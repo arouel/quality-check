@@ -12,8 +12,8 @@
 	<artifactId>distribution</artifactId>
 	<version>2012.08-SNAPSHOT</version>
 
-	<name>UADetector :: Distribution</name>
-	<description>This project is intended to create distributions of the UADetector multimodule project.</description>
+	<name>Quality :: Check</name>
+	<description>This project is intended to create distributions of the Quality-Check multimodule project.</description>
 
 	<packaging>pom</packaging>
 
@@ -22,19 +22,14 @@
 		this distribution project builds AFTER that one... -->
 	<dependencies>
 		<dependency>
-			<groupId>net.sf.uadetector</groupId>
-			<artifactId>uadetector-core</artifactId>
-			<version>0.5.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.uadetector</groupId>
-			<artifactId>uadetector-resources</artifactId>
-			<version>2012.08-SNAPSHOT</version>
+			<groupId>com.github.quality</groupId>
+			<artifactId>quality-check</artifactId>
+			<version>0.9-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>uadetector-${project.version}</finalName>
+		<finalName>quality-check-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
