@@ -18,6 +18,8 @@ package com.github.quality.check;
 
 import org.junit.Test;
 
+import com.github.quality.check.exception.IllegalNullArgumentException;
+
 /**
  * Modul Test for the class {@link com.github.quality.check.Check}
  * 
@@ -26,9 +28,25 @@ import org.junit.Test;
  */
 public class CheckTest {
 
+	@Test
+	public void notNull_withReference_isValid() {
+		Check.notNull("");
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notNull_withReference_withName_isInvalid() {
+		Check.notNull(null, "foo");
+	}
+
+	@Test
+	public void notNull_withReference_withName_isValid() {
+		Check.notNull("", "foo");
+	}
+
 	@Test(expected = java.lang.IllegalAccessException.class)
-	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Class<?> cls = Class.forName("com.github.quality.check.Check");
+	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		final Class<?> cls = Class.forName("com.github.quality.check.Check");
 		cls.newInstance(); // exception here
 	}
 
