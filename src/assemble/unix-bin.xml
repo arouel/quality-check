@@ -25,7 +25,7 @@
 			<fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>${basedir}/../modules/uadetector-core</directory>
+			<directory>${basedir}/../modules/quality-check</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
 				<include>LICENSE.alphanum.txt</include>

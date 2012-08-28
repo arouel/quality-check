@@ -1,7 +1,4 @@
 User-agent: *
-Disallow: /modules/uadetector-core/cobertura/
-Disallow: /modules/uadetector-resources/xref/
-Disallow: /modules/uadetector-core/xref/
-Disallow: /modules/uadetector-resources/cobertura/
+Disallow: /modules/quality-check/cobertura/
 Allow: /
 
