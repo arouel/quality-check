@@ -16,13 +16,19 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+/**
+ * 
+ * 
+ * @author André Rouél
+ * @author Dominik Seichter
+ */
 public final class Check {
-	
+
 	/**
-	 * Hidden default constructor. This class provides only
-	 * static methods.
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
 	private Check() {
-		// You are not supposed to create instances of this class
+		// This class is not intended to create objects from it.
 	}
+
 }
