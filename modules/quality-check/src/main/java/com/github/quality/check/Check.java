@@ -16,13 +16,51 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+import javax.annotation.Nullable;
+
+import com.github.quality.check.exception.IllegalNullArgumentException;
+
 /**
- * 
+ * This class offers simple static methods to test your arguments to be valid.
  * 
  * @author André Rouél
  * @author Dominik Seichter
  */
 public final class Check {
+
+	/**
+	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
+	 * 
+	 * @param reference
+	 *            an object reference
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 */
+	public static <T> T notNull(final @Nullable T reference) {
+		if (reference == null) {
+			throw new IllegalNullArgumentException();
+		}
+		return reference;
+	}
+
+	/**
+	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
+	 * 
+	 * @param reference
+	 *            an object reference
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 */
+	public static <T> T notNull(final @Nullable T reference, final String name) {
+		if (reference == null) {
+			throw new IllegalNullArgumentException(name);
+		}
+		return reference;
+	}
 
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
