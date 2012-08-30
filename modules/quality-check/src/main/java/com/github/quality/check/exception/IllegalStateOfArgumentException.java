@@ -38,10 +38,14 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 * Message to indicate that an invalid state was caused due to the passed arguments, which also 
 	 * provides an explanation why the state is invalid.
 	 */
-	protected static final String MESSAGE_DESCRIPTION = "The passed arguments have caused an invalid state: '%s'";
+	protected static final String MESSAGE_DESCRIPTION = "The passed arguments have caused an invalid state: ";
 	
 	private static String format(final @Nonnull String descriptionTemplate, Object... descriptionTemplateArgs) {
-		return String.format(descriptionTemplate, descriptionTemplateArgs);
+		if( descriptionTemplateArgs == null || descriptionTemplateArgs.length == 0 ) {
+			return MESSAGE_DESCRIPTION + descriptionTemplate;
+		} else {
+			return String.format(descriptionTemplate, descriptionTemplateArgs);
+		}
 	}
 	
 	/**

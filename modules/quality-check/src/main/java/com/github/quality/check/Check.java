@@ -140,6 +140,19 @@ public final class Check {
 		return reference;
 	}
 
+	/**
+	 * Ensures that a given position index is valid within the size of an array, list or string ...
+	 * 
+	 * @param index
+	 *            index of an array, list or string
+	 * @param size
+	 *            size of an array list or string
+	 * @return the index
+	 * 
+	 * @throws IllegalPositionIndexException
+	 *             if the index is not a valid position index within an array, list or string of size <em>size</em>
+	 * 
+	 */
 	public static int positionIndex(final int index, final int size) {
 		final boolean isIndexValid = (size >= 0) && (index >= 0) && (index < size);
 
@@ -193,35 +206,6 @@ public final class Check {
 		}
 	}
 
-	/**
-	 * 
-	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
-	 * is not true
-	 * 
-	 * @param expression
-	 *            an expression that must be true to indicate a valid state
-	 * @param clazz
-	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
-	 * @throws a
-	 *             new instance of clazz if the given arguments caused an invalid state
-	 */
-	@ArgumentsChecked
-	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
-		Check.notNull(clazz);
-
-		if (!expression) {
-			RuntimeException re;
-			try {
-				re = clazz.newInstance();
-			} catch (final InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (final IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-
-			throw re;
-		}
-	}
 
 	/**
 	 * Ensures that a given state is true
@@ -255,6 +239,35 @@ public final class Check {
 			final Object... descriptionTemplateArgs) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);
+		}
+	}
+
+	/**
+	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
+	 * is not true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param clazz
+	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
+	 * @throws a
+	 *             new instance of clazz if the given arguments caused an invalid state
+	 */
+	@ArgumentsChecked
+	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		Check.notNull(clazz);
+
+		if (!expression) {
+			RuntimeException re;
+			try {
+				re = clazz.newInstance();
+			} catch (InstantiationException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+
+			throw re;
 		}
 	}
 
