@@ -67,6 +67,19 @@ public final class Check {
 		return reference;
 	}
 
+	/**
+	 * Ensures that a given position index is valid within the size of an array, list or string ...
+	 * 
+	 * @param index
+	 *            index of an array, list or string
+	 * @param size
+	 *            size of an array list or string
+	 * @return the index
+	 * 
+	 * @throws IllegalPositionIndexException
+	 *             if the index is not a valid position index within an array, list or string of size <em>size</em>
+	 * 
+	 */
 	public static int positionIndex(final int index, final int size) {
 		final boolean isIndexValid = (size >= 0) && (index >= 0) && (index < size);
 
@@ -168,7 +181,7 @@ public final class Check {
 	@ArgumentsChecked
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
 		Check.notNull(clazz);
-		
+
 		if (!expression) {
 			RuntimeException re;
 			try {
