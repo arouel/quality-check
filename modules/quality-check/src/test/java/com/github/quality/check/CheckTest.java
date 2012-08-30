@@ -161,5 +161,15 @@ public class CheckTest {
 	@Test(expected=IllegalStateOfArgumentException.class)
 	public void checkStateIsTrueWithMessageArguments_False() {
 		Check.stateIsTrue(false, "Value '%d' is not allowed.", 42);
+	}
+	
+	@Test
+	public void checkStateIsTrueWithThrowable_True() {
+		Check.stateIsTrue(true, NullPointerException.class);
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void checkStateIsTrueWithThrowable_False() {
+		Check.stateIsTrue(false, NullPointerException.class);
 	}		
 }

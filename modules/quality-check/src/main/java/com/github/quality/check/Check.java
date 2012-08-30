@@ -142,7 +142,33 @@ public final class Check {
 			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);
 		}
 	}
-	
+
+	/**
+	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
+	 * is not true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param clazz
+	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
+	 * @throws a
+	 *             new instance of clazz if the given arguments caused an invalid state
+	 */
+	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		if (!expression) {
+			RuntimeException re;
+			try {
+				re = clazz.newInstance();
+			} catch (InstantiationException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+
+			throw re;
+		}
+	}
+
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
