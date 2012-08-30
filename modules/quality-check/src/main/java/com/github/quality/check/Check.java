@@ -19,6 +19,7 @@ package com.github.quality.check;
 import javax.annotation.Nullable;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalRangeException;
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
@@ -60,6 +61,33 @@ public final class Check {
 			throw new IllegalNullArgumentException(name);
 		}
 		return reference;
+	}
+
+	/**
+	 * Ensures that the given arguments are a valid range.
+	 * 
+	 * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true: - start <=
+	 * size - end <= size - start <= end - size >= 0 - start >= 0 - end >= 0
+	 * 
+	 * If negative numbers are allowed in your range, you must check using { {@link #rangeNegativeOrPositive()}.
+	 * 
+	 * @param start
+	 *            the start value of the range
+	 * @param end
+	 *            the end value of the range
+	 * @param size
+	 *            the size value of the range
+	 * 
+	 * 
+	 * @throws IllegalRangeException
+	 *             if the given arguments do not form a valid range
+	 */
+	public static void range(final int start, final int end, final int size) {
+		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end) && (size >= 0) && (start >= 0) && (end >= 0);
+
+		if (!rangeIsValid) {
+			throw new IllegalRangeException(start, end, size);
+		}
 	}
 
 	/**
