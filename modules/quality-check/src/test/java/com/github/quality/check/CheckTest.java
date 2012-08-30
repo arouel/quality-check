@@ -28,6 +28,11 @@ import com.github.quality.check.exception.IllegalNullArgumentException;
  */
 public class CheckTest {
 
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notNull_withReference_isInvalid() {
+		Check.notNull(null);
+	}
+
 	@Test
 	public void notNull_withReference_isValid() {
 		Check.notNull("");
