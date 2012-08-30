@@ -20,6 +20,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.github.quality.check.ArgumentsChecked.Throws;
+import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
@@ -33,6 +35,44 @@ import com.github.quality.check.exception.IllegalStateOfArgumentException;
 public final class Check {
 
 	/**
+	 * Ensures that an object reference passed as a parameter to the calling method is not empty. The passed boolean
+	 * value is the result of checking whether the reference is empty or not.
+	 * 
+	 * <p>
+	 * The following example describes how to use it.
+	 * 
+	 * <pre>
+	 * &#064;ArgumentsChecked
+	 * public setText(String text) {
+	 * 	Check.notEmpty(text, text.isEmpty(), &quot;text&quot;);
+	 * 	this.text = text;
+	 * }
+	 * </pre>
+	 * 
+	 * @param reference
+	 *            an object reference which should not be empty
+	 * @param expression
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T> T notEmpty(final @Nullable T reference, final boolean expression, final @Nullable String name) {
+		notNull(reference, name);
+		if (expression) {
+			throw new IllegalEmptyArgumentException(name);
+		}
+		return reference;
+	}
+
+	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
 	 * 
 	 * @param reference
@@ -41,6 +81,7 @@ public final class Check {
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is {@code null}
 	 */
+	@Throws(IllegalNullArgumentException.class)
 	public static <T> T notNull(final @Nullable T reference) {
 		if (reference == null) {
 			throw new IllegalNullArgumentException();
@@ -59,7 +100,8 @@ public final class Check {
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is {@code null}
 	 */
-	public static <T> T notNull(final @Nullable T reference, final String name) {
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T notNull(final @Nullable T reference, final @Nullable String name) {
 		if (reference == null) {
 			throw new IllegalNullArgumentException(name);
 		}
@@ -110,6 +152,32 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
+	 * is not true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param clazz
+	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
+	 * @throws a
+	 *             new instance of clazz if the given arguments caused an invalid state
+	 */
+	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		if (!expression) {
+			RuntimeException re;
+			try {
+				re = clazz.newInstance();
+			} catch (final InstantiationException e) {
+				throw new RuntimeException(e);
+			} catch (final IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+
+			throw re;
+		}
+	}
+
+	/**
 	 * Ensures that a given state is true
 	 * 
 	 * @param expression
@@ -137,35 +205,10 @@ public final class Check {
 	 * @throws IllegalStateOfArgumentException
 	 *             if the given arguments caused an invalid state
 	 */
-	public static void stateIsTrue(final boolean expression, final @Nonnull String descriptionTemplate, Object... descriptionTemplateArgs) {
+	public static void stateIsTrue(final boolean expression, final @Nonnull String descriptionTemplate,
+			final Object... descriptionTemplateArgs) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);
-		}
-	}
-
-	/**
-	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
-	 * is not true
-	 * 
-	 * @param expression
-	 *            an expression that must be true to indicate a valid state
-	 * @param clazz
-	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
-	 * @throws a
-	 *             new instance of clazz if the given arguments caused an invalid state
-	 */
-	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
-		if (!expression) {
-			RuntimeException re;
-			try {
-				re = clazz.newInstance();
-			} catch (InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-
-			throw re;
 		}
 	}
 
