@@ -32,6 +32,179 @@ import com.github.quality.check.exception.IllegalStateOfArgumentException;
  */
 public class CheckTest {
 
+	private static class FakeIllegalAccessException extends RuntimeException {
+		private static final long serialVersionUID = 3810373199918408287L;
+
+		@SuppressWarnings("unused")
+		public FakeIllegalAccessException() throws IllegalAccessException {
+			throw new IllegalAccessException();
+		}
+	}
+
+	private static class FakeInstantiationException extends RuntimeException {
+		private static final long serialVersionUID = -7585963509351269594L;
+
+		@SuppressWarnings("unused")
+		public FakeInstantiationException() throws InstantiationException {
+			throw new InstantiationException();
+		}
+	}
+
+	@Test
+	public void checkEmptyRange() {
+		Check.range(0, 0, 0);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidEndBeforeStartRange() {
+		Check.range(2, 1, 3);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidEndBiggerThanSizeRange() {
+		Check.range(1, 4, 3);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidNegativeEndRange() {
+		Check.range(1, -2, 5);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidNegativeRange() {
+		Check.range(-2, -3, -4);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidNegativeSizeRange() {
+		Check.range(1, 2, -5);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidNegativeStartRange() {
+		Check.range(-1, 2, 5);
+	}
+
+	@Test(expected = IllegalRangeException.class)
+	public void checkInvalidStartBiggerThanSizeRange() {
+		Check.range(4, 2, 3);
+	}
+
+	@Test(expected = IllegalPositionIndexException.class)
+	public void checkPositionAllZero() {
+		Check.positionIndex(0, 0);
+	}
+
+	@Test
+	public void checkPositionIndex_ok_highest() {
+		final int ret = Check.positionIndex(2, 3);
+		Assert.assertEquals(2, ret);
+	}
+
+	@Test
+	public void checkPositionIndex_ok_lowest() {
+		final int ret = Check.positionIndex(0, 3);
+		Assert.assertEquals(0, ret);
+	}
+
+	@Test(expected = IllegalPositionIndexException.class)
+	public void checkPositionIndexEqualsSize() {
+		Check.positionIndex(3, 3);
+	}
+
+	@Test(expected = IllegalPositionIndexException.class)
+	public void checkPositionIndexNegative() {
+		Check.positionIndex(-1, 3);
+	}
+
+	@Test(expected = IllegalPositionIndexException.class)
+	public void checkPositionIndexToBig() {
+		Check.positionIndex(4, 3);
+	}
+
+	@Test(expected = IllegalPositionIndexException.class)
+	public void checkPositionSizeNegative() {
+		Check.positionIndex(0, -1);
+	}
+
+	@Test
+	public void checkRange() {
+		Check.range(3, 5, 10);
+	}
+
+	@Test
+	public void checkRangeBoundariesAllUpper() {
+		Check.range(10, 10, 10);
+	}
+
+	@Test
+	public void checkRangeBoundariesLower() {
+		Check.range(0, 2, 4);
+	}
+
+	@Test
+	public void checkRangeBoundariesUpper() {
+		Check.range(0, 10, 10);
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void checkStateIsTrue_False() {
+		Check.stateIsTrue(false);
+	}
+
+	@Test
+	public void checkStateIsTrue_True() {
+		Check.stateIsTrue(true);
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void checkStateIsTrueWithMessage_False() {
+		Check.stateIsTrue(false, "False is not allowed.");
+	}
+
+	@Test
+	public void checkStateIsTrueWithMessage_True() {
+		Check.stateIsTrue(true, "False is not allowed.");
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void checkStateIsTrueWithMessageArguments_False() {
+		Check.stateIsTrue(false, "Value '%d' is not allowed.", 42);
+	}
+
+	@Test
+	public void checkStateIsTrueWithMessageArguments_True() {
+		Check.stateIsTrue(true, "Value '%d' is not allowed.", 42);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void checkStateIsTrueWithThrowable_False() {
+		Check.stateIsTrue(false, NullPointerException.class);
+	}
+
+	@Test
+	public void checkStateIsTrueWithThrowable_True() {
+		Check.stateIsTrue(true, NullPointerException.class);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void checkStateIsTrueWithThrowableAndIllegalAccessException_False() {
+		Check.stateIsTrue(false, FakeIllegalAccessException.class);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void checkStateIsTrueWithThrowableAndInstantiationException_False() {
+		Check.stateIsTrue(false, FakeInstantiationException.class);
+	}
+
+	@Test
+	public void checkValidRanges() {
+		Check.range(0, 0, 0);
+		Check.range(0, 0, 1);
+		Check.range(0, 1, 1);
+		Check.range(1, 1, 1);
+	}
+
 	@Test
 	public void notNull_checkReferenceIsSame() {
 		final String text = "beer tastes good";
@@ -64,176 +237,5 @@ public class CheckTest {
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("com.github.quality.check.Check");
 		cls.newInstance(); // exception here
-	}
-	
-	@Test
-	public void checkPositionIndex_ok_lowest() {
-		final int ret = Check.positionIndex(0, 3);
-		Assert.assertEquals(0, ret);
-	}
-
-	@Test
-	public void checkPositionIndex_ok_highest() {
-		final int ret = Check.positionIndex(2, 3);
-		Assert.assertEquals(2, ret);
-	}
-
-	@Test(expected=IllegalPositionIndexException.class)
-	public void checkPositionIndexNegative() {
-		Check.positionIndex(-1, 3);
-	}
-	
-	@Test(expected=IllegalPositionIndexException.class)
-	public void checkPositionIndexEqualsSize() {
-		Check.positionIndex(3, 3);
-	}
-	
-	@Test(expected=IllegalPositionIndexException.class)
-	public void checkPositionIndexToBig() {
-		Check.positionIndex(4, 3);
-	}
-	
-	@Test(expected=IllegalPositionIndexException.class)
-	public void checkPositionAllZero() {
-		Check.positionIndex(0, 0);
-	}
-	
-	@Test(expected=IllegalPositionIndexException.class)
-	public void checkPositionSizeNegative() {
-		Check.positionIndex(0, -1);
-	}
-	
-	@Test
-	public void checkEmptyRange() {
-		Check.range(0, 0, 0);
-	}
-	
-	@Test
-	public void checkRangeBoundariesLower() {
-		Check.range(0, 2, 4);
-	}
-	
-	@Test
-	public void checkRangeBoundariesUpper() {
-		Check.range(0, 10, 10);
-	}
-
-	@Test
-	public void checkRangeBoundariesAllUpper() {
-		Check.range(10, 10, 10);
-	}
-	
-	@Test
-	public void checkRange() {
-		Check.range(3, 5, 10);
-	}
-	
-	@Test
-	public void checkValidRanges() {
-		Check.range(0, 0, 0);
-		Check.range(0, 0, 1);
-		Check.range(0, 1, 1);
-		Check.range(1, 1, 1);		
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidNegativeRange() {
-		Check.range(-2, -3, -4);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidNegativeStartRange() {
-		Check.range(-1, 2, 5);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidNegativeEndRange() {
-		Check.range(1, -2, 5);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidNegativeSizeRange() {
-		Check.range(1, 2, -5);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidEndBeforeStartRange() {
-		Check.range(2, 1, 3);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidEndBiggerThanSizeRange() {
-		Check.range(1, 4, 3);
-	}
-	
-	@Test(expected=IllegalRangeException.class)
-	public void checkInvalidStartBiggerThanSizeRange() {
-		Check.range(4, 2, 3);
-	}
-	
-	@Test
-	public void checkStateIsTrue_True() {
-		Check.stateIsTrue(true);
-	}
-	
-	@Test(expected=IllegalStateOfArgumentException.class)
-	public void checkStateIsTrue_False() {
-		Check.stateIsTrue(false);
-	}
-	
-	@Test
-	public void checkStateIsTrueWithMessage_True() {
-		Check.stateIsTrue(true, "False is not allowed.");
-	}
-	
-	@Test(expected=IllegalStateOfArgumentException.class)
-	public void checkStateIsTrueWithMessage_False() {
-		Check.stateIsTrue(false, "False is not allowed.");
-	}
-	
-	@Test
-	public void checkStateIsTrueWithMessageArguments_True() {
-		Check.stateIsTrue(true, "Value '%d' is not allowed.", 42);
-	}
-	
-	@Test(expected=IllegalStateOfArgumentException.class)
-	public void checkStateIsTrueWithMessageArguments_False() {
-		Check.stateIsTrue(false, "Value '%d' is not allowed.", 42);
-	}
-	
-	@Test
-	public void checkStateIsTrueWithThrowable_True() {
-		Check.stateIsTrue(true, NullPointerException.class);
-	}
-	
-	@Test(expected=NullPointerException.class)
-	public void checkStateIsTrueWithThrowable_False() {
-		Check.stateIsTrue(false, NullPointerException.class);
-	}
-	
-	private static class FakeInstantiationException extends RuntimeException {
-		private static final long serialVersionUID = -7585963509351269594L;
-		@SuppressWarnings("unused")
-		public FakeInstantiationException() throws InstantiationException {
-			throw new InstantiationException();
-		}
-	}
-	
-	@Test(expected=RuntimeException.class)
-	public void checkStateIsTrueWithThrowableAndInstantiationException_False() {
-		Check.stateIsTrue(false, FakeInstantiationException.class);
-	}
-	
-	private static class FakeIllegalAccessException extends RuntimeException {
-		private static final long serialVersionUID = 3810373199918408287L;
-		@SuppressWarnings("unused")
-		public FakeIllegalAccessException() throws IllegalAccessException {
-			throw new IllegalAccessException();
-		}
-	}
-	
-	@Test(expected=RuntimeException.class)
-	public void checkStateIsTrueWithThrowableAndIllegalAccessException_False() {
-		Check.stateIsTrue(false, FakeIllegalAccessException.class);
 	}
 }
