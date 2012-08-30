@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import com.github.quality.check.ArgumentsChecked.Throws;
 import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
@@ -108,6 +109,16 @@ public final class Check {
 		return reference;
 	}
 
+	public static int positionIndex(final int index, final int size) {
+		final boolean isIndexValid = (size >= 0) && (index >= 0) && (index < size);
+
+		if (!isIndexValid) {
+			throw new IllegalPositionIndexException(index, size);
+		}
+
+		return index;
+	}
+
 	/**
 	 * Ensures that the given arguments are a valid range.
 	 * 
@@ -152,6 +163,7 @@ public final class Check {
 	}
 
 	/**
+	 * 
 	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
 	 * is not true
 	 * 
@@ -162,7 +174,10 @@ public final class Check {
 	 * @throws a
 	 *             new instance of clazz if the given arguments caused an invalid state
 	 */
+	@ArgumentsChecked
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		Check.notNull(clazz);
+
 		if (!expression) {
 			RuntimeException re;
 			try {
