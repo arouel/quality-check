@@ -207,13 +207,19 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyText_withArgName_isValid() {
+		final String text = "";
+		Check.notEmpty(text, "text");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
 	public void notEmpty_withEmptyReference_isEmpty_withArgName_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text, text.isEmpty(), "text");
 	}
 
 	@Test
-	public void notEmpty_withEmptyReference_notEmpty_withArgName_isValid() {
+	public void notEmpty_withFilledReference_notEmpty_withArgName_isValid() {
 		final String text = "strawberries tastes also good";
 		Assert.assertSame(text, Check.notEmpty(text, text.isEmpty(), "text"));
 	}
@@ -221,6 +227,17 @@ public class CheckTest {
 	@Test(expected = IllegalNullArgumentException.class)
 	public void notEmpty_withNullReference_isEmpty_withArgName_isInvalid() {
 		Check.notEmpty(null, true, "argName");
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notEmpty_withNullReference_withArgName_isValid() {
+		Check.notEmpty(null, "text");
+	}
+
+	@Test
+	public void notEmpty_withText_withArgName_isValid() {
+		final String text = "strawberries tastes also good";
+		Assert.assertSame(text, Check.notEmpty(text, "text"));
 	}
 
 	@Test
