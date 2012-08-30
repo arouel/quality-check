@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
@@ -64,6 +65,16 @@ public final class Check {
 			throw new IllegalNullArgumentException(name);
 		}
 		return reference;
+	}
+
+	public static int positionIndex(final int index, final int size) {
+		final boolean isIndexValid = (size >= 0) && (index >= 0) && (index < size);
+
+		if (!isIndexValid) {
+			throw new IllegalPositionIndexException(index, size);
+		}
+
+		return index;
 	}
 
 	/**

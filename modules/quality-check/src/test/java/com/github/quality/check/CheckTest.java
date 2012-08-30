@@ -20,6 +20,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
@@ -63,6 +64,43 @@ public class CheckTest {
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("com.github.quality.check.Check");
 		cls.newInstance(); // exception here
+	}
+	
+	@Test
+	public void checkPositionIndex_ok_lowest() {
+		final int ret = Check.positionIndex(0, 3);
+		Assert.assertEquals(0, ret);
+	}
+
+	@Test
+	public void checkPositionIndex_ok_highest() {
+		final int ret = Check.positionIndex(2, 3);
+		Assert.assertEquals(2, ret);
+	}
+
+	@Test(expected=IllegalPositionIndexException.class)
+	public void checkPositionIndexNegative() {
+		Check.positionIndex(-1, 3);
+	}
+	
+	@Test(expected=IllegalPositionIndexException.class)
+	public void checkPositionIndexEqualsSize() {
+		Check.positionIndex(3, 3);
+	}
+	
+	@Test(expected=IllegalPositionIndexException.class)
+	public void checkPositionIndexToBig() {
+		Check.positionIndex(4, 3);
+	}
+	
+	@Test(expected=IllegalPositionIndexException.class)
+	public void checkPositionAllZero() {
+		Check.positionIndex(0, 0);
+	}
+	
+	@Test(expected=IllegalPositionIndexException.class)
+	public void checkPositionSizeNegative() {
+		Check.positionIndex(0, -1);
 	}
 	
 	@Test
@@ -171,5 +209,31 @@ public class CheckTest {
 	@Test(expected=NullPointerException.class)
 	public void checkStateIsTrueWithThrowable_False() {
 		Check.stateIsTrue(false, NullPointerException.class);
-	}		
+	}
+	
+	private static class FakeInstantiationException extends RuntimeException {
+		private static final long serialVersionUID = -7585963509351269594L;
+		@SuppressWarnings("unused")
+		public FakeInstantiationException() throws InstantiationException {
+			throw new InstantiationException();
+		}
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void checkStateIsTrueWithThrowableAndInstantiationException_False() {
+		Check.stateIsTrue(false, FakeInstantiationException.class);
+	}
+	
+	private static class FakeIllegalAccessException extends RuntimeException {
+		private static final long serialVersionUID = 3810373199918408287L;
+		@SuppressWarnings("unused")
+		public FakeIllegalAccessException() throws IllegalAccessException {
+			throw new IllegalAccessException();
+		}
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void checkStateIsTrueWithThrowableAndIllegalAccessException_False() {
+		Check.stateIsTrue(false, FakeIllegalAccessException.class);
+	}
 }
