@@ -19,10 +19,8 @@ package com.github.quality.check.exception;
 /**
  * Thrown to indicate that a method has been passed with a range as arguments.
  * 
- * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true:
- * - start < size
- * - end < size
- * - start < end
+ * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true: - start < size -
+ * end < size - start < end
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -37,9 +35,10 @@ public class IllegalRangeException extends RuntimeException {
 	protected static final String DEFAULT_MESSAGE = "Arguments must be a valid range.";
 
 	/**
-	 * Message to indicate that the the given arguments <em>start</em>, <em>end</em> and <em>size</em> must be a valid range.
+	 * Message to indicate that the the given arguments <em>start</em>, <em>end</em> and <em>size</em> must be a valid
+	 * range.
 	 */
-	protected static final String MESSAGE_WITH_VALUES = "Arguments start='%i', end='%i' and size='%i' must be a valid range.";
+	protected static final String MESSAGE_WITH_VALUES = "Arguments start='%d', end='%d' and size='%d' must be a valid range.";
 
 	private static String format(final int start, final int end, final int size) {
 		return String.format(MESSAGE_WITH_VALUES, start, end, size);
@@ -54,8 +53,8 @@ public class IllegalRangeException extends RuntimeException {
 	}
 
 	/**
-	 * Constructs an {@code IllegalRangeException} with the message
-	 * {@link IllegalRangeException#MESSAGE_WITH_VALUES} including the given values of the arguments.
+	 * Constructs an {@code IllegalRangeException} with the message {@link IllegalRangeException#MESSAGE_WITH_VALUES}
+	 * including the given values of the arguments.
 	 * 
 	 * @param start
 	 *            the start value of the invalid range
@@ -69,8 +68,8 @@ public class IllegalRangeException extends RuntimeException {
 	}
 
 	/**
-	 * Constructs a new exception with the message {@link IllegalRangeException#MESSAGE_WITH_VALUES} including the
-	 * given values of the arguments.
+	 * Constructs a new exception with the message {@link IllegalRangeException#MESSAGE_WITH_VALUES} including the given
+	 * values of the arguments.
 	 * 
 	 * @param start
 	 *            the start value of the invalid range
