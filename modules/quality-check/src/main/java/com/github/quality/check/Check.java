@@ -165,7 +165,10 @@ public final class Check {
 	 * @throws a
 	 *             new instance of clazz if the given arguments caused an invalid state
 	 */
+	@ArgumentsChecked
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		Check.notNull(clazz);
+		
 		if (!expression) {
 			RuntimeException re;
 			try {
