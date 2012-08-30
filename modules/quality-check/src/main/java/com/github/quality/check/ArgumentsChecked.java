@@ -23,28 +23,45 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that a method is intended to check all its arguments using
- * Quality-Check. If a method is annotated with this annotation the method is
- * responsible to check all arguments against basic conditions like not null,
- * not empty etc.
- * <p>
- * In turn the caller has to be aware that exceptions like
- * IllegalNullArgumentException etc. will be thrown by the method if input
- * arguments are not valid.
+ * Indicates that a method is intended to check all its arguments using <em>Quality-Check</em>. If a method is annotated
+ * with this annotation the method is responsible to check all arguments against basic conditions like not null, not
+ * empty etc.
  * 
- * <p>Example
- * {@code
- * @ArgumentsChecked
+ * <p>
+ * In turn the caller has to be aware that exceptions like {@code IllegalNullArgumentException} will be thrown by the
+ * method if input arguments are not valid.
+ * 
+ * <p>
+ * The following example describes how to use it.
+ * 
+ * <pre>
+ * &#064;ArgumentsChecked
  * public void validate(Object o) {
- * 	  Check.notNull(o);
- * }}
+ * 	Check.notNull(o);
+ * }
+ * </pre>
  * 
  * 
  * @author André Rouél
  * @author Dominik Seichter
  */
-@Target(value = ElementType.METHOD)
 @Retention(value = RetentionPolicy.SOURCE)
+@Target(value = ElementType.METHOD)
 public @interface ArgumentsChecked {
+
+	/**
+	 * The <code>Throws</code> annotation specifies the classes that will be thrown when one ore more arguments are not
+	 * valid.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@Target(ElementType.METHOD)
+	public @interface Throws {
+
+		/**
+		 * @return the classes that can be thrown
+		 */
+		public Class<? extends Throwable>[] value();
+
+	}
 
 }
