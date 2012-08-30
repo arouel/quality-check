@@ -28,10 +28,16 @@ public class IllegalStateOfArgumentsExceptionTest {
 	}
 	
 	@Test
+	public void message_with_null_template() {
+		final IllegalStateOfArgumentException e = new IllegalStateOfArgumentException("a=%d", (Object[])null);
+		Assert.assertEquals("The passed arguments have caused an invalid state: a=%d", e.getMessage());
+	}	
+	
+	@Test
 	public void construct_withFilledArgsAndFilledCause() {
-		new IllegalStateOfArgumentException("a^2 + b^2 = c^2", new NumberFormatException());
+		new IllegalStateOfArgumentException(new NumberFormatException(), "a^2 + b^2 = c^2");
 	}
-
+	
 	@Test
 	public void construct_withFilledArgsAndNullCause() {
 		final IllegalStateOfArgumentException e = new IllegalStateOfArgumentException("a != b", (Throwable)null);
