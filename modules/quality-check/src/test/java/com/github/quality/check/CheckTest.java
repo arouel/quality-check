@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalRangeException;
+import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
 /**
  * Modul Test for the class {@link com.github.quality.check.Check}
@@ -131,4 +132,34 @@ public class CheckTest {
 	public void checkInvalidStartBiggerThanSizeRange() {
 		Check.range(4, 2, 3);
 	}
+	
+	@Test
+	public void checkStateIsTrue_True() {
+		Check.stateIsTrue(true);
+	}
+	
+	@Test(expected=IllegalStateOfArgumentException.class)
+	public void checkStateIsTrue_False() {
+		Check.stateIsTrue(false);
+	}
+	
+	@Test
+	public void checkStateIsTrueWithMessage_True() {
+		Check.stateIsTrue(true, "False is not allowed.");
+	}
+	
+	@Test(expected=IllegalStateOfArgumentException.class)
+	public void checkStateIsTrueWithMessage_False() {
+		Check.stateIsTrue(false, "False is not allowed.");
+	}
+	
+	@Test
+	public void checkStateIsTrueWithMessageArguments_True() {
+		Check.stateIsTrue(true, "Value '%d' is not allowed.", 42);
+	}
+	
+	@Test(expected=IllegalStateOfArgumentException.class)
+	public void checkStateIsTrueWithMessageArguments_False() {
+		Check.stateIsTrue(false, "Value '%d' is not allowed.", 42);
+	}		
 }

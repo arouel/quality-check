@@ -17,10 +17,12 @@
 package com.github.quality.check;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalRangeException;
+import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
@@ -84,13 +86,63 @@ public final class Check {
 	 *             if the given arguments do not form a valid range
 	 */
 	public static void range(final @Nonnegative int start, final @Nonnegative int end, final @Nonnegative int size) {
-		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end) && (size >= 0) && (start >= 0) && (end >= 0);
+		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end);
+		final boolean inputValuesAreValid = (size >= 0) && (start >= 0) && (end >= 0);
 
-		if (!rangeIsValid) {
+		if (!rangeIsValid || !inputValuesAreValid) {
 			throw new IllegalRangeException(start, end, size);
 		}
 	}
 
+	/**
+	 * Ensures that a given state is true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * 
+	 * @throws IllegalStateOfArgumentException
+	 *             if the given arguments caused an invalid state
+	 */
+	public static void stateIsTrue(final boolean expression) {
+		if (!expression) {
+			throw new IllegalStateOfArgumentException();
+		}
+	}
+
+	/**
+	 * Ensures that a given state is true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param description
+	 *            will be used in the error message to describe why the arguments caused an invalid state
+	 * @throws IllegalStateOfArgumentException
+	 *             if the given arguments caused an invalid state
+	 */
+	public static void stateIsTrue(final boolean expression, final @Nonnull String description) {
+		if (!expression) {
+			throw new IllegalStateOfArgumentException(description);
+		}
+	}
+
+	/**
+	 * Ensures that a given state is true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param descriptionTemplate
+	 *            format string template that explains why the state is invalid
+	 * @param descriptionTemplateArgs
+	 *            format string template arguments to explain why the state is invalid
+	 * @throws IllegalStateOfArgumentException
+	 *             if the given arguments caused an invalid state
+	 */
+	public static void stateIsTrue(final boolean expression, final @Nonnull String descriptionTemplate, Object... descriptionTemplateArgs) {
+		if (!expression) {
+			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);
+		}
+	}
+	
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
