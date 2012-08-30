@@ -15,9 +15,11 @@
  ******************************************************************************/
 package com.github.quality.check.exception;
 
+import javax.annotation.Nullable;
+
 /**
  * Thrown to indicate that a method has been passed with an illegal {@code null} reference as argument that does not
- * accept it as a valid.
+ * accept it as valid.
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -36,8 +38,16 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 */
 	protected static final String MESSAGE_WITH_NAME = "Argument '%s' must not be null.";
 
-	private static String format(final String name) {
-		return String.format(MESSAGE_WITH_NAME, name);
+	/**
+	 * Returns the formatted string {@link IllegalNullArgumentException#MESSAGE_WITH_NAME} with the given
+	 * {@code argumentName}.
+	 * 
+	 * @param argumentName
+	 *            the name of the passed argument
+	 * @return a formatted string of message with the given argument name
+	 */
+	private static String format(final @Nullable String argumentName) {
+		return String.format(MESSAGE_WITH_NAME, argumentName);
 	}
 
 	/**
@@ -53,25 +63,25 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 * {@link IllegalNullArgumentException#MESSAGE_WITH_NAME} including the given name of the argument as string
 	 * representation.
 	 * 
-	 * @param name
-	 *            the name of the argument which was null
+	 * @param argumentName
+	 *            the name of the passed argument
 	 */
-	public IllegalNullArgumentException(final String name) {
-		super(format(name));
+	public IllegalNullArgumentException(final @Nullable String argumentName) {
+		super(format(argumentName));
 	}
 
 	/**
 	 * Constructs a new exception with the message {@link IllegalNullArgumentException#MESSAGE_WITH_NAME} including the
 	 * given name as string representation and cause.
 	 * 
-	 * @param name
-	 *            the name of the argument which was null
+	 * @param argumentName
+	 *            the name of the passed argument
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNullArgumentException(final String name, final Throwable cause) {
-		super(format(name), cause);
+	public IllegalNullArgumentException(final @Nullable String argumentName, final @Nullable Throwable cause) {
+		super(format(argumentName), cause);
 	}
 
 	/**
@@ -81,7 +91,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNullArgumentException(final Throwable cause) {
+	public IllegalNullArgumentException(final @Nullable Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 
