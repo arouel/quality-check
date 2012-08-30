@@ -16,6 +16,7 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
@@ -72,17 +73,17 @@ public final class Check {
 	 * If negative numbers are allowed in your range, you must check using { {@link #rangeNegativeOrPositive()}.
 	 * 
 	 * @param start
-	 *            the start value of the range
+	 *            the start value of the range (must be a positive integer or 0)
 	 * @param end
-	 *            the end value of the range
+	 *            the end value of the range (must be a positive integer or 0)
 	 * @param size
-	 *            the size value of the range
+	 *            the size value of the range (must be a positive integer or 0)
 	 * 
 	 * 
 	 * @throws IllegalRangeException
 	 *             if the given arguments do not form a valid range
 	 */
-	public static void range(final int start, final int end, final int size) {
+	public static void range(final @Nonnegative int start, final @Nonnegative int end, final @Nonnegative int size) {
 		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end) && (size >= 0) && (start >= 0) && (end >= 0);
 
 		if (!rangeIsValid) {
