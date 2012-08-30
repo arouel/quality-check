@@ -16,6 +16,7 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.quality.check.exception.IllegalNullArgumentException;
@@ -28,6 +29,13 @@ import com.github.quality.check.exception.IllegalRangeException;
  * @author Dominik Seichter
  */
 public class CheckTest {
+
+	@Test
+	public void notNull_checkReferenceIsSame() {
+		final String text = "beer tastes good";
+		Assert.assertSame(text, Check.notNull(text));
+		Assert.assertSame(text, Check.notNull(text, "textArg"));
+	}
 
 	@Test(expected = IllegalNullArgumentException.class)
 	public void notNull_withReference_isInvalid() {
