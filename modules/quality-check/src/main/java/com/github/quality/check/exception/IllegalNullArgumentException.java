@@ -54,7 +54,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 * representation.
 	 * 
 	 * @param name
-	 *            the URL to which no stream can be established
+	 *            the name of the argument which was null
 	 */
 	public IllegalNullArgumentException(final String name) {
 		super(format(name));
@@ -65,7 +65,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 * given name as string representation and cause.
 	 * 
 	 * @param name
-	 *            the URL to which no stream can be established
+	 *            the name of the argument which was null
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
