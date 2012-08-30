@@ -16,6 +16,8 @@
  ******************************************************************************/
 package com.github.quality.check.exception;
 
+import javax.annotation.Nullable;
+
 /**
  * Thrown to indicate that a method has been passed with a range as arguments.
  * 
@@ -81,7 +83,7 @@ public class IllegalRangeException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalRangeException(final int start, final int end, final int size, final Throwable cause) {
+	public IllegalRangeException(final int start, final int end, final int size, final @Nullable Throwable cause) {
 		super(format(start, end, size), cause);
 	}
 
@@ -92,7 +94,7 @@ public class IllegalRangeException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalRangeException(final Throwable cause) {
+	public IllegalRangeException(final  @Nullable Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 
