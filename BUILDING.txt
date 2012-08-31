@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-Building UADetector
+Building Quality-Check
 ============================
 
 Initial Setup
@@ -37,12 +37,12 @@ Initial Setup
 Building
 --------
 
-1) Change to the top level directory of UADetector source distribution.
+1) Change to the top level directory of Quality-Check source distribution.
 
 2) Run
          $> mvn package
-   This will compile UADetector and run all of the tests in the 
-   UADetector source distribution. Alternatively, you can run
+   This will compile Quality-Check and run all of the tests in the 
+   Qualiy-Check source distribution. 
    
    Depending on the load of remote Maven repositories, you may have 
    to run "mvn clean package" several times until the required dependencies are 
