@@ -39,6 +39,28 @@ public final class Check {
 	 * Ensures that a passed string as a parameter of the calling method is not empty.
 	 * 
 	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(String, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param reference
+	 *            a string reference which should not be empty
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static String notEmpty(final @Nullable String reference) {
+		notNull(reference);
+		notEmpty(reference, reference.isEmpty(), null);
+		return reference;
+	}
+
+	/**
+	 * Ensures that a passed string as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
 	 * The following example describes how to use it.
 	 * 
 	 * <pre>
@@ -247,6 +269,35 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
+	 * is not true
+	 * 
+	 * @param expression
+	 *            an expression that must be true to indicate a valid state
+	 * @param clazz
+	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
+	 * @throws a
+	 *             new instance of clazz if the given arguments caused an invalid state
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
+		Check.notNull(clazz);
+
+		if (!expression) {
+			RuntimeException re;
+			try {
+				re = clazz.newInstance();
+			} catch (final InstantiationException e) {
+				throw new RuntimeException(e);
+			} catch (final IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+
+			throw re;
+		}
+	}
+
+	/**
 	 * Ensures that a given state is true
 	 * 
 	 * @param expression
@@ -278,35 +329,6 @@ public final class Check {
 			final Object... descriptionTemplateArgs) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);
-		}
-	}
-
-	/**
-	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
-	 * is not true
-	 * 
-	 * @param expression
-	 *            an expression that must be true to indicate a valid state
-	 * @param clazz
-	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
-	 * @throws a
-	 *             new instance of clazz if the given arguments caused an invalid state
-	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
-	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
-		Check.notNull(clazz);
-
-		if (!expression) {
-			RuntimeException re;
-			try {
-				re = clazz.newInstance();
-			} catch (InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-
-			throw re;
 		}
 	}
 

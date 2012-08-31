@@ -206,8 +206,21 @@ public class CheckTest {
 		Check.range(1, 1, 1);
 	}
 
+	@Test
+	public void notEmpty_checkReferenceIsSame_withString() {
+		final String text = "beer tastes good";
+		Assert.assertSame(text, Check.notEmpty(text));
+		Assert.assertSame(text, Check.notEmpty(text, "text"));
+	}
+
 	@Test(expected = IllegalEmptyArgumentException.class)
-	public void notEmpty_emptyText_withArgName_isValid() {
+	public void notEmpty_emptyText_isInvalid() {
+		final String text = "";
+		Check.notEmpty(text);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyText_withArgName_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text, "text");
 	}
@@ -230,7 +243,12 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
-	public void notEmpty_withNullReference_withArgName_isValid() {
+	public void notEmpty_withNullReference_isInvalid() {
+		Check.notEmpty((String) null);
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notEmpty_withNullReference_withArgName_isInvalid() {
 		Check.notEmpty(null, "text");
 	}
 
