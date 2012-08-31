@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 /**
  * Thrown to indicate that a method has been passed with an array or a collection
- * which contains a <code>null</code> element. 
+ * which contains a {@code null} element. 
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -29,12 +29,12 @@ public class IllegalNullElementsException extends RuntimeException {
 	private static final long serialVersionUID = -1957077437070375885L;
 
 	/**
-	 * Default message to indicate that a given array or collection argument must not contain null.
+	 * Default message to indicate that a given array or collection argument must not contain {@code null}.
 	 */
 	protected static final String DEFAULT_MESSAGE = "The passed argument must not contain null.";
 
 	/**
-	 * Message to indicate that the the given array or collection argument with <em>name</em> must not contain null.
+	 * Message to indicate that the the given array or collection argument with <em>name</em> must not contain {@code null}.
 	 */
 	protected static final String MESSAGE_WITH_NAME = "The passed argument '%s' must not contain null.";
 
