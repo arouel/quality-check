@@ -88,7 +88,7 @@ at FindBugs™ JSR-305 support.
 		<!-- Maven Plugins -->
 		<build-helper-maven-plugin.version>1.7</build-helper-maven-plugin.version>
 		<cobertura-maven-plugin.version>2.5.1</cobertura-maven-plugin.version>
-		<findbugs-maven-plugin.version>2.5.1</findbugs-maven-plugin.version>
+		<findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<maven-assembly-plugin.version>2.3</maven-assembly-plugin.version>
 		<maven-changelog-plugin.version>2.2</maven-changelog-plugin.version>
