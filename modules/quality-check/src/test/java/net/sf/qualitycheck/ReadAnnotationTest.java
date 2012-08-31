@@ -1,4 +1,4 @@
-package com.github.quality.check;
+package net.sf.qualitycheck;
 
 import java.lang.reflect.Method;
 
@@ -12,7 +12,7 @@ public class ReadAnnotationTest {
 
 	@Test
 	public void read() throws Exception {
-		for (final Method m : Class.forName("com.github.quality.check.Check").getMethods()) {
+		for (final Method m : Class.forName("net.sf.qualitycheck.Check").getMethods()) {
 			if (m.isAnnotationPresent(ArgumentsChecked.class)) {
 				LOG.info("Analyzing: " + m.toGenericString());
 				final Class<? extends Throwable>[] throwsExceptions = m.getAnnotation(ArgumentsChecked.class).value();

@@ -14,24 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.github.quality.check;
+package net.sf.qualitycheck;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalNullElementsException;
+import net.sf.qualitycheck.exception.IllegalPositionIndexException;
+import net.sf.qualitycheck.exception.IllegalRangeException;
+import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.quality.check.exception.IllegalEmptyArgumentException;
-import com.github.quality.check.exception.IllegalNullArgumentException;
-import com.github.quality.check.exception.IllegalNullElementsException;
-import com.github.quality.check.exception.IllegalPositionIndexException;
-import com.github.quality.check.exception.IllegalRangeException;
-import com.github.quality.check.exception.IllegalStateOfArgumentException;
 
 /**
- * Modul Test for the class {@link com.github.quality.check.Check}
+ * Modul Test for the class {@link net.sf.qualitycheck.Check}
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -366,7 +367,7 @@ public class CheckTest {
 	@Test(expected = java.lang.IllegalAccessException.class)
 	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
-		final Class<?> cls = Class.forName("com.github.quality.check.Check");
+		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
 	}
 }

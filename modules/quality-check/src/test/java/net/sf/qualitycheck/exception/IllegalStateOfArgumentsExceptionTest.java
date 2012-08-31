@@ -1,4 +1,4 @@
-package com.github.quality.check.exception;
+package net.sf.qualitycheck.exception;
 
 import org.junit.Assert;
 import org.junit.Test;

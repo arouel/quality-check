@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.github.quality.check;
+package net.sf.qualitycheck;
 
 import java.util.Collection;
 
@@ -22,12 +22,13 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.github.quality.check.exception.IllegalEmptyArgumentException;
-import com.github.quality.check.exception.IllegalNullArgumentException;
-import com.github.quality.check.exception.IllegalNullElementsException;
-import com.github.quality.check.exception.IllegalPositionIndexException;
-import com.github.quality.check.exception.IllegalRangeException;
-import com.github.quality.check.exception.IllegalStateOfArgumentException;
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalNullElementsException;
+import net.sf.qualitycheck.exception.IllegalPositionIndexException;
+import net.sf.qualitycheck.exception.IllegalRangeException;
+import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
+
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
