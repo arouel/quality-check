@@ -19,6 +19,7 @@ package com.github.quality.check;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
@@ -205,11 +206,45 @@ public class CheckTest {
 		Check.range(1, 1, 1);
 	}
 
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyText_withArgName_isValid() {
+		final String text = "";
+		Check.notEmpty(text, "text");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_withEmptyReference_isEmpty_withArgName_isInvalid() {
+		final String text = "";
+		Check.notEmpty(text, text.isEmpty(), "text");
+	}
+
+	@Test
+	public void notEmpty_withFilledReference_notEmpty_withArgName_isValid() {
+		final String text = "strawberries tastes also good";
+		Assert.assertSame(text, Check.notEmpty(text, text.isEmpty(), "text"));
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notEmpty_withNullReference_isEmpty_withArgName_isInvalid() {
+		Check.notEmpty(null, true, "argName");
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void notEmpty_withNullReference_withArgName_isValid() {
+		Check.notEmpty(null, "text");
+	}
+
+	@Test
+	public void notEmpty_withText_withArgName_isValid() {
+		final String text = "strawberries tastes also good";
+		Assert.assertSame(text, Check.notEmpty(text, "text"));
+	}
+
 	@Test
 	public void notNull_checkReferenceIsSame() {
 		final String text = "beer tastes good";
 		Assert.assertSame(text, Check.notNull(text));
-		Assert.assertSame(text, Check.notNull(text, "textArg"));
+		Assert.assertSame(text, Check.notNull(text, "text"));
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)

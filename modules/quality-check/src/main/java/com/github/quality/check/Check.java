@@ -20,7 +20,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.github.quality.check.ArgumentsChecked.Throws;
 import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalPositionIndexException;
@@ -34,6 +33,36 @@ import com.github.quality.check.exception.IllegalStateOfArgumentException;
  * @author Dominik Seichter
  */
 public final class Check {
+
+	/**
+	 * Ensures that a passed string as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * The following example describes how to use it.
+	 * 
+	 * <pre>
+	 * &#064;ArgumentsChecked
+	 * public setText(String text) {
+	 * 	this.text = Check.notEmpty(text, &quot;text&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * @param reference
+	 *            a string reference which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static String notEmpty(final @Nullable String reference, final @Nullable String name) {
+		notNull(reference, name);
+		notEmpty(reference, reference.isEmpty(), name);
+		return reference;
+	}
 
 	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not empty. The passed boolean
@@ -63,8 +92,7 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T notEmpty(final @Nullable T reference, final boolean expression, final @Nullable String name) {
 		notNull(reference, name);
 		if (expression) {
@@ -175,7 +203,6 @@ public final class Check {
 		}
 	}
 
-
 	/**
 	 * Ensures that a given state is true
 	 * 
@@ -222,7 +249,7 @@ public final class Check {
 	 * @throws a
 	 *             new instance of clazz if the given arguments caused an invalid state
 	 */
-	@ArgumentsChecked
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
 		Check.notNull(clazz);
 
