@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalNullElementsException;
 import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
@@ -211,6 +212,48 @@ public final class Check {
 			throw new IllegalNullArgumentException(name);
 		}
 		return reference;
+	}
+
+	/**
+	 * Ensures that an array does not contain {@code null}.
+	 * 
+	 * @param array
+	 *            reference to an array
+	 * 
+	 * @throws IllegalNullElementsException
+	 *             if the given argument {@code array} contains {@code null}
+	 */
+	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
+	public static void noNullElements(final @Nullable Object[] array) {
+		Check.notNull(array);
+
+		for (final Object o : array) {
+			if (o == null) {
+				throw new IllegalNullElementsException();
+			}
+		}
+	}
+
+	/**
+	 * Ensures that an array does not contain {@code null}.
+	 * 
+	 * @param array
+	 *            reference to an array
+	 * @param name
+	 *            name of object reference (in source code)
+	 * 
+	 * @throws IllegalNullElementsException
+	 *             if the given argument {@code array} contains {@code null}
+	 */
+	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
+	public static void noNullElements(final @Nullable Object[] array, final @Nullable String name) {
+		Check.notNull(array);
+
+		for (final Object o : array) {
+			if (o == null) {
+				throw new IllegalNullElementsException(name);
+			}
+		}
 	}
 
 	/**

@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
+import com.github.quality.check.exception.IllegalNullElementsException;
 import com.github.quality.check.exception.IllegalPositionIndexException;
 import com.github.quality.check.exception.IllegalRangeException;
 import com.github.quality.check.exception.IllegalStateOfArgumentException;
@@ -327,5 +328,45 @@ public class CheckTest {
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("com.github.quality.check.Check");
 		cls.newInstance(); // exception here
+	}
+	
+	@Test
+	public void noNullElements_emptyArray_ok() {
+		Check.noNullElements(new Object[] {} );
+	}
+	
+	@Test
+	public void noNullElements_stringArray_ok() {
+		Check.noNullElements(new String[] {"Hello", "World"} );
+	}
+	
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyArray_fail() {
+		Check.noNullElements(new String[] {null} );
+	}
+	
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtEndArray_fail() {
+		Check.noNullElements(new Integer[] {1, 2, 3, 4, null} );
+	}
+	
+	@Test
+	public void noNullElements_emptyArrayWithName_ok() {
+		Check.noNullElements(new Object[] {}, "obj" );
+	}
+	
+	@Test
+	public void noNullElements_stringArrayWithName_ok() {
+		Check.noNullElements(new String[] {"Hello", "World"}, "obj" );
+	}
+	
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyArrayWithName_fail() {
+		Check.noNullElements(new String[] {null}, "obj" );
+	}
+	
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtEndArrayWithName_fail() {
+		Check.noNullElements(new Integer[] {1, 2, 3, 4, null}, "obj");
 	}
 }
