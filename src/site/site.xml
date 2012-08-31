@@ -32,6 +32,8 @@
 
 	</body>
 
+	<googleAnalyticsAccountId>UA-34496927-1</googleAnalyticsAccountId>
+
 	<custom>
 		<fluidoSkin>
 			<gitHub>
@@ -39,6 +41,7 @@
 				<ribbonOrientation>right</ribbonOrientation>
 				<ribbonColor>black</ribbonColor>
 			</gitHub>
+			<googleAnalytics />
 			<googlePlusOne />
 			<googleSearch>
 				<sitesearch />
