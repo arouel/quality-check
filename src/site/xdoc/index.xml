@@ -22,7 +22,11 @@
 				earlier. For more informations look at FindBugs™ JSR-305 support.
 			</p>
 			<p>
-				We noticed that many projects just copy org.springframework.util.Assert or com.google.common.base.Preconditions to
+				We noticed that many projects just copy
+				<a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">org.springframework.util.Assert</a>
+				or
+				<a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">com.google.common.base.Preconditions</a>
+				to
 				get
 				access to these quality checks. Therefore we provide these features and small library that can be included in any
 				application without big overhead.
@@ -31,7 +35,8 @@
 		<section name="Why is it called check and not assertion?">
 			<p>We think that checks of method arguments are not only assertion tests it's more over a condition to work properly.
 				More over it supports you to write faster contracts for your methods and classes. If nothing of this package make
-				sense look at the concept design by contract.
+				sense look at the concept
+				<a href="http://en.wikipedia.org/wiki/Design_by_contract"><em>design by contract</em></a>.
 			</p>
 		</section>
 		<section name="Example">
@@ -47,8 +52,7 @@ setObject(final Object object) {
 		throw new IllegalArgumentException("Argument 'object' must not be null.");
 	}
 	this.object = object;
-}			
-			]]></source>
+}]]></source>
 			<p>
 				can be replaces by:
 			</p>
@@ -59,48 +63,64 @@ setObject(final Object object) {
 @ArgumentsChecked
 setObject(final Object object) {
 	this.object = Check.notNull(object);
-}
-			]]></source>
+}]]></source>
 		</section>
-		<section name="Wy use Quality-Checks for your method parameters?">
+		<section name="Why use Quality-Checks for your method parameters?">
 			<p>
-				Quality-Check brings several advantages to your project. If used extensivel throughout your codebase, 
-				you will benefit from the following points. We will outline each one in a short paragraph below.
-			</p>    
-		    <ul>
-		        <li>Prevent technical errors due to invalid input parameters</li>
-		        <li>Detect errors early, where they occur</li>
-		        <li>Do not waste time by writing useless test to cover error detection branches</li>
-		        <li>No need to document exceptions thrown because of invalid method arguments</li>
-		    </ul>
-		    <subsection name="Prevent errors">
-		        <p>
-			        Quality-Checks to check the input arguments of a method, such as <code>Check.isNull(object)</code> or
-			        <code>Check.positionIndex(4, myList.size())</code>  
-			        should be applied to every argument of every public method in your class, service or component. Why is that? 
-			        If you check all arguments as soon as they are passed to your code, you do not need to deal with invalid argument values
-			        through the rest of your component or class. For example, if every public method ensures that no <code>null</code> values
-			        are passed to the class, you do not have to  care about <code>null</code> values in your private methods.
-		        </p>
-		        <p>
-		            Therefore, Quality-Checks assist you in preventing <b>technical</b> errors in your classes, because they only have to work with valid arguments.
-		        </p>
-		    </subsection>
-		    <subsection name="Detect errors early">
-		        <p>
-		            Often, in Java development, you have to deal with <code>NullPointerExceptions</code> or other faults which can be tracked back to invalid values
-		            passed to methods and handed further down till they crash in your code. Sometimes it is hard to trace down where the invalid value came from. 
-		            To identify invalid values as soon as possible and detect errors where they occur, we suggest to guard every public method with Quality-Checks.
-		        </p>
-		        <p>
-		            Using quality checks, erronous input arguments are identified, as soon as they are passed to your component.
-		        </p>
-		    </subsection>
+				<em>Quality-Check</em> brings several advantages to your project. If used extensivel throughout your codebase, you will benefit from the
+				following points. We will outline each one in a short paragraph below.
+			</p>
+			<ul>
+				<li>Prevent technical errors due to invalid input parameters</li>
+				<li>Detect errors early, where they occur</li>
+				<li>Do not waste time by writing useless test to cover error detection branches</li>
+				<li>No need to document exceptions thrown because of invalid method arguments</li>
+			</ul>
+			<subsection name="Prevent errors">
+				<p>
+					<em>Quality-Checks</em> to check the input arguments of a method, such as
+					<code>Check.isNull(object)</code>
+					or
+					<code>Check.positionIndex(4, myList.size())</code>
+					should be applied to every argument of every public method in your class, service or component. Why is that?
+					If you
+					check all arguments as soon as they are passed to your code, you do not need to deal with invalid argument
+					values
+					through the rest of your component or class. For example, if every public method ensures that no
+					<code>null</code>
+					values
+					are passed to the class, you do not have to care about
+					<code>null</code>
+					values in your private methods.
+				</p>
+				<p>
+					Therefore, <em>Quality-Checks</em> assist you in preventing
+					<b>technical</b>
+					errors in your classes, because they only have to work with valid arguments.
+				</p>
+			</subsection>
+			<subsection name="Detect errors early">
+				<p>
+					Often, in Java development, you have to deal with
+					<code>NullPointerExceptions</code>
+					or other faults which can be tracked back to invalid values
+					passed to methods and handed further down till they
+					crash in your code. Sometimes it is hard to trace down where the
+					invalid value came from.
+					To identify invalid values
+					as soon as possible and detect errors where they occur, we suggest to guard every public
+					method with <em>Quality-Checks</em>.
+				</p>
+				<p>
+					Using quality checks, erroneous input arguments are identified, as soon as they are passed to your component.
+				</p>
+			</subsection>
 			<subsection name="Avoid useless tests">
-			    <p>
-			        If you add checks for method arguments manually, you will notice that you have to write additional tests using invalid method arguments to cover
-			        these branches. One example for a manual check is here:
-			    </p>
+				<p>
+					If you add checks for method arguments manually, you will notice that you have to write additional tests using
+					invalid method arguments to cover
+					these branches. One example for a manual check is here:
+				</p>
 				<source><![CDATA[
 void doSomething(final List<String> list) {
 	if( list == null ) {
@@ -112,12 +132,17 @@ void doSomething(final List<String> list) {
 }
 				]]></source>
 				<p>
-			    	In this example, you would have to write two additional tests (one with a null list and one with an empty list), just to test these to branches - 
-			    	or, if you do not, your branch coverage will go down.
-				</p>    
+					In this example, you would have to write two additional tests (one with a null list and one with an empty list),
+					just
+					to test these to branches -
+					or, if you do not, your branch coverage will go down.
+				</p>
 				<p>
-				    Quality-Checks will save you from doing so! As calls to <code>Check.*</code> are method calls you will cover them in any test automatically. We make sure 
-				    that Quality-Check works, so that you do not have to test it. See the example below:
+					<em>Quality-Checks</em> will save you from doing so! As calls to
+					<code>Check.*</code>
+					are method calls you will cover them in any test automatically. We make sure
+					that <em>Quality-Check</em> works, so that you
+					do not have to test it. See the example below:
 				</p>
 				<source><![CDATA[
 @ArgumentsChecked
@@ -125,13 +150,14 @@ void doSomething(final List<String> list) {
    	Check.isNull(list, "list");
 	Check.isEmpty(list, "list");
 }
-				]]></source>				
+				]]></source>
 			</subsection>
 			<subsection name="No need to write documentation for technical error cases">
 				<p>
-				    Similar to the example of the branch coverage, you also write a lot of JavaDoc documentation for exceptions thrown in your
-				    methods, which check for illegal input parameters. 
-				</p>			    
+					Similar to the example of the branch coverage, you also write a lot of JavaDoc documentation for exceptions
+					thrown in your
+					methods, which check for illegal input parameters.
+				</p>
 				<source><![CDATA[
 /**
  * Method does something.
@@ -149,12 +175,17 @@ void doSomething(final List<String> list) {
 }
 				]]></source>
 				<p>
-				    As quality check throws the exceptions and your code does not there is no need for you to document these exceptions. You can focus
-				    on the real important documentation of exceptions which might be thrown by business logic. To show the caller of the method that
-				    quality-checks are in place and certain exceptions might be thrown, we add an <code>@ArgumentsChecked</code> annotation.
+					As quality check throws the exceptions and your code does not there is no need for you to document these
+					exceptions. You can focus
+					on the real important documentation of exceptions which might be thrown by business logic.
+					To show the caller of the
+					method that
+					quality-checks are in place and certain exceptions might be thrown, we add an
+					<code>@ArgumentsChecked</code>
+					annotation.
 				</p>
 			</subsection>
-   		</section>
+		</section>
 		<section name="Contribute">
 			<ul>
 				<li>
