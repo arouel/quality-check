@@ -10,10 +10,13 @@
 
 		<section name="What is Quality-Check?">
 			<p>
-				The goal of quality-check is to provide a small Java library for basic runtime code quality checks. It provides
-				similar features to org.springframework.util.Assert or com.google.common.base.Preconditions without the need to
-				include big libraries or frameworks such as Spring or Guava. The package quality-check tries to replace these
-				libraries and provide all the basic code quality checks you need.
+				The goal of quality-check is to provide a small Java library for basic runtime code quality checks. It provides similar
+				features to
+				<code>org.springframework.util.Assert</code> <a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
+				or
+				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
+				without the need to include big libraries or frameworks such as Spring or Guava. The package quality-check tries to
+				replace these libraries and provide all the basic code quality checks you need.
 			</p>
 			<p>
 				The checks provided here are typically used to validate method parameters and detect errors during runtime. To
@@ -23,13 +26,11 @@
 			</p>
 			<p>
 				We noticed that many projects just copy
-				<a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">org.springframework.util.Assert</a>
+				<code>org.springframework.util.Assert</code>
 				or
-				<a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">com.google.common.base.Preconditions</a>
-				to
-				get
-				access to these quality checks. Therefore we provide these features and small library that can be included in any
-				application without big overhead.
+				<code>com.google.common.base.Preconditions</code>
+				to get access to these quality checks. Therefore we provide these features and a small library that can be included in
+				any application without big overhead.
 			</p>
 		</section>
 		<section name="Why is it called check and not assertion?">
