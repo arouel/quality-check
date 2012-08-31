@@ -41,6 +41,15 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  * 
+ * <p>
+ * Additionally it can be documented which exceptions may occur if given parameters are invalid.
+ * 
+ * <pre>
+ * &#064;ArgumentsChecked(IllegalNullArgumentException.class)
+ * public void validate(Object o) {
+ * 	Check.notNull(o);
+ * }
+ * </pre>
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -50,18 +59,8 @@ import java.lang.annotation.Target;
 public @interface ArgumentsChecked {
 
 	/**
-	 * The <code>Throws</code> annotation specifies the classes that will be thrown when one ore more arguments are not
-	 * valid.
+	 * @return the classes that can be thrown
 	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@Target(ElementType.METHOD)
-	public @interface Throws {
-
-		/**
-		 * @return the classes that can be thrown
-		 */
-		public Class<? extends Throwable>[] value();
-
-	}
+	public Class<? extends Throwable>[] value();
 
 }

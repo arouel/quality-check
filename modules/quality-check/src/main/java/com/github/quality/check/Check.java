@@ -20,7 +20,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.github.quality.check.ArgumentsChecked.Throws;
 import com.github.quality.check.exception.IllegalEmptyArgumentException;
 import com.github.quality.check.exception.IllegalNullArgumentException;
 import com.github.quality.check.exception.IllegalPositionIndexException;
@@ -58,8 +57,7 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static String notEmpty(final @Nullable String reference, final @Nullable String name) {
 		notNull(reference, name);
 		notEmpty(reference, reference.isEmpty(), name);
@@ -94,8 +92,7 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T notEmpty(final @Nullable T reference, final boolean expression, final @Nullable String name) {
 		notNull(reference, name);
 		if (expression) {
@@ -206,7 +203,6 @@ public final class Check {
 		}
 	}
 
-
 	/**
 	 * Ensures that a given state is true
 	 * 
@@ -253,7 +249,7 @@ public final class Check {
 	 * @throws a
 	 *             new instance of clazz if the given arguments caused an invalid state
 	 */
-	@ArgumentsChecked
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
 		Check.notNull(clazz);
 
