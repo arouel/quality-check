@@ -129,8 +129,7 @@ void doSomething(final List<String> list) {
 	if( list.isEmpty() ) {
 		throw new IllegalArgumentException("Argument 'list' must not be empty.");
 	}
-}
-				]]></source>
+}]]></source>
 				<p>
 					In this example, you would have to write two additional tests (one with a null list and one with an empty list),
 					just
@@ -149,8 +148,7 @@ void doSomething(final List<String> list) {
 void doSomething(final List<String> list) {
    	Check.isNull(list, "list");
 	Check.isEmpty(list, "list");
-}
-				]]></source>
+}]]></source>
 			</subsection>
 			<subsection name="No need to write documentation for technical error cases">
 				<p>
@@ -172,8 +170,7 @@ void doSomething(final List<String> list) {
 	if( list.isEmpty() ) {
 		throw new AnotherIllegalArgumentException("Argument 'list' must not be empty.");
 	}
-}
-				]]></source>
+}]]></source>
 				<p>
 					As quality check throws the exceptions and your code does not there is no need for you to document these
 					exceptions. You can focus
