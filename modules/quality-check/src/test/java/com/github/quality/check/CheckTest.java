@@ -16,6 +16,10 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -214,15 +218,43 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
-	public void notEmpty_emptyText_isInvalid() {
+	public void notEmpty_emptyCollection_isInvalid() {
+		final Set<String> collection = new HashSet<String>();
+		Check.notEmpty(collection);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyCollection_withArgName_isInvalid() {
+		final Set<String> collection = new HashSet<String>();
+		Check.notEmpty(collection, "collection");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyString_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text);
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
-	public void notEmpty_emptyText_withArgName_isInvalid() {
+	public void notEmpty_emptyString_withArgName_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text, "text");
+	}
+
+	@Test
+	public void notEmpty_filledCollection_isValid() {
+		final Set<String> collection = new HashSet<String>();
+		collection.add("hmm, what a tasty ice cream");
+		final Set<String> nonEmptySet = Check.notEmpty(collection);
+		Assert.assertSame(collection, nonEmptySet);
+	}
+
+	@Test
+	public void notEmpty_filledCollection_withArgName_isValid() {
+		final Set<String> collection = new HashSet<String>();
+		collection.add("hmm, what a tasty ice cream");
+		final Set<String> nonEmptySet = Check.notEmpty(collection, "collection");
+		Assert.assertSame(collection, nonEmptySet);
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
@@ -238,6 +270,11 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
+	public void notEmpty_withNullCollection_withArgName_isInvalid() {
+		Check.notEmpty((Collection<?>) null, "text");
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
 	public void notEmpty_withNullReference_isEmpty_withArgName_isInvalid() {
 		Check.notEmpty(null, true, "argName");
 	}
@@ -248,8 +285,8 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
-	public void notEmpty_withNullReference_withArgName_isInvalid() {
-		Check.notEmpty(null, "text");
+	public void notEmpty_withNullString_withArgName_isInvalid() {
+		Check.notEmpty((String) null, "text");
 	}
 
 	@Test

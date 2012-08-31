@@ -16,6 +16,8 @@
  ******************************************************************************/
 package com.github.quality.check;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -87,6 +89,28 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed collection as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param collection
+	 *            a collection which should not be empty
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Collection<?>> T notEmpty(final @Nullable T collection) {
+		notNull(collection);
+		notEmpty(collection, collection.isEmpty(), null);
+		return collection;
+	}
+
+	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not empty. The passed boolean
 	 * value is the result of checking whether the reference is empty or not.
 	 * 
@@ -121,6 +145,36 @@ public final class Check {
 			throw new IllegalEmptyArgumentException(name);
 		}
 		return reference;
+	}
+
+	/**
+	 * Ensures that a passed collection as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * The following example describes how to use it.
+	 * 
+	 * <pre>
+	 * &#064;ArgumentsChecked
+	 * public setCollection(Collection&lt;String&gt; collection) {
+	 * 	this.collection = Check.notEmpty(collection, &quot;collection&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * @param collection
+	 *            a collection which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Collection<?>> T notEmpty(final @Nullable T collection, final @Nullable String name) {
+		notNull(collection, name);
+		notEmpty(collection, collection.isEmpty(), name);
+		return collection;
 	}
 
 	/**
