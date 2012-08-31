@@ -7,7 +7,7 @@
 	<body>
 
 		<breadcrumbs>
-			<item name="Quality-Check" href="https://github.com/before/quality-check/" />
+			<item name="Quality-Check" href="http://qualitycheck.sourceforge.net/" />
 		</breadcrumbs>
 
 		<menu name="Overview">
