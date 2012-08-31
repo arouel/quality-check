@@ -54,7 +54,7 @@ import java.lang.annotation.Target;
  * @author André Rouél
  * @author Dominik Seichter
  */
-@Retention(value = RetentionPolicy.SOURCE)
+@Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)
 public @interface ArgumentsChecked {
 

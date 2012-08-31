@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * <p>
  * This annotation is only intended for internal use.
  */
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @interface Throws {
 
