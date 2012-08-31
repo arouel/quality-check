@@ -212,6 +212,46 @@ public class CheckTest {
 	}
 
 	@Test
+	public void noNullElements_emptyArray_ok() {
+		Check.noNullElements(new Object[] {});
+	}
+
+	@Test
+	public void noNullElements_emptyArrayWithName_ok() {
+		Check.noNullElements(new Object[] {}, "obj");
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtEndArray_fail() {
+		Check.noNullElements(new Integer[] { 1, 2, 3, 4, null });
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtEndArrayWithName_fail() {
+		Check.noNullElements(new Integer[] { 1, 2, 3, 4, null }, "obj");
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyArray_fail() {
+		Check.noNullElements(new String[] { null });
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyArrayWithName_fail() {
+		Check.noNullElements(new String[] { null }, "obj");
+	}
+
+	@Test
+	public void noNullElements_stringArray_ok() {
+		Check.noNullElements(new String[] { "Hello", "World" });
+	}
+
+	@Test
+	public void noNullElements_stringArrayWithName_ok() {
+		Check.noNullElements(new String[] { "Hello", "World" }, "obj");
+	}
+
+	@Test
 	public void notEmpty_checkReferenceIsSame_withString() {
 		final String text = "beer tastes good";
 		Assert.assertSame(text, Check.notEmpty(text));
@@ -328,45 +368,5 @@ public class CheckTest {
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("com.github.quality.check.Check");
 		cls.newInstance(); // exception here
-	}
-	
-	@Test
-	public void noNullElements_emptyArray_ok() {
-		Check.noNullElements(new Object[] {} );
-	}
-	
-	@Test
-	public void noNullElements_stringArray_ok() {
-		Check.noNullElements(new String[] {"Hello", "World"} );
-	}
-	
-	@Test(expected = IllegalNullElementsException.class)
-	public void noNullElements_nullOnlyArray_fail() {
-		Check.noNullElements(new String[] {null} );
-	}
-	
-	@Test(expected = IllegalNullElementsException.class)
-	public void noNullElements_nullAtEndArray_fail() {
-		Check.noNullElements(new Integer[] {1, 2, 3, 4, null} );
-	}
-	
-	@Test
-	public void noNullElements_emptyArrayWithName_ok() {
-		Check.noNullElements(new Object[] {}, "obj" );
-	}
-	
-	@Test
-	public void noNullElements_stringArrayWithName_ok() {
-		Check.noNullElements(new String[] {"Hello", "World"}, "obj" );
-	}
-	
-	@Test(expected = IllegalNullElementsException.class)
-	public void noNullElements_nullOnlyArrayWithName_fail() {
-		Check.noNullElements(new String[] {null}, "obj" );
-	}
-	
-	@Test(expected = IllegalNullElementsException.class)
-	public void noNullElements_nullAtEndArrayWithName_fail() {
-		Check.noNullElements(new Integer[] {1, 2, 3, 4, null}, "obj");
 	}
 }
