@@ -348,9 +348,9 @@ public class CheckTest {
 
 	@Test
 	public void notEmpty_filledMap_withArgName_isValid() {
-		final Set<String> map = new HashSet<String>();
-		map.add("we like immutables");
-		final Set<String> nonEmptyMap = Check.notEmpty(map, "map");
+		final Map<String, String> map = new HashMap<String, String>();
+		map.put("drink", "water");
+		final Map<String, String> nonEmptyMap = Check.notEmpty(map, "map");
 		Assert.assertSame(map, nonEmptyMap);
 	}
 
