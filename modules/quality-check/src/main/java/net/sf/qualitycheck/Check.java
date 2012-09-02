@@ -51,10 +51,8 @@ public final class Check {
 	public static void noNullElements(final @Nullable Object[] array) {
 		Check.notNull(array);
 
-		for (final Object o : array) {
-			if (o == null) {
-				throw new IllegalNullElementsException();
-			}
+		if (containsNullElements(array)) {
+			throw new IllegalNullElementsException();
 		}
 	}
 
@@ -73,11 +71,29 @@ public final class Check {
 	public static void noNullElements(final @Nullable Object[] array, final @Nullable String name) {
 		Check.notNull(array);
 
+		if (containsNullElements(array)) {
+			throw new IllegalNullElementsException(name);
+		}
+	}
+
+	/**
+	 * Checks if the given array contains {@code null}.
+	 * 
+	 * @param array
+	 *            reference to an array
+	 * @return {@code true} if the array contains {@code null}, otherwise {@code false}
+	 * 
+	 */
+	private static boolean containsNullElements(final @Nullable Object[] array) {
+		boolean containsNull = false;
 		for (final Object o : array) {
 			if (o == null) {
-				throw new IllegalNullElementsException(name);
+				containsNull = true;
+				break;
 			}
 		}
+
+		return containsNull;
 	}
 
 	/**
