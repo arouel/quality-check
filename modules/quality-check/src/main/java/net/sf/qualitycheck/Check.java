@@ -39,6 +39,25 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 public final class Check {
 
 	/**
+	 * Checks if the given array contains {@code null}.
+	 * 
+	 * @param array
+	 *            reference to an array
+	 * @return {@code true} if the array contains {@code null}, otherwise {@code false}
+	 * 
+	 */
+	private static boolean containsNullElements(final @Nullable Object[] array) {
+		boolean containsNull = false;
+		for (final Object o : array) {
+			if (o == null) {
+				containsNull = true;
+				break;
+			}
+		}
+		return containsNull;
+	}
+
+	/**
 	 * Ensures that an array does not contain {@code null}.
 	 * 
 	 * @param array
@@ -74,26 +93,6 @@ public final class Check {
 		if (containsNullElements(array)) {
 			throw new IllegalNullElementsException(name);
 		}
-	}
-
-	/**
-	 * Checks if the given array contains {@code null}.
-	 * 
-	 * @param array
-	 *            reference to an array
-	 * @return {@code true} if the array contains {@code null}, otherwise {@code false}
-	 * 
-	 */
-	private static boolean containsNullElements(final @Nullable Object[] array) {
-		boolean containsNull = false;
-		for (final Object o : array) {
-			if (o == null) {
-				containsNull = true;
-				break;
-			}
-		}
-
-		return containsNull;
 	}
 
 	/**
