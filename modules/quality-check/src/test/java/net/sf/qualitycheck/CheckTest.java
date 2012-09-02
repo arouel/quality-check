@@ -16,6 +16,7 @@
  ******************************************************************************/
 package net.sf.qualitycheck;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -211,6 +212,14 @@ public class CheckTest {
 		Check.range(0, 0, 1);
 		Check.range(0, 1, 1);
 		Check.range(1, 1, 1);
+	}
+
+	@Test
+	public void giveMeCoverageForMyPrivateConstructor() throws Exception {
+		// reduces only some noise in coverage report
+		final Constructor<Check> constructor = Check.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		constructor.newInstance();
 	}
 
 	@Test
@@ -425,4 +434,5 @@ public class CheckTest {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
 	}
+
 }
