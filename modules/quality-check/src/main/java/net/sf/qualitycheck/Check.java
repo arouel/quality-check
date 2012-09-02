@@ -434,8 +434,8 @@ public final class Check {
 	 *            an expression that must be true to indicate a valid state
 	 * @param clazz
 	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
-	 * @throws a
-	 *             new instance of clazz if the given arguments caused an invalid state
+	 * @throws clazz
+	 *             a new instance of {@code clazz} if the given arguments caused an invalid state
 	 */
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
