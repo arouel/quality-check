@@ -17,6 +17,7 @@
 package net.sf.qualitycheck;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -28,7 +29,6 @@ import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
-
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
@@ -87,7 +87,7 @@ public final class Check {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(String, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
-	 * @param reference
+	 * @param string
 	 *            a string reference which should not be empty
 	 * @return the passed reference that is not empty
 	 * @throws IllegalNullArgumentException
@@ -96,10 +96,10 @@ public final class Check {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static String notEmpty(final @Nullable String reference) {
-		notNull(reference);
-		notEmpty(reference, reference.isEmpty(), null);
-		return reference;
+	public static String notEmpty(final @Nullable String string) {
+		notNull(string);
+		notEmpty(string, string.isEmpty(), null);
+		return string;
 	}
 
 	/**
@@ -115,21 +115,21 @@ public final class Check {
 	 * }
 	 * </pre>
 	 * 
-	 * @param reference
+	 * @param string
 	 *            a string reference which should not be empty
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the passed reference that is not empty
 	 * @throws IllegalNullArgumentException
-	 *             if the given argument {@code reference} is {@code null}
+	 *             if the given argument {@code string} is {@code null}
 	 * @throws IllegalEmptyArgumentException
-	 *             if the given argument {@code reference} is empty
+	 *             if the given argument {@code string} is empty
 	 */
 	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static String notEmpty(final @Nullable String reference, final @Nullable String name) {
-		notNull(reference, name);
-		notEmpty(reference, reference.isEmpty(), name);
-		return reference;
+	public static String notEmpty(final @Nullable String string, final @Nullable String name) {
+		notNull(string, name);
+		notEmpty(string, string.isEmpty(), name);
+		return string;
 	}
 
 	/**
@@ -143,15 +143,37 @@ public final class Check {
 	 *            a collection which should not be empty
 	 * @return the passed reference that is not empty
 	 * @throws IllegalNullArgumentException
-	 *             if the given argument {@code reference} is {@code null}
+	 *             if the given argument {@code collection} is {@code null}
 	 * @throws IllegalEmptyArgumentException
-	 *             if the given argument {@code reference} is empty
+	 *             if the given argument {@code collection} is empty
 	 */
 	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(final @Nullable T collection) {
 		notNull(collection);
 		notEmpty(collection, collection.isEmpty(), null);
 		return collection;
+	}
+
+	/**
+	 * Ensures that a passed map as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param map
+	 *            a map which should not be empty
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code map} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code map} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Map<?, ?>> T notEmpty(final @Nullable T map) {
+		notNull(map);
+		notEmpty(map, map.isEmpty(), null);
+		return map;
 	}
 
 	/**
@@ -192,6 +214,30 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed map as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param map
+	 *            a map which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code map} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code map} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Map<?, ?>> T notEmpty(final @Nullable T map, final @Nullable String name) {
+		notNull(map);
+		notEmpty(map, map.isEmpty(), name);
+		return map;
+	}
+
+	/**
 	 * Ensures that a passed collection as a parameter of the calling method is not empty.
 	 * 
 	 * <p>
@@ -210,15 +256,57 @@ public final class Check {
 	 *            name of object reference (in source code)
 	 * @return the passed reference that is not empty
 	 * @throws IllegalNullArgumentException
-	 *             if the given argument {@code reference} is {@code null}
+	 *             if the given argument {@code collection} is {@code null}
 	 * @throws IllegalEmptyArgumentException
-	 *             if the given argument {@code reference} is empty
+	 *             if the given argument {@code collection} is empty
 	 */
 	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(final @Nullable T collection, final @Nullable String name) {
 		notNull(collection, name);
 		notEmpty(collection, collection.isEmpty(), name);
 		return collection;
+	}
+
+	/**
+	 * Ensures that a passed map as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(Object[], String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param array
+	 *            a map which should not be empty
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code array} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code array} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T> T[] notEmpty(final @Nullable T[] array) {
+		notNull(array);
+		notEmpty(array, array.length == 0, null);
+		return array;
+	}
+
+	/**
+	 * Ensures that a passed map as a parameter of the calling method is not empty.
+	 * 
+	 * @param array
+	 *            a map which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code array} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code array} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T> T[] notEmpty(final @Nullable T[] array, final @Nullable String name) {
+		notNull(array);
+		notEmpty(array, array.length == 0, null);
+		return array;
 	}
 
 	/**
