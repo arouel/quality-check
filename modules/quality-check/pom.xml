@@ -5,7 +5,7 @@
 
 	<parent>
 		<relativePath>../../</relativePath>
-		<groupId>com.github.quality</groupId>
+		<groupId>net.sf.qualitycheck</groupId>
 		<artifactId>quality-parent</artifactId>
 		<version>0.9-SNAPSHOT</version>
 	</parent>

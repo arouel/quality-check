@@ -16,8 +16,11 @@
  ******************************************************************************/
 package net.sf.qualitycheck;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
@@ -29,7 +32,6 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 
 /**
  * Modul Test for the class {@link net.sf.qualitycheck.Check}
@@ -213,6 +215,14 @@ public class CheckTest {
 	}
 
 	@Test
+	public void giveMeCoverageForMyPrivateConstructor() throws Exception {
+		// reduces only some noise in coverage report
+		final Constructor<Check> constructor = Check.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		constructor.newInstance();
+	}
+
+	@Test
 	public void noNullElements_emptyArray_ok() {
 		Check.noNullElements(new Object[] {});
 	}
@@ -260,6 +270,18 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyArray_isInvalid() {
+		final String[] array = new String[] {};
+		Check.notEmpty(array);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyArray_withArgName_isInvalid() {
+		final String[] array = new String[] {};
+		Check.notEmpty(array, "array");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
 	public void notEmpty_emptyCollection_isInvalid() {
 		final Set<String> collection = new HashSet<String>();
 		Check.notEmpty(collection);
@@ -272,6 +294,18 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyMap_isInvalid() {
+		final Map<String, String> map = new HashMap<String, String>();
+		Check.notEmpty(map);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyMap_withArgName_isInvalid() {
+		final Map<String, String> map = new HashMap<String, String>();
+		Check.notEmpty(map, "map");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
 	public void notEmpty_emptyString_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text);
@@ -281,6 +315,20 @@ public class CheckTest {
 	public void notEmpty_emptyString_withArgName_isInvalid() {
 		final String text = "";
 		Check.notEmpty(text, "text");
+	}
+
+	@Test
+	public void notEmpty_filledArray_isValid() {
+		final String[] array = new String[] { "nom nom, what a tasty vanilla ice cream" };
+		final String[] nonEmptyArray = Check.notEmpty(array);
+		Assert.assertSame(array, nonEmptyArray);
+	}
+
+	@Test
+	public void notEmpty_filledArray_withArgName_isValid() {
+		final String[] array = new String[] { "Mr. Spock" };
+		final String[] nonEmptyMap = Check.notEmpty(array, "array");
+		Assert.assertSame(array, nonEmptyMap);
 	}
 
 	@Test
@@ -297,6 +345,22 @@ public class CheckTest {
 		collection.add("hmm, what a tasty ice cream");
 		final Set<String> nonEmptySet = Check.notEmpty(collection, "collection");
 		Assert.assertSame(collection, nonEmptySet);
+	}
+
+	@Test
+	public void notEmpty_filledMap_isValid() {
+		final Map<String, String> map = new HashMap<String, String>();
+		map.put("key", "value");
+		final Map<String, String> nonEmptyMap = Check.notEmpty(map);
+		Assert.assertSame(map, nonEmptyMap);
+	}
+
+	@Test
+	public void notEmpty_filledMap_withArgName_isValid() {
+		final Map<String, String> map = new HashMap<String, String>();
+		map.put("drink", "water");
+		final Map<String, String> nonEmptyMap = Check.notEmpty(map, "map");
+		Assert.assertSame(map, nonEmptyMap);
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
@@ -370,4 +434,5 @@ public class CheckTest {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
 	}
+
 }
