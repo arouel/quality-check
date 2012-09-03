@@ -140,7 +140,22 @@ at FindBugs™ JSR-305 support.
 					</reportPlugins>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<configuration>
+					<targetClasses>
+						<param>net.sf.qualitycheck.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>net.sf.qualitycheck.*</param>
+					</targetTests>
+					<outputFormats>
+						<outputFormat>XML</outputFormat>
+						<outputFormat>HTML</outputFormat>
+					</outputFormats>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
