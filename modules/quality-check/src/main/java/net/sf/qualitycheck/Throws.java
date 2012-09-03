@@ -19,6 +19,6 @@ import java.lang.annotation.Target;
 	/**
 	 * @return the classes that can be thrown
 	 */
-	public Class<? extends Throwable>[] value();
+	Class<? extends Throwable>[] value();
 
 }
