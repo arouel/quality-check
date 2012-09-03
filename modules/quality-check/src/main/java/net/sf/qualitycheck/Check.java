@@ -46,7 +46,7 @@ public final class Check {
 	 * @return {@code true} if the array contains {@code null}, otherwise {@code false}
 	 * 
 	 */
-	private static boolean containsNullElements(@Nullable final Object[] array) {
+	private static boolean containsNullElements(@Nonnull final Object[] array) {
 		boolean containsNull = false;
 		for (final Object o : array) {
 			if (o == null) {
