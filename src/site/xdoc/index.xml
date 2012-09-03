@@ -184,6 +184,13 @@ void doSomething(final List<String> list) {
 				</p>
 			</subsection>
 		</section>
+		<subsection name="Overview over the Quality-Check way">
+			<div class="section">
+			    <a href="./images/the_quality_check_way.png">
+   					<img src="./images/the_quality_check_way_small.png" alt="Visualization of the Quality-Check way" />
+   				</a>
+			</div>
+		</subsection>
 		<section name="Contribute">
 			<ul>
 				<li>
@@ -194,8 +201,13 @@ void doSomething(final List<String> list) {
 				<li>
 					Help with the documentation by pointing out areas that are lacking or unclear, and if you are so inclined,
 					submitting patches to correct it. You can quickly contribute rough thoughts by forking this project on
-					<a target="_blank" href="https://github.com/before/quality-check">GitHub</a>
+					<a target="_blank" href="https://github.com/before/quality-check">GitHub</a> or
+					downloading at <a target="_blank" href="https://sourceforge.net/projects/qualitycheck/">Sourceforge</a>
 					, or you can volunteer to help collate and organize information that is already there.
+				</li>
+				<li>
+				    Some software metrics can be found on our Continuous Integration server at <a target="_blank" href="https://buildhive.cloudbees.com/job/before/job/quality-check">Buildhive</a>
+				    or  later at Sonatype and Oloh.
 				</li>
 			</ul>
 			<p>Your participation in this project is much appreciated!</p>
