@@ -389,8 +389,6 @@ public final class Check {
 	 * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true: - start <=
 	 * size - end <= size - start <= end - size >= 0 - start >= 0 - end >= 0
 	 * 
-	 * If negative numbers are allowed in your range, you must check using { {@link #rangeNegativeOrPositive()}.
-	 * 
 	 * @param start
 	 *            the start value of the range (must be a positive integer or 0)
 	 * @param end
