@@ -67,6 +67,12 @@ public class IllegalNullElementsExceptionTest {
 	}
 
 	@Test
+	public void construct_withCause() {
+		new IllegalNullElementsException(new NullPointerException());
+	}
+
+	
+	@Test
 	public void construct_withoutArgs_successful() {
 		new IllegalNullElementsException();
 	}
