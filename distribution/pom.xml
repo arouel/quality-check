@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<relativePath>../</relativePath>
 		<groupId>net.sf.qualitycheck</groupId>
 		<artifactId>quality-parent</artifactId>
-		<version>0.9-SNAPSHOT</version>
+		<version>0.10-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>distribution</artifactId>
-	<version>2012.08-SNAPSHOT</version>
 
 	<name>Quality :: Distribution</name>
 	<description>This project is intended to create distributions of the Quality-Check multimodule project.</description>
@@ -25,7 +23,7 @@
 		<dependency>
 			<groupId>net.sf.qualitycheck</groupId>
 			<artifactId>quality-check</artifactId>
-			<version>0.9-SNAPSHOT</version>
+			<version>0.10-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -129,8 +127,7 @@
 										</pathconvert>
 										<echo message="Uploading following files ..." />
 										<echo>${files}</echo>
-										<scp todir="${scp.userid}@${scp.host}:${scp.remotedir}/${project.version}" password="${scp.password}"
-											verbose="${scp.verbose}">
+										<scp todir="${scp.userid}@${scp.host}:${scp.remotedir}/${project.version}" password="${scp.password}" verbose="${scp.verbose}">
 											<fileset refid="files-to-upload" />
 										</scp>
 									</target>

@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,7 +9,7 @@
 
 	<groupId>net.sf.qualitycheck</groupId>
 	<artifactId>quality-parent</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Quality :: Project</name>
@@ -59,10 +58,11 @@ at FindBugs™ JSR-305 support.
 	</licenses>
 
 	<scm>
-		<connection>scm:git://github.com/before/quality-check.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:before/quality-check.git</developerConnection>
+		<connection>scm:git:git://github.com/before/quality-check.git</connection>
+		<developerConnection>scm:git:git@github.com:before/quality-check.git</developerConnection>
 		<url>https://github.com/before/quality-check.git</url>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 
 	<modules>
 		<module>modules/quality-check</module>
