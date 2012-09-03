@@ -9,7 +9,7 @@
 
 	<groupId>net.sf.qualitycheck</groupId>
 	<artifactId>quality-parent</artifactId>
-	<version>0.9</version>
+	<version>0.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Quality :: Project</name>
@@ -61,7 +61,7 @@ at FindBugs™ JSR-305 support.
 		<connection>scm:git:git://github.com/before/quality-check.git</connection>
 		<developerConnection>scm:git:git@github.com:before/quality-check.git</developerConnection>
 		<url>https://github.com/before/quality-check.git</url>
-	  <tag>0.9</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<modules>
