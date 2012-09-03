@@ -90,7 +90,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalStateOfArgumentException(final @Nonnull String description, final @Nullable Throwable cause) {
+	public IllegalStateOfArgumentException(final @Nonnull String description, @Nullable final Throwable cause) {
 		super(format(description), cause);
 	}
 	
@@ -106,7 +106,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 * @param descriptionTemplateArgs
 	 *            format string template arguments to explain why the state is invalid
 	 */
-	public IllegalStateOfArgumentException(final @Nullable Throwable cause, final @Nonnull String description, Object... descriptionTemplateArgs) {
+	public IllegalStateOfArgumentException(@Nullable final Throwable cause, final @Nonnull String description, Object... descriptionTemplateArgs) {
 		super(format(description, descriptionTemplateArgs), cause);
 	}
 	
@@ -117,7 +117,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalStateOfArgumentException(final @Nullable Throwable cause) {
+	public IllegalStateOfArgumentException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 

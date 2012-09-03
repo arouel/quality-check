@@ -48,7 +48,7 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 * @return {@code DEFAULT_MESSAGE} if the given argument name is {@code null} or empty, otherwise a formatted
 	 *         {@code MESSAGE_WITH_NAME}
 	 */
-	private static final String determineMessage(final @Nullable String argumentName) {
+	private static final String determineMessage(@Nullable final String argumentName) {
 		return argumentName != null && !argumentName.isEmpty() ? format(argumentName) : DEFAULT_MESSAGE;
 	}
 
@@ -60,7 +60,7 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 *            the name of the passed argument
 	 * @return a formatted string of message with the given argument name
 	 */
-	private static String format(final @Nullable String argumentName) {
+	private static String format(@Nullable final String argumentName) {
 		return String.format(MESSAGE_WITH_NAME, argumentName);
 	}
 
@@ -80,7 +80,7 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 * @param argumentName
 	 *            the name of the passed argument
 	 */
-	public IllegalEmptyArgumentException(final @Nullable String argumentName) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName) {
 		super(determineMessage(argumentName));
 	}
 
@@ -94,7 +94,7 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalEmptyArgumentException(final @Nullable String argumentName, final @Nullable Throwable cause) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Throwable cause) {
 		super(determineMessage(argumentName), cause);
 	}
 
@@ -105,7 +105,7 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalEmptyArgumentException(final @Nullable Throwable cause) {
+	public IllegalEmptyArgumentException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 

@@ -76,7 +76,7 @@ public class IllegalPositionIndexException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalPositionIndexException(final int index, final int size, final @Nullable Throwable cause) {
+	public IllegalPositionIndexException(final int index, final int size, @Nullable final Throwable cause) {
 		super(format(index, size), cause);
 	}
 
@@ -87,7 +87,7 @@ public class IllegalPositionIndexException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalPositionIndexException(final @Nullable Throwable cause) {
+	public IllegalPositionIndexException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 

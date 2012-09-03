@@ -46,7 +46,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 *            the name of the passed argument
 	 * @return a formatted string of message with the given argument name
 	 */
-	private static String format(final @Nullable String argumentName) {
+	private static String format(@Nullable final String argumentName) {
 		return String.format(MESSAGE_WITH_NAME, argumentName);
 	}
 
@@ -66,7 +66,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 * @param argumentName
 	 *            the name of the passed argument
 	 */
-	public IllegalNullArgumentException(final @Nullable String argumentName) {
+	public IllegalNullArgumentException(@Nullable final String argumentName) {
 		super(format(argumentName));
 	}
 
@@ -80,7 +80,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNullArgumentException(final @Nullable String argumentName, final @Nullable Throwable cause) {
+	public IllegalNullArgumentException(@Nullable final String argumentName, @Nullable final Throwable cause) {
 		super(format(argumentName), cause);
 	}
 
@@ -91,7 +91,7 @@ public class IllegalNullArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNullArgumentException(final @Nullable Throwable cause) {
+	public IllegalNullArgumentException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 

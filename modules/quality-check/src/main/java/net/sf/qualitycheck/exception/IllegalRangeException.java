@@ -83,7 +83,7 @@ public class IllegalRangeException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalRangeException(final int start, final int end, final int size, final @Nullable Throwable cause) {
+	public IllegalRangeException(final int start, final int end, final int size, @Nullable final Throwable cause) {
 		super(format(start, end, size), cause);
 	}
 
