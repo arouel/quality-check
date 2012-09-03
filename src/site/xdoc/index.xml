@@ -207,7 +207,7 @@ void doSomething(final List<String> list) {
 				</li>
 				<li>
 				    Some software metrics can be found on our Continuous Integration server at <a target="_blank" href="https://buildhive.cloudbees.com/job/before/job/quality-check">Buildhive</a>
-				    or  later at Sonatype and Oloh.
+				    or <a href="https://www.ohloh.net/p/quality-check>Ohloh</a>.
 				</li>
 			</ul>
 			<p>Your participation in this project is much appreciated!</p>

@@ -34,7 +34,8 @@
 
 	<poweredBy>
 	    <!--  TODO: Add correct sourceforge ID here, maybe also GitHub, BuildHive, Ohloh and Sonartype links -->
-		<logo name="Hosted by SourceForge" href="http://www.sourceforge.net/" img="http://sourceforge.net/sflogo.php?group_id=16035&amp;type=1" />	
+		<logo name="Hosted by SourceForge" href="http://www.sourceforge.net/" img="http://sourceforge.net/sflogo.php?group_id=quality-check&amp;type=1" />
+		<logo name="Analysed by Oloh" href="https://www.ohloh.net/p/quality-check" img="https://www.ohloh.net/images/ohlohlogo100.png" />
 	</poweredBy>
 		
 	<googleAnalyticsAccountId>UA-34496927-1</googleAnalyticsAccountId>

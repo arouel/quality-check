@@ -112,6 +112,10 @@ at FindBugs™ JSR-305 support.
 		<junit.version>4.10</junit.version>
 		<slf4j.version>1.6.4</slf4j.version>
 
+		<!-- Sonar -->
+		<sonar.pitest.mode>active</sonar.pitest.mode>
+		<sonar.pit.target.classes>net.sf.qualitycheck.*</sonar.pit.target.classes>
+		<sonar.pit.target.tests>net.sf.qualitycheck.*</sonar.pit.target.tests>		
 	</properties>
 
 	<dependencyManagement>
