@@ -33,6 +33,12 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 /**
  * This class offers simple static methods to test your arguments to be valid.
  * 
+ * Checks should be added to all arguments of all public methods in your class
+ * to assure that only valid values can be encountered within your class. This
+ * is major step to avoid technical errors like NullPointerExceptions or 
+ * IndexOutOfBoundsException.
+ * 
+ * 
  * @author André Rouél
  * @author Dominik Seichter
  */
