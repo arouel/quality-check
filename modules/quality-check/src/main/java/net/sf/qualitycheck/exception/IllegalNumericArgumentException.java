@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 /**
  * Thrown to indicate that a method has been passed with an argument that was not numeric. Numeric arguments consist
- * only of the characters 0-9 and may start with 0 (compared to number arguments, which must be valid numbers)
+ * only of the characters 0-9 and may start with 0 (compared to number arguments, which must be valid numbers).
  * 
  * @see IllegalNumberArgumentException
  * 

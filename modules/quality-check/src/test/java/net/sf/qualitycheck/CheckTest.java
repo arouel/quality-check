@@ -24,8 +24,10 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
+import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
@@ -433,6 +435,96 @@ public class CheckTest {
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
+	}
+
+	@Test
+	public void testNaNFloat_Ok() {
+		Assert.assertEquals(1.0f, Check.notNaN(1.0f), 0.0f);
+	}
+
+	@Test
+	public void testNaNFloatArgument_Ok() {
+		Assert.assertEquals(1.0f, Check.notNaN(1.0f, "float"), 0.0f);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNFloat_Fail() {
+		Check.notNaN(Float.NaN);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNFloatArgument_Fail() {
+		Check.notNaN(Float.NaN, "float");
+	}
+
+	@Test
+	public void testNaNDouble_Ok() {
+		Assert.assertEquals(1.0d, Check.notNaN(1.0f), 0.0d);
+	}
+
+	@Test
+	public void testNaNDoubleArgument_Ok() {
+		Assert.assertEquals(1.0d, Check.notNaN(1.0d, "double"), 0.0d);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNDouble_Fail() {
+		Check.notNaN(Double.NaN);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNDoubleArgument_Fail() {
+		Check.notNaN(Double.NaN, "float");
+	}
+
+	@Test
+	public void testNumeric_Ok() {
+		Assert.assertEquals("123", Check.isNumeric("123"));
+	}
+
+	@Test
+	public void testNumericArgument_Ok() {
+		Assert.assertEquals("123", Check.isNumeric("123", "numeric"));
+	}
+
+	@Test
+	public void testNumericZero_Ok() {
+		Assert.assertEquals("0123", Check.isNumeric("0123"));
+	}
+
+	@Test
+	public void testNumericZeroArgument_Ok() {
+		Assert.assertEquals("0123", Check.isNumeric("0123", "numeric"));
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumeric_Fail() {
+		Check.isNumeric("Hallo Welt!");
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumericArgument_Fail() {
+		Check.isNumeric("Hallo Welt", "numeric");
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumericNegativeNumber_Fail() {
+		Check.isNumeric("-123");
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumericArgumentNegativeNumber_Fail() {
+		Check.isNumeric("-123", "numeric");
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumericDecimalNumber_Fail() {
+		Check.isNumeric("1.23");
+	}
+
+	@Test(expected = IllegalNumericArgumentException.class)
+	public void testNumericArgumentDecimalNumber_Fail() {
+		Check.isNumeric("1.23", "numeric");
 	}
 
 }

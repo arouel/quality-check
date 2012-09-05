@@ -18,6 +18,8 @@ package net.sf.qualitycheck;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,6 +29,8 @@ import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
+import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
+import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
@@ -44,6 +48,17 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
  */
 public final class Check {
 
+	/**
+	 * Holder for the regular expression to determine numeric values. Using the holder pattern guarantees that the
+	 * regular expression is initialized before the first used (thread safe!) and that it is only initialized if it is
+	 * used.
+	 * 
+	 * So we do not pay any performance bounty for regular expressions when using other checks.
+	 */
+	private static class NumericRegularExpressionHolder {
+		public static final Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
+	}
+	
 	/**
 	 * Checks if the given array contains {@code null}.
 	 * 
@@ -338,6 +353,8 @@ public final class Check {
 	 * @param value
 	 *            value which should not be NaN
 	 * @return the given double value
+	 * @throws IllegalNaNArgumentException
+	 *             if the given argument {@code value} is NaN
 	 */
 	public static double notNaN(final double value) {
 		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
@@ -357,6 +374,8 @@ public final class Check {
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the given double value
+	 * @throws IllegalNaNArgumentException
+	 *             if the given argument {@code value} is NaN
 	 */
 	public static double notNaN(final double value, @Nullable final String name) {
 		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
@@ -374,6 +393,8 @@ public final class Check {
 	 * @param value
 	 *            value which should not be NaN
 	 * @return the given double value
+	 * @throws IllegalNaNArgumentException
+	 *             if the given argument {@code value} is NaN
 	 */
 	public static float notNaN(final float value) {
 		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
@@ -393,10 +414,105 @@ public final class Check {
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the given float value
+	 * @throws IllegalNaNArgumentException
+	 *             if the given argument {@code value} is NaN
 	 */
 	public static float notNaN(final float value, @Nullable final String name) {
 		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
 			throw new IllegalNaNArgumentException(name);
+		}
+
+		return value;
+	}
+
+	/**
+	 * Ensures that a String argument is a number.
+	 * 
+	 * @param value
+	 *            value which must be a number
+	 * @return the given string argument converted to an int
+	 * @throws IllegalNumberArgumentException
+	 *             if the given argument {@code value} is no number
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static int isNumber(@Nullable final String value) {
+		Check.notNull(value);
+		int number;
+		try {
+			number = Integer.parseInt(value);
+		} catch (final NumberFormatException nfe) {
+			throw new IllegalNumberArgumentException(nfe);
+		}
+		return number;
+	}
+
+	/**
+	 * Ensures that a String argument is a number.
+	 * 
+	 * @param value
+	 *            value which must be a number
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the given string argument converted to an int
+	 * @throws IllegalNumberArgumentException
+	 *             if the given argument {@code value} is no number
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static int isNumber(@Nullable final String value, @Nullable final String name) {
+		Check.notNull(value);
+
+		int number;
+		try {
+			number = Integer.parseInt(value);
+		} catch (final NumberFormatException nfe) {
+			throw new IllegalNumberArgumentException(name, nfe);
+		}
+		return number;
+	}
+
+	/**
+	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
+	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
+	 * 
+	 * 
+	 * @param value
+	 *            value which must be a number
+	 * @return the given string argument
+	 * @throws IllegalNumberArgumentException
+	 *             if the given argument {@code value} is no number
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static String isNumeric(@Nullable final String value) {
+		Check.notNull(value);
+
+		Matcher m = NumericRegularExpressionHolder.NUMERIC_REGEX.matcher(value);
+		if (!m.matches()) {
+			throw new IllegalNumericArgumentException();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
+	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
+	 * 
+	 * 
+	 * @param value
+	 *            value which must be a number
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the given string argument
+	 * @throws IllegalNumberArgumentException
+	 *             if the given argument {@code value} is no number
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static String isNumeric(@Nullable final String value, @Nullable final String name) {
+		Check.notNull(value);
+
+		Matcher m = NumericRegularExpressionHolder.NUMERIC_REGEX.matcher(value);
+		if (!m.matches()) {
+			throw new IllegalNumericArgumentException();
 		}
 
 		return value;
