@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
@@ -33,9 +34,8 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 /**
  * This class offers simple static methods to test your arguments to be valid.
  * 
- * Checks should be added to all arguments of all public methods in your class
- * to assure that only valid values can be encountered within your class. This
- * is major step to avoid technical errors like NullPointerExceptions or 
+ * Checks should be added to all arguments of all public methods in your class to assure that only valid values can be
+ * encountered within your class. This is major step to avoid technical errors like NullPointerExceptions or
  * IndexOutOfBoundsException.
  * 
  * 
@@ -328,6 +328,78 @@ public final class Check {
 		notNull(array);
 		notEmpty(array, array.length == 0, null);
 		return array;
+	}
+
+	/**
+	 * Ensures that a double argument is not NaN (not a number).
+	 * 
+	 * @see {@code Double.NaN}
+	 * 
+	 * @param value
+	 *            value which should not be NaN
+	 * @return the given double value
+	 */
+	public static double notNaN(final double value) {
+		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
+			throw new IllegalNaNArgumentException();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Ensures that a double argument is not NaN (not a number).
+	 * 
+	 * @see {@code Double.NaN}
+	 * 
+	 * @param value
+	 *            value which should not be NaN
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the given double value
+	 */
+	public static double notNaN(final double value, @Nullable final String name) {
+		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
+			throw new IllegalNaNArgumentException(name);
+		}
+
+		return value;
+	}
+
+	/**
+	 * Ensures that a double argument is not NaN (not a number).
+	 * 
+	 * @see {@code Float.NaN}
+	 * 
+	 * @param value
+	 *            value which should not be NaN
+	 * @return the given double value
+	 */
+	public static float notNaN(final float value) {
+		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
+			throw new IllegalNaNArgumentException();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Ensures that a double argument is not NaN (not a number).
+	 * 
+	 * @see {@code Float.NaN}
+	 * 
+	 * @param value
+	 *            value which should not be NaN
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the given float value
+	 */
+	public static float notNaN(final float value, @Nullable final String name) {
+		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
+			throw new IllegalNaNArgumentException(name);
+		}
+
+		return value;
 	}
 
 	/**
