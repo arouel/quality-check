@@ -25,6 +25,11 @@
 				earlier. For more informations look at FindBugs™ JSR-305 support.
 			</p>
 			<p>
+				We think that our module is particularly suitable for APIs, which contain their own domain objects and services that are validated 
+				using quality check not only functionally, but also technically. More over we provide an easy to use fail-fast description of an API 
+				to immediately report at its interface any failure or condition that is likely to lead to failure.
+			</p>
+			<p>
 				We noticed that many projects just copy
 				<code>org.springframework.util.Assert</code>
 				or
@@ -184,13 +189,13 @@ void doSomething(final List<String> list) {
 				</p>
 			</subsection>
 		</section>
-		<subsection name="Overview over the Quality-Check way">
+		<section name="Overview over the Quality-Check way">
 			<div class="section">
 			    <a href="./images/the_quality_check_way.png">
    					<img src="./images/the_quality_check_way_small.png" alt="Visualization of the Quality-Check way" />
    				</a>
 			</div>
-		</subsection>
+		</section>
 		<section name="Contribute">
 			<ul>
 				<li>
@@ -207,7 +212,7 @@ void doSomething(final List<String> list) {
 				</li>
 				<li>
 				    Some software metrics can be found on our Continuous Integration server at <a target="_blank" href="https://buildhive.cloudbees.com/job/before/job/quality-check">Buildhive</a>
-				    or <a href="https://www.ohloh.net/p/quality-check>Ohloh</a>.
+				    or <a target="_blank" href="https://www.ohloh.net/p/quality-check">Ohloh</a>.
 				</li>
 			</ul>
 			<p>Your participation in this project is much appreciated!</p>
