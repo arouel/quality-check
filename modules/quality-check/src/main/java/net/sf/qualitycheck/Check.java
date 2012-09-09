@@ -55,7 +55,7 @@ public final class Check {
 	 * 
 	 * So we do not pay any performance bounty for regular expressions when using other checks.
 	 */
-	private static class NumericRegularExpressionHolder {
+	private static final class NumericRegularExpressionHolder {
 		public static final Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
 	}
 	
@@ -447,7 +447,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a String argument is a number.
+	 * Ensures that a String argument is a number according to {@code Integer.parseInt}
 	 * 
 	 * @param value
 	 *            value which must be a number

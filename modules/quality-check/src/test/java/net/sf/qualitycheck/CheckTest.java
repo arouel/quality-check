@@ -27,6 +27,7 @@ import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
+import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
@@ -436,7 +437,7 @@ public class CheckTest {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
 	}
-
+	
 	@Test
 	public void testNaNFloat_Ok() {
 		Assert.assertEquals(1.0f, Check.notNaN(1.0f), 0.0f);
@@ -459,7 +460,7 @@ public class CheckTest {
 
 	@Test
 	public void testNaNDouble_Ok() {
-		Assert.assertEquals(1.0d, Check.notNaN(1.0f), 0.0d);
+		Assert.assertEquals(1.0d, Check.notNaN(1.0d), 0.0d);
 	}
 
 	@Test
@@ -527,4 +528,55 @@ public class CheckTest {
 		Check.isNumeric("1.23", "numeric");
 	}
 
+	//
+	@Test
+	public void testNumber_Ok() {
+		Assert.assertEquals(123, Check.isNumber("123"));
+	}
+
+	@Test
+	public void testNumberArgument_Ok() {
+		Assert.assertEquals(123, Check.isNumber("123", "numeric"));
+	}
+
+	@Test
+	public void testNumerZero_Ok() {
+		Assert.assertEquals(123, Check.isNumber("0123"));
+	}
+
+	@Test
+	public void testNumberOctalArgument_Ok() {
+		Assert.assertEquals(123, Check.isNumber("0123", "octalNumber"));
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumber_Fail() {
+		Check.isNumber("Hallo Welt!");
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberArgument_Fail() {
+		Check.isNumber("Hallo Welt", "numeric");
+	}
+
+	@Test
+	public void testNegativeNumber_Ok() {
+		Assert.assertEquals(-123, Check.isNumber("-123"));
+	}
+
+	@Test
+	public void testArgumentNegativeNumber_Ok() {
+		Assert.assertEquals(-123, Check.isNumber("-123", "numeric"));
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberDecimalNumber_Fail() {
+		Check.isNumber("1.23");
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberArgumentDecimalNumber_Fail() {
+		Check.isNumber("1.23", "numeric");
+	}
+	
 }
