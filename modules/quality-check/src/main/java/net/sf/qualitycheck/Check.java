@@ -580,8 +580,15 @@ public final class Check {
 	/**
 	 * Ensures that the given arguments are a valid range.
 	 * 
-	 * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true: - start <=
-	 * size - end <= size - start <= end - size >= 0 - start >= 0 - end >= 0
+	 * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are {@code true}:
+	 * <ul>
+	 * <li>start <= size</li>
+	 * <li>end <= size</li>
+	 * <li>start <= end</li>
+	 * <li>size >= 0</li>
+	 * <li>start >= 0</li>
+	 * <li>end >= 0</li>
+	 * </ul>
 	 * 
 	 * @param start
 	 *            the start value of the range (must be a positive integer or 0)
@@ -589,7 +596,6 @@ public final class Check {
 	 *            the end value of the range (must be a positive integer or 0)
 	 * @param size
 	 *            the size value of the range (must be a positive integer or 0)
-	 * 
 	 * 
 	 * @throws IllegalRangeException
 	 *             if the given arguments do not form a valid range
@@ -604,7 +610,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a given state is true
+	 * Ensures that a given state is {@code true}.
 	 * 
 	 * @param expression
 	 *            an expression that must be true to indicate a valid state
@@ -619,11 +625,11 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a given state is true and allows to specify the class of exception which is thrown in case the state
-	 * is not true
+	 * Ensures that a given state is {@code true} and allows to specify the class of exception which is thrown in case
+	 * the state is not {@code true}.
 	 * 
 	 * @param expression
-	 *            an expression that must be true to indicate a valid state
+	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param clazz
 	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
 	 * @throws clazz
@@ -648,10 +654,10 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a given state is true
+	 * Ensures that a given state is {@code true}.
 	 * 
 	 * @param expression
-	 *            an expression that must be true to indicate a valid state
+	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param description
 	 *            will be used in the error message to describe why the arguments caused an invalid state
 	 * @throws IllegalStateOfArgumentException
@@ -664,10 +670,10 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a given state is true
+	 * Ensures that a given state is {@code true}
 	 * 
 	 * @param expression
-	 *            an expression that must be true to indicate a valid state
+	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param descriptionTemplate
 	 *            format string template that explains why the state is invalid
 	 * @param descriptionTemplateArgs
