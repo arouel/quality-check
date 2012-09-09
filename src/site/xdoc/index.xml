@@ -10,12 +10,12 @@
 
 		<section name="What is Quality-Check?">
 			<p>
-				The goal of quality-check is to provide a small Java library for basic runtime code quality checks. It provides similar
+				The goal of <em>Quality-Check</em> is to provide a small Java library for basic runtime code quality checks. It provides similar
 				features to
 				<code>org.springframework.util.Assert</code> <a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
 				or
 				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
-				without the need to include big libraries or frameworks such as Spring or Guava. The package quality-check tries to
+				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> tries to
 				replace these libraries and provide all the basic code quality checks you need.
 			</p>
 			<p>
