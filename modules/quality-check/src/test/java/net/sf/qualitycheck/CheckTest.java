@@ -320,6 +320,26 @@ public class CheckTest {
 		Check.notEmpty(text, "text");
 	}
 
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_expression_isInvalid() {
+		Check.notEmpty(true);
+	}
+
+	@Test
+	public void notEmpty_expression_isValid() {
+		Check.notEmpty(false);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_expression_withArgName_isInvalid() {
+		Check.notEmpty(true, "myVar");
+	}
+
+	@Test
+	public void notEmpty_expression_withArgName_isValid() {
+		Check.notEmpty(false, "myVar");
+	}
+
 	@Test
 	public void notEmpty_filledArray_isValid() {
 		final String[] array = new String[] { "nom nom, what a tasty vanilla ice cream" };
@@ -431,46 +451,19 @@ public class CheckTest {
 		Check.notNull("", "foo");
 	}
 
-	@Test(expected = java.lang.IllegalAccessException.class)
-	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
-		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
-		cls.newInstance(); // exception here
-	}
-	
 	@Test
-	public void testNaNFloat_Ok() {
-		Assert.assertEquals(1.0f, Check.notNaN(1.0f), 0.0f);
-	}
-
-	@Test
-	public void testNaNFloatArgument_Ok() {
-		Assert.assertEquals(1.0f, Check.notNaN(1.0f, "float"), 0.0f);
-	}
-
-	@Test(expected = IllegalNaNArgumentException.class)
-	public void testNaNFloat_Fail() {
-		Check.notNaN(Float.NaN);
-	}
-
-	@Test(expected = IllegalNaNArgumentException.class)
-	public void testNaNFloatArgument_Fail() {
-		Check.notNaN(Float.NaN, "float");
-	}
-
-	@Test
-	public void testNaNDouble_Ok() {
-		Assert.assertEquals(1.0d, Check.notNaN(1.0d), 0.0d);
-	}
-
-	@Test
-	public void testNaNDoubleArgument_Ok() {
-		Assert.assertEquals(1.0d, Check.notNaN(1.0d, "double"), 0.0d);
+	public void testArgumentNegativeNumber_Ok() {
+		Assert.assertEquals(-123, Check.isNumber("-123", "numeric"));
 	}
 
 	@Test(expected = IllegalNaNArgumentException.class)
 	public void testNaNDouble_Fail() {
 		Check.notNaN(Double.NaN);
+	}
+
+	@Test
+	public void testNaNDouble_Ok() {
+		Assert.assertEquals(1.0d, Check.notNaN(1.0d), 0.0d);
 	}
 
 	@Test(expected = IllegalNaNArgumentException.class)
@@ -479,23 +472,68 @@ public class CheckTest {
 	}
 
 	@Test
-	public void testNumeric_Ok() {
-		Assert.assertEquals("123", Check.isNumeric("123"));
+	public void testNaNDoubleArgument_Ok() {
+		Assert.assertEquals(1.0d, Check.notNaN(1.0d, "double"), 0.0d);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNFloat_Fail() {
+		Check.notNaN(Float.NaN);
 	}
 
 	@Test
-	public void testNumericArgument_Ok() {
-		Assert.assertEquals("123", Check.isNumeric("123", "numeric"));
+	public void testNaNFloat_Ok() {
+		Assert.assertEquals(1.0f, Check.notNaN(1.0f), 0.0f);
+	}
+
+	@Test(expected = IllegalNaNArgumentException.class)
+	public void testNaNFloatArgument_Fail() {
+		Check.notNaN(Float.NaN, "float");
 	}
 
 	@Test
-	public void testNumericZero_Ok() {
-		Assert.assertEquals("0123", Check.isNumeric("0123"));
+	public void testNaNFloatArgument_Ok() {
+		Assert.assertEquals(1.0f, Check.notNaN(1.0f, "float"), 0.0f);
 	}
 
 	@Test
-	public void testNumericZeroArgument_Ok() {
-		Assert.assertEquals("0123", Check.isNumeric("0123", "numeric"));
+	public void testNegativeNumber_Ok() {
+		Assert.assertEquals(-123, Check.isNumber("-123"));
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumber_Fail() {
+		Check.isNumber("Hallo Welt!");
+	}
+
+	@Test
+	public void testNumber_Ok() {
+		Assert.assertEquals(123, Check.isNumber("123"));
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberArgument_Fail() {
+		Check.isNumber("Hallo Welt", "numeric");
+	}
+
+	@Test
+	public void testNumberArgument_Ok() {
+		Assert.assertEquals(123, Check.isNumber("123", "numeric"));
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberArgumentDecimalNumber_Fail() {
+		Check.isNumber("1.23", "numeric");
+	}
+
+	@Test(expected = IllegalNumberArgumentException.class)
+	public void testNumberDecimalNumber_Fail() {
+		Check.isNumber("1.23");
+	}
+
+	@Test
+	public void testNumberOctalArgument_Ok() {
+		Assert.assertEquals(123, Check.isNumber("0123", "octalNumber"));
 	}
 
 	@Test(expected = IllegalNumericArgumentException.class)
@@ -503,14 +541,24 @@ public class CheckTest {
 		Check.isNumeric("Hallo Welt!");
 	}
 
+	@Test
+	public void testNumeric_Ok() {
+		Assert.assertEquals("123", Check.isNumeric("123"));
+	}
+
 	@Test(expected = IllegalNumericArgumentException.class)
 	public void testNumericArgument_Fail() {
 		Check.isNumeric("Hallo Welt", "numeric");
 	}
 
+	@Test
+	public void testNumericArgument_Ok() {
+		Assert.assertEquals("123", Check.isNumeric("123", "numeric"));
+	}
+
 	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericNegativeNumber_Fail() {
-		Check.isNumeric("-123");
+	public void testNumericArgumentDecimalNumber_Fail() {
+		Check.isNumeric("1.23", "numeric");
 	}
 
 	@Test(expected = IllegalNumericArgumentException.class)
@@ -524,19 +572,18 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericArgumentDecimalNumber_Fail() {
-		Check.isNumeric("1.23", "numeric");
-	}
-
-	//
-	@Test
-	public void testNumber_Ok() {
-		Assert.assertEquals(123, Check.isNumber("123"));
+	public void testNumericNegativeNumber_Fail() {
+		Check.isNumeric("-123");
 	}
 
 	@Test
-	public void testNumberArgument_Ok() {
-		Assert.assertEquals(123, Check.isNumber("123", "numeric"));
+	public void testNumericZero_Ok() {
+		Assert.assertEquals("0123", Check.isNumeric("0123"));
+	}
+
+	@Test
+	public void testNumericZeroArgument_Ok() {
+		Assert.assertEquals("0123", Check.isNumeric("0123", "numeric"));
 	}
 
 	@Test
@@ -544,39 +591,11 @@ public class CheckTest {
 		Assert.assertEquals(123, Check.isNumber("0123"));
 	}
 
-	@Test
-	public void testNumberOctalArgument_Ok() {
-		Assert.assertEquals(123, Check.isNumber("0123", "octalNumber"));
+	@Test(expected = java.lang.IllegalAccessException.class)
+	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
+		cls.newInstance(); // exception here
 	}
 
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumber_Fail() {
-		Check.isNumber("Hallo Welt!");
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberArgument_Fail() {
-		Check.isNumber("Hallo Welt", "numeric");
-	}
-
-	@Test
-	public void testNegativeNumber_Ok() {
-		Assert.assertEquals(-123, Check.isNumber("-123"));
-	}
-
-	@Test
-	public void testArgumentNegativeNumber_Ok() {
-		Assert.assertEquals(-123, Check.isNumber("-123", "numeric"));
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberDecimalNumber_Fail() {
-		Check.isNumber("1.23");
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberArgumentDecimalNumber_Fail() {
-		Check.isNumber("1.23", "numeric");
-	}
-	
 }

@@ -210,6 +210,50 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed a parameter of the calling method is not empty, using the passed expression to evaluate the
+	 * emptiness.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(boolean, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param expression
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
+	 * 
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalEmptyArgumentException.class })
+	public static void notEmpty(final boolean expression) {
+		notEmpty(expression, null);
+	}
+
+	/**
+	 * Ensures that a passed a parameter of the calling method is not empty, using the passed expression to evaluate the
+	 * emptiness.
+	 * 
+	 * @param expression
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
+	 * @param name
+	 *            name of object reference (in source code)
+	 * 
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code reference} is empty
+	 */
+	@ArgumentsChecked({ IllegalEmptyArgumentException.class })
+	public static void notEmpty(final boolean expression, @Nullable final String name) {
+		if (expression) {
+			throw new IllegalEmptyArgumentException(name);
+		}
+	}
+
+	/**
 	 * Ensures that a passed string as a parameter of the calling method is not empty.
 	 * 
 	 * <p>
