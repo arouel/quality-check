@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -76,6 +77,41 @@ public final class Check {
 			}
 		}
 		return containsNull;
+	}
+
+	/**
+	 * Ensures that a passed argument is a member of a specific type.
+	 * 
+	 * @param type
+	 *            class that the given object is a member of
+	 * @param obj
+	 *            the object reference that should be a member of a specific {@code type}
+	 * @throws IllegalInstanceOfArgumentException
+	 *             if the given argument {@code obj} is not a member of {@code type}
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static void instanceOf(@Nonnull final Class<?> type, final @Nullable Object obj) {
+		instanceOf(type, obj, null);
+	}
+
+	/**
+	 * Ensures that a passed argument is a member of a specific type.
+	 * 
+	 * @param type
+	 *            class that the given object is a member of
+	 * @param obj
+	 *            the object reference that should be a member of a specific {@code type}
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @throws IllegalInstanceOfArgumentException
+	 *             if the given argument {@code obj} is not a member of {@code type}
+	 */
+	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	public static void instanceOf(@Nonnull final Class<?> type, final @Nullable Object obj, final String name) {
+		Check.notNull(obj);
+		if (type.isInstance(obj)) {
+			throw new IllegalInstanceOfArgumentException(name, type, obj.getClass());
+		}
 	}
 
 	/**
