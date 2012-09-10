@@ -216,8 +216,8 @@ public final class Check {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(String, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
-	 * @param string
-	 *            a string reference which should not be empty
+	 * @param chars
+	 *            a readable sequence of {@code char} values which should not be empty
 	 * @return the passed reference that is not empty
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is {@code null}
@@ -225,40 +225,10 @@ public final class Check {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static String notEmpty(@Nullable final String string) {
-		notNull(string);
-		notEmpty(string, string.isEmpty(), null);
-		return string;
-	}
-
-	/**
-	 * Ensures that a passed string as a parameter of the calling method is not empty.
-	 * 
-	 * <p>
-	 * The following example describes how to use it.
-	 * 
-	 * <pre>
-	 * &#064;ArgumentsChecked
-	 * public setText(String text) {
-	 * 	this.text = Check.notEmpty(text, &quot;text&quot;);
-	 * }
-	 * </pre>
-	 * 
-	 * @param string
-	 *            a string reference which should not be empty
-	 * @param name
-	 *            name of object reference (in source code)
-	 * @return the passed reference that is not empty
-	 * @throws IllegalNullArgumentException
-	 *             if the given argument {@code string} is {@code null}
-	 * @throws IllegalEmptyArgumentException
-	 *             if the given argument {@code string} is empty
-	 */
-	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static String notEmpty(@Nullable final String string, @Nullable final String name) {
-		notNull(string, name);
-		notEmpty(string, string.isEmpty(), name);
-		return string;
+	public static <T extends CharSequence> T notEmpty(@Nullable final T chars) {
+		notNull(chars);
+		notEmpty(chars, chars.length() == 0, null);
+		return chars;
 	}
 
 	/**
@@ -340,6 +310,36 @@ public final class Check {
 			throw new IllegalEmptyArgumentException(name);
 		}
 		return reference;
+	}
+
+	/**
+	 * Ensures that a passed string as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * The following example describes how to use it.
+	 * 
+	 * <pre>
+	 * &#064;ArgumentsChecked
+	 * public setText(String text) {
+	 * 	this.text = Check.notEmpty(text, &quot;text&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * @param chars
+	 *            a readable sequence of {@code char} values which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code string} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code string} is empty
+	 */
+	@ArgumentsChecked({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends CharSequence> T notEmpty(@Nullable final T chars, @Nullable final String name) {
+		notNull(chars, name);
+		notEmpty(chars, chars.length() == 0, name);
+		return chars;
 	}
 
 	/**
