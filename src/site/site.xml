@@ -20,10 +20,11 @@
 			<item name="Quality-Check" href="modules/quality-check/index.html" />
 		</menu>
 
-		<menu name="Project Documentation">
+		<menu name="Documentation">
 			<item name="Dependency Convergence" href="dependency-convergence.html" />
 			<item name="Dependency Management" href="dependency-management.html" />
 			<item name="Issue Tracking" href="issue-tracking.html" />
+			<item name="Javadoc" href="modules/quality-check/apidocs/index.html" />
 			<item name="Plugin Management" href="plugin-management.html" />
 			<item name="Plugins" href="plugins.html" />
 			<item name="Summary" href="project-summary.html" />
@@ -52,6 +53,10 @@
 			<googleSearch>
 				<sitesearch />
 			</googleSearch>
+			<ohloh>
+				<projectId>605016</projectId>
+				<widget>users</widget>
+			</ohloh>
 			<searchEnabled>true</searchEnabled>
 			<sideBarEnabled>true</sideBarEnabled>
 			<sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
