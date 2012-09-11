@@ -237,12 +237,34 @@ public class CheckTest {
 
 	@Test(expected = IllegalNullElementsException.class)
 	public void noNullElements_nullAtEndArray_fail() {
-		Check.noNullElements(new Integer[] { 1, 2, 3, 4, null });
+		IllegalNullElementsException actual = null;
+		try {
+			Check.noNullElements(new Integer[] { 1, 2, 3, 4, null });
+		} catch (final IllegalNullElementsException e) {
+			actual = e;
+			throw e;
+		} finally {
+			final String expected = "The passed argument must not contain null.";
+			if (actual != null) {
+				Assert.assertEquals(expected, actual.getMessage());
+			}
+		}
 	}
 
 	@Test(expected = IllegalNullElementsException.class)
 	public void noNullElements_nullAtEndArrayWithName_fail() {
-		Check.noNullElements(new Integer[] { 1, 2, 3, 4, null }, "obj");
+		IllegalNullElementsException actual = null;
+		try {
+			Check.noNullElements(new Integer[] { 1, 2, 3, 4, null }, "obj");
+		} catch (final IllegalNullElementsException e) {
+			actual = e;
+			throw e;
+		} finally {
+			final String expected = "The passed argument 'obj' must not contain null.";
+			if (actual != null) {
+				Assert.assertEquals(expected, actual.getMessage());
+			}
+		}
 	}
 
 	@Test(expected = IllegalNullElementsException.class)

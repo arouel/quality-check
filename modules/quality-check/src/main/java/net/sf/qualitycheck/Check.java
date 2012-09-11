@@ -210,6 +210,10 @@ public final class Check {
 	/**
 	 * Ensures that an array does not contain {@code null}.
 	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#noNullElements(Object[], String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
+	 * 
 	 * @param array
 	 *            reference to an array
 	 * 
@@ -218,11 +222,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
 	public static void noNullElements(@Nullable final Object[] array) {
-		Check.notNull(array);
-
-		if (containsNullElements(array)) {
-			throw new IllegalNullElementsException();
-		}
+		noNullElements(array, null);
 	}
 
 	/**
