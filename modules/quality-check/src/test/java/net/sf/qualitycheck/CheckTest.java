@@ -260,7 +260,7 @@ public class CheckTest {
 			actual = e;
 			throw e;
 		} finally {
-			final String expected = "The passed argument must not contain null.";
+			final String expected = "The passed parameter must not contain elements that are null.";
 			if (actual != null) {
 				Assert.assertEquals(expected, actual.getMessage());
 			}
@@ -276,7 +276,7 @@ public class CheckTest {
 			actual = e;
 			throw e;
 		} finally {
-			final String expected = "The passed argument 'obj' must not contain null.";
+			final String expected = "The passed parameter 'obj' must not contain elements that are null.";
 			if (actual != null) {
 				Assert.assertEquals(expected, actual.getMessage());
 			}
@@ -293,7 +293,7 @@ public class CheckTest {
 			actual = e;
 			throw e;
 		} finally {
-			final String expected = "The passed argument must not contain null.";
+			final String expected = "The passed parameter must not contain elements that are null.";
 			if (actual != null) {
 				Assert.assertEquals(expected, actual.getMessage());
 			}
@@ -310,7 +310,7 @@ public class CheckTest {
 			actual = e;
 			throw e;
 		} finally {
-			final String expected = "The passed argument 'myIterable' must not contain null.";
+			final String expected = "The passed parameter 'myIterable' must not contain elements that are null.";
 			if (actual != null) {
 				Assert.assertEquals(expected, actual.getMessage());
 			}
