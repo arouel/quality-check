@@ -17,9 +17,12 @@
 package net.sf.qualitycheck;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -242,6 +245,12 @@ public class CheckTest {
 		Assert.assertSame(array, Check.noNullElements(array, "obj"));
 	}
 
+	@Test
+	public void noNullElements_emptyIterable_isValid() {
+		final List<String> iterable = new ArrayList<String>();
+		Assert.assertSame(iterable, Check.noNullElements(iterable));
+	}
+
 	@Test(expected = IllegalNullElementsException.class)
 	public void noNullElements_nullAtEndArray_fail() {
 		IllegalNullElementsException actual = null;
@@ -275,6 +284,40 @@ public class CheckTest {
 	}
 
 	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtIterableEnd_fail() {
+		IllegalNullElementsException actual = null;
+		try {
+			final List<Integer> iterable = Arrays.asList(new Integer[] { 1, 2, 3, 4, null });
+			Check.noNullElements(iterable);
+		} catch (final IllegalNullElementsException e) {
+			actual = e;
+			throw e;
+		} finally {
+			final String expected = "The passed argument must not contain null.";
+			if (actual != null) {
+				Assert.assertEquals(expected, actual.getMessage());
+			}
+		}
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullAtIterableEnd_withArgName_fail() {
+		IllegalNullElementsException actual = null;
+		try {
+			final List<Integer> iterable = Arrays.asList(new Integer[] { 1, 2, 3, 4, null });
+			Check.noNullElements(iterable, "myIterable");
+		} catch (final IllegalNullElementsException e) {
+			actual = e;
+			throw e;
+		} finally {
+			final String expected = "The passed argument 'myIterable' must not contain null.";
+			if (actual != null) {
+				Assert.assertEquals(expected, actual.getMessage());
+			}
+		}
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
 	public void noNullElements_nullOnlyArray_fail() {
 		Check.noNullElements(new String[] { null });
 	}
@@ -282,6 +325,18 @@ public class CheckTest {
 	@Test(expected = IllegalNullElementsException.class)
 	public void noNullElements_nullOnlyArrayWithName_fail() {
 		Check.noNullElements(new String[] { null }, "obj");
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyIterable_fail() {
+		final List<Integer> iterable = Arrays.asList(new Integer[] { null, null, null });
+		Assert.assertSame(iterable, Check.noNullElements(iterable));
+	}
+
+	@Test(expected = IllegalNullElementsException.class)
+	public void noNullElements_nullOnlyIterable_withArgName_fail() {
+		final List<Integer> iterable = Arrays.asList(new Integer[] { null, null, null });
+		Assert.assertSame(iterable, Check.noNullElements(iterable, "myIterable"));
 	}
 
 	@Test

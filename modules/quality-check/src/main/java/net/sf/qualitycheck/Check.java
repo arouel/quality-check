@@ -208,6 +208,46 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that an iterable reference is neither {@code null} nor contains any elements that are {@code null}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#noNullElements(Iterable, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param iterable
+	 *            the iterable reference which should not contain {@code null}
+	 * @return the passed reference which contains no elements that are {@code null}
+	 * @throws IllegalNullElementsException
+	 *             if the given argument {@code iterable} contains elements that are {@code null}
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable) {
+		return noNullElements(iterable, null);
+	}
+
+	/**
+	 * Ensures that an iterable reference is neither {@code null} nor contains any elements that are {@code null}.
+	 * 
+	 * @param iterable
+	 *            the iterable reference which should not contain {@code null}
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference which contains no elements that are {@code null}
+	 * @throws IllegalNullElementsException
+	 *             if the given argument {@code iterable} contains elements that are {@code null}
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable, final String name) {
+		Check.notNull(iterable);
+		for (final Object element : iterable) {
+			if (element == null) {
+				throw new IllegalNullElementsException(name);
+			}
+		}
+		return iterable;
+	}
+
+	/**
 	 * Ensures that an array does not contain {@code null}.
 	 * 
 	 * <p>
