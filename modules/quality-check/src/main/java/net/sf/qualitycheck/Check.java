@@ -256,7 +256,7 @@ public final class Check {
 	 * 
 	 * @param array
 	 *            reference to an array
-	 * 
+	 * @return the passed reference which contains no elements that are {@code null}
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
@@ -272,7 +272,7 @@ public final class Check {
 	 *            reference to an array
 	 * @param name
 	 *            name of object reference (in source code)
-	 * 
+	 * @return the passed reference which contains no elements that are {@code null}
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
