@@ -22,59 +22,79 @@ public class IllegalNullElementsExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalNullElementsException("argName");
+		final IllegalNullElementsException e = new IllegalNullElementsException("argName");
+		final String expected = "The passed argument 'argName' must not contain null.";
+		Assert.assertEquals(expected, e.getMessage());
+	}
+
+	@Test
+	public void construct_withCause() {
+		final IllegalNullElementsException e = new IllegalNullElementsException(new NullPointerException());
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalNullElementsException("");
+		final IllegalNullElementsException e = new IllegalNullElementsException("");
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		new IllegalNullElementsException("", null);
+		final IllegalNullElementsException e = new IllegalNullElementsException("", null);
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		new IllegalNullElementsException("argName", new NumberFormatException());
+		final IllegalNullElementsException e = new IllegalNullElementsException("argName", new NumberFormatException());
+		final String expected = "The passed argument 'argName' must not contain null.";
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
 		final IllegalNullElementsException e = new IllegalNullElementsException("argName", null);
-		Assert.assertEquals("The passed argument 'argName' must not contain null.", e.getMessage());
+		final String expected = "The passed argument 'argName' must not contain null.";
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNullElementsException(new NumberFormatException());
+		final IllegalNullElementsException e = new IllegalNullElementsException(new NumberFormatException());
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullArgName() {
-		new IllegalNullElementsException((String) null);
+		final IllegalNullElementsException e = new IllegalNullElementsException((String) null);
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullArgNameAndNullCause() {
-		new IllegalNullElementsException((String) null, null);
+		final IllegalNullElementsException e = new IllegalNullElementsException((String) null, null);
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new IllegalNullElementsException((Throwable) null);
+		final IllegalNullElementsException e = new IllegalNullElementsException((Throwable) null);
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
-	@Test
-	public void construct_withCause() {
-		new IllegalNullElementsException(new NullPointerException());
-	}
-
-	
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNullElementsException();
+		final IllegalNullElementsException e = new IllegalNullElementsException();
+		final String expected = IllegalNullElementsException.DEFAULT_MESSAGE;
+		Assert.assertEquals(expected, e.getMessage());
 	}
 
 }
