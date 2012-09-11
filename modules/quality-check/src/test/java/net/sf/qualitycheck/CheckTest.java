@@ -226,13 +226,20 @@ public class CheckTest {
 	}
 
 	@Test
+	public void noNullElements_checkManipulation() {
+		final Object[] array = new Object[] {};
+		Assert.assertArrayEquals(array, Check.noNullElements(array.clone(), "obj"));
+	}
+
+	@Test
 	public void noNullElements_emptyArray_ok() {
 		Check.noNullElements(new Object[] {});
 	}
 
 	@Test
 	public void noNullElements_emptyArrayWithName_ok() {
-		Check.noNullElements(new Object[] {}, "obj");
+		final Object[] array = new Object[] {};
+		Assert.assertSame(array, Check.noNullElements(array, "obj"));
 	}
 
 	@Test(expected = IllegalNullElementsException.class)

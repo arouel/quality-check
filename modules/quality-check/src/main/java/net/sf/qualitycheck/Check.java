@@ -221,8 +221,8 @@ public final class Check {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
-	public static void noNullElements(@Nullable final Object[] array) {
-		noNullElements(array, null);
+	public static <T> T[] noNullElements(@Nullable final T[] array) {
+		return noNullElements(array, null);
 	}
 
 	/**
@@ -237,12 +237,12 @@ public final class Check {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
-	public static void noNullElements(@Nullable final Object[] array, @Nullable final String name) {
+	public static <T> T[] noNullElements(@Nullable final T[] array, @Nullable final String name) {
 		Check.notNull(array);
-
 		if (containsNullElements(array)) {
 			throw new IllegalNullElementsException(name);
 		}
+		return array;
 	}
 
 	/**
