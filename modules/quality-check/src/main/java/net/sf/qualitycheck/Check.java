@@ -89,7 +89,7 @@ public final class Check {
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj) {
 		instanceOf(type, obj, null);
 	}
@@ -106,7 +106,7 @@ public final class Check {
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj, final String name) {
 		Check.notNull(obj);
 		if (type.isInstance(obj)) {
@@ -123,7 +123,7 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static int isNumber(@Nullable final String value) {
 		Check.notNull(value);
 		int number;
@@ -146,7 +146,7 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static int isNumber(@Nullable final String value, @Nullable final String name) {
 		Check.notNull(value);
 
@@ -170,7 +170,7 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static String isNumeric(@Nullable final String value) {
 		Check.notNull(value);
 
@@ -195,7 +195,7 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(value = IllegalNullArgumentException.class)
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static String isNumeric(@Nullable final String value, @Nullable final String name) {
 		Check.notNull(value);
 
@@ -260,7 +260,7 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
-	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(@Nullable final T[] array) {
 		return noNullElements(array, null);
 	}
@@ -276,7 +276,7 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
-	@ArgumentsChecked(value = { IllegalNullArgumentException.class })
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(@Nullable final T[] array, @Nullable final String name) {
 		Check.notNull(array);
 		if (containsNullElements(array)) {
