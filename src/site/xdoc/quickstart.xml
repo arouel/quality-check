@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<properties>
+		<title>Quick Start with Apache Maven</title>
+		<author>André Rouél</author>
+	</properties>
+	<body>
+		<section name="Quick Start with Maven">
+			<p>
+				If you use Apache Maven for your project, it's very easy to start using <em>Quality-Check</em>, because all artifacts are in
+				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cquality-check">The Central Repository</a>.
+				This repository is used by default to search for libraries.
+			</p>
+			<p>
+				Just add the following dependency to your Project Object Model (POM). You know, the file called
+				<em>pom.xml</em>
+				.
+			</p>
+			<source><![CDATA[<project>
+	...
+	<dependencies>
+		...
+		<dependency>
+		    <groupId>net.sf.qualitycheck</groupId>
+		    <artifactId>quality-check</artifactId>
+		    <version>0.10</version>
+		</dependency>
+		...
+	</dependencies>
+	...
+</project>
+]]></source>
+			<p>
+				Maven will now transitively resolve all dependencies to
+				<a href="modules/quality-check/index.html">Quality-Check</a>
+				and
+				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jsr305%22">JSR-305 Annotations</a>.
+				Now you're good to go with the next step:
+				<a href="usage.html">Usage in your API</a>.
+			</p>
+		</section>
+	</body>
+</document>

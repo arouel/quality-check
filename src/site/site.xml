@@ -17,6 +17,11 @@
 			<item name="Team" href="team-list.html" />
 		</menu>
 
+		<menu name="Examples">
+			<item name="Quick Start with Maven" href="quickstart.html" />
+			<item name="Usage in an object" href="usage.html" />
+		</menu>
+
 		<menu name="Modules">
 			<item name="Quality-Check" href="modules/quality-check/index.html" />
 		</menu>
