@@ -16,6 +16,7 @@
  ******************************************************************************/
 package net.sf.qualitycheck;
 
+import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -26,6 +27,7 @@ import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
+import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -89,6 +91,25 @@ public final class Check {
 			}
 		}
 		return containsNull;
+	}
+
+	/**
+	 * Ensures that a passed class has an annotation of a specific type
+	 * 
+	 * @param clazz
+	 *            the class that must have a required annotation
+	 * @param annotation
+	 *            the type of annotation that is required on the class
+	 * @return the annotation which is present on the checked class
+	 */
+	public static Annotation hasAnnotation(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
+		Check.notNull(clazz, "clazz");
+		Check.notNull(annotation, "annotation");
+		if (!clazz.isAnnotationPresent(annotation)) {
+			throw new IllegalMissingAnnotationException(annotation, clazz);
+		}
+
+		return clazz.getAnnotation(annotation);
 	}
 
 	/**
