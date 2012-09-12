@@ -70,6 +70,17 @@
 							<em>Assert</em>
 						</th>
 					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>hasAnnotation</strong>(Class&lt;?&gt;&#160;clazz,
+								Class&lt;? extends Annotation&gt;annotation)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
 							<code>
@@ -666,6 +677,17 @@
 							<em>Preconditions</em>
 						</th>
 					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>hasAnnotation</strong>(Class&lt;?&gt;&#160;clazz,
+								Class&lt;? extends Annotation&gt;annotation)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
 							<code>
@@ -1201,6 +1223,17 @@
 							Method of
 							<em>Validate</em>
 						</th>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>hasAnnotation</strong>(Class&lt;?&gt;&#160;clazz,
+								Class&lt;? extends Annotation&gt;annotation)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
 					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
