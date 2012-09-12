@@ -55,7 +55,7 @@ import java.lang.annotation.Target;
  * @author Dominik Seichter
  */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target(value = ElementType.METHOD)
+@Target(value = { ElementType.CONSTRUCTOR, ElementType.METHOD })
 public @interface ArgumentsChecked {
 
 	/**
