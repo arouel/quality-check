@@ -16,7 +16,8 @@
 				or
 				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
 				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> tries to
-				replace these libraries and provide all the basic code quality checks you need.
+				replace these libraries and provide all the basic code quality checks you need. (If you're familiar with those classes, just look at our
+				<a href="comparison.html">comparison</a> page.)
 			</p>
 			<p>
 				The checks provided here are typically used to validate method parameters and detect errors during runtime. To
@@ -26,21 +27,19 @@
 			</p>
 			<p>
 				We think that our module is particularly suitable for APIs, which contain their own domain objects and services that are validated 
-				using quality check not only functionally, but also technically. More over we provide an easy to use fail-fast description of an API 
+				using <em>Quality-Check</em> not only functionally, but also technically. More over we provide an easy to use fail-fast description of an API 
 				to immediately report at its interface any failure or condition that is likely to lead to failure.
 			</p>
 			<p>
 				We noticed that many projects just copy
-				<code>org.springframework.util.Assert</code>
-				or
-				<code>com.google.common.base.Preconditions</code>
+				<code>org.springframework.util.Assert</code> or <code>com.google.common.base.Preconditions</code>
 				to get access to these quality checks. Therefore we provide these features and a small library that can be included in
 				any application without big overhead.
 			</p>
 		</section>
 		<section name="Why is it called check and not assertion?">
 			<p>We think that checks of method arguments are not only assertion tests it's more over a condition to work properly.
-				More over it supports you to write faster contracts for your methods and classes. If nothing of this package make
+				Beyond this, it supports you to write faster contracts for your methods and classes. If nothing of this package make
 				sense look at the concept
 				<a href="http://en.wikipedia.org/wiki/Design_by_contract"><em>design by contract</em></a>.
 			</p>
