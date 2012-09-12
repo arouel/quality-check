@@ -102,6 +102,7 @@ public final class Check {
 	 *            the type of annotation that is required on the class
 	 * @return the annotation which is present on the checked class
 	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static Annotation hasAnnotation(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(annotation, "annotation");
