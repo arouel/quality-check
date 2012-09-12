@@ -32,6 +32,7 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
+import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
@@ -206,6 +207,58 @@ public final class Check {
 		}
 
 		return value;
+	}
+
+	/**
+	 * Ensures that a readable sequence of {@code char} values matches a specified pattern. If the given character
+	 * sequence does not match against the passed pattern, an {@link IllegalPatternArgumentException} will be thrown.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#matchesPattern(Pattern, CharSequence, String)} and pass as
+	 * second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param pattern
+	 *            pattern, that the {@code chars} must correspond to
+	 * @param chars
+	 *            a readable sequence of {@code char} values which should match the given pattern
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed {@code chars} that matches the given pattern
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code chars} is {@code null}
+	 * @throws IllegalPatternArgumentException
+	 *             if the given {@code chars} that does not match the {@code pattern}
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nullable final T chars) {
+		return matchesPattern(pattern, chars, null);
+	}
+
+	/**
+	 * Ensures that a readable sequence of {@code char} values matches a specified pattern. If the given character
+	 * sequence does not match against the passed pattern, an {@link IllegalPatternArgumentException} will be thrown.
+	 * 
+	 * @param pattern
+	 *            pattern, that the {@code chars} must correspond to
+	 * @param chars
+	 *            a readable sequence of {@code char} values which should match the given pattern
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed {@code chars} that matches the given pattern
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code chars} is {@code null}
+	 * @throws IllegalPatternArgumentException
+	 *             if the given {@code chars} that does not match the {@code pattern}
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nullable final T chars,
+			@Nullable final String name) {
+		Check.notNull(pattern);
+		Check.notNull(chars);
+		if (!pattern.matcher(chars).matches()) {
+			throw new IllegalPatternArgumentException(name, pattern);
+		}
+		return chars;
 	}
 
 	/**
