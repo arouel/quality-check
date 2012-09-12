@@ -107,9 +107,10 @@ public final class Check {
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
 	@ArgumentsChecked(IllegalNullArgumentException.class)
-	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj, final String name) {
+	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj, @Nullable final String name) {
+		Check.notNull(type);
 		Check.notNull(obj);
-		if (type.isInstance(obj)) {
+		if (!type.isInstance(obj)) {
 			throw new IllegalInstanceOfArgumentException(name, type, obj.getClass());
 		}
 	}
