@@ -18,7 +18,6 @@ package net.sf.qualitycheck;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnegative;
@@ -58,7 +57,13 @@ public final class Check {
 	 * So we do not pay any performance bounty for regular expressions when using other checks.
 	 */
 	private static final class NumericRegularExpressionHolder {
-		public static final Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
+
+		private static Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
+
+		public static Pattern getPattern() {
+			return NUMERIC_REGEX;
+		}
+
 	}
 
 	/**
@@ -138,7 +143,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a String argument is a number according to {@code Integer.parseInt}
+	 * Ensures that a string argument is a number according to {@code Integer.parseInt}
 	 * 
 	 * @param value
 	 *            value which must be a number
@@ -165,6 +170,9 @@ public final class Check {
 	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
 	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
 	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#isNumeric(String, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param value
 	 *            value which must be a number
@@ -174,20 +182,12 @@ public final class Check {
 	 */
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static String isNumeric(@Nullable final String value) {
-		Check.notNull(value);
-
-		final Matcher m = NumericRegularExpressionHolder.NUMERIC_REGEX.matcher(value);
-		if (!m.matches()) {
-			throw new IllegalNumericArgumentException();
-		}
-
-		return value;
+		return isNumeric(value, null);
 	}
 
 	/**
 	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
 	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
-	 * 
 	 * 
 	 * @param value
 	 *            value which must be a number
@@ -200,13 +200,23 @@ public final class Check {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static String isNumeric(@Nullable final String value, @Nullable final String name) {
 		Check.notNull(value);
-
-		final Matcher m = NumericRegularExpressionHolder.NUMERIC_REGEX.matcher(value);
-		if (!m.matches()) {
-			throw new IllegalNumericArgumentException();
+		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
+			throw new IllegalNumericArgumentException(name);
 		}
-
 		return value;
+	}
+
+	/**
+	 * Checks whether a character sequence matches against a specified pattern or not.
+	 * 
+	 * @param pattern
+	 *            pattern, that the {@code chars} must correspond to
+	 * @param chars
+	 *            a readable sequence of {@code char} values which should match the given pattern
+	 * @return {@code true} when {@code chars} matches against the passed {@code pattern}, otherwise {@code false}
+	 */
+	private static boolean matches(@Nonnull final Pattern pattern, @Nonnull final CharSequence chars) {
+		return pattern.matcher(chars).matches();
 	}
 
 	/**
@@ -255,7 +265,7 @@ public final class Check {
 			@Nullable final String name) {
 		Check.notNull(pattern);
 		Check.notNull(chars);
-		if (!pattern.matcher(chars).matches()) {
+		if (!matches(pattern, chars)) {
 			throw new IllegalPatternArgumentException(name, pattern);
 		}
 		return chars;
