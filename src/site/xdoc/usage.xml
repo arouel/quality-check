@@ -40,7 +40,7 @@ import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 public class User {
 
   // example email pattern
-  private static final Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+"); // example pattern
+  private static final Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
   private final String name;
   private final String email;
 
