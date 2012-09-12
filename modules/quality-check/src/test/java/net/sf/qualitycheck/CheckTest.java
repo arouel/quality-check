@@ -16,6 +16,7 @@
  ******************************************************************************/
 package net.sf.qualitycheck;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +29,12 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import javax.annotation.Generated;
+import javax.annotation.Resource;
+
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
+import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -67,6 +72,14 @@ public class CheckTest {
 		public FakeInstantiationException() throws InstantiationException {
 			throw new InstantiationException();
 		}
+	}
+	
+	@Generated(value = { "2001-07-04T12:08:56.235-0700" })
+	private static class FakeSourceAnnotatedClass {
+	}
+	
+	@Resource
+	private static class FakeAnnotatedClass {
 	}
 
 	@Test
@@ -231,7 +244,33 @@ public class CheckTest {
 		constructor.setAccessible(true);
 		constructor.newInstance();
 	}
+	
+	@Test(expected = IllegalNullArgumentException.class)
+	public void hasAnnotation_class_isNull() {
+		Check.hasAnnotation(null, ArgumentsChecked.class);
+	}
+	
+	@Test(expected = IllegalNullArgumentException.class)
+	public void hasAnnoation_annotation_isNull() {
+		Check.hasAnnotation(CheckTest.class, null);
+	}
 
+	@Test(expected = IllegalMissingAnnotationException.class)
+	public void hasAnnoation_annotation_fail() {
+		Check.hasAnnotation(CheckTest.class, ArgumentsChecked.class);
+	}
+
+	@Test(expected = IllegalMissingAnnotationException.class)
+	public void hasAnnoation_annotationRetentionSource_fail() {
+		Check.hasAnnotation(FakeSourceAnnotatedClass.class, Generated.class);
+	}
+
+	@Test
+	public void hasAnnoation_annotation_ok() {
+		final Annotation annotation = Check.hasAnnotation(FakeAnnotatedClass.class, Resource.class);
+		Assert.assertTrue(annotation instanceof Resource);
+	}
+	
 	@Test(expected = IllegalNullArgumentException.class)
 	public void instanceOf_obj_isNull() {
 		Check.instanceOf(Integer.class, null);

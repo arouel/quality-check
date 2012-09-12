@@ -34,6 +34,12 @@ public class IllegalMissingAnnotationExceptionTest {
 	public void construct_withNullAnnotation_notSuccessful() {
 		new IllegalMissingAnnotationException((Class<? extends Annotation>)null);
 	}
+	
+	@Test
+	public void construct_withNullCause() {
+		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException((Throwable)null);
+		Assert.assertEquals("Annotation is required on the passed class.", e.getMessage());
+	}
 
 	@Test(expected=IllegalNullArgumentException.class)
 	public void construct_withNullAnnotationAndNullCause_notSuccessfull() {
