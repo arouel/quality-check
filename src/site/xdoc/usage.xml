@@ -25,9 +25,11 @@
 				<em>immutable</em>
 				object as the following example.
 			</p>
-			<h4 class="green">
-				With
-				<em>Quality-Check</em>
+			<h4>
+				<span class="green">
+					With
+					<em>Quality-Check</em>
+				</span>
 			</h4>
 			<source><![CDATA[package net.example.app.model;
 
@@ -70,10 +72,16 @@ public class User {
   }
 
 }]]></source>
-			<p>Look how much source code not very nice to read, must be written without <em>Quality-Check</em>.</p>
-			<h4 class="red">
-				Without
-				<em>Quality-Check</em>
+			<br />
+			<p>
+				Look how many lines of code must be written without
+				<em>Quality-Check</em>.
+			</p>
+			<h4>
+				<span class="red">
+					Without
+					<em>Quality-Check</em>
+				</span>
 			</h4>
 			<source><![CDATA[package net.example.app.model;
 

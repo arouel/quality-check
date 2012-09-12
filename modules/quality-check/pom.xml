@@ -6,7 +6,7 @@
 		<relativePath>../../</relativePath>
 		<groupId>net.sf.qualitycheck</groupId>
 		<artifactId>quality-parent</artifactId>
-		<version>0.10-SNAPSHOT</version>
+		<version>0.11-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>quality-check</artifactId>

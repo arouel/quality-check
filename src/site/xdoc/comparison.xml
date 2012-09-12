@@ -1,0 +1,1889 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<properties>
+		<title>About Quality-Check</title>
+		<author>André Rouél</author>
+		<author>Dominik Seichter</author>
+	</properties>
+	<body>
+		<section name="Comparison of Quality-Check with similar classes">
+			<a name="overview" />
+			<p>
+				This page tries to compare
+				<em>Quality-Check</em>
+				with other classes like
+				<code>org.springframework.util.Assert</code>
+				<a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
+				or
+				<code>com.google.common.base.Preconditions</code>
+				<a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
+				or
+				<code>org.apache.commons.lang3.Validate</code>
+				<a href="http://commons.apache.org/lang/api/org/apache/commons/lang3/Validate.html">[3]</a>
+				.
+			</p>
+			<ul>
+				<li>
+					<a href="#toAssert">
+						Comparison with
+						<em>Assert</em>
+					</a>
+				</li>
+				<li>
+					<a href="#toPreconditions">
+						Comparison with
+						<em>Preconditions</em>
+					</a>
+				</li>
+				<li>
+					<a href="#toValidate">
+						Comparison with
+						<em>Validate</em>
+					</a>
+				</li>
+			</ul>
+			<br />
+			<br />
+			<br />
+
+			<br />
+			<br />
+			<a name="toAssert" />
+			<a href="#overview">
+				Comparison Overview
+			</a>
+			<h3>
+				<em>Check</em>
+				compared to
+				<em>Assert</em>
+			</h3>
+			<table class="comparison" border="0" cellpadding="3" cellspacing="0" summary="Method Comparison table, listing methods">
+				<tbody>
+					<tr>
+						<th class="colFirst" scope="col">
+							Method of
+							<em>Check</em>
+						</th>
+						<th class="colLast" scope="col">
+							Method of
+							<em>Assert</em>
+						</th>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isInstanceOf</strong>(Class&lt;?&gt;&#160;clazz,
+								Object&#160;obj)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isInstanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(Object[]&#160;array)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(Object[]&#160;array,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression,
+								String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>hasLength</strong>
+								(String&#160;text)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Collection&#160;collection,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Map&#160;map)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Object[]&#160;array)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Object[]&#160;array,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;reference,
+								boolean&#160;expression, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>hasLength</strong>
+								(String&#160;text, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Collection&#160;collection,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Map&#160;map, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notNull</strong>
+								(Object&#160;object)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notNull</strong>
+								(Object&#160;object, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>positionIndex</strong>
+								(int&#160;index, int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>range</strong>
+								(int&#160;start, int&#160;end,
+								int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>state</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression, Class&lt;?
+								extends RuntimeException&gt;&#160;clazz)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;description)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>state</strong>
+								(boolean&#160;expression,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;descriptionTemplate,
+								Object...&#160;descriptionTemplateArgs)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr>
+						<td class="center" colspan="2">
+							<span>
+								Methods that are not directly supported by
+								<em>Check</em>
+							</span>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>doesNotContain</strong>
+								(String&#160;textToSearch,
+								String&#160;substring)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>doesNotContain</strong>
+								(String&#160;textToSearch,
+								String&#160;substring, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>hasText</strong>
+								(String&#160;text)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>hasText</strong>
+								(String&#160;text, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isAssignable</strong>
+								(Class&#160;superType,
+								Class&#160;subType)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isAssignable</strong>
+								(Class&#160;superType,
+								Class&#160;subType, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;object)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;object, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<br />
+			<br />
+			<a name="toPreconditions" />
+			<a href="#overview">
+				Comparison Overview
+			</a>
+			<h3>
+				<em>Check</em>
+				compared to
+				<em>Preconditions</em>
+			</h3>
+			<table class="comparison" border="0" cellpadding="3" cellspacing="0" summary="Method Comparison table, listing methods">
+				<tbody>
+					<tr>
+						<th class="colFirst" scope="col">
+							Method of
+							<em>Check</em>
+						</th>
+						<th class="colLast" scope="col">
+							Method of
+							<em>Preconditions</em>
+						</th>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression,
+								String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;reference,
+								boolean&#160;expression, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkNotNull</strong>
+								(T&#160;reference)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkNotNull</strong>
+								(T&#160;reference,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>positionIndex</strong>
+								(int&#160;index, int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkPositionIndex</strong>
+								(int&#160;index, int&#160;size)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>range</strong>
+								(int&#160;start, int&#160;end,
+								int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkPositionIndexes</strong>
+								(int&#160;start,
+								int&#160;end, int&#160;size)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkState</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression, Class&lt;?
+								extends RuntimeException&gt;&#160;clazz)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;description)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkState</strong>
+								(boolean&#160;expression,
+								String&#160;errorMessage)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;descriptionTemplate,
+								Object...&#160;descriptionTemplateArgs)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkState</strong>
+								(boolean&#160;expression,
+								String&#160;errorMessageTemplate, Object...&#160;errorMessageArgs)
+							</code>
+						</td>
+					</tr>
+					<tr>
+						<td class="center" colspan="2">
+							<span>
+								Methods that are not directly supported by
+								<em>Check</em>
+							</span>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkArgument</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkArgument</strong>
+								(boolean&#160;expression,
+								Object&#160;errorMessage)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkArgument</strong>
+								(boolean&#160;expression,
+								String&#160;errorMessageTemplate, Object...&#160;errorMessageArgs)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkElementIndex</strong>
+								(int&#160;index, int&#160;size)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkElementIndex</strong>
+								(int&#160;index, int&#160;size,
+								String&#160;desc)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkNotNull</strong>
+								(T&#160;reference,
+								String&#160;errorMessageTemplate, Object...&#160;errorMessageArgs)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>checkPositionIndex</strong>
+								(int&#160;index, int&#160;size,
+								String&#160;desc)
+							</code>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<br />
+			<br />
+			<a name="toValidate" />
+			<a href="#overview">
+				Comparison Overview
+			</a>
+			<h3>
+				<em>Check</em>
+				compared to
+				<em>Validate</em>
+			</h3>
+			<table class="comparison" border="0" cellpadding="3" cellspacing="0"
+				summary="Method Summary table, listing methods, and an explanation">
+				<tbody>
+					<tr>
+						<th class="colFirst" scope="col">
+							Method of
+							<em>Check</em>
+						</th>
+						<th class="colLast" scope="col">
+							Method of
+							<em>Validate</em>
+						</th>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isInstanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>instanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj, String&#160;message)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isInstanceOf</strong>(Class&lt;?&gt;&#160;type,
+								Object&#160;obj, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumber</strong>
+								(String&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNumeric</strong>
+								(T&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>matchesPattern</strong>
+								(Pattern&#160;pattern,
+								T&#160;chars, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(Object[]&#160;array)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(Object[]&#160;array,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>noNullElements</strong>
+								(T&#160;iterable, String&#160;name)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(boolean&#160;expression,
+								String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Collection&#160;collection,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Map&#160;map)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Object[]&#160;array)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T[]&#160;array, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Object[]&#160;array,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;reference,
+								boolean&#160;expression, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;chars, String&#160;message,
+								Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;collection, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Collection&#160;collection,
+								String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notEmpty</strong>
+								(T&#160;map, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notEmpty</strong>
+								(Map&#160;map, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(double&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNaN</strong>
+								(float&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notNull</strong>
+								(Object&#160;object)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>notNull</strong>
+								(T&#160;reference, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notNull</strong>
+								(Object&#160;object, String&#160;message)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>positionIndex</strong>
+								(int&#160;index, int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>range</strong>
+								(int&#160;start, int&#160;end,
+								int&#160;size)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validState</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression, Class&lt;?
+								extends RuntimeException&gt;&#160;clazz)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;description)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>stateIsTrue</strong>
+								(boolean&#160;expression,
+								String&#160;descriptionTemplate,
+								Object...&#160;descriptionTemplateArgs)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validState</strong>
+								(boolean&#160;expression,
+								String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr>
+						<td class="center" colspan="2">
+							<span>
+								Methods that are not directly supported by
+								<em>Check</em>
+							</span>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>exclusiveBetween</strong>
+								(T&#160;start,
+								T&#160;end, Comparable&lt;T&gt;&#160;value)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>exclusiveBetween</strong>
+								(T&#160;start,
+								T&#160;end, Comparable&lt;T&gt;&#160;value, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>inclusiveBetween</strong>
+								(T&#160;start,
+								T&#160;end, Comparable&lt;T&gt;&#160;value)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>inclusiveBetween</strong>
+								(T&#160;start,
+								T&#160;end, Comparable&lt;T&gt;&#160;value, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isAssignableFrom</strong>
+								(Class&#160;superType,
+								Class&#160;subType)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isAssignableFrom</strong>
+								(Class&#160;superType,
+								Class&#160;subType, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression,
+								String&#160;message, double&#160;value)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression,
+								String&#160;message, long&#160;value)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isTrue</strong>
+								(boolean&#160;expression,
+								String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notBlank</strong>
+								(T&#160;chars)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>notBlank</strong>
+								(T&#160;chars, String&#160;message,
+								Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T[]&#160;array, int&#160;index)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T[]&#160;array, int&#160;index, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T&#160;chars, int&#160;index)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T&#160;chars, int&#160;index, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T&#160;collection, int&#160;index)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>-</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>validIndex</strong>
+								(T&#160;collection, int&#160;index, String&#160;message, Object...&#160;values)
+							</code>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</section>
+	</body>
+</document>
