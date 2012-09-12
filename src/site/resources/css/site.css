@@ -63,9 +63,9 @@ tt {
 }
 
 .green {
-	font-color: #3ADF00;
+	font-color: #3ADF00 !important;
 }
 
 .red {
-	font-color: #DF0101;
+	font-color: #DF0101 !important;
 }
