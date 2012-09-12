@@ -13,13 +13,14 @@
 		<menu name="Overview">
 			<item name="About" href="index.html" />
 			<item name="Usage" href="usage.html" />
+			<item name="Comparison with other" href="comparison.html" />
 			<item name="License" href="license.html" />
 			<item name="Team" href="team-list.html" />
 		</menu>
 
 		<menu name="Examples">
 			<item name="Quick Start with Maven" href="quickstart.html" />
-			<item name="Usage in an object" href="usage.html" />
+			<item name="Simple use case" href="usage.html" />
 		</menu>
 
 		<menu name="Modules">

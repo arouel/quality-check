@@ -59,13 +59,34 @@ a.poweredBy {
 }
 
 tt {
-	background-color: #FFF9D9;
+	background-color: inherit;
 }
 
 .green {
-	font-color: #3ADF00 !important;
+	color: #3ADF00 !important;
 }
 
 .red {
-	font-color: #DF0101 !important;
+	color: #DF0101 !important;
+}
+
+.comparison {
+	width: 1100px;
+}
+
+.comparison tt {
+	font-size: 10px !important;
+}
+
+td.center {
+	text-align: center;
+	width: 100%;
+}
+
+tr.rowColor {
+	background-color: #F8F8F8;
+}
+
+tr.altColor {
+	background-color: #F0F0F0;
 }
