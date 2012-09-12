@@ -167,30 +167,32 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
-	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
+	 * Ensures that a readable sequence of {@code char} values is numeric. Numeric arguments consist only of the
+	 * characters 0-9 and may start with 0 (compared to number arguments, which must be valid numbers - think of a bank
+	 * account number).
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#isNumeric(String, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param value
-	 *            value which must be a number
+	 *            a readable sequence of {@code char} values which must be a number
 	 * @return the given string argument
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked(IllegalNullArgumentException.class)
-	public static String isNumeric(@Nullable final String value) {
+	public static <T extends CharSequence> T isNumeric(@Nullable final T value) {
 		return isNumeric(value, null);
 	}
 
 	/**
-	 * Ensures that a String argument is numeric. Numeric arguments consist only of the characters 0-9 and may start
-	 * with 0 (compared to number arguments, which must be valid numbers - think of a bank account number).
+	 * Ensures that a readable sequence of {@code char} values is numeric. Numeric arguments consist only of the
+	 * characters 0-9 and may start with 0 (compared to number arguments, which must be valid numbers - think of a bank
+	 * account number).
 	 * 
 	 * @param value
-	 *            value which must be a number
+	 *            a readable sequence of {@code char} values which must be a number
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the given string argument
@@ -198,7 +200,7 @@ public final class Check {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked(IllegalNullArgumentException.class)
-	public static String isNumeric(@Nullable final String value, @Nullable final String name) {
+	public static <T extends CharSequence> T isNumeric(@Nullable final T value, @Nullable final String name) {
 		Check.notNull(value);
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
 			throw new IllegalNumericArgumentException(name);
