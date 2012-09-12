@@ -60,6 +60,7 @@ public final class Check {
 
 		private static Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
 
+		@Nonnull
 		public static Pattern getPattern() {
 			return NUMERIC_REGEX;
 		}
