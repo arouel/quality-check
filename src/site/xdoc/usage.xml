@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<properties>
+		<title>Usage of Quality-Check</title>
+		<author email="andre.rouel@googlemail.com">André Rouél</author>
+	</properties>
+	<body>
+		<section name="Usage">
+			<h3>Requirements</h3>
+			<p>This library uses JSR-305 annotations to identify software defects easily.</p>
+			<p>
+				This means that if the
+				<em>Quality-Check</em>
+				library is used also the JSR-305 library must exist in your classpath.
+			</p>
+			<h3>A simple use case</h3>
+			<p>
+				To use the library it must be added to your classpath. With Apache Maven you can start with
+				<a href="quickstart.html">this guide</a>
+				quickly.
+			</p>
+			<p>
+				Then you should have access to the classes of the library. For example, you might want to build an
+				<em>immutable</em>
+				object as the following example.
+			</p>
+			<h4 class="green">
+				With
+				<em>Quality-Check</em>
+			</h4>
+			<source><![CDATA[package net.example.app.model;
+
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
+
+public class User {
+
+  // example email pattern
+  private static final Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+"); // example pattern
+  private final String name;
+  private final String email;
+
+  /**
+   * Constructs a new instance of {@code User} with a name and email address.
+   * 
+   * @param name
+   *          name of an user
+   * @param email
+   *          email address an user
+   */
+  @ArgumentsChecked({
+    IllegalNullArgumentException.class,
+    IllegalEmptyArgumentException.class,
+    IllegalPatternArgumentException.class })
+  public User(@Nonnull final String name, @Nonnull final String email) {
+    this.name = Check.notEmpty(name);
+    this.email = Check.matchesPattern(EMAIL_PATTERN, email);
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+}]]></source>
+			<p>Look how much source code not very nice to read, must be written without <em>Quality-Check</em>.</p>
+			<h4 class="red">
+				Without
+				<em>Quality-Check</em>
+			</h4>
+			<source><![CDATA[package net.example.app.model;
+
+import java.util.regex.Pattern;
+
+public class User {
+
+  // example email pattern
+  private static final Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
+  private final String name;
+  private final String email;
+
+  /**
+   * Constructs a new instance of {@code User} with a name and email address.
+   * 
+   * @param name
+   *          name of an user
+   * @param email
+   *          email address an user
+   * @throws IllegalArgumentException
+   *           if any argument is {@code null}
+   * @throws IllegalArgumentException
+   *           if argument {@code name} is empty
+   * @throws IllegalArgumentException
+   *           if argument {@code email} is not a valid email address
+   */
+  public User(final String name, final String email) {
+    if (name == null) {
+      throw new IllegalArgumentException("Argument 'name' must not be null.");
+    }
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Argument 'name' must not be empty.");
+    }
+    if (email == null) {
+      throw new IllegalArgumentException("Argument 'email' must not be null.");
+    }
+    if (!EMAIL_PATTERN.matcher(email).matches()) {
+      throw new IllegalArgumentException("Argument 'email' must be a valid email address.");
+    }
+
+    this.name = name;
+    this.email = email;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+}]]></source>
+		</section>
+	</body>
+</document>
