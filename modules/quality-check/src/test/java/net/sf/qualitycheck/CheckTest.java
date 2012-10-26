@@ -38,8 +38,6 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
-import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
-import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
@@ -55,6 +53,10 @@ import org.junit.Test;
  * @author Dominik Seichter
  */
 public class CheckTest {
+
+	@Resource
+	private static class FakeAnnotatedClass {
+	}
 
 	private static class FakeIllegalAccessException extends RuntimeException {
 		private static final long serialVersionUID = 3810373199918408287L;
@@ -73,13 +75,9 @@ public class CheckTest {
 			throw new InstantiationException();
 		}
 	}
-	
+
 	@Generated(value = { "2001-07-04T12:08:56.235-0700" })
 	private static class FakeSourceAnnotatedClass {
-	}
-	
-	@Resource
-	private static class FakeAnnotatedClass {
 	}
 
 	@Test
@@ -244,25 +242,15 @@ public class CheckTest {
 		constructor.setAccessible(true);
 		constructor.newInstance();
 	}
-	
-	@Test(expected = IllegalNullArgumentException.class)
-	public void hasAnnotation_class_isNull() {
-		Check.hasAnnotation(null, ArgumentsChecked.class);
-	}
-	
-	@Test(expected = IllegalNullArgumentException.class)
-	public void hasAnnoation_annotation_isNull() {
-		Check.hasAnnotation(CheckTest.class, null);
-	}
 
 	@Test(expected = IllegalMissingAnnotationException.class)
 	public void hasAnnoation_annotation_fail() {
 		Check.hasAnnotation(CheckTest.class, ArgumentsChecked.class);
 	}
 
-	@Test(expected = IllegalMissingAnnotationException.class)
-	public void hasAnnoation_annotationRetentionSource_fail() {
-		Check.hasAnnotation(FakeSourceAnnotatedClass.class, Generated.class);
+	@Test(expected = IllegalNullArgumentException.class)
+	public void hasAnnoation_annotation_isNull() {
+		Check.hasAnnotation(CheckTest.class, null);
 	}
 
 	@Test
@@ -270,7 +258,17 @@ public class CheckTest {
 		final Annotation annotation = Check.hasAnnotation(FakeAnnotatedClass.class, Resource.class);
 		Assert.assertTrue(annotation instanceof Resource);
 	}
-	
+
+	@Test(expected = IllegalMissingAnnotationException.class)
+	public void hasAnnoation_annotationRetentionSource_fail() {
+		Check.hasAnnotation(FakeSourceAnnotatedClass.class, Generated.class);
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void hasAnnotation_class_isNull() {
+		Check.hasAnnotation(null, ArgumentsChecked.class);
+	}
+
 	@Test(expected = IllegalNullArgumentException.class)
 	public void instanceOf_obj_isNull() {
 		Check.instanceOf(Integer.class, null);
@@ -694,11 +692,6 @@ public class CheckTest {
 		Check.notNull("", "foo");
 	}
 
-	@Test
-	public void testArgumentNegativeNumber_Ok() {
-		Assert.assertEquals(-123, Check.isNumber("-123", "numeric"));
-	}
-
 	@Test(expected = IllegalNaNArgumentException.class)
 	public void testNaNDouble_Fail() {
 		Check.notNaN(Double.NaN);
@@ -737,101 +730,6 @@ public class CheckTest {
 	@Test
 	public void testNaNFloatArgument_Ok() {
 		Assert.assertEquals(1.0f, Check.notNaN(1.0f, "float"), 0.0f);
-	}
-
-	@Test
-	public void testNegativeNumber_Ok() {
-		Assert.assertEquals(-123, Check.isNumber("-123"));
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumber_Fail() {
-		Check.isNumber("Hallo Welt!");
-	}
-
-	@Test
-	public void testNumber_Ok() {
-		Assert.assertEquals(123, Check.isNumber("123"));
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberArgument_Fail() {
-		Check.isNumber("Hallo Welt", "numeric");
-	}
-
-	@Test
-	public void testNumberArgument_Ok() {
-		Assert.assertEquals(123, Check.isNumber("123", "numeric"));
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberArgumentDecimalNumber_Fail() {
-		Check.isNumber("1.23", "numeric");
-	}
-
-	@Test(expected = IllegalNumberArgumentException.class)
-	public void testNumberDecimalNumber_Fail() {
-		Check.isNumber("1.23");
-	}
-
-	@Test
-	public void testNumberOctalArgument_Ok() {
-		Assert.assertEquals(123, Check.isNumber("0123", "octalNumber"));
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumeric_Fail() {
-		Check.isNumeric("Hallo Welt!");
-	}
-
-	@Test
-	public void testNumeric_Ok() {
-		Assert.assertEquals("123", Check.isNumeric("123"));
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericArgument_Fail() {
-		Check.isNumeric("Hallo Welt", "numeric");
-	}
-
-	@Test
-	public void testNumericArgument_Ok() {
-		Assert.assertEquals("123", Check.isNumeric("123", "numeric"));
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericArgumentDecimalNumber_Fail() {
-		Check.isNumeric("1.23", "numeric");
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericArgumentNegativeNumber_Fail() {
-		Check.isNumeric("-123", "numeric");
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericDecimalNumber_Fail() {
-		Check.isNumeric("1.23");
-	}
-
-	@Test(expected = IllegalNumericArgumentException.class)
-	public void testNumericNegativeNumber_Fail() {
-		Check.isNumeric("-123");
-	}
-
-	@Test
-	public void testNumericZero_Ok() {
-		Assert.assertEquals("0123", Check.isNumeric("0123"));
-	}
-
-	@Test
-	public void testNumericZeroArgument_Ok() {
-		Assert.assertEquals("0123", Check.isNumeric("0123", "numeric"));
-	}
-
-	@Test
-	public void testNumerZero_Ok() {
-		Assert.assertEquals(123, Check.isNumber("0123"));
 	}
 
 	@Test(expected = java.lang.IllegalAccessException.class)
