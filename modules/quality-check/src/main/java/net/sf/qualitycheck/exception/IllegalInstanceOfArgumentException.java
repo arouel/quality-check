@@ -28,21 +28,21 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 	private static final long serialVersionUID = -1886931952915327794L;
 
 	/**
-	 * Default message to indicate that a given parameter must is a member of an unexpected type
+	 * Default message to indicate that a given argument must is a member of an unexpected type
 	 */
-	protected static final String DEFAULT_MESSAGE = "The passed parameter is a member of an unexpected type.";
+	protected static final String DEFAULT_MESSAGE = "The passed argument is a member of an unexpected type.";
 
 	/**
-	 * Message to indicate that a given parameter with must is a member of an unexpected type (with current and expected
+	 * Message to indicate that a given argument with must is a member of an unexpected type (with current and expected
 	 * type information)
 	 */
-	protected static final String MESSAGE_WITH_TYPES = "The passed parameter is a member of an unexpected type (expected type: %s, actual: %s).";
+	protected static final String MESSAGE_WITH_TYPES = "The passed argument is a member of an unexpected type (expected type: %s, actual: %s).";
 
 	/**
-	 * Message to indicate that a given parameter with <em>name</em> must is a member of an unexpected type (with
-	 * current and expected type information)
+	 * Message to indicate that a given argument with <em>name</em> must is a member of an unexpected type (with current
+	 * and expected type information)
 	 */
-	protected static final String MESSAGE_WITH_NAME_AND_TYPES = "The passed parameter '%s' is a member of an unexpected type (expected type: %s, actual: %s).";
+	protected static final String MESSAGE_WITH_NAME_AND_TYPES = "The passed argument '%s' is a member of an unexpected type (expected type: %s, actual: %s).";
 
 	/**
 	 * Placeholder for not set types to format a message human readable
@@ -50,22 +50,22 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 	protected static final String NO_TYPE_PLACEHOLDER = "(not set)";
 
 	/**
-	 * Determines the message to be used, depending on the passed parameter name. If if the given parameter name is
+	 * Determines the message to be used, depending on the passed argument name. If if the given argument name is
 	 * {@code null} or empty {@code DEFAULT_MESSAGE} will be returned, otherwise a formatted {@code MESSAGE_WITH_NAME}
 	 * with the passed name.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
+	 * @param argumentName
+	 *            the name of the passed argument
 	 * @param expectedType
-	 *            the expected class of the given parameter
+	 *            the expected class of the given argument
 	 * @param actualType
-	 *            the actual class of the given parameter
-	 * @return {@code MESSAGE_WITH_TYPES} if the given parameter name is {@code null} or empty, otherwise a formatted
+	 *            the actual class of the given argument
+	 * @return {@code MESSAGE_WITH_TYPES} if the given argument name is {@code null} or empty, otherwise a formatted
 	 *         {@code MESSAGE_WITH_NAME}
 	 */
-	private static final String determineMessage(@Nullable final String parameterName, @Nullable final Class<?> expectedType,
+	private static final String determineMessage(@Nullable final String argumentName, @Nullable final Class<?> expectedType,
 			@Nullable final Class<?> actualType) {
-		return parameterName != null && !parameterName.isEmpty() ? format(parameterName, expectedType, actualType) : format(expectedType,
+		return argumentName != null && !argumentName.isEmpty() ? format(argumentName, expectedType, actualType) : format(expectedType,
 				actualType);
 	}
 
@@ -73,10 +73,10 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 	 * Returns the formatted string {@link IllegalInstanceOfArgumentException#MESSAGE_WITH_TYPES} with the given types.
 	 * 
 	 * @param expectedType
-	 *            the expected class of the given parameter
+	 *            the expected class of the given argument
 	 * @param actualType
-	 *            the actual class of the given parameter
-	 * @return a formatted string of message with the given parameter name
+	 *            the actual class of the given argument
+	 * @return a formatted string of message with the given argument name
 	 */
 	private static String format(@Nullable final Class<?> expectedType, @Nullable final Class<?> actualType) {
 		final String expected = expectedType != null ? expectedType.getName() : NO_TYPE_PLACEHOLDER;
@@ -86,21 +86,21 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 
 	/**
 	 * Returns the formatted string {@link IllegalInstanceOfArgumentException#MESSAGE_WITH_NAME_AND_TYPES} with the
-	 * given {@code parameterName}.
+	 * given {@code argumentName}.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
+	 * @param argumentName
+	 *            the name of the passed argument
 	 * @param expectedType
-	 *            the expected class of the given parameter
+	 *            the expected class of the given argument
 	 * @param actualType
-	 *            the actual class of the given parameter
-	 * @return a formatted string of message with the given parameter name
+	 *            the actual class of the given argument
+	 * @return a formatted string of message with the given argument name
 	 */
-	private static String format(@Nullable final String parameterName, @Nullable final Class<?> expectedType,
+	private static String format(@Nullable final String argumentName, @Nullable final Class<?> expectedType,
 			@Nullable final Class<?> actualType) {
 		final String expected = expectedType != null ? expectedType.getName() : NO_TYPE_PLACEHOLDER;
 		final String actual = actualType != null ? actualType.getName() : NO_TYPE_PLACEHOLDER;
-		return String.format(MESSAGE_WITH_NAME_AND_TYPES, parameterName, expected, actual);
+		return String.format(MESSAGE_WITH_NAME_AND_TYPES, argumentName, expected, actual);
 	}
 
 	/**
@@ -113,19 +113,19 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 
 	/**
 	 * Constructs an {@code IllegalInstanceOfArgumentException} with the message
-	 * {@link IllegalInstanceOfArgumentException#MESSAGE_WITH_NAME_AND_TYPES} including the given name of the parameter
+	 * {@link IllegalInstanceOfArgumentException#MESSAGE_WITH_NAME_AND_TYPES} including the given name of the argument
 	 * as string representation.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
+	 * @param argumentName
+	 *            the name of the passed argument
 	 * @param expectedType
-	 *            the expected class of the given parameter
+	 *            the expected class of the given argument
 	 * @param actualType
-	 *            the actual class of the given parameter
+	 *            the actual class of the given argument
 	 */
-	public IllegalInstanceOfArgumentException(@Nullable final String parameterName, @Nullable final Class<?> expectedType,
+	public IllegalInstanceOfArgumentException(@Nullable final String argumentName, @Nullable final Class<?> expectedType,
 			@Nullable final Class<?> actualType) {
-		super(determineMessage(parameterName, expectedType, actualType));
+		super(determineMessage(argumentName, expectedType, actualType));
 	}
 
 	/**

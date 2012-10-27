@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * Additionally it can be documented which exceptions may occur if given parameters are invalid.
+ * Additionally it can be documented which exceptions may occur if given arguments are invalid.
  * 
  * <pre>
  * &#064;ArgumentsChecked(IllegalNullArgumentException.class)

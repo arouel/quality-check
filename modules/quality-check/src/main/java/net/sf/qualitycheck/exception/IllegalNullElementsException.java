@@ -28,40 +28,40 @@ public class IllegalNullElementsException extends RuntimeException {
 	private static final long serialVersionUID = -1957077437070375885L;
 
 	/**
-	 * Default message to indicate that a given array or {@code Iterable} parameter must not contain {@code null}.
+	 * Default message to indicate that a given array or {@code Iterable} argument must not contain {@code null}.
 	 */
-	protected static final String DEFAULT_MESSAGE = "The passed parameter must not contain elements that are null.";
+	protected static final String DEFAULT_MESSAGE = "The passed argument must not contain elements that are null.";
 
 	/**
-	 * Message to indicate that the the given array or {@code Iterable} parameter with <em>name</em> must not contain
+	 * Message to indicate that the the given array or {@code Iterable} argument with <em>name</em> must not contain
 	 * {@code null}.
 	 */
-	protected static final String MESSAGE_WITH_NAME = "The passed parameter '%s' must not contain elements that are null.";
+	protected static final String MESSAGE_WITH_NAME = "The passed argument '%s' must not contain elements that are null.";
 
 	/**
-	 * Determines the message to be used, depending on the passed parameter name. If if the given parameter name is
+	 * Determines the message to be used, depending on the passed argument name. If if the given argument name is
 	 * {@code null} or empty {@code DEFAULT_MESSAGE} will be returned, otherwise a formatted {@code MESSAGE_WITH_NAME}
 	 * with the passed name.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
-	 * @return {@code DEFAULT_MESSAGE} if the given parameter name is {@code null} or empty, otherwise a formatted
+	 * @param argumentName
+	 *            the name of the passed argument
+	 * @return {@code DEFAULT_MESSAGE} if the given argument name is {@code null} or empty, otherwise a formatted
 	 *         {@code MESSAGE_WITH_NAME}
 	 */
-	private static final String determineMessage(@Nullable final String parameterName) {
-		return parameterName != null && !parameterName.isEmpty() ? format(parameterName) : DEFAULT_MESSAGE;
+	private static final String determineMessage(@Nullable final String argumentName) {
+		return argumentName != null && !argumentName.isEmpty() ? format(argumentName) : DEFAULT_MESSAGE;
 	}
 
 	/**
 	 * Returns the formatted string {@link IllegalEmptyArgumentException#MESSAGE_WITH_NAME} with the given
-	 * {@code parameterName}.
+	 * {@code argumentName}.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
-	 * @return a formatted string of message with the given parameter name
+	 * @param argumentName
+	 *            the name of the passed argument
+	 * @return a formatted string of message with the given argument name
 	 */
-	private static String format(@Nullable final String parameterName) {
-		return String.format(MESSAGE_WITH_NAME, parameterName);
+	private static String format(@Nullable final String argumentName) {
+		return String.format(MESSAGE_WITH_NAME, argumentName);
 	}
 
 	/**
@@ -74,28 +74,28 @@ public class IllegalNullElementsException extends RuntimeException {
 
 	/**
 	 * Constructs an {@code IllegalNullArgumentException} with the message
-	 * {@link IllegalEmptyArgumentException#MESSAGE_WITH_NAME} including the given name of the parameter as string
+	 * {@link IllegalEmptyArgumentException#MESSAGE_WITH_NAME} including the given name of the argument as string
 	 * representation.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
+	 * @param argumentName
+	 *            the name of the passed argument
 	 */
-	public IllegalNullElementsException(@Nullable final String parameterName) {
-		super(determineMessage(parameterName));
+	public IllegalNullElementsException(@Nullable final String argumentName) {
+		super(determineMessage(argumentName));
 	}
 
 	/**
 	 * Constructs a new exception with the message {@link IllegalEmptyArgumentException#MESSAGE_WITH_NAME} including the
 	 * given name as string representation and cause.
 	 * 
-	 * @param parameterName
-	 *            the name of the passed parameter
+	 * @param argumentName
+	 *            the name of the passed argument
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNullElementsException(@Nullable final String parameterName, @Nullable final Throwable cause) {
-		super(determineMessage(parameterName), cause);
+	public IllegalNullElementsException(@Nullable final String argumentName, @Nullable final Throwable cause) {
+		super(determineMessage(argumentName), cause);
 	}
 
 	/**
