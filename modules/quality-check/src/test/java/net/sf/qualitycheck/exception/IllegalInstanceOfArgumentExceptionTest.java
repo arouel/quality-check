@@ -29,29 +29,28 @@ public class IllegalInstanceOfArgumentExceptionTest {
 	public void construct_withEmptyArgName_successful() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException("", Long.class, Integer.class);
 		Assert.assertEquals(
-				"The passed parameter is a member of an unexpected type (expected type: java.lang.Long, actual: java.lang.Integer).",
+				"The passed argument is a member of an unexpected type (expected type: java.lang.Long, actual: java.lang.Integer).",
 				e.getMessage());
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullActualType() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException("", Long.class, null);
-		Assert.assertEquals("The passed parameter is a member of an unexpected type (expected type: java.lang.Long, actual: (not set)).",
+		Assert.assertEquals("The passed argument is a member of an unexpected type (expected type: java.lang.Long, actual: (not set)).",
 				e.getMessage());
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullExpectedType() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException("", null, Integer.class);
-		Assert.assertEquals(
-				"The passed parameter is a member of an unexpected type (expected type: (not set), actual: java.lang.Integer).",
+		Assert.assertEquals("The passed argument is a member of an unexpected type (expected type: (not set), actual: java.lang.Integer).",
 				e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullTypes() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException("argName", null, null);
-		Assert.assertEquals("The passed parameter 'argName' is a member of an unexpected type (expected type: "
+		Assert.assertEquals("The passed argument 'argName' is a member of an unexpected type (expected type: "
 				+ IllegalInstanceOfArgumentException.NO_TYPE_PLACEHOLDER + ", actual: "
 				+ IllegalInstanceOfArgumentException.NO_TYPE_PLACEHOLDER + ").", e.getMessage());
 	}
@@ -60,7 +59,7 @@ public class IllegalInstanceOfArgumentExceptionTest {
 	public void construct_withFilledArgNameAndTypes() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException("argName", Long.class, Integer.class);
 		Assert.assertEquals(
-				"The passed parameter 'argName' is a member of an unexpected type (expected type: java.lang.Long, actual: java.lang.Integer).",
+				"The passed argument 'argName' is a member of an unexpected type (expected type: java.lang.Long, actual: java.lang.Integer).",
 				e.getMessage());
 	}
 
@@ -73,7 +72,7 @@ public class IllegalInstanceOfArgumentExceptionTest {
 	@Test
 	public void construct_withNullArgs() {
 		final IllegalInstanceOfArgumentException e = new IllegalInstanceOfArgumentException((String) null, null, null);
-		Assert.assertEquals("The passed parameter is a member of an unexpected type (expected type: (not set), actual: (not set)).",
+		Assert.assertEquals("The passed argument is a member of an unexpected type (expected type: (not set), actual: (not set)).",
 				e.getMessage());
 	}
 

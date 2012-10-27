@@ -23,7 +23,7 @@ public class IllegalNullElementsExceptionTest {
 	@Test
 	public void construct_withArgName_successful() {
 		final IllegalNullElementsException e = new IllegalNullElementsException("argName");
-		final String expected = "The passed parameter 'argName' must not contain elements that are null.";
+		final String expected = "The passed argument 'argName' must not contain elements that are null.";
 		Assert.assertEquals(expected, e.getMessage());
 	}
 
@@ -51,14 +51,14 @@ public class IllegalNullElementsExceptionTest {
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
 		final IllegalNullElementsException e = new IllegalNullElementsException("argName", new NumberFormatException());
-		final String expected = "The passed parameter 'argName' must not contain elements that are null.";
+		final String expected = "The passed argument 'argName' must not contain elements that are null.";
 		Assert.assertEquals(expected, e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
 		final IllegalNullElementsException e = new IllegalNullElementsException("argName", null);
-		final String expected = "The passed parameter 'argName' must not contain elements that are null.";
+		final String expected = "The passed argument 'argName' must not contain elements that are null.";
 		Assert.assertEquals(expected, e.getMessage());
 	}
 

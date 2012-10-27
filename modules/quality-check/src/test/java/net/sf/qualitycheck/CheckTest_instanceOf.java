@@ -51,7 +51,7 @@ public class CheckTest_instanceOf {
 			actual = e;
 			throw e;
 		} finally {
-			final String expected = "The passed parameter 'list' is a member of an unexpected type (expected type: java.util.Vector, actual: java.util.ArrayList).";
+			final String expected = "The passed argument 'list' is a member of an unexpected type (expected type: java.util.Vector, actual: java.util.ArrayList).";
 			if (actual != null) {
 				Assert.assertEquals(expected, actual.getMessage());
 			}
