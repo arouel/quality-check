@@ -16,7 +16,6 @@
  ******************************************************************************/
 package net.sf.qualitycheck;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +24,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import javax.annotation.Generated;
-import javax.annotation.Resource;
-
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
-import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
@@ -46,14 +41,6 @@ import org.junit.Test;
  * @author Dominik Seichter
  */
 public class CheckTest {
-
-	@Resource
-	private static class FakeAnnotatedClass {
-	}
-
-	@Generated(value = { "2001-07-04T12:08:56.235-0700" })
-	private static class FakeSourceAnnotatedClass {
-	}
 
 	@Test
 	public void checkEmptyRange() {
@@ -166,32 +153,6 @@ public class CheckTest {
 		final Constructor<Check> constructor = Check.class.getDeclaredConstructor();
 		constructor.setAccessible(true);
 		constructor.newInstance();
-	}
-
-	@Test(expected = IllegalMissingAnnotationException.class)
-	public void hasAnnoation_annotation_fail() {
-		Check.hasAnnotation(CheckTest.class, ArgumentsChecked.class);
-	}
-
-	@Test(expected = IllegalNullArgumentException.class)
-	public void hasAnnoation_annotation_isNull() {
-		Check.hasAnnotation(CheckTest.class, null);
-	}
-
-	@Test
-	public void hasAnnoation_annotation_ok() {
-		final Annotation annotation = Check.hasAnnotation(FakeAnnotatedClass.class, Resource.class);
-		Assert.assertTrue(annotation instanceof Resource);
-	}
-
-	@Test(expected = IllegalMissingAnnotationException.class)
-	public void hasAnnoation_annotationRetentionSource_fail() {
-		Check.hasAnnotation(FakeSourceAnnotatedClass.class, Generated.class);
-	}
-
-	@Test(expected = IllegalNullArgumentException.class)
-	public void hasAnnotation_class_isNull() {
-		Check.hasAnnotation(null, ArgumentsChecked.class);
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
