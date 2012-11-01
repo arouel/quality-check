@@ -43,4 +43,11 @@ public class CheckTest {
 		cls.newInstance(); // exception here
 	}
 
+	@Test
+	public void giveMeCoverageForMyPrivateConstructor_NumericRegularExpressionHolder() throws Exception {
+		// reduces only some noise in coverage report
+		final Constructor<Check.NumericRegularExpressionHolder> constructor = Check.NumericRegularExpressionHolder.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		constructor.newInstance();
+	}
 }
