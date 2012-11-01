@@ -26,14 +26,14 @@ import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumberRangeException;
 
 /**
- * Check if number are in a given range
+ * Check if a number is in a given range of a particular datatype.
  * 
  * @author Dominik Seichter
  * 
- * Based on code from
+ *         Based on code from
  * @author Cedric Chabanois (cchabanois at gmail.com)
  */
-public final  class NumberInRange {
+public final class NumberInRange {
 
 	public static final BigInteger BYTE_MIN = BigInteger.valueOf((long) Byte.MIN_VALUE);
 	public static final BigInteger BYTE_MAX = BigInteger.valueOf((long) Byte.MAX_VALUE);
@@ -51,8 +51,10 @@ public final  class NumberInRange {
 
 	/**
 	 * Checks if a given number is in the range of a byte.
-	 * @param number a number which should be in the range of a byte (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of a byte (positive or negative)
+	 * 
 	 * @see {@code Byte.MIN}
 	 * @see {@code Byte.MAX}
 	 * 
@@ -61,17 +63,19 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static byte checkByte(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInByteRange(number) ) {
+		if (!isInByteRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), BYTE_MIN, BYTE_MAX);
 		}
-		
+
 		return number.byteValue();
 	}
 
 	/**
 	 * Checks if a given number is in the range of a short.
-	 * @param number a number which should be in the range of a short (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of a short (positive or negative)
+	 * 
 	 * @see {@code Short.MIN}
 	 * @see {@code Short.MAX}
 	 * 
@@ -80,17 +84,19 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static short checkShort(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInShortRange(number) ) {
+		if (!isInShortRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), SHORT_MIN, SHORT_MAX);
 		}
-		
+
 		return number.shortValue();
 	}
 
 	/**
 	 * Checks if a given number is in the range of an integer.
-	 * @param number a number which should be in the range of an integer (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of an integer (positive or negative)
+	 * 
 	 * @see {@code Integer.MIN}
 	 * @see {@code Integer.MAX}
 	 * 
@@ -99,17 +105,19 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static int checkInteger(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInIntegerRange(number) ) {
+		if (!isInIntegerRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), INTEGER_MIN, INTEGER_MAX);
 		}
-		
+
 		return number.intValue();
 	}
 
 	/**
 	 * Checks if a given number is in the range of a long.
-	 * @param number a number which should be in the range of a long (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of a long (positive or negative)
+	 * 
 	 * @see {@code Long.MIN}
 	 * @see {@code Long.MAX}
 	 * 
@@ -118,17 +126,19 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static int checkLong(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInLongRange(number) ) {
+		if (!isInLongRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), LONG_MIN, LONG_MAX);
 		}
-		
+
 		return number.intValue();
 	}
 
 	/**
 	 * Checks if a given number is in the range of a float.
-	 * @param number a number which should be in the range of a float (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of a float (positive or negative)
+	 * 
 	 * @see {@code Float.MIN}
 	 * @see {@code Float.MAX}
 	 * 
@@ -137,17 +147,19 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static float checkFloat(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInFloatRange(number) ) {
+		if (!isInFloatRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), FLOAT_MIN, FLOAT_MAX);
 		}
-		
+
 		return number.floatValue();
 	}
-	
+
 	/**
 	 * Checks if a given number is in the range of a double.
-	 * @param number a number which should be in the range of a double (positive or negative)
-	 * 	
+	 * 
+	 * @param number
+	 *            a number which should be in the range of a double (positive or negative)
+	 * 
 	 * @see {@code Double.MIN}
 	 * @see {@code Double.MAX}
 	 * 
@@ -156,30 +168,75 @@ public final  class NumberInRange {
 	@ArgumentsChecked(IllegalNullArgumentException.class)
 	public static double checkDouble(@Nonnull final Number number) {
 		Check.notNull(number);
-		if( !isInDoubleRange(number) ) {
+		if (!isInDoubleRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), DOUBLE_MIN, DOUBLE_MAX);
 		}
-		
+
 		return number.doubleValue();
 	}
-	
-	public static boolean isInByteRange(Number number) {
+
+	/**
+	 * Test if a number is in the range of the datatype {@code byte}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code byte}
+	 */
+	public static boolean isInByteRange(@Nonnull final Number number) {
 		return isInRange(number, BYTE_MIN, BYTE_MAX);
 	}
 
-	public static boolean isInShortRange(Number number) {
+	/**
+	 * Test if a number is in the range of the datatype {@code short}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code short}
+	 */
+	public static boolean isInShortRange(@Nonnull final Number number) {
 		return isInRange(number, SHORT_MIN, SHORT_MAX);
 	}
 
-	public static boolean isInIntegerRange(Number number) {
+	/**
+	 * Test if a number is in the range of the datatype {@code int}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code int}
+	 */
+	public static boolean isInIntegerRange(@Nonnull final Number number) {
 		return isInRange(number, INTEGER_MIN, INTEGER_MAX);
 	}
 
-	public static boolean isInLongRange(Number number) {
+	/**
+	 * Test if a number is in the range of the datatype {@code long}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code long}
+	 */
+	public static boolean isInLongRange(@Nonnull final Number number) {
 		return isInRange(number, LONG_MIN, LONG_MAX);
 	}
 
-	public static boolean isInRange(Number number, BigInteger min, BigInteger max) {
+	/**
+	 * Test if a number is in an arbitrary range.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param min
+	 *            lower boundary of the range
+	 * @param max
+	 *            upper boundary of the range
+	 * 
+	 * @return true if the given number is within the range
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigInteger min, @Nonnull final BigInteger max) {
+		Check.notNull(number);
+		Check.notNull(min);
+		Check.notNull(max);
+	
 		BigInteger bigInteger = null;
 		if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long) {
 			bigInteger = BigInteger.valueOf(number.longValue());
@@ -190,12 +247,30 @@ public final  class NumberInRange {
 		} else if (number instanceof BigDecimal) {
 			bigInteger = ((BigDecimal) number).toBigInteger();
 		} else {
-			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': " + number.getClass().getName());
+			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': "
+					+ number.getClass().getName());
 		}
 		return max.compareTo(bigInteger) >= 0 && min.compareTo(bigInteger) <= 0;
 	}
 
-	public static boolean isInRange(Number number, BigDecimal min, BigDecimal max) {
+	/**
+	 * Test if a number is in an arbitrary range.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param min
+	 *            lower boundary of the range
+	 * @param max
+	 *            upper boundary of the range
+	 * 
+	 * @return true if the given number is within the range
+	 */
+	@ArgumentsChecked(IllegalNullArgumentException.class)
+	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigDecimal min, @Nonnull final BigDecimal max) {
+		Check.notNull(number);
+		Check.notNull(min);
+		Check.notNull(max);
+		
 		BigDecimal bigDecimal = null;
 		if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long) {
 			bigDecimal = new BigDecimal(number.longValue());
@@ -206,19 +281,37 @@ public final  class NumberInRange {
 		} else if (number instanceof BigDecimal) {
 			bigDecimal = (BigDecimal) number;
 		} else {
-			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': " + number.getClass().getName());
+			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': "
+					+ number.getClass().getName());
 		}
 		return max.compareTo(bigDecimal) >= 0 && min.compareTo(bigDecimal) <= 0;
 	}
 
-	public static boolean isInFloatRange(Number number) {
+	/**
+	 * Test if a number is in the range of the datatype {@code float}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code float}
+	 */
+	public static boolean isInFloatRange(@Nonnull final Number number) {
 		return isInRange(number, FLOAT_MIN, FLOAT_MAX);
 	}
 
-	public static boolean isInDoubleRange(Number number) {
+	/**
+	 * Test if a number is in the range of the datatype {@code double}
+	 * 
+	 * @param number
+	 *            a number
+	 * @return true if the given number can be stored in a {@code double}
+	 */
+	public static boolean isInDoubleRange(@Nonnull final Number number) {
 		return isInRange(number, DOUBLE_MIN, DOUBLE_MAX);
 	}
-	
+
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
 	private NumberInRange() {
 		// Do not instantiate utility class
 	}
