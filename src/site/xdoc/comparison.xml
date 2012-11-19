@@ -68,6 +68,16 @@
 							<em>Assert</em>
 						</th>
 					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>equals</strong>(T expected, T check)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>
 					<tr class="rowColor">
 						<td class="colFirst">
 							<code>
@@ -675,6 +685,16 @@
 							<em>Preconditions</em>
 						</th>
 					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>equals</strong>(T expected, T check)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>					
 					<tr class="rowColor">
 						<td class="colFirst">
 							<code>
@@ -1222,6 +1242,16 @@
 							<em>Validate</em>
 						</th>
 					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>equals</strong>(T expected, T check)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>					
 					<tr class="rowColor">
 						<td class="colFirst">
 							<code>

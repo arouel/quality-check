@@ -54,7 +54,8 @@ public class User {
    * @param email
    *          email address an user
    */
-  @ArgumentsChecked({
+  @ArgumentsChecked
+  @Throws({
     IllegalNullArgumentException.class,
     IllegalEmptyArgumentException.class,
     IllegalPatternArgumentException.class })
