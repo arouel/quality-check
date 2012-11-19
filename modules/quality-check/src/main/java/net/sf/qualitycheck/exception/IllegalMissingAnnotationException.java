@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
 
 /**
  * Thrown to indicate that a method has been passed with a class that does not have a required annotation.
@@ -60,7 +61,8 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 *            the name of the required annotation
 	 * @return a formatted string of message with the given argument name
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	private static String format(@Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(annotation);
 		return String.format(MESSAGE_WITH_ANNOTATION, annotation.getName());
@@ -76,7 +78,8 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 *            the name of the class which does not have the required annotation
 	 * @return a formatted string of message with the given argument name
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	private static String format(@Nonnull final Class<? extends Annotation> annotation, @Nullable final Class<?> clazz) {
 		Check.notNull(annotation);
 		if (clazz != null) {

@@ -9,12 +9,10 @@ import java.lang.annotation.Target;
  * The <code>Throws</code> annotation specifies the classes that will be thrown when one ore more arguments are not
  * valid.
  * 
- * <p>
- * This annotation is only intended for internal use.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@interface Throws {
+public @interface Throws {
 
 	/**
 	 * @return the classes that can be thrown

@@ -42,10 +42,12 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * Additionally it can be documented which exceptions may occur if given arguments are invalid.
+ * Additionally it can be documented which exceptions may occur if given arguments are invalid using
+ * the additional annotation {@code @Throws}.
  * 
  * <pre>
- * &#064;ArgumentsChecked(IllegalNullArgumentException.class)
+ * &#064;ArgumentsChecked
+ * &#064;Throws(IllegalNullArgumentException.class)
  * public void validate(Object o) {
  * 	Check.notNull(o);
  * }
@@ -57,10 +59,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.CONSTRUCTOR, ElementType.METHOD })
 public @interface ArgumentsChecked {
-
-	/**
-	 * @return the classes that can be thrown
-	 */
-	Class<? extends Throwable>[] value();
 
 }

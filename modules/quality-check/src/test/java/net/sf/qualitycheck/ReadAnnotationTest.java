@@ -15,7 +15,7 @@ public class ReadAnnotationTest {
 		for (final Method m : Class.forName("net.sf.qualitycheck.Check").getMethods()) {
 			if (m.isAnnotationPresent(ArgumentsChecked.class)) {
 				LOG.info("Analyzing: " + m.toGenericString());
-				final Class<? extends Throwable>[] throwsExceptions = m.getAnnotation(ArgumentsChecked.class).value();
+				final Class<? extends Throwable>[] throwsExceptions = m.getAnnotation(Throws.class).value();
 				for (final Class<? extends Throwable> throwsException : throwsExceptions) {
 					LOG.info("\tthrows " + throwsException.getName());
 				}

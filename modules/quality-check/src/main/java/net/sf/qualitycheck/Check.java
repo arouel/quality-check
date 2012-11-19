@@ -31,6 +31,7 @@ import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
+import net.sf.qualitycheck.exception.IllegalNotEqualException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
@@ -97,6 +98,55 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check) }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * @return {@code check} The checked object
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Object> T equals(final T expected, final T check) {
+		Check.notNull(expected);
+		Check.notNull(check);
+
+		if (!expected.equals(check)) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check) }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * @param message
+	 *            an error message describing why the objects must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked object
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
+	public static <T extends Object> T equals(final @Nonnull T expected, final @Nonnull T check, final String message) {
+		Check.notNull(expected);
+		Check.notNull(check);
+
+		if (!expected.equals(check)) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
 	 * Ensures that a passed class has an annotation of a specific type
 	 * 
 	 * @param clazz
@@ -105,7 +155,8 @@ public final class Check {
 	 *            the type of annotation that is required on the class
 	 * @return the annotation which is present on the checked class
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static Annotation hasAnnotation(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(annotation, "annotation");
@@ -126,7 +177,8 @@ public final class Check {
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj) {
 		instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
 	}
@@ -143,7 +195,8 @@ public final class Check {
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj, @Nullable final String name) {
 		Check.notNull(type);
 		Check.notNull(obj);
@@ -161,7 +214,8 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static int isNumber(@Nullable final String value) {
 		Check.notNull(value);
 		return Check.isNumber(value, Integer.class).intValue();
@@ -178,7 +232,8 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static int isNumber(@Nullable final String value, @Nullable final String name) {
 		Check.notNull(value);
 		return Check.isNumber(value, name, Integer.class).intValue();
@@ -197,15 +252,16 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Number> T isNumber(@Nonnull final String value, @Nonnull final Class<T> type) {
 		return isNumber(value, null, type);
 	}
 
 	/**
 	 * Ensures that a String argument is a number. This overload supports all subclasses of {@code Number}. The number
-	 * is first converted to a {@code BigDecimal} or {@code BigInteger}. Floating point types are only supported
-	 * if the {@code type} is one of {@code Float, Double, BigDecimal}.
+	 * is first converted to a {@code BigDecimal} or {@code BigInteger}. Floating point types are only supported if the
+	 * {@code type} is one of {@code Float, Double, BigDecimal}.
 	 * 
 	 * This method does also check against the ranges of the given datatypes.
 	 * 
@@ -220,7 +276,8 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(value={IllegalNullArgumentException.class, IllegalNumberRangeException.class})
+	@ArgumentsChecked
+	@Throws(value = { IllegalNullArgumentException.class, IllegalNumberRangeException.class })
 	public static <T extends Number> T isNumber(@Nonnull final String value, @Nullable final String name, @Nonnull final Class<T> type) {
 		Check.notNull(value, "value");
 		Check.notNull(type, "type");
@@ -284,7 +341,8 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T isNumeric(@Nullable final T value) {
 		return isNumeric(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -302,7 +360,8 @@ public final class Check {
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T isNumeric(@Nullable final T value, @Nullable final String name) {
 		Check.notNull(value);
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
@@ -344,7 +403,8 @@ public final class Check {
 	 * @throws IllegalPatternArgumentException
 	 *             if the given {@code chars} that does not match the {@code pattern}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nullable final T chars) {
 		return matchesPattern(pattern, chars, EMPTY_ARGUMENT_NAME);
 	}
@@ -365,7 +425,8 @@ public final class Check {
 	 * @throws IllegalPatternArgumentException
 	 *             if the given {@code chars} that does not match the {@code pattern}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nullable final T chars,
 			@Nullable final String name) {
 		Check.notNull(pattern);
@@ -389,7 +450,8 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable) {
 		return noNullElements(iterable, EMPTY_ARGUMENT_NAME);
 	}
@@ -405,7 +467,8 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable, final String name) {
 		Check.notNull(iterable);
 		for (final Object element : iterable) {
@@ -429,7 +492,8 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(@Nullable final T[] array) {
 		return noNullElements(array, EMPTY_ARGUMENT_NAME);
 	}
@@ -445,7 +509,8 @@ public final class Check {
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code array} contains {@code null}
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(@Nullable final T[] array, @Nullable final String name) {
 		Check.notNull(array);
 		if (containsNullElements(array)) {
@@ -463,15 +528,16 @@ public final class Check {
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param expression
-	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty, {@code
-	 *            false} means not empty)
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
 	 * 
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is {@code null}
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked( { IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws(IllegalEmptyArgumentException.class)
 	public static void notEmpty(final boolean expression) {
 		notEmpty(expression, EMPTY_ARGUMENT_NAME);
 	}
@@ -481,17 +547,16 @@ public final class Check {
 	 * emptiness.
 	 * 
 	 * @param expression
-	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty, {@code
-	 *            false} means not empty)
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
 	 * @param name
 	 *            name of object reference (in source code)
 	 * 
-	 * @throws IllegalNullArgumentException
-	 *             if the given argument {@code reference} is {@code null}
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked( { IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws(IllegalEmptyArgumentException.class)
 	public static void notEmpty(final boolean expression, @Nullable final String name) {
 		if (expression) {
 			throw new IllegalEmptyArgumentException(name);
@@ -513,7 +578,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends CharSequence> T notEmpty(@Nullable final T chars) {
 		notNull(chars);
 		notEmpty(chars, chars.length() == 0, EMPTY_ARGUMENT_NAME);
@@ -535,7 +601,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code collection} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(@Nullable final T collection) {
 		notNull(collection);
 		notEmpty(collection, collection.isEmpty(), EMPTY_ARGUMENT_NAME);
@@ -557,7 +624,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code map} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Map<?, ?>> T notEmpty(@Nullable final T map) {
 		notNull(map);
 		notEmpty(map, map.isEmpty(), EMPTY_ARGUMENT_NAME);
@@ -582,8 +650,8 @@ public final class Check {
 	 * @param reference
 	 *            an object reference which should not be empty
 	 * @param expression
-	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty, {@code
-	 *            false} means not empty)
+	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
+	 *            {@code false} means not empty)
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the passed reference that is not empty
@@ -592,7 +660,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code reference} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T notEmpty(@Nullable final T reference, final boolean expression, @Nullable final String name) {
 		notNull(reference, name);
 		if (expression) {
@@ -624,7 +693,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code string} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends CharSequence> T notEmpty(@Nullable final T chars, @Nullable final String name) {
 		notNull(chars, name);
 		notEmpty(chars, chars.length() == 0, name);
@@ -648,7 +718,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code map} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Map<?, ?>> T notEmpty(@Nullable final T map, @Nullable final String name) {
 		notNull(map);
 		notEmpty(map, map.isEmpty(), name);
@@ -678,7 +749,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code collection} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(@Nullable final T collection, @Nullable final String name) {
 		notNull(collection, name);
 		notEmpty(collection, collection.isEmpty(), name);
@@ -700,7 +772,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code array} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T[] notEmpty(@Nullable final T[] array) {
 		notNull(array);
 		notEmpty(array, array.length == 0, EMPTY_ARGUMENT_NAME);
@@ -720,7 +793,8 @@ public final class Check {
 	 * @throws IllegalEmptyArgumentException
 	 *             if the given argument {@code array} is empty
 	 */
-	@ArgumentsChecked( { IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T[] notEmpty(@Nullable final T[] array, @Nullable final String name) {
 		notNull(array);
 		notEmpty(array, array.length == 0, EMPTY_ARGUMENT_NAME);
@@ -738,6 +812,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
+	@Throws({ IllegalNaNArgumentException.class })
 	public static double notNaN(final double value) {
 		return notNaN(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -755,6 +830,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
+	@Throws({ IllegalNaNArgumentException.class })
 	public static double notNaN(final double value, @Nullable final String name) {
 		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
 			throw new IllegalNaNArgumentException(name);
@@ -774,6 +850,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
+	@Throws({ IllegalNaNArgumentException.class })
 	public static float notNaN(final float value) {
 		return notNaN(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -791,6 +868,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
+	@Throws({ IllegalNaNArgumentException.class })
 	public static float notNaN(final float value, @Nullable final String name) {
 		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
 			throw new IllegalNaNArgumentException(name);
@@ -847,6 +925,7 @@ public final class Check {
 	 *             if the index is not a valid position index within an array, list or string of size <em>size</em>
 	 * 
 	 */
+	@Throws(IllegalPositionIndexException.class)
 	public static int positionIndex(final int index, final int size) {
 		final boolean isIndexValid = (size >= 0) && (index >= 0) && (index < size);
 
@@ -880,6 +959,7 @@ public final class Check {
 	 * @throws IllegalRangeException
 	 *             if the given arguments do not form a valid range
 	 */
+	@Throws(IllegalRangeException.class)
 	public static void range(final @Nonnegative int start, final @Nonnegative int end, final @Nonnegative int size) {
 		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end);
 		final boolean inputValuesAreValid = (size >= 0) && (start >= 0) && (end >= 0);
@@ -898,6 +978,7 @@ public final class Check {
 	 * @throws IllegalStateOfArgumentException
 	 *             if the given arguments caused an invalid state
 	 */
+	@Throws(IllegalStateOfArgumentException.class)
 	public static void stateIsTrue(final boolean expression) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException();
@@ -915,7 +996,8 @@ public final class Check {
 	 * @throws clazz
 	 *             a new instance of {@code clazz} if the given arguments caused an invalid state
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
 		Check.notNull(clazz);
 
@@ -943,6 +1025,7 @@ public final class Check {
 	 * @throws IllegalStateOfArgumentException
 	 *             if the given arguments caused an invalid state
 	 */
+	@Throws(IllegalStateOfArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final @Nonnull String description) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(description);
@@ -961,6 +1044,7 @@ public final class Check {
 	 * @throws IllegalStateOfArgumentException
 	 *             if the given arguments caused an invalid state
 	 */
+	@Throws(IllegalStateOfArgumentException.class)
 	public static void stateIsTrue(final boolean expression, final @Nonnull String descriptionTemplate,
 			final Object... descriptionTemplateArgs) {
 		if (!expression) {

@@ -60,7 +60,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as a byte (rounding might occur)
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static byte checkByte(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInByteRange(number)) {
@@ -81,7 +82,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as a short (rounding might occur)
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static short checkShort(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInShortRange(number)) {
@@ -102,7 +104,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as an integer (rounding might occur)
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static int checkInteger(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInIntegerRange(number)) {
@@ -123,7 +126,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as a long (rounding might occur)
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static int checkLong(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInLongRange(number)) {
@@ -144,7 +148,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as a float
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static float checkFloat(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInFloatRange(number)) {
@@ -165,7 +170,8 @@ public final class NumberInRange {
 	 * 
 	 * @return number as a double
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static double checkDouble(@Nonnull final Number number) {
 		Check.notNull(number);
 		if (!isInDoubleRange(number)) {
@@ -231,7 +237,8 @@ public final class NumberInRange {
 	 * 
 	 * @return true if the given number is within the range
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigInteger min, @Nonnull final BigInteger max) {
 		Check.notNull(number);
 		Check.notNull(min);
@@ -265,7 +272,8 @@ public final class NumberInRange {
 	 * 
 	 * @return true if the given number is within the range
 	 */
-	@ArgumentsChecked(IllegalNullArgumentException.class)
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
 	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigDecimal min, @Nonnull final BigDecimal max) {
 		Check.notNull(number);
 		Check.notNull(min);
