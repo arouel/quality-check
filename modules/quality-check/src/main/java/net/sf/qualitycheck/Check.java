@@ -109,7 +109,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Object> T equals(final T expected, final T check) {
+	public static <T extends Object> T equals(final @Nonnull T expected, final @Nonnull T check) {
 		Check.notNull(expected);
 		Check.notNull(check);
 
