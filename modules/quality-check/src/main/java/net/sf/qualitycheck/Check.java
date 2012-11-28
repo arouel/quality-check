@@ -823,6 +823,10 @@ public final class Check {
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNaN(double, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
 	 * @see java.lang.Double#NaN
 	 * 
 	 * @param value
@@ -860,6 +864,10 @@ public final class Check {
 
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNaN(float, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @see java.lang.Float#NaN
 	 * 
@@ -995,6 +1003,12 @@ public final class Check {
 
 	/**
 	 * Ensures that a given state is {@code true}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#stateIsTrue(boolean, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message. A better way is to create specific exceptions (with a
+	 * good wording) for your case and to use the overloaded method {@link Check#stateIsTrue(boolean, Class)} and pass
+	 * as second argument your exception.
 	 * 
 	 * @param expression
 	 *            an expression that must be true to indicate a valid state
