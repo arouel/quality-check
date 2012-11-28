@@ -109,7 +109,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Object> T equals(final @Nonnull T expected, final @Nonnull T check) {
+	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected);
 		Check.notNull(check);
 
@@ -135,7 +135,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
-	public static <T extends Object> T equals(final @Nonnull T expected, final @Nonnull T check, final String message) {
+	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) {
 		Check.notNull(expected);
 		Check.notNull(check);
 
@@ -1026,7 +1026,7 @@ public final class Check {
 	 *             if the given arguments caused an invalid state
 	 */
 	@Throws(IllegalStateOfArgumentException.class)
-	public static void stateIsTrue(final boolean expression, final @Nonnull String description) {
+	public static void stateIsTrue(final boolean expression, @Nonnull final String description) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(description);
 		}
@@ -1045,7 +1045,7 @@ public final class Check {
 	 *             if the given arguments caused an invalid state
 	 */
 	@Throws(IllegalStateOfArgumentException.class)
-	public static void stateIsTrue(final boolean expression, final @Nonnull String descriptionTemplate,
+	public static void stateIsTrue(final boolean expression, @Nonnull final String descriptionTemplate,
 			final Object... descriptionTemplateArgs) {
 		if (!expression) {
 			throw new IllegalStateOfArgumentException(descriptionTemplate, descriptionTemplateArgs);

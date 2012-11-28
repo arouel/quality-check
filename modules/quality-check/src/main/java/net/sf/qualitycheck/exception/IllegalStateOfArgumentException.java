@@ -40,7 +40,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 */
 	protected static final String MESSAGE_DESCRIPTION = "The passed arguments have caused an invalid state: ";
 	
-	private static String format(final @Nonnull String descriptionTemplate, Object... descriptionTemplateArgs) {
+	private static String format(@Nonnull final String descriptionTemplate, Object... descriptionTemplateArgs) {
 		if( descriptionTemplateArgs == null || descriptionTemplateArgs.length == 0 ) {
 			return MESSAGE_DESCRIPTION + descriptionTemplate;
 		} else {
@@ -63,7 +63,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 * @param description
 	 *            explains why the state is invalid
 	 */
-	public IllegalStateOfArgumentException(final @Nonnull String description) {
+	public IllegalStateOfArgumentException(@Nonnull final String description) {
 		super(format(description));
 	}
 
@@ -76,7 +76,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 * @param descriptionTemplateArgs
 	 *            format string template arguments to explain why the state is invalid
 	 */
-	public IllegalStateOfArgumentException(final @Nonnull String description, Object... descriptionTemplateArgs) {
+	public IllegalStateOfArgumentException(@Nonnull final String description, Object... descriptionTemplateArgs) {
 		super(format(description, descriptionTemplateArgs));
 	}
 	
@@ -90,7 +90,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalStateOfArgumentException(final @Nonnull String description, @Nullable final Throwable cause) {
+	public IllegalStateOfArgumentException(@Nonnull final String description, @Nullable final Throwable cause) {
 		super(format(description), cause);
 	}
 	
@@ -106,7 +106,7 @@ public class IllegalStateOfArgumentException extends RuntimeException {
 	 * @param descriptionTemplateArgs
 	 *            format string template arguments to explain why the state is invalid
 	 */
-	public IllegalStateOfArgumentException(@Nullable final Throwable cause, final @Nonnull String description, Object... descriptionTemplateArgs) {
+	public IllegalStateOfArgumentException(@Nullable final Throwable cause, @Nonnull final String description, Object... descriptionTemplateArgs) {
 		super(format(description, descriptionTemplateArgs), cause);
 	}
 	

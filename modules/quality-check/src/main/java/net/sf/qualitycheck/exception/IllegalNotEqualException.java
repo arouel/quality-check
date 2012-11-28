@@ -49,7 +49,7 @@ public class IllegalNotEqualException extends RuntimeException {
 	 * @param message
 	 *            explains why the object must equal another object
 	 */
-	public IllegalNotEqualException(final @Nonnull String message) {
+	public IllegalNotEqualException(@Nonnull final String message) {
 		super(message);
 	}
 
@@ -62,7 +62,7 @@ public class IllegalNotEqualException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNotEqualException(final @Nonnull String message, @Nullable final Throwable cause) {
+	public IllegalNotEqualException(@Nonnull final String message, @Nullable final Throwable cause) {
 		super(message, cause);
 	}
 	
