@@ -228,7 +228,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static void instanceOf(@Nonnull final Class<?> type, @Nullable final Object obj) {
+	public static void instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj) {
 		instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
 	}
 
@@ -424,7 +424,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nullable final T chars) {
+	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nonnull final T chars) {
 		return matchesPattern(pattern, chars, EMPTY_ARGUMENT_NAME);
 	}
 
