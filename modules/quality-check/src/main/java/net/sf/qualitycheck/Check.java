@@ -265,7 +265,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static int isNumber(@Nullable final String value) {
+	public static int isNumber(@Nonnull final String value) {
 		Check.notNull(value);
 		return Check.isNumber(value, Integer.class).intValue();
 	}
@@ -302,7 +302,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static int isNumber(@Nullable final String value, @Nullable final String name) {
+	public static int isNumber(@Nonnull final String value, @Nullable final String name) {
 		Check.notNull(value);
 		return Check.isNumber(value, name, Integer.class).intValue();
 	}
@@ -362,7 +362,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends CharSequence> T isNumeric(@Nullable final T value) {
+	public static <T extends CharSequence> T isNumeric(@Nonnull final T value) {
 		return isNumeric(value, EMPTY_ARGUMENT_NAME);
 	}
 
@@ -381,7 +381,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends CharSequence> T isNumeric(@Nullable final T value, @Nullable final String name) {
+	public static <T extends CharSequence> T isNumeric(@Nonnull final T value, @Nullable final String name) {
 		Check.notNull(value);
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
 			throw new IllegalNumericArgumentException(name);
@@ -471,7 +471,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable) {
+	public static <T extends Iterable<?>> T noNullElements(@Nonnull final T iterable) {
 		return noNullElements(iterable, EMPTY_ARGUMENT_NAME);
 	}
 
@@ -488,7 +488,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Iterable<?>> T noNullElements(@Nullable final T iterable, final String name) {
+	public static <T extends Iterable<?>> T noNullElements(@Nonnull final T iterable, final String name) {
 		Check.notNull(iterable);
 		for (final Object element : iterable) {
 			if (element == null) {
@@ -513,7 +513,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T[] noNullElements(@Nullable final T[] array) {
+	public static <T> T[] noNullElements(@Nonnull final T[] array) {
 		return noNullElements(array, EMPTY_ARGUMENT_NAME);
 	}
 
@@ -530,7 +530,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T[] noNullElements(@Nullable final T[] array, @Nullable final String name) {
+	public static <T> T[] noNullElements(@Nonnull final T[] array, @Nullable final String name) {
 		Check.notNull(array);
 		if (containsNullElements(array)) {
 			throw new IllegalNullElementsException(name);
@@ -599,7 +599,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends CharSequence> T notEmpty(@Nullable final T chars) {
+	public static <T extends CharSequence> T notEmpty(@Nonnull final T chars) {
 		notNull(chars);
 		notEmpty(chars, chars.length() == 0, EMPTY_ARGUMENT_NAME);
 		return chars;
@@ -622,7 +622,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends Collection<?>> T notEmpty(@Nullable final T collection) {
+	public static <T extends Collection<?>> T notEmpty(@Nonnull final T collection) {
 		notNull(collection);
 		notEmpty(collection, collection.isEmpty(), EMPTY_ARGUMENT_NAME);
 		return collection;
@@ -645,7 +645,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends Map<?, ?>> T notEmpty(@Nullable final T map) {
+	public static <T extends Map<?, ?>> T notEmpty(@Nonnull final T map) {
 		notNull(map);
 		notEmpty(map, map.isEmpty(), EMPTY_ARGUMENT_NAME);
 		return map;
@@ -681,7 +681,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T> T notEmpty(@Nullable final T reference, final boolean expression, @Nullable final String name) {
+	public static <T> T notEmpty(@Nonnull final T reference, final boolean expression, @Nullable final String name) {
 		notNull(reference, name);
 		if (expression) {
 			throw new IllegalEmptyArgumentException(name);
@@ -714,7 +714,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends CharSequence> T notEmpty(@Nullable final T chars, @Nullable final String name) {
+	public static <T extends CharSequence> T notEmpty(@Nonnull final T chars, @Nullable final String name) {
 		notNull(chars, name);
 		notEmpty(chars, chars.length() == 0, name);
 		return chars;
@@ -739,7 +739,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends Map<?, ?>> T notEmpty(@Nullable final T map, @Nullable final String name) {
+	public static <T extends Map<?, ?>> T notEmpty(@Nonnull final T map, @Nullable final String name) {
 		notNull(map);
 		notEmpty(map, map.isEmpty(), name);
 		return map;
@@ -770,7 +770,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T extends Collection<?>> T notEmpty(@Nullable final T collection, @Nullable final String name) {
+	public static <T extends Collection<?>> T notEmpty(@Nonnull final T collection, @Nullable final String name) {
 		notNull(collection, name);
 		notEmpty(collection, collection.isEmpty(), name);
 		return collection;
@@ -793,7 +793,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T> T[] notEmpty(@Nullable final T[] array) {
+	public static <T> T[] notEmpty(@Nonnull final T[] array) {
 		notNull(array);
 		notEmpty(array, array.length == 0, EMPTY_ARGUMENT_NAME);
 		return array;
@@ -814,7 +814,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
-	public static <T> T[] notEmpty(@Nullable final T[] array, @Nullable final String name) {
+	public static <T> T[] notEmpty(@Nonnull final T[] array, @Nullable final String name) {
 		notNull(array);
 		notEmpty(array, array.length == 0, EMPTY_ARGUMENT_NAME);
 		return array;
@@ -906,7 +906,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is {@code null}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T notNull(@Nullable final T reference) {
+	public static <T> T notNull(@Nonnull final T reference) {
 		if (reference == null) {
 			throw new IllegalNullArgumentException();
 		}
@@ -925,7 +925,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is {@code null}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T notNull(@Nullable final T reference, @Nullable final String name) {
+	public static <T> T notNull(@Nonnull final T reference, @Nullable final String name) {
 		if (reference == null) {
 			throw new IllegalNullArgumentException(name);
 		}
