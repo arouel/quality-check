@@ -49,7 +49,10 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 */
 	protected static final String MESSAGE_WITH_ANNOTATION_AND_CLASS = "Class '%s' must have annotation '%s'.";
 
+	@Nullable
 	private final Class<? extends Annotation> annotation;
+
+	@Nullable
 	private final Class<?> clazz;
 
 	/**
@@ -126,7 +129,7 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalMissingAnnotationException(@Nullable final Class<? extends Annotation> annotation, @Nullable final Throwable cause) {
+	public IllegalMissingAnnotationException(@Nonnull final Class<? extends Annotation> annotation, @Nullable final Throwable cause) {
 		super(format(annotation), cause);
 		this.annotation = annotation;
 		this.clazz = null;
@@ -159,7 +162,7 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalMissingAnnotationException(@Nullable final Class<? extends Annotation> annotation, @Nullable final Class<?> clazz,
+	public IllegalMissingAnnotationException(@Nonnull final Class<? extends Annotation> annotation, @Nullable final Class<?> clazz,
 			@Nullable final Throwable cause) {
 		super(format(annotation, clazz), cause);
 		this.annotation = annotation;
