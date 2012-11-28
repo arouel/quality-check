@@ -49,9 +49,15 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	 */
 	protected static final String MESSAGE_WITH_ANNOTATION_AND_CLASS = "Class '%s' must have annotation '%s'.";
 
+	/**
+	 * Annotation to search on a class
+	 */
 	@Nullable
 	private final Class<? extends Annotation> annotation;
 
+	/**
+	 * Class to check for an annotation
+	 */
 	@Nullable
 	private final Class<?> clazz;
 
