@@ -351,8 +351,8 @@ public final class Check {
 	 * account number).
 	 * 
 	 * <p>
-	 * We recommend to use the overloaded method {@link Check#isNumeric(String, String)} and pass as second argument the
-	 * name of the parameter to enhance the exception message.
+	 * We recommend to use the overloaded method {@link Check#isNumeric(CharSequence, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param value
 	 *            a readable sequence of {@code char} values which must be a number
@@ -414,8 +414,6 @@ public final class Check {
 	 *            pattern, that the {@code chars} must correspond to
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should match the given pattern
-	 * @param name
-	 *            name of object reference (in source code)
 	 * @return the passed {@code chars} that matches the given pattern
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code chars} is {@code null}
@@ -586,8 +584,8 @@ public final class Check {
 	 * Ensures that a passed string as a parameter of the calling method is not empty.
 	 * 
 	 * <p>
-	 * We recommend to use the overloaded method {@link Check#notEmpty(String, String)} and pass as second argument the
-	 * name of the parameter to enhance the exception message.
+	 * We recommend to use the overloaded method {@link Check#notEmpty(CharSequence, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should not be empty
