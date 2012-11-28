@@ -90,6 +90,11 @@ public class IllegalMissingAnnotationExceptionTest {
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
+	public void construct_withNullAnnotationAndFilledClassAndFilledCause() {
+		new IllegalMissingAnnotationException(null, IllegalMissingAnnotationExceptionTest.class, new RuntimeInstantiationException());
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
 	public void construct_withNullAnnotationAndNullCause() {
 		new IllegalMissingAnnotationException(null, (Throwable) null);
 	}
