@@ -4,10 +4,17 @@
 	<publishDate position="right" />
 	<version position="right" />
 
+	<bannerLeft>
+		<name>Quality-Check</name>
+		<src>./images/logo.png</src>
+		<href>http://qualitycheck.sourceforge.net/</href>
+		<alt>Logo of Quality-Check</alt>
+	</bannerLeft>
+
 	<body>
 
 		<breadcrumbs>
-			<item name="Quality-Check" href="http://qualitycheck.sourceforge.net/" />
+			<item name="qualitycheck.sf.net" href="http://qualitycheck.sourceforge.net/" />
 		</breadcrumbs>
 
 		<menu name="Overview">
