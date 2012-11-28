@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package net.sf.qualitycheck;
 
 import java.lang.annotation.ElementType;
