@@ -34,10 +34,9 @@
 			<source><![CDATA[package net.example.app.model;
 
 import java.util.regex.Pattern;
-import javax.annotation.Nonnull;
-import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
-import net.sf.qualitycheck.exception.IllegalNullArgumentException;
-import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
+import javax.annotation.*;
+import net.sf.qualitycheck.*;
+import net.sf.qualitycheck.exception.*;
 
 public class User {
 
@@ -46,14 +45,6 @@ public class User {
   private final String name;
   private final String email;
 
-  /**
-   * Constructs a new instance of {@code User} with a name and email address.
-   * 
-   * @param name
-   *          name of an user
-   * @param email
-   *          email address an user
-   */
   @ArgumentsChecked
   @Throws({
     IllegalNullArgumentException.class,
@@ -64,10 +55,12 @@ public class User {
     this.email = Check.matchesPattern(EMAIL_PATTERN, email);
   }
 
+  @Nonnull
   public String getEmail() {
     return email;
   }
 
+  @Nonnull
   public String getName() {
     return name;
   }
@@ -95,20 +88,6 @@ public class User {
   private final String name;
   private final String email;
 
-  /**
-   * Constructs a new instance of {@code User} with a name and email address.
-   * 
-   * @param name
-   *          name of an user
-   * @param email
-   *          email address an user
-   * @throws IllegalArgumentException
-   *           if any argument is {@code null}
-   * @throws IllegalArgumentException
-   *           if argument {@code name} is empty
-   * @throws IllegalArgumentException
-   *           if argument {@code email} is not a valid email address
-   */
   public User(final String name, final String email) {
     if (name == null) {
       throw new IllegalArgumentException("Argument 'name' must not be null.");
