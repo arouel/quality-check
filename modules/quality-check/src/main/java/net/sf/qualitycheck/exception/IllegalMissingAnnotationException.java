@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.ArgumentsChecked;
-import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 
 /**
@@ -64,7 +63,9 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	private static String format(@Nonnull final Class<? extends Annotation> annotation) {
-		Check.notNull(annotation);
+		if (annotation == null) {
+			throw new IllegalNullArgumentException("annotation");
+		}
 		return String.format(MESSAGE_WITH_ANNOTATION, annotation.getName());
 	}
 
@@ -81,7 +82,10 @@ public class IllegalMissingAnnotationException extends RuntimeException {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	private static String format(@Nonnull final Class<? extends Annotation> annotation, @Nullable final Class<?> clazz) {
-		Check.notNull(annotation);
+		if (annotation == null) {
+			throw new IllegalNullArgumentException("annotation");
+		}
+
 		if (clazz != null) {
 			return String.format(MESSAGE_WITH_ANNOTATION_AND_CLASS, clazz.getName(), annotation.getName());
 		} else {
