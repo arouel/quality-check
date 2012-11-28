@@ -832,10 +832,10 @@ public final class Check {
 	 */
 	@Throws({ IllegalNaNArgumentException.class })
 	public static double notNaN(final double value, @Nullable final String name) {
-		if (value != value) { // most efficient check for NaN, see Double.isNaN(value))
+		// most efficient check for NaN, see Double.isNaN(value))
+		if (value != value) {
 			throw new IllegalNaNArgumentException(name);
 		}
-
 		return value;
 	}
 
@@ -870,7 +870,8 @@ public final class Check {
 	 */
 	@Throws({ IllegalNaNArgumentException.class })
 	public static float notNaN(final float value, @Nullable final String name) {
-		if (value != value) { // most efficient check for NaN, see Float.isNaN(value))
+		// most efficient check for NaN, see Float.isNaN(value))
+		if (value != value) {
 			throw new IllegalNaNArgumentException(name);
 		}
 		return value;
