@@ -960,7 +960,7 @@ public final class Check {
 	 *             if the given arguments do not form a valid range
 	 */
 	@Throws(IllegalRangeException.class)
-	public static void range(final @Nonnegative int start, final @Nonnegative int end, final @Nonnegative int size) {
+	public static void range(@Nonnegative final int start, @Nonnegative final int end, @Nonnegative final int size) {
 		final boolean rangeIsValid = (start <= size) && (end <= size) && (start <= end);
 		final boolean inputValuesAreValid = (size >= 0) && (start >= 0) && (end >= 0);
 

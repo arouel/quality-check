@@ -127,7 +127,7 @@ public class IllegalNumberRangeException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNumberRangeException(final  @Nullable Throwable cause) {
+	public IllegalNumberRangeException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 
