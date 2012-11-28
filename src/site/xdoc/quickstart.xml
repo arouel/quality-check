@@ -24,7 +24,7 @@
 		<dependency>
 		    <groupId>net.sf.qualitycheck</groupId>
 		    <artifactId>quality-check</artifactId>
-		    <version>0.10</version>
+		    <version>1.0-RC1</version>
 		</dependency>
 		...
 	</dependencies>
