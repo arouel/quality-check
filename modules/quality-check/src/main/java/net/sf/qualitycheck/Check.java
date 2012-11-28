@@ -823,7 +823,7 @@ public final class Check {
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
-	 * @see {@code Double.NaN}
+	 * @see java.lang.Double#NaN
 	 * 
 	 * @param value
 	 *            value which should not be NaN
@@ -839,7 +839,7 @@ public final class Check {
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
-	 * @see {@code Double.NaN}
+	 * @see java.lang.Double#NaN
 	 * 
 	 * @param value
 	 *            value which should not be NaN
@@ -861,7 +861,7 @@ public final class Check {
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
-	 * @see {@code Float.NaN}
+	 * @see java.lang.Float#NaN
 	 * 
 	 * @param value
 	 *            value which should not be NaN
@@ -877,7 +877,7 @@ public final class Check {
 	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
-	 * @see {@code Float.NaN}
+	 * @see java.lang.Float#NaN
 	 * 
 	 * @param value
 	 *            value which should not be NaN
