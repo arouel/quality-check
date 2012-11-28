@@ -61,8 +61,8 @@ at FindBugs™ JSR-305 support.
 		<connection>scm:git:git://github.com/before/quality-check.git</connection>
 		<developerConnection>scm:git:git@github.com:before/quality-check.git</developerConnection>
 		<url>https://github.com/before/quality-check.git</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<modules>
 		<module>modules/quality-check</module>
@@ -90,22 +90,22 @@ at FindBugs™ JSR-305 support.
 		<cobertura-maven-plugin.version>2.5.1</cobertura-maven-plugin.version>
 		<findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
-		<maven-assembly-plugin.version>2.3</maven-assembly-plugin.version>
+		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
 		<maven-changelog-plugin.version>2.2</maven-changelog-plugin.version>
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 		<maven-gpg-plugin.version>1.4</maven-gpg-plugin.version>
-		<maven-javadoc-plugin.version>2.8.1</maven-javadoc-plugin.version>
+		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
 		<maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
 		<maven-pmd-plugin.version>2.7.1</maven-pmd-plugin.version>
-		<maven-project-info-reports-plugin.version>2.4</maven-project-info-reports-plugin.version>
+		<maven-project-info-reports-plugin.version>2.6</maven-project-info-reports-plugin.version>
 		<maven-release-plugin.version>2.3.2</maven-release-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<maven-site-plugin.version>3.0</maven-site-plugin.version>
-		<maven-surefire-plugin.version>2.12.3</maven-surefire-plugin.version>
+		<maven-site-plugin.version>3.2</maven-site-plugin.version>
+		<maven-surefire-plugin.version>2.12.4</maven-surefire-plugin.version>
 		<maven-toolchains-plugin.version>1.0</maven-toolchains-plugin.version>
-		<wagon-ssh.version>2.2</wagon-ssh.version>
-		<pitest.version>0.28</pitest.version>
-		
+		<wagon-ssh.version>2.3</wagon-ssh.version>
+		<pitest.version>0.29</pitest.version>
+
 		<!-- Dependencies -->
 		<commons-logging.version>1.1.1</commons-logging.version>
 		<findbugs.version>2.0.1</findbugs.version>
@@ -115,7 +115,7 @@ at FindBugs™ JSR-305 support.
 		<!-- Sonar -->
 		<sonar.pitest.mode>active</sonar.pitest.mode>
 		<sonar.pit.target.classes>net.sf.qualitycheck.*</sonar.pit.target.classes>
-		<sonar.pit.target.tests>net.sf.qualitycheck.*</sonar.pit.target.tests>		
+		<sonar.pit.target.tests>net.sf.qualitycheck.*</sonar.pit.target.tests>
 	</properties>
 
 	<dependencyManagement>
