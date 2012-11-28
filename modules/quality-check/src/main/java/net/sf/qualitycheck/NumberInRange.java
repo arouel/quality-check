@@ -55,8 +55,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of a byte (positive or negative)
 	 * 
-	 * @see {@code Byte.MIN}
-	 * @see {@code Byte.MAX}
+	 * @see java.lang.Byte#MIN_VALUE
+	 * @see java.lang.Byte#MAX_VALUE
 	 * 
 	 * @return number as a byte (rounding might occur)
 	 */
@@ -77,8 +77,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of a short (positive or negative)
 	 * 
-	 * @see {@code Short.MIN}
-	 * @see {@code Short.MAX}
+	 * @see java.lang.Short#MIN_VALUE
+	 * @see java.lang.Short#MAX_VALUE
 	 * 
 	 * @return number as a short (rounding might occur)
 	 */
@@ -99,8 +99,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of an integer (positive or negative)
 	 * 
-	 * @see {@code Integer.MIN}
-	 * @see {@code Integer.MAX}
+	 * @see java.lang.Integer#MIN_VALUE
+	 * @see java.lang.Integer#MAX_VALUE
 	 * 
 	 * @return number as an integer (rounding might occur)
 	 */
@@ -121,8 +121,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of a long (positive or negative)
 	 * 
-	 * @see {@code Long.MIN}
-	 * @see {@code Long.MAX}
+	 * @see java.lang.Long#MIN_VALUE
+	 * @see java.lang.Long#MAX_VALUE
 	 * 
 	 * @return number as a long (rounding might occur)
 	 */
@@ -143,8 +143,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of a float (positive or negative)
 	 * 
-	 * @see {@code Float.MIN}
-	 * @see {@code Float.MAX}
+	 * @see java.lang.Float#MIN_VALUE
+	 * @see java.lang.Float#MAX_VALUE
 	 * 
 	 * @return number as a float
 	 */
@@ -165,8 +165,8 @@ public final class NumberInRange {
 	 * @param number
 	 *            a number which should be in the range of a double (positive or negative)
 	 * 
-	 * @see {@code Double.MIN}
-	 * @see {@code Double.MAX}
+	 * @see java.lang.Double#MIN_VALUE
+	 * @see java.lang.Double#MAX_VALUE
 	 * 
 	 * @return number as a double
 	 */
