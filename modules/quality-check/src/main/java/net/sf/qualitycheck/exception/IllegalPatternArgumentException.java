@@ -58,7 +58,7 @@ public class IllegalPatternArgumentException extends RuntimeException {
 	 * @return {@code DEFAULT_MESSAGE} if the given argument name is {@code null} or empty, otherwise a formatted
 	 *         {@code MESSAGE_WITH_NAME}
 	 */
-	private static final String determineMessage(@Nullable final String argumentName, @Nullable final Pattern pattern) {
+	private static String determineMessage(@Nullable final String argumentName, @Nullable final Pattern pattern) {
 		return argumentName != null && !argumentName.isEmpty() ? format(argumentName, pattern) : format(pattern);
 	}
 

@@ -63,7 +63,7 @@ public class IllegalInstanceOfArgumentException extends RuntimeException {
 	 * @return {@code MESSAGE_WITH_TYPES} if the given argument name is {@code null} or empty, otherwise a formatted
 	 *         {@code MESSAGE_WITH_NAME}
 	 */
-	private static final String determineMessage(@Nullable final String argumentName, @Nullable final Class<?> expectedType,
+	private static String determineMessage(@Nullable final String argumentName, @Nullable final Class<?> expectedType,
 			@Nullable final Class<?> actualType) {
 		return argumentName != null && !argumentName.isEmpty() ? format(argumentName, expectedType, actualType) : format(expectedType,
 				actualType);
