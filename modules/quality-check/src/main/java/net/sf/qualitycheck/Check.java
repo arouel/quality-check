@@ -64,7 +64,7 @@ public final class Check {
 	 */
 	protected static final class NumericRegularExpressionHolder {
 
-		private static Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
+		private static final Pattern NUMERIC_REGEX = Pattern.compile("[0-9]+");
 
 		@Nonnull
 		public static Pattern getPattern() {
@@ -76,7 +76,7 @@ public final class Check {
 	/**
 	 * Representation of an empty argument name
 	 */
-	private static String EMPTY_ARGUMENT_NAME = "";
+	private static final String EMPTY_ARGUMENT_NAME = "";
 
 	/**
 	 * Checks if the given array contains {@code null}.
