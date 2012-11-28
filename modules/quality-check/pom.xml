@@ -26,7 +26,7 @@ runtime we use JSR-305 Annotations. With these annotations you are
 able to detect possible bugs earlier. For more informations look
 at FindBugs™ JSR-305 support.
 ]]></description>
-	<url>http://qualitycheck.sourceforge.net/</url>
+	<url>http://qualitycheck.sourceforge.net/modules/quality-check/</url>
 
 	<packaging>jar</packaging>
 
