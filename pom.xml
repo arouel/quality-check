@@ -73,7 +73,7 @@ at FindBugs™ JSR-305 support.
 		<downloadUrl>https://github.com/before/quality-check/downloads</downloadUrl>
 		<site>
 			<id>qualitycheck.sf.net</id>
-			<url>scp://shell.sourceforge.net/home/project-web/qualitycheck/htdocs</url>
+			<url>scp://belor@shell.sourceforge.net/home/project-web/qualitycheck/htdocs</url>
 		</site>
 	</distributionManagement>
 
