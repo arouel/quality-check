@@ -285,37 +285,7 @@ public final class Check {
 
 		final Number ret;
 		try {
-			if (type.equals(Byte.class)) {
-				final Number number = new BigInteger(value);
-				NumberInRange.checkByte(number);
-				ret = Byte.valueOf(number.byteValue());
-			} else if (type.equals(Double.class)) {
-				final Number number = new BigDecimal(value);
-				NumberInRange.checkDouble(number);
-				ret = Double.valueOf(number.doubleValue());
-			} else if (type.equals(Float.class)) {
-				final Number number = new BigDecimal(value);
-				NumberInRange.checkFloat(number);
-				ret = Float.valueOf(number.floatValue());
-			} else if (type.equals(Integer.class)) {
-				final Number number = new BigInteger(value);
-				NumberInRange.checkInteger(number);
-				ret = Integer.valueOf(number.intValue());
-			} else if (type.equals(Long.class)) {
-				final Number number = new BigInteger(value);
-				NumberInRange.checkLong(number);
-				ret = Long.valueOf(number.longValue());
-			} else if (type.equals(Short.class)) {
-				final Number number = new BigInteger(value);
-				NumberInRange.checkShort(number);
-				ret = Short.valueOf(number.shortValue());
-			} else if (type.equals(BigInteger.class)) {
-				ret = new BigInteger(value);
-			} else if (type.equals(BigDecimal.class)) {
-				ret = new BigDecimal(value);
-			} else {
-				throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': " + type.getName());
-			}
+			ret = checkNumberInRange(value, type);
 		} catch (final NumberFormatException nfe) {
 			if (name == null) {
 				throw new IllegalNumberArgumentException(nfe);
@@ -325,6 +295,54 @@ public final class Check {
 		}
 
 		return type.cast(ret);
+	}
+
+	/**
+	 * Checks the passed {@code value} against the ranges of the given datatype.
+	 * 
+	 * @param value
+	 *            value which must be a number and in the range of the given datatype.
+	 * @param type
+	 *            requested return value type, must be a subclass of {@code Number}
+	 * @return a number
+	 * 
+	 * @throws NumberFormatException
+	 *             if the given value can not be parsed as a number
+	 */
+	private static <T> Number checkNumberInRange(final String value, final Class<T> type) {
+		final Number ret;
+		if (type.equals(Byte.class)) {
+			final Number number = new BigInteger(value);
+			NumberInRange.checkByte(number);
+			ret = Byte.valueOf(number.byteValue());
+		} else if (type.equals(Double.class)) {
+			final Number number = new BigDecimal(value);
+			NumberInRange.checkDouble(number);
+			ret = Double.valueOf(number.doubleValue());
+		} else if (type.equals(Float.class)) {
+			final Number number = new BigDecimal(value);
+			NumberInRange.checkFloat(number);
+			ret = Float.valueOf(number.floatValue());
+		} else if (type.equals(Integer.class)) {
+			final Number number = new BigInteger(value);
+			NumberInRange.checkInteger(number);
+			ret = Integer.valueOf(number.intValue());
+		} else if (type.equals(Long.class)) {
+			final Number number = new BigInteger(value);
+			NumberInRange.checkLong(number);
+			ret = Long.valueOf(number.longValue());
+		} else if (type.equals(Short.class)) {
+			final Number number = new BigInteger(value);
+			NumberInRange.checkShort(number);
+			ret = Short.valueOf(number.shortValue());
+		} else if (type.equals(BigInteger.class)) {
+			ret = new BigInteger(value);
+		} else if (type.equals(BigDecimal.class)) {
+			ret = new BigDecimal(value);
+		} else {
+			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': " + type.getName());
+		}
+		return ret;
 	}
 
 	/**
