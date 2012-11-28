@@ -24,16 +24,6 @@
 			<lineEnding>unix</lineEnding>
 			<fileMode>0644</fileMode>
 		</fileSet>
-		<fileSet>
-			<directory>${basedir}/../modules/quality-check</directory>
-			<outputDirectory>/</outputDirectory>
-			<includes>
-				<include>LICENSE.alphanum.txt</include>
-				<include>LICENSE.uas.txt</include>
-			</includes>
-			<lineEnding>unix</lineEnding>
-			<fileMode>0644</fileMode>
-		</fileSet>
 
 	</fileSets>
 
