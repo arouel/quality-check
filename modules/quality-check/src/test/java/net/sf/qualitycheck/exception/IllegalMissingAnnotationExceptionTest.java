@@ -26,24 +26,44 @@ import org.junit.Test;
 public class IllegalMissingAnnotationExceptionTest {
 
 	@Test
+	public void construct_withAnnotationAndClass_successful() {
+		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class);
+	}
+
+	@Test
+	public void construct_withAnnotationAndNullClassAndNullCause() {
+		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class, (Class<?>) null,
+				(Throwable) null);
+		Assert.assertEquals("Class must have annotation 'net.sf.qualitycheck.ArgumentsChecked'.", e.getMessage());
+		Assert.assertEquals(ArgumentsChecked.class, e.getMissingAnnotation());
+		Assert.assertNull(e.getClassWithoutAnnotation());
+	}
+
+	@Test
 	public void construct_withArgName_successful() {
 		new IllegalMissingAnnotationException(ArgumentsChecked.class);
 	}
 
-	@Test(expected=IllegalNullArgumentException.class)
-	public void construct_withNullAnnotation_notSuccessful() {
-		new IllegalMissingAnnotationException((Class<? extends Annotation>)null);
-	}
-	
 	@Test
-	public void construct_withNullCause() {
-		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException((Throwable)null);
-		Assert.assertEquals("Annotation is required on the passed class.", e.getMessage());
+	public void construct_withArgNameAndClass_successful() {
+		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class);
 	}
 
-	@Test(expected=IllegalNullArgumentException.class)
-	public void construct_withNullAnnotationAndNullCause_notSuccessfull() {
-		new IllegalMissingAnnotationException((Class<? extends Annotation>)null, (Throwable)null);
+	@Test
+	public void construct_withFilledAnnotationAndClassAndFilledCause() {
+		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class,
+				new ClassNotFoundException());
+	}
+
+	@Test
+	public void construct_withFilledAnnotationAndClauseAndNullCause() {
+		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class,
+				IllegalMissingAnnotationExceptionTest.class, (Throwable) null);
+		Assert.assertEquals(
+				"Class 'net.sf.qualitycheck.exception.IllegalMissingAnnotationExceptionTest' must have annotation 'net.sf.qualitycheck.ArgumentsChecked'.",
+				e.getMessage());
+		Assert.assertEquals(ArgumentsChecked.class, e.getMissingAnnotation());
+		Assert.assertEquals(IllegalMissingAnnotationExceptionTest.class, e.getClassWithoutAnnotation());
 	}
 
 	@Test
@@ -53,43 +73,27 @@ public class IllegalMissingAnnotationExceptionTest {
 
 	@Test
 	public void construct_withFilledAnnotationAndNullCause() {
-		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class, (Throwable)null);
+		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class, (Throwable) null);
 		Assert.assertEquals("Class must have annotation 'net.sf.qualitycheck.ArgumentsChecked'.", e.getMessage());
 		Assert.assertEquals(ArgumentsChecked.class, e.getMissingAnnotation());
-		Assert.assertNull(e.getClassWithoutAnnotation());		
+		Assert.assertNull(e.getClassWithoutAnnotation());
 	}
 
-	//
-	@Test
-	public void construct_withArgNameAndClass_successful() {
-		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class);
+	@Test(expected = IllegalNullArgumentException.class)
+	public void construct_withNullAnnotation_notSuccessful() {
+		new IllegalMissingAnnotationException((Class<? extends Annotation>) null);
 	}
 
-	@Test
-	public void construct_withAnnotationAndClass_successful() {
-		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class);
-	}
-
-	@Test
-	public void construct_withAnnotationAndNullClassAndNullCause() {
-		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class, (Class<?>)null, (Throwable)null);
-		Assert.assertEquals("Class must have annotation 'net.sf.qualitycheck.ArgumentsChecked'.", e.getMessage());
-		Assert.assertEquals(ArgumentsChecked.class, e.getMissingAnnotation());
-		Assert.assertNull(e.getClassWithoutAnnotation());		
+	@Test(expected = IllegalNullArgumentException.class)
+	public void construct_withNullAnnotationAndNullCause_notSuccessfull() {
+		new IllegalMissingAnnotationException((Class<? extends Annotation>) null, (Throwable) null);
 	}
 
 	@Test
-	public void construct_withFilledAnnotationAndClassAndFilledCause() {
-		new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class, new ClassNotFoundException());
+	public void construct_withNullCause() {
+		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException((Throwable) null);
+		Assert.assertEquals("Annotation is required on the passed class.", e.getMessage());
 	}
-
-	@Test
-	public void construct_withFilledAnnotationAndClauseAndNullCause() {
-		final IllegalMissingAnnotationException e = new IllegalMissingAnnotationException(ArgumentsChecked.class, IllegalMissingAnnotationExceptionTest.class, (Throwable)null);
-		Assert.assertEquals("Class 'net.sf.qualitycheck.exception.IllegalMissingAnnotationExceptionTest' must have annotation 'net.sf.qualitycheck.ArgumentsChecked'.", e.getMessage());
-		Assert.assertEquals(ArgumentsChecked.class, e.getMissingAnnotation());
-		Assert.assertEquals(IllegalMissingAnnotationExceptionTest.class, e.getClassWithoutAnnotation());		
-	}	
 
 	@Test
 	public void construct_withoutArgs_successful() {
@@ -98,4 +102,3 @@ public class IllegalMissingAnnotationExceptionTest {
 	}
 
 }
-
