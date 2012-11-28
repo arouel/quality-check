@@ -41,6 +41,7 @@ import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
+import net.sf.qualitycheck.exception.RuntimeInstantiationException;
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
@@ -993,12 +994,15 @@ public final class Check {
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param clazz
-	 *            an subclass of RuntimeException which will be thrown if the given state is not valid
+	 *            an subclass of {@link RuntimeException} which will be thrown if the given state is not valid
 	 * @throws clazz
 	 *             a new instance of {@code clazz} if the given arguments caused an invalid state
+	 * @throws RuntimeInstantiationException
+	 *             <strong>Attention</strong>: Be aware, that a {@code RuntimeInstantiationException} can be thrown when
+	 *             the given {@code clazz} cannot be instantiated
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, RuntimeInstantiationException.class })
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
 		Check.notNull(clazz);
 
@@ -1007,11 +1011,10 @@ public final class Check {
 			try {
 				re = clazz.newInstance();
 			} catch (final InstantiationException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeInstantiationException(clazz.getSimpleName(), e);
 			} catch (final IllegalAccessException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeInstantiationException(clazz.getSimpleName(), e);
 			}
-
 			throw re;
 		}
 	}
