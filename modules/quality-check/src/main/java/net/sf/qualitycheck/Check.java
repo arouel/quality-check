@@ -159,8 +159,8 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check) {
-		Check.notNull(expected);
-		Check.notNull(check);
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
 
 		if (!expected.equals(check)) {
 			throw new IllegalNotEqualException();
@@ -185,8 +185,8 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
 	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) {
-		Check.notNull(expected);
-		Check.notNull(check);
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
 
 		if (!expected.equals(check)) {
 			throw new IllegalNotEqualException(message);
@@ -247,8 +247,8 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static void instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj, @Nullable final String name) {
-		Check.notNull(type);
-		Check.notNull(obj);
+		Check.notNull(type, "type");
+		Check.notNull(obj, "obj");
 		if (!type.isInstance(obj)) {
 			throw new IllegalInstanceOfArgumentException(name, type, obj.getClass());
 		}
@@ -266,7 +266,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static int isNumber(@Nonnull final String value) {
-		Check.notNull(value);
+		Check.notNull(value, "value");
 		return Check.isNumber(value, Integer.class).intValue();
 	}
 
@@ -303,7 +303,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static int isNumber(@Nonnull final String value, @Nullable final String name) {
-		Check.notNull(value);
+		Check.notNull(value, "value");
 		return Check.isNumber(value, name, Integer.class).intValue();
 	}
 
@@ -382,7 +382,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T isNumeric(@Nonnull final T value, @Nullable final String name) {
-		Check.notNull(value);
+		Check.notNull(value, "value");
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
 			throw new IllegalNumericArgumentException(name);
 		}
@@ -448,8 +448,8 @@ public final class Check {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nonnull final T chars,
 			@Nullable final String name) {
-		Check.notNull(pattern);
-		Check.notNull(chars);
+		Check.notNull(pattern, "pattern");
+		Check.notNull(chars, "chars");
 		if (!matches(pattern, chars)) {
 			throw new IllegalPatternArgumentException(name, pattern);
 		}
@@ -489,7 +489,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Iterable<?>> T noNullElements(@Nonnull final T iterable, final String name) {
-		Check.notNull(iterable);
+		Check.notNull(iterable, "iterable");
 		for (final Object element : iterable) {
 			if (element == null) {
 				throw new IllegalNullElementsException(name);
@@ -531,7 +531,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(@Nonnull final T[] array, @Nullable final String name) {
-		Check.notNull(array);
+		Check.notNull(array, "array");
 		if (containsNullElements(array)) {
 			throw new IllegalNullElementsException(name);
 		}
@@ -899,6 +899,10 @@ public final class Check {
 	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
 	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNull(Object, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
 	 * @param reference
 	 *            an object reference
 	 * @return the non-null reference that was validated
@@ -1022,7 +1026,7 @@ public final class Check {
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, RuntimeInstantiationException.class })
 	public static void stateIsTrue(final boolean expression, final Class<? extends RuntimeException> clazz) {
-		Check.notNull(clazz);
+		Check.notNull(clazz, "clazz");
 
 		if (!expression) {
 			RuntimeException re;
