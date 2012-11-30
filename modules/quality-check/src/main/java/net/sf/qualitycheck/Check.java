@@ -155,7 +155,13 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check) {
+	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR Sonar
+																									// warns about
+																									// suspicious equals
+																									// method name, as
+																									// the name is
+																									// intended
+																									// deactivate sonar
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -181,7 +187,21 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
-	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+																															// Sonar
+																															// warns
+																															// about
+																															// suspicious
+																															// equals
+																															// method
+																															// name,
+																															// as
+																															// the
+																															// name
+																															// is
+																															// intended
+																															// deactivate
+																															// sonar
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
