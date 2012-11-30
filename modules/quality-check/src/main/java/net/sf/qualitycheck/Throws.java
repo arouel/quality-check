@@ -24,6 +24,8 @@ import java.lang.annotation.Target;
 /**
  * The <code>Throws</code> annotation specifies the classes that will be thrown when one ore more arguments are not
  * valid.
+ * 
+ * This is useful to show the runtime exceptions which can possibly be thrown by a method.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

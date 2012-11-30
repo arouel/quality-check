@@ -63,7 +63,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static byte checkByte(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInByteRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), BYTE_MIN, BYTE_MAX);
 		}
@@ -85,7 +85,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static short checkShort(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInShortRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), SHORT_MIN, SHORT_MAX);
 		}
@@ -107,7 +107,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static int checkInteger(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInIntegerRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), INTEGER_MIN, INTEGER_MAX);
 		}
@@ -129,7 +129,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static int checkLong(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInLongRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), LONG_MIN, LONG_MAX);
 		}
@@ -151,7 +151,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static float checkFloat(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInFloatRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), FLOAT_MIN, FLOAT_MAX);
 		}
@@ -173,7 +173,7 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static double checkDouble(@Nonnull final Number number) {
-		Check.notNull(number);
+		Check.notNull(number, "number");
 		if (!isInDoubleRange(number)) {
 			throw new IllegalNumberRangeException(number.toString(), DOUBLE_MIN, DOUBLE_MAX);
 		}
@@ -240,9 +240,9 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigInteger min, @Nonnull final BigInteger max) {
-		Check.notNull(number);
-		Check.notNull(min);
-		Check.notNull(max);
+		Check.notNull(number, "number");
+		Check.notNull(min, "min");
+		Check.notNull(max, "max");
 
 		BigInteger bigInteger = null;
 		if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long) {
@@ -275,9 +275,9 @@ public final class NumberInRange {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static boolean isInRange(@Nonnull final Number number, @Nonnull final BigDecimal min, @Nonnull final BigDecimal max) {
-		Check.notNull(number);
-		Check.notNull(min);
-		Check.notNull(max);
+		Check.notNull(number, "number");
+		Check.notNull(min, "min");
+		Check.notNull(max, "max");
 
 		BigDecimal bigDecimal = null;
 		if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long) {

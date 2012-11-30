@@ -48,8 +48,7 @@ import net.sf.qualitycheck.exception.RuntimeInstantiationException;
  * 
  * Checks should be added to all arguments of all public methods in your class to assure that only valid values can be
  * encountered within your class. This is major step to avoid technical errors like NullPointerExceptions or
- * IndexOutOfBoundsException.
- * 
+ * IndexOutOfBoundsException in your code.
  * 
  * @author André Rouél
  * @author Dominik Seichter
@@ -58,10 +57,8 @@ public final class Check {
 
 	/**
 	 * Holder for the regular expression to determine numeric values. Using the holder pattern guarantees that the
-	 * regular expression is initialized before the first used (thread safe!) and that it is only initialized if it is
-	 * used.
-	 * 
-	 * So we do not pay any performance bounty for regular expressions when using other checks.
+	 * regular expression is initialized before the first use (thread safe!) and that it is only initialized if it is
+	 * needed. So, we do not pay any performance bounty for regular expressions when using other checks.
 	 */
 	protected static final class NumericRegularExpressionHolder {
 
@@ -75,7 +72,7 @@ public final class Check {
 	}
 
 	/**
-	 * Representation of an empty argument name
+	 * Representation of an empty argument name.
 	 */
 	private static final String EMPTY_ARGUMENT_NAME = "";
 
@@ -317,7 +314,7 @@ public final class Check {
 	 * @param value
 	 *            value which must be a number and in the range of the given datatype.
 	 * @param name
-	 *            name of object reference (in source code)
+	 *            (optional) name of object reference (in source code).
 	 * @param type
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
@@ -537,7 +534,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed a parameter of the calling method is not empty, using the passed expression to evaluate the
+	 * Ensures that a passed parameter of the calling method is not empty, using the passed expression to evaluate the
 	 * emptiness.
 	 * 
 	 * <p>
@@ -560,7 +557,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed a parameter of the calling method is not empty, using the passed expression to evaluate the
+	 * Ensures that a passed parameter of the calling method is not empty, using the passed expression to evaluate the
 	 * emptiness.
 	 * 
 	 * @param expression
