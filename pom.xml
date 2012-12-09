@@ -131,7 +131,7 @@ at FindBugs™ JSR-305 support.
 				<!-- Scope set to compile and test only         -->
 				<!-- If you want to use CheckStatic.isImmutable -->
 				<!-- You have to provide MutabilityDetector     -->
-				<scope>compile, test</scope>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- JSR-305 annotations -->
