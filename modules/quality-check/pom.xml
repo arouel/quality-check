@@ -47,6 +47,11 @@ at FindBugs™ JSR-305 support.
 			<artifactId>jsr305</artifactId>
 		</dependency>
 
+		<dependency>
+		  <groupId>org.mutabilitydetector</groupId>
+		  <artifactId>MutabilityDetector</artifactId>
+		</dependency>
+
 		<!-- Unit testing -->
 		<dependency>
 			<groupId>commons-logging</groupId>
