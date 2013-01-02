@@ -229,8 +229,8 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static void instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj) {
-		instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
+	public static <T> T instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj) {
+		return instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
 	}
 
 	/**
@@ -247,12 +247,14 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static void instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj, @Nullable final String name) {
+	@SuppressWarnings("unchecked")
+	public static <T> T instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj, @Nullable final String name) {
 		Check.notNull(type, "type");
 		Check.notNull(obj, "obj");
 		if (!type.isInstance(obj)) {
 			throw new IllegalInstanceOfArgumentException(name, type, obj.getClass());
 		}
+		return (T) obj;
 	}
 
 	/**

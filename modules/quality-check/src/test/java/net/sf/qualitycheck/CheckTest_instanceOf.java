@@ -26,8 +26,9 @@ public class CheckTest_instanceOf {
 
 	@Test
 	public void instanceOf_type_isValid() {
-		final Long id = 12376L;
-		Check.instanceOf(Long.class, id);
+		final Object id = 12376L;
+		final Long result = Check.instanceOf(Long.class, id);
+		Assert.assertEquals(id, result);
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
@@ -38,7 +39,8 @@ public class CheckTest_instanceOf {
 	@Test
 	public void instanceOf_withArgName_subtype_isValid() {
 		final List<Integer> list = Arrays.asList(new Integer[] { 1, 2, 3, 4, null });
-		Check.instanceOf(Collection.class, list, "list");
+		final Collection<Integer> result = Check.instanceOf(Collection.class, list, "list");
+		Assert.assertEquals(list, result);
 	}
 
 	@Test(expected = IllegalInstanceOfArgumentException.class)
