@@ -36,11 +36,6 @@ and support in writing unit tests..
 	</licenses>
 
 	<dependencies>
-		<dependency>
-			<groupId>net.sf.qualitycheck</groupId>
-			<artifactId>quality-check</artifactId>
-			<version>1.1-SNAPSHOT</version>
-		</dependency> 
 
 		<!-- JSR-305 annotations -->
 		<dependency>
