@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2013 André Rouél
  * Copyright 2013 Dominik Seichter
@@ -59,5 +60,15 @@ public class StaticCheckTest {
 	@Test(expected=IllegalClassWithPublicDefaultConstructorException.class)
 	public void testInstantiationException() {
 		StaticCheck.noPublicDefaultConstructor(Useless.class);
+	}
+	
+	public static class WithPublicConstructor {
+			public WithPublicConstructor() {
+			}
+	};
+	
+	@Test(expected=IllegalClassWithPublicDefaultConstructorException.class)
+	public void testInstantiationException2() {
+		StaticCheck.noPublicDefaultConstructor(WithPublicConstructor.class);
 	}
 }

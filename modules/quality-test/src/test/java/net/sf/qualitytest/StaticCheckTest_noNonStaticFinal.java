@@ -108,4 +108,10 @@ public class StaticCheckTest_noNonStaticFinal {
 	public void testClassWithInheritedStaticVariableInHierarchy() {
 		StaticCheck.noNonStaticFinalInHierarchy(ClassWithInheritedStaticVariable.class);
 	}
+
+	@Test
+	public void testClassWithoutInheritedStaticVariableInHierarchy() {
+		StaticCheck.noNonStaticFinalInHierarchy(ClassWithNoStaticVariable.class);
+	}
+
 }
