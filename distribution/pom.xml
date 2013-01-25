@@ -25,6 +25,11 @@
 			<artifactId>quality-check</artifactId>
 			<version>1.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.qualitycheck</groupId>
+			<artifactId>quality-test</artifactId>
+			<version>1.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -67,6 +67,7 @@ at FindBugs™ JSR-305 support.
 
 	<modules>
 		<module>modules/quality-check</module>
+		<module>modules/quality-test</module>
 		<module>distribution</module>
 	</modules>
 
@@ -112,6 +113,8 @@ at FindBugs™ JSR-305 support.
 		<findbugs.version>2.0.1</findbugs.version>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.2</slf4j.version>
+		<easymock.version>3.1</easymock.version>
+		<powermock.version>1.5</powermock.version>
 
 		<!-- Sonar -->
 		<sonar.pitest.mode>active</sonar.pitest.mode>
@@ -121,7 +124,12 @@ at FindBugs™ JSR-305 support.
 
 	<dependencyManagement>
 		<dependencies>
-
+			<dependency>
+				<groupId>net.sf.qualitycheck</groupId>
+				<artifactId>quality-check</artifactId>
+				<version>1.1-SNAPSHOT</version>
+			</dependency>
+			
 			<!-- JSR-305 annotations -->
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
@@ -160,7 +168,24 @@ at FindBugs™ JSR-305 support.
 				<version>${slf4j.version}</version>
 				<scope>test</scope>
 			</dependency>
-
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>${powermock.version}</version>				
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-easymock</artifactId>
+				<version>${powermock.version}</version>				
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>			
+				<version>${easymock.version}</version>				
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
