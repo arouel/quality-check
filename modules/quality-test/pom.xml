@@ -20,8 +20,12 @@ It is discouraged to use quality-test in production code. The checks
 provided in this library are designed to be used in unit-tests.
 
 The checks and utilities provided in this package check static properties
-of classes, for example if classes are final or if constructors are private
-and support in writing unit tests..
+of classes, for example whether classes are marked final or constructors are private.
+Additionally, there are utils to give additional code coverage for private constructors.
+
+Quality-Test often can be used together with Google Reflections (http://code.google.com/p/reflections/)
+to perform checks such as, assure that every class in package *.dto.* is final 
+or make sure that no class in the package *.controller.* contains any non-final static variables. 
 ]]></description>
 	<url>http://qualitycheck.sourceforge.net/modules/quality-test/</url>
 
