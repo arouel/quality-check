@@ -106,12 +106,12 @@ public class StaticCheckTest_noNonStaticFinal {
 	
 	@Test(expected=IllegalNonFinalStaticException.class)
 	public void testClassWithInheritedStaticVariableInHierarchy() {
-		StaticCheck.noNonStaticFinalInHierarchy(ClassWithInheritedStaticVariable.class);
+		StaticCheck.noNonFinalStaticInHierarchy(ClassWithInheritedStaticVariable.class);
 	}
 
 	@Test
 	public void testClassWithoutInheritedStaticVariableInHierarchy() {
-		StaticCheck.noNonStaticFinalInHierarchy(ClassWithNoStaticVariable.class);
+		StaticCheck.noNonFinalStaticInHierarchy(ClassWithNoStaticVariable.class);
 	}
 
 }

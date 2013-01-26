@@ -16,12 +16,15 @@
  ******************************************************************************/
 package net.sf.qualitytest;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import javax.annotation.Nonnull;
 
 import net.sf.qualitytest.exception.IllegalClassWithPublicDefaultConstructorException;
+import net.sf.qualitytest.exception.IllegalMissingAnnotationOnMethodException;
 import net.sf.qualitytest.exception.IllegalNonFinalClassException;
 import net.sf.qualitytest.exception.IllegalNonFinalStaticException;
 
@@ -43,8 +46,7 @@ public final class StaticCheck {
 	 * 
 	 * @param clazz
 	 *            A class that must be final.
-	 * @return clazz
-	 * 			  The class that was passed to this method.
+	 * @return clazz The class that was passed to this method.
 	 * 
 	 * @throws IllegalNonFinalClassException
 	 *             If the passed class is not final.
@@ -60,16 +62,39 @@ public final class StaticCheck {
 	}
 
 	/**
-	 * Check if a class contains a non-final static variable.
-	 * Non-final static fields are dangerous in multi-threaded environments 
-	 * and should therefore not be used.
-	 *
+	 * Check that all declared public methods of a class are annotated using a certain
+	 * annotation.
+	 * 
+	 * @param clazz
+	 *            A class that must have annotations on all public methods.
+	 * @param annotation
+	 *            An annotation that must be present on all public methods in a
+	 *            class
+	 * @return The checked class.
+	 */
+	public static Class<?> publicMethodsAnnotated(
+			@Nonnull final Class<?> clazz,
+			@Nonnull final Class<? extends Annotation> annotation) {
+		final Method[] methods = clazz.getDeclaredMethods();
+		for (final Method m : methods) {
+			if (!m.isAnnotationPresent(annotation)) {
+				throw new IllegalMissingAnnotationOnMethodException(clazz, annotation,
+						m);
+			}
+		}
+		return clazz;
+	}
+
+	/**
+	 * Check if a class contains a non-final static variable. Non-final static
+	 * fields are dangerous in multi-threaded environments and should therefore
+	 * not be used.
+	 * 
 	 * This method only checks the passed class and not any super-classes.
 	 * 
 	 * @param clazz
 	 *            A class which is checked for non-final statics.
-	 * @return clazz
-	 * 			  The class that was passed to this method.
+	 * @return clazz The class that was passed to this method.
 	 * 
 	 * @throws IllegalNonFinalStaticException
 	 *             If the passed class contains and non-final static field.
@@ -88,18 +113,17 @@ public final class StaticCheck {
 
 	/**
 	 * Check if a class or super-class contains a non-final static variable.
-	 * Non-final static fields are dangerous in multi-threaded environments 
-	 * and should therefore not be used.
-	 *
+	 * Non-final static fields are dangerous in multi-threaded environments and
+	 * should therefore not be used.
+	 * 
 	 * @param clazz
 	 *            A class which is checked for non-final statics.
-	 * @return clazz
-	 * 			  The class that was passed to this method.
+	 * @return clazz The class that was passed to this method.
 	 * 
 	 * @throws IllegalNonFinalStaticException
 	 *             If the passed class contains and non-final static field.
 	 */
-	public static Class<?> noNonStaticFinalInHierarchy(
+	public static Class<?> noNonFinalStaticInHierarchy(
 			@Nonnull final Class<?> clazz) {
 		Class<?> obj = clazz;
 		do {
@@ -111,16 +135,16 @@ public final class StaticCheck {
 	}
 
 	/**
-	 * Check that a class contains no public default constructor.
-	 * It is recommended to hide the public default constructor of 
-	 * utility classes by providing a private default construct. 
+	 * Check that a class contains no public default constructor. It is
+	 * recommended to hide the public default constructor of utility classes by
+	 * providing a private default construct.
 	 * 
 	 * This method assures that the given class cannot be intantiated
 	 * 
 	 * @param clazz
-	 *            A class which is checked for not having a public default constructor
-	 * @return clazz
-	 * 			  The class that was passed to this method.
+	 *            A class which is checked for not having a public default
+	 *            constructor
+	 * @return clazz The class that was passed to this method.
 	 * 
 	 * @throws IllegalClassWithPublicDefaultConstructorException
 	 *             If the passed class contains a public default constructor.
