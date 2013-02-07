@@ -74,6 +74,11 @@ public final class Imports {
 		return new Imports(Lists.newArrayList(imports));
 	}
 
+	public static Imports of(final Iterable<Import> imports) {
+		Check.notNull(imports, "imports");
+		return new Imports(Lists.newArrayList(imports));
+	}
+
 	private static Imports ofAnnotations(@Nonnull final Iterable<Annotation> annotations) {
 		Check.notNull(annotations, "annotations");
 		final List<Import> imports = Lists.newArrayList();

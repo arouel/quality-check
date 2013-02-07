@@ -45,21 +45,6 @@ public final class ImmutableObjectGenerator {
 	private static final List<Attribute> WITHOUT_ATTRIBUTES = ImmutableList.of();
 
 	@Nonnull
-	private static Constructor determineConstructor(@Nonnull final String name, @Nonnull final List<Field> fields) {
-		Check.notNull(fields, "fields");
-		final List<Attribute> attributes = Lists.newArrayListWithCapacity(fields.size());
-		for (final Field field : fields) {
-			if (field.getStatic() != Static.STATIC) {
-				attributes.add(new Attribute(field.getName(), field.getType(), Final.FINAL, field.getAnnotations()));
-			}
-		}
-		final Visibility visibility = Visibility.PUBLIC;
-		final List<Annotation> annotations = ImmutableList.of();
-		final Constructor constructor = new Constructor(name, Constructor.NOT_IMPLEMENTED, attributes, visibility, annotations);
-		return ConstructorGenerator.generate(constructor);
-	}
-
-	@Nonnull
 	private static List<Annotation> findAnnotations(@Nonnull final java.lang.annotation.Annotation[] annotations) {
 		Check.notNull(annotations, "annotations");
 		final ImmutableList.Builder<Annotation> builder = new ImmutableList.Builder<Annotation>();
@@ -117,8 +102,8 @@ public final class ImmutableObjectGenerator {
 			final CompilationUnit unit = JavaParser.parse(new ByteArrayInputStream(code.getBytes(Charsets.UTF_8.displayName())));
 			final List<TypeDeclaration> types = unit.getTypes();
 			final TypeDeclaration type = types.get(0);
-			final Imports imports = SourceCodeReader.findImports(unit.getImports()).copyAndAdd(EqualsMethodGenerator.DEPENDS_ON)
-					.copyAndAdd(HashCodeMethodGenerator.DEPENDS_ON).copyAndAdd(ConstructorGenerator.DEPENDS_ON);
+			Imports imports = SourceCodeReader.findImports(unit.getImports()).copyAndAdd(EqualsMethodGenerator.DEPENDS_ON)
+					.copyAndAdd(HashCodeMethodGenerator.DEPENDS_ON);
 			final String name = CLAZZ_PREFIX + type.getName();
 			final Package pkg = new Package(unit.getPackage().getName().toString());
 			final List<Annotation> annotations = SourceCodeReader.findAnnotations(type.getAnnotations(), imports);
@@ -131,7 +116,10 @@ public final class ImmutableObjectGenerator {
 			methods.add(EqualsMethodGenerator.generate(name, fields));
 			methods.add(HashCodeMethodGenerator.generate(fields));
 
-			final List<Constructor> constructors = ImmutableList.of(determineConstructor(name, fields));
+			final ConstructorGenerator constructorGenerator = new ConstructorGenerator(name, fields);
+			final Constructor constructor = constructorGenerator.createConstructor();
+			final List<Constructor> constructors = ImmutableList.of(constructor);
+			imports = imports.copyAndAdd(constructorGenerator.dependsOn());
 			final List<Interface> interfaces = ImmutableList.of(new Interface(new Type(pkg, type.getName(), GenericDeclaration.UNDEFINED)));
 			clazz = new Clazz(name, pkg, fields, constructors, methods, Visibility.PUBLIC, Final.FINAL, Abstract.UNDEFINED, interfaces,
 					imports, annotations);
@@ -161,7 +149,9 @@ public final class ImmutableObjectGenerator {
 		final List<Field> fields = new ArrayList<Field>();
 		fields.add(SerialVersionGenerator.generate());
 		fields.addAll(findFields(methods));
-		final List<Constructor> constructors = ImmutableList.of(determineConstructor(name, fields));
+		final ConstructorGenerator constructorGenerator = new ConstructorGenerator(name, fields);
+		final Constructor constructor = constructorGenerator.createConstructor();
+		final List<Constructor> constructors = ImmutableList.of(constructor);
 
 		methods.add(EqualsMethodGenerator.generate(name, fields));
 		methods.add(HashCodeMethodGenerator.generate(fields));
@@ -171,7 +161,7 @@ public final class ImmutableObjectGenerator {
 		final Visibility visibility = Visibility.PUBLIC;
 		final List<Interface> interfaces = ImmutableList.of(Interface.of(type));
 		final Imports imports = EqualsMethodGenerator.DEPENDS_ON.copyAndAdd(HashCodeMethodGenerator.DEPENDS_ON).copyAndAdd(
-				ConstructorGenerator.DEPENDS_ON);
+				constructorGenerator.dependsOn());
 		final List<Annotation> annotations = ImmutableList.of(Annotation.IMMUTABLE);
 		final Clazz clazz = new Clazz(name, pkg, fields, constructors, methods, visibility, finalModifier, abstractModifier, interfaces,
 				imports, annotations);
