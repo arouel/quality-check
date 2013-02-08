@@ -73,6 +73,10 @@ public final class GenericDeclaration {
 		return result;
 	}
 
+	public boolean isUndefined() {
+		return UNDEFINED.equals(this);
+	}
+
 	@Override
 	public String toString() {
 		return _declaration;

@@ -30,4 +30,8 @@ public enum Visibility implements Modifier {
 		return name;
 	}
 
+	public boolean isUndefined() {
+		return UNDEFINED.equals(this);
+	}
+
 }

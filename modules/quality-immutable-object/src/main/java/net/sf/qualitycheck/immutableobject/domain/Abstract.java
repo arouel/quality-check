@@ -29,4 +29,8 @@ public enum Abstract implements Modifier {
 		return name;
 	}
 
+	public boolean isUndefined() {
+		return UNDEFINED.equals(this);
+	}
+
 }

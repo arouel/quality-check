@@ -26,4 +26,8 @@ public enum Static implements Modifier {
 		return name;
 	}
 
+	public boolean isUndefined() {
+		return UNDEFINED.equals(this);
+	}
+
 }

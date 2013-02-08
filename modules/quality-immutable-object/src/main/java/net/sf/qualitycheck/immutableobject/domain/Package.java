@@ -89,6 +89,10 @@ public final class Package implements Characters {
 		return result;
 	}
 
+	public boolean isUndefined() {
+		return UNDEFINED.equals(this);
+	}
+
 	@Override
 	public String toString() {
 		return PREFIX + SPACE + _name;
