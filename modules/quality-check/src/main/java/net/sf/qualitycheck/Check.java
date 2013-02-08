@@ -229,8 +229,9 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
+	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj) {
-		return instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
+		return (T) instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
 	}
 
 	/**
