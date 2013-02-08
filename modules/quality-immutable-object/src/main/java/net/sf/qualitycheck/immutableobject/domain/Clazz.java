@@ -46,14 +46,14 @@ public final class Clazz implements Characters {
 	private final Package _package;
 
 	@Nonnull
-	private final Imports _imports;
+	private final List<Import> _imports;
 
 	@Nonnull
 	private final Visibility _visibility;
 
 	public Clazz(final String name, final Package pkg, final List<Field> fields, final List<Constructor> constructors,
 			final List<Method> methods, final Visibility visibility, final Final finalModifier, final Abstract abstractModifier,
-			final List<Interface> interfaces, final Imports imports, @Nonnull final List<Annotation> annotations) {
+			final List<Interface> interfaces, final List<Import> imports, @Nonnull final List<Annotation> annotations) {
 		_name = Check.notEmpty(name, "name");
 		_package = Check.notNull(pkg, "pkg");
 		_abstract = Check.notNull(abstractModifier, "abstractModifier");
@@ -63,12 +63,12 @@ public final class Clazz implements Characters {
 		_visibility = Check.notNull(visibility, "visibility");
 		_final = Check.notNull(finalModifier, "finalModifier");
 		_interfaces = ImmutableList.copyOf(Check.notNull(interfaces, "interfaces"));
+		_imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
 
 		// TODO find a nice solution
 		Check.notNull(annotations, "annotations");
-		_annotations = ImmutableList.copyOf(Annotations.of(annotations).removeUnqualified(imports).getAnnotations());
+		_annotations = ImmutableList.copyOf(Annotations.of(annotations).removeUnqualified(_imports).getAnnotations());
 
-		_imports = Check.notNull(imports, "imports");
 		Check.stateIsTrue(!abstractAndFinal(), "A class can be either abstract or final, not both.");
 	}
 
@@ -141,8 +141,8 @@ public final class Clazz implements Characters {
 		return _final;
 	}
 
-	public Imports getImports() {
-		return _imports;
+	public List<Import> getImports() {
+		return Imports.copyOf(_imports).copyAndAdd(Imports.allOf(this)).filter().sortByName().asList();
 	}
 
 	public List<Interface> getInterfaces() {
@@ -191,7 +191,7 @@ public final class Clazz implements Characters {
 			b.append(NEWLINE);
 		}
 		b.append(NEWLINE);
-		final List<Import> imports = _imports.copyAndAdd(Imports.allOf(this)).filter().sortByName().asList();
+		final List<Import> imports = getImports();
 		for (final Import imp : imports) {
 			b.append(imp.toString());
 			b.append(NEWLINE);

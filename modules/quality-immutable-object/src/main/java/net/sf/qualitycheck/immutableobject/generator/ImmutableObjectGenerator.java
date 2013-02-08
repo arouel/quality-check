@@ -122,7 +122,7 @@ public final class ImmutableObjectGenerator {
 			imports = imports.copyAndAdd(constructorGenerator.dependsOn());
 			final List<Interface> interfaces = ImmutableList.of(new Interface(new Type(pkg, type.getName(), GenericDeclaration.UNDEFINED)));
 			clazz = new Clazz(name, pkg, fields, constructors, methods, Visibility.PUBLIC, Final.FINAL, Abstract.UNDEFINED, interfaces,
-					imports, annotations);
+					imports.asList(), annotations);
 		} catch (final Exception e) {
 			throw new RuntimeException("Failed to parse interface: " + e.getLocalizedMessage(), e);
 		}
@@ -164,7 +164,7 @@ public final class ImmutableObjectGenerator {
 				constructorGenerator.dependsOn());
 		final List<Annotation> annotations = ImmutableList.of(Annotation.IMMUTABLE);
 		final Clazz clazz = new Clazz(name, pkg, fields, constructors, methods, visibility, finalModifier, abstractModifier, interfaces,
-				imports, annotations);
+				imports.asList(), annotations);
 
 		return SourceCodeFormatter.format(clazz.toString());
 	}

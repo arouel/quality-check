@@ -50,9 +50,9 @@ public final class Annotations {
 	}
 
 	@Nonnull
-	public Annotations removeUnqualified(@Nonnull final Imports imports) {
+	public Annotations removeUnqualified(@Nonnull final List<Import> imports) {
 		Check.notNull(imports, "imports");
-		return Annotations.of(removeUnqualified(getAnnotations(), imports));
+		return Annotations.of(removeUnqualified(getAnnotations(), Imports.copyOf(imports)));
 	}
 
 }

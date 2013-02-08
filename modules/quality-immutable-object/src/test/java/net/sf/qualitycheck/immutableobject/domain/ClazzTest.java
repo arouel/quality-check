@@ -35,9 +35,8 @@ public class ClazzTest {
 		final Visibility visibility = Visibility.PUBLIC;
 		final List<Interface> interfaces = ImmutableList.of();
 		final List<Annotation> annotations = new ImmutableList.Builder<Annotation>().add(Annotation.of(Immutable.class)).build();
-		ImmutableList.of();
-		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, Imports.of(),
-				annotations);
+		final List<Import> imports = ImmutableList.of();
+		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, imports, annotations);
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
@@ -52,8 +51,8 @@ public class ClazzTest {
 		final Visibility visibility = Visibility.PUBLIC;
 		final List<Interface> interfaces = ImmutableList.of();
 		final List<Annotation> annotations = ImmutableList.of();
-		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, Imports.of(),
-				annotations);
+		final List<Import> imports = ImmutableList.of();
+		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, imports, annotations);
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
@@ -68,7 +67,7 @@ public class ClazzTest {
 		final Visibility visibility = Visibility.PUBLIC;
 		final List<Interface> interfaces = ImmutableList.of();
 		final List<Annotation> annotations = ImmutableList.of();
-		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, Imports.of(),
-				annotations);
+		final List<Import> imports = ImmutableList.of();
+		new Clazz(name, pkg, field, constructors, methods, visibility, finalModifier, abstractModifier, interfaces, imports, annotations);
 	}
 }
