@@ -58,11 +58,11 @@ public final class Type {
 
 	private final Package _package;
 
-	private final String _typeName;
+	private final String _name;
 
 	public Type(@Nonnull final Package packageName, @Nonnull final String typeName, @Nonnull final GenericDeclaration genericDeclaration) {
 		_package = Check.notNull(packageName, "packageName");
-		_typeName = Check.notEmpty(typeName, "typeName");
+		_name = Check.notEmpty(typeName, "typeName");
 		_genericDeclaration = Check.notNull(genericDeclaration, "genericDeclaration");
 	}
 
@@ -73,10 +73,10 @@ public final class Type {
 		if (m.group(7) != null) {
 			// should be an inner interface
 			_package = createPackage(m.group(1) + m.group(4));
-			_typeName = m.group(7);
+			_name = m.group(7);
 		} else {
 			_package = createPackage(m.group(1));
-			_typeName = Check.notEmpty(m.group(4), "typeName");
+			_name = Check.notEmpty(m.group(4), "typeName");
 		}
 		if (m.group(10) != null) {
 			_genericDeclaration = createGenericDeclaration(m.group(10));
@@ -108,7 +108,7 @@ public final class Type {
 		if (!_package.equals(other._package)) {
 			return false;
 		}
-		if (!_typeName.equals(other._typeName)) {
+		if (!_name.equals(other._name)) {
 			return false;
 		}
 		return true;
@@ -122,8 +122,8 @@ public final class Type {
 		return _package;
 	}
 
-	public String getTypeName() {
-		return _typeName;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public final class Type {
 		int result = 1;
 		result = prime * result + _genericDeclaration.hashCode();
 		result = prime * result + _package.hashCode();
-		result = prime * result + _typeName.hashCode();
+		result = prime * result + _name.hashCode();
 		return result;
 	}
 
@@ -143,7 +143,7 @@ public final class Type {
 			b.append(_package.getName());
 			b.append(Characters.DOT);
 		}
-		b.append(_typeName);
+		b.append(_name);
 		if (!_genericDeclaration.getDeclaration().isEmpty()) {
 			b.append('<');
 			b.append(_genericDeclaration.getDeclaration());

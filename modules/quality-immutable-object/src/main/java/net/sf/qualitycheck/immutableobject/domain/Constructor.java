@@ -116,7 +116,7 @@ public final class Constructor implements Characters {
 		if (!_annotations.isEmpty()) {
 			for (final Annotation annotation : _annotations) {
 				b.append(AT_SIGN);
-				b.append(annotation.getType().getTypeName());
+				b.append(annotation.getType().getName());
 				b.append(NEWLINE);
 			}
 		}

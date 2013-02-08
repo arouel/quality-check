@@ -17,7 +17,7 @@ public final class Import implements Characters {
 	private static final String PREFIX = "import";
 
 	private static Type filterGenericDeclaration(final Type type) {
-		return type.getGenericDeclaration() == GenericDeclaration.UNDEFINED ? type : new Type(type.getPackage(), type.getTypeName(),
+		return type.getGenericDeclaration() == GenericDeclaration.UNDEFINED ? type : new Type(type.getPackage(), type.getName(),
 				GenericDeclaration.UNDEFINED);
 	}
 

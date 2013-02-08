@@ -142,7 +142,7 @@ public final class Field implements Characters {
 			b.append(_final.getName());
 			b.append(SPACE);
 		}
-		b.append(_type.getTypeName());
+		b.append(_type.getName());
 		if (_type.getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
 			b.append(BRACKET_OPEN);
 			b.append(_type.getGenericDeclaration());

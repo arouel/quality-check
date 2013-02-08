@@ -57,7 +57,7 @@ public final class Interface {
 
 	@Override
 	public String toString() {
-		return _type.getTypeName();
+		return _type.getName();
 	}
 
 }

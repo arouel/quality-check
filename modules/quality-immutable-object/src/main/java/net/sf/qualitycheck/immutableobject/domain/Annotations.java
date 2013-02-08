@@ -25,7 +25,7 @@ public final class Annotations {
 		final Set<Annotation> result = Sets.newLinkedHashSet();
 		for (final Annotation annotation : annotations) {
 			if (annotation.getType().getPackage() == Package.UNDEFINED) {
-				final Import imp = imports.find(annotation.getType().getTypeName());
+				final Import imp = imports.find(annotation.getType().getName());
 				if (imp != null) {
 					result.add(new Annotation(imp.getType()));
 				}

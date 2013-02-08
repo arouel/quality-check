@@ -16,7 +16,7 @@ public class TypeTest {
 	public void construct_typeGeneric() {
 		final Type type = new Type("T");
 		assertEquals(Package.UNDEFINED, type.getPackage());
-		assertEquals("T", type.getTypeName());
+		assertEquals("T", type.getName());
 		assertEquals(GenericDeclaration.UNDEFINED, type.getGenericDeclaration());
 	}
 
@@ -28,7 +28,7 @@ public class TypeTest {
 	@Test
 	public void construct_typeWithoutPackageAndGeneric() {
 		final Type type = new Type("List<String>");
-		assertEquals("List", type.getTypeName());
+		assertEquals("List", type.getName());
 		assertEquals("String", type.getGenericDeclaration().getDeclaration());
 		assertEquals("List<String>", type.toString());
 	}

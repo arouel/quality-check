@@ -155,7 +155,7 @@ public final class Method implements Characters {
 		if (!_annotations.isEmpty()) {
 			for (final Annotation annotation : _annotations) {
 				b.append(AT_SIGN);
-				b.append(annotation.getType().getTypeName());
+				b.append(annotation.getType().getName());
 				b.append(NEWLINE);
 			}
 		}
@@ -171,7 +171,7 @@ public final class Method implements Characters {
 			b.append(_final.getName());
 			b.append(SPACE);
 		}
-		b.append(_returnType.getType().getTypeName());
+		b.append(_returnType.getType().getName());
 		if (_returnType.getType().getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
 			b.append(BRACKET_OPEN);
 			b.append(_returnType.getType().getGenericDeclaration());

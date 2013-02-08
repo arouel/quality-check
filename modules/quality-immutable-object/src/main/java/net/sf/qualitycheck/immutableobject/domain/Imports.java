@@ -204,7 +204,7 @@ public final class Imports {
 		Import ret = null;
 		final Type type = new Type(typeName);
 		for (final Import imp : _imports) {
-			if (imp.getType().getTypeName().equals(type.getTypeName())) {
+			if (imp.getType().getName().equals(type.getName())) {
 				ret = imp;
 				break;
 			}

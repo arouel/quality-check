@@ -106,8 +106,8 @@ public final class SourceCodeReader {
 			ret = new Type(type.toString());
 		} else {
 			final Type t = new Type(type.toString());
-			final Import imp = imports.find(t.getTypeName());
-			ret = imp != null ? new Type(imp.getType().getPackage(), imp.getType().getTypeName(), t.getGenericDeclaration()) : t;
+			final Import imp = imports.find(t.getName());
+			ret = imp != null ? new Type(imp.getType().getPackage(), imp.getType().getName(), t.getGenericDeclaration()) : t;
 		}
 		return ret;
 	}

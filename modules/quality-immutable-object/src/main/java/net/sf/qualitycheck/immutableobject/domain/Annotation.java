@@ -100,7 +100,7 @@ public final class Annotation implements Characters {
 
 	@Override
 	public String toString() {
-		return Characters.AT_SIGN + _type.getTypeName();
+		return Characters.AT_SIGN + _type.getName();
 	}
 
 }

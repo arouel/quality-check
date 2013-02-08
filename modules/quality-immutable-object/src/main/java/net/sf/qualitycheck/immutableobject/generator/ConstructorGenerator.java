@@ -64,7 +64,7 @@ public final class ConstructorGenerator implements CodeGenerator<Constructor> {
 		}
 
 		private static boolean equal(final Type a, final Type b) {
-			return Objects.equal(a.getPackage(), b.getPackage()) && Objects.equal(a.getTypeName(), b.getTypeName());
+			return Objects.equal(a.getPackage(), b.getPackage()) && Objects.equal(a.getName(), b.getName());
 
 		}
 
@@ -134,7 +134,7 @@ public final class ConstructorGenerator implements CodeGenerator<Constructor> {
 			final Type alternative = CollectionType.convert(attribute.getType());
 			if (alternative != null) {
 				_imports.add(Import.of(alternative));
-				b.append(alternative.getTypeName());
+				b.append(alternative.getName());
 				b.append(".copyOf(");
 			}
 			if (attribute.getAnnotations().contains(Annotation.NONNULL)) {

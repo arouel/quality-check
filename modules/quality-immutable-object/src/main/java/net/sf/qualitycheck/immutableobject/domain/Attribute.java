@@ -90,7 +90,7 @@ public final class Attribute implements Characters {
 		if (!_annotations.isEmpty()) {
 			for (final Annotation annotation : _annotations) {
 				b.append(AT_SIGN);
-				b.append(annotation.getType().getTypeName());
+				b.append(annotation.getType().getName());
 				b.append(SPACE);
 			}
 		}
@@ -98,7 +98,7 @@ public final class Attribute implements Characters {
 			b.append(_final.getName());
 			b.append(SPACE);
 		}
-		b.append(_type.getTypeName());
+		b.append(_type.getName());
 		if (_type.getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
 			b.append(BRACKET_OPEN);
 			b.append(_type.getGenericDeclaration());
