@@ -17,9 +17,6 @@ public final class Field implements Characters {
 	private final List<Annotation> _annotations;
 
 	@Nonnull
-	private final String _content;
-
-	@Nonnull
 	private final Final _final;
 
 	@Nonnull
@@ -32,18 +29,21 @@ public final class Field implements Characters {
 	private final Type _type;
 
 	@Nonnull
+	private final String _value;
+
+	@Nonnull
 	private final Visibility _visibility;
 
 	public Field(@Nonnull final String name, @Nonnull final Type type, @Nonnull final Visibility visibility,
 			@Nonnull final Final finalModifier, final Static staticModifier, @Nonnull final List<Annotation> annotations,
-			@Nonnull final String content) {
+			@Nonnull final String value) {
 		_name = Check.notNull(name, "name");
 		_type = Check.notNull(type, "type");
 		_visibility = Check.notNull(visibility, "visibility");
 		_final = Check.notNull(finalModifier, "finalModifier");
 		_static = Check.notNull(staticModifier, "staticModifier");
 		_annotations = Check.notNull(annotations, "annotations");
-		_content = Check.notNull(content, "content");
+		_value = Check.notNull(value, "value");
 	}
 
 	@Override
@@ -100,6 +100,10 @@ public final class Field implements Characters {
 		return _type;
 	}
 
+	public String getValue() {
+		return _value;
+	}
+
 	@Nonnull
 	public Visibility getVisibility() {
 		return _visibility;
@@ -146,9 +150,9 @@ public final class Field implements Characters {
 		}
 		b.append(SPACE);
 		b.append(_name);
-		if (!_content.isEmpty()) {
+		if (!_value.isEmpty()) {
 			b.append(EQUALS_SIGN);
-			b.append(_content);
+			b.append(_value);
 		}
 		b.append(SEMICOLON);
 		return b.toString();
