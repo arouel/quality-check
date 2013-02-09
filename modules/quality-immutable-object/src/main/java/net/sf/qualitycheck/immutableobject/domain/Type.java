@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.immutableobject.util.Primitive;
 
 /**
  * Represents a type which can be a class, interface or annotation
@@ -118,12 +119,12 @@ public final class Type {
 		return _genericDeclaration;
 	}
 
-	public Package getPackage() {
-		return _package;
-	}
-
 	public String getName() {
 		return _name;
+	}
+
+	public Package getPackage() {
+		return _package;
 	}
 
 	@Override
@@ -134,6 +135,10 @@ public final class Type {
 		result = prime * result + _package.hashCode();
 		result = prime * result + _name.hashCode();
 		return result;
+	}
+
+	public boolean isPrimitive() {
+		return Primitive.isPrimitive(_name);
 	}
 
 	@Override
