@@ -61,7 +61,7 @@ public final class ImmutableObjectGenerator {
 		for (final Method method : methods) {
 			final List<Annotation> annotations = method.getAnnotations();
 			fields.add(new Field(FieldUtil.determineFieldName(method.getName()), method.getReturnType().getType(), Visibility.PRIVATE,
-					Final.FINAL, Static.UNDEFINED, annotations, Field.WITHOUT_VALUE));
+					Final.FINAL, Static.UNDEFINED, annotations, Field.WITHOUT_VALUE, FieldUtil.determineAccessorPrefix(method.getName())));
 		}
 		return fields;
 	}

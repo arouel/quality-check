@@ -1,31 +1,43 @@
 package net.sf.qualitycheck.immutableobject.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Nonnull;
 
-
 import net.sf.qualitycheck.Check;
-import net.sf.qualitycheck.immutableobject.Constants;
+import net.sf.qualitycheck.immutableobject.domain.AccessorPrefix;
 
 public final class FieldUtil {
 
+	private static final Pattern PATTERN = Pattern.compile("^(get|has|is)([A-Z]\\w+)");
+
 	/**
-	 * Determines the field name based on a method name.
+	 * Determines the prefix of an accessor method based on an accessor method name.
 	 * 
 	 * @param methodName
-	 *            a method name
+	 *            an accessor method name
+	 * @return the resulting prefix
+	 */
+	public static AccessorPrefix determineAccessorPrefix(@Nonnull final String methodName) {
+		Check.notEmpty(methodName, "methodName");
+		final Matcher m = PATTERN.matcher(methodName);
+		Check.stateIsTrue(m.find(), "passed method name '%s' is not applicable", methodName);
+		return new AccessorPrefix(m.group(1));
+	}
+
+	/**
+	 * Determines the field name based on an accessor method name.
+	 * 
+	 * @param methodName
+	 *            an accessor method name
 	 * @return the resulting field name
 	 */
 	public static String determineFieldName(@Nonnull final String methodName) {
 		Check.notEmpty(methodName, "methodName");
-		String filtered = methodName.replace(Constants.METHOD_GET_PREFIX, "");
-		if (filtered.equals(methodName)) {
-			filtered = methodName.replace(Constants.METHOD_IS_PREFIX, "");
-		} else if (filtered.equals(methodName)) {
-			filtered = methodName.replace(Constants.METHOD_HAS_PREFIX, "");
-		}
-		Check.stateIsTrue(!filtered.isEmpty(), "method name requires characters after prefix (%s, %s, %s)", Constants.METHOD_GET_PREFIX,
-				Constants.METHOD_HAS_PREFIX, Constants.METHOD_IS_PREFIX);
-		return filtered.substring(0, 1).toLowerCase() + filtered.substring(1);
+		final Matcher m = PATTERN.matcher(methodName);
+		Check.stateIsTrue(m.find(), "passed method name '%s' is not applicable", methodName);
+		return m.group(2).substring(0, 1).toLowerCase() + m.group(2).substring(1);
 	}
 
 	private FieldUtil() {

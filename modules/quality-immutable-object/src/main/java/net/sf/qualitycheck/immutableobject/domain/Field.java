@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.immutableobject.util.MethodUtil;
 
 public final class Field implements Characters {
 
@@ -14,10 +15,19 @@ public final class Field implements Characters {
 	public static final String WITHOUT_VALUE = "";
 
 	@Nonnull
+	private transient final String _accessorMethodName;
+
+	@Nonnull
+	private final AccessorPrefix _accessorPrefix;
+
+	@Nonnull
 	private final List<Annotation> _annotations;
 
 	@Nonnull
 	private final Final _final;
+
+	@Nonnull
+	private transient final String _mutatorMethodName;
 
 	@Nonnull
 	private final String _name;
@@ -36,7 +46,7 @@ public final class Field implements Characters {
 
 	public Field(@Nonnull final String name, @Nonnull final Type type, @Nonnull final Visibility visibility,
 			@Nonnull final Final finalModifier, final Static staticModifier, @Nonnull final List<Annotation> annotations,
-			@Nonnull final String value) {
+			@Nonnull final String value, final AccessorPrefix accessorPrefix) {
 		_name = Check.notNull(name, "name");
 		_type = Check.notNull(type, "type");
 		_visibility = Check.notNull(visibility, "visibility");
@@ -44,6 +54,9 @@ public final class Field implements Characters {
 		_static = Check.notNull(staticModifier, "staticModifier");
 		_annotations = Check.notNull(annotations, "annotations");
 		_value = Check.notNull(value, "value");
+		_accessorPrefix = Check.notNull(accessorPrefix, "accessorPrefix");
+		_accessorMethodName = MethodUtil.determineAccessorName(_accessorPrefix, _name);
+		_mutatorMethodName = MethodUtil.determineMutatorName(_name);
 	}
 
 	@Override
@@ -76,6 +89,14 @@ public final class Field implements Characters {
 		return true;
 	}
 
+	public String getAccessorMethodName() {
+		return _accessorMethodName;
+	}
+
+	public AccessorPrefix getAccessorPrefix() {
+		return _accessorPrefix;
+	}
+
 	@Nonnull
 	public List<Annotation> getAnnotations() {
 		return _annotations;
@@ -84,6 +105,10 @@ public final class Field implements Characters {
 	@Nonnull
 	public Final getFinal() {
 		return _final;
+	}
+
+	public String getMutatorMethodName() {
+		return _mutatorMethodName;
 	}
 
 	@Nonnull

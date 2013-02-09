@@ -9,20 +9,19 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableSet;
-
-import net.sf.qualitycheck.immutableobject.Constants;
+import net.sf.qualitycheck.immutableobject.domain.AccessorPrefix;
 
 import org.reflections.ReflectionUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableSet;
 
 public final class InterfaceParser {
 
-	private static final Predicate<Method> FILTER_GET = Predicates.and(withPrefix(Constants.METHOD_GET_PREFIX), withParametersCount(0));
-	private static final Predicate<Method> FILTER_HAS = Predicates.and(withPrefix(Constants.METHOD_HAS_PREFIX), withParametersCount(0));
-	private static final Predicate<Method> FILTER_IS = Predicates.and(withPrefix(Constants.METHOD_IS_PREFIX), withParametersCount(0));
+	private static final Predicate<Method> FILTER_GET = Predicates.and(withPrefix(AccessorPrefix.GET.getPrefix()), withParametersCount(0));
+	private static final Predicate<Method> FILTER_HAS = Predicates.and(withPrefix(AccessorPrefix.HAS.getPrefix()), withParametersCount(0));
+	private static final Predicate<Method> FILTER_IS = Predicates.and(withPrefix(AccessorPrefix.IS.getPrefix()), withParametersCount(0));
 	private static final Predicate<Method> FILTER_POSSIBLE_MUTATING = new Predicate<Method>() {
 		@Override
 		public boolean apply(@Nullable final Method input) {
