@@ -31,6 +31,7 @@ import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
+import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -904,6 +905,48 @@ public final class Check {
 			throw new IllegalNaNArgumentException(name);
 		}
 		return value;
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNegative(int, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param reference
+	 *            an object reference
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNegativeArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNullArgumentException.class)
+	public static int notNegative(@Nonnull final int reference) {
+		if (reference < 0) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return reference;
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * @param reference
+	 *            an object reference
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static int notNegative(@Nonnull final int reference, @Nullable final String name) {
+		if (reference < 0) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return reference;
 	}
 
 	/**
