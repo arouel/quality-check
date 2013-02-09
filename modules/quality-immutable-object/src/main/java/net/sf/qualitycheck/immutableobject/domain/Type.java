@@ -50,15 +50,19 @@ public final class Type {
 		return packageName.isEmpty() ? Package.UNDEFINED : new Package(packageName);
 	}
 
+	@Nonnull
 	public static Type of(@Nonnull final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 		return new Type(clazz.getName());
 	}
 
+	@Nonnull
 	private final GenericDeclaration _genericDeclaration;
 
+	@Nonnull
 	private final Package _package;
 
+	@Nonnull
 	private final String _name;
 
 	public Type(@Nonnull final Package packageName, @Nonnull final String typeName, @Nonnull final GenericDeclaration genericDeclaration) {
@@ -115,14 +119,17 @@ public final class Type {
 		return true;
 	}
 
+	@Nonnull
 	public GenericDeclaration getGenericDeclaration() {
 		return _genericDeclaration;
 	}
 
+	@Nonnull
 	public String getName() {
 		return _name;
 	}
 
+	@Nonnull
 	public Package getPackage() {
 		return _package;
 	}
