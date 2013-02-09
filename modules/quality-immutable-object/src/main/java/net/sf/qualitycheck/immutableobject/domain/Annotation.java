@@ -4,6 +4,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import net.sf.qualitycheck.Check;
 
@@ -24,6 +25,11 @@ public final class Annotation implements Characters {
 	 * Representation of annotation {@link Nonnull}
 	 */
 	public static final Annotation NONNULL = Annotation.of(Nonnull.class);
+
+	/**
+	 * Representation of annotation {@link NotThreadSafe}
+	 */
+	public static final Annotation NOT_THREAD_SAFE = Annotation.of(NotThreadSafe.class);
 
 	/**
 	 * Representation of annotation {@link Nullable}
@@ -92,6 +98,10 @@ public final class Annotation implements Characters {
 
 	public boolean isNonnull() {
 		return NONNULL.equals(this);
+	}
+
+	public boolean isNotThreadSafe() {
+		return NOT_THREAD_SAFE.equals(this);
 	}
 
 	public boolean isNullable() {
