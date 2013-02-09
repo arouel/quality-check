@@ -1,19 +1,95 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.util.Primitive;
+
+import com.google.common.base.Objects;
 
 /**
  * Represents a type which can be a class, interface or annotation
  */
 @Immutable
 public final class Type {
+
+	public enum CollectionVariant {
+
+		COLLECTION(Type.of(Collection.class), "new ArrayList", "Collections.unmodifiableCollection", "ImmutableCollection.copyOf"),
+
+		ITERABLE(Type.of(Iterable.class), "new ArrayList", "Collections.unmodifiableCollection", "ImmutableCollection.copyOf"),
+
+		LIST(Type.of(List.class), "new ArrayList", "Collections.unmodifiableList", "ImmutableList.copyOf"),
+
+		MAP(Type.of(Map.class), "new HashMap", "Collections.unmodifiableMap", "ImmutableMap.copyOf"),
+
+		SET(Type.of(Set.class), "new HashSet", "Collections.unmodifiableSet", "ImmutableSet.copyOf"),
+
+		SORTEDMAP(Type.of(SortedMap.class), "new LinkedHashMap", "Collections.unmodifiableSortedMap", "ImmutableSortedMap.copyOf"),
+
+		SORTEDSET(Type.of(SortedSet.class), "new LinkedHashSet", "Collections.unmodifiableSortedSet", "ImmutableSortedSet.copyOf");
+
+		private static boolean equal(final Type a, final Type b) {
+			return Objects.equal(a.getPackage(), b.getPackage()) && Objects.equal(a.getName(), b.getName());
+
+		}
+
+		@Nullable
+		public static CollectionVariant evaluate(@Nonnull final Type type) {
+			Check.notNull(type, "type");
+			CollectionVariant variant = null;
+			for (final CollectionVariant v : values()) {
+				if (equal(v.getType(), type)) {
+					variant = v;
+					break;
+				}
+			}
+			return variant;
+		}
+
+		private final String _copy;
+		private final String _guava;
+
+		private final Type _type;
+
+		private final String _unmodifiable;
+
+		CollectionVariant(@Nonnull final Type type, @Nonnull final String copy, @Nonnull final String unmodifiable,
+				@Nonnull final String guava) {
+			_type = Check.notNull(type, "type");
+			_copy = Check.notNull(copy, "copy");
+			_unmodifiable = Check.notNull(unmodifiable, "unmodifiable");
+			_guava = Check.notNull(guava, "guava");
+		}
+
+		public String getCopy() {
+			return _copy;
+		}
+
+		public String getGuava() {
+			return _guava;
+		}
+
+		public Type getType() {
+			return _type;
+		}
+
+		public String getUnmodifiable() {
+			return _unmodifiable;
+		}
+
+	}
 
 	/**
 	 * Pattern to parse a full qualified name of a type
@@ -56,14 +132,17 @@ public final class Type {
 		return new Type(clazz.getName());
 	}
 
+	@Nullable
+	private transient CollectionVariant _collectionVariant;
+
 	@Nonnull
 	private final GenericDeclaration _genericDeclaration;
 
 	@Nonnull
-	private final Package _package;
+	private final String _name;
 
 	@Nonnull
-	private final String _name;
+	private final Package _package;
 
 	public Type(@Nonnull final Package packageName, @Nonnull final String typeName, @Nonnull final GenericDeclaration genericDeclaration) {
 		_package = Check.notNull(packageName, "packageName");
@@ -117,6 +196,13 @@ public final class Type {
 			return false;
 		}
 		return true;
+	}
+
+	public CollectionVariant getCollectionVariant() {
+		if (_collectionVariant == null) {
+			_collectionVariant = CollectionVariant.evaluate(this);
+		}
+		return _collectionVariant;
 	}
 
 	@Nonnull
