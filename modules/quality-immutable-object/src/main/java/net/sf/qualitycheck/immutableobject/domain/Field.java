@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.util.MethodUtil;
 
+import com.google.common.collect.ImmutableList;
+
 public final class Field implements Characters {
 
 	/**
@@ -52,11 +54,11 @@ public final class Field implements Characters {
 		_visibility = Check.notNull(visibility, "visibility");
 		_final = Check.notNull(finalModifier, "finalModifier");
 		_static = Check.notNull(staticModifier, "staticModifier");
-		_annotations = Check.notNull(annotations, "annotations");
+		_annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
 		_value = Check.notNull(value, "value");
 		_accessorPrefix = Check.notNull(accessorPrefix, "accessorPrefix");
-		_accessorMethodName = MethodUtil.determineAccessorName(_accessorPrefix, _name);
-		_mutatorMethodName = MethodUtil.determineMutatorName(_name);
+		_accessorMethodName = MethodUtil.determineAccessorName(accessorPrefix, name);
+		_mutatorMethodName = MethodUtil.determineMutatorName(name);
 	}
 
 	@Override
@@ -144,6 +146,18 @@ public final class Field implements Characters {
 		result = prime * result + _type.hashCode();
 		result = prime * result + _visibility.hashCode();
 		return result;
+	}
+
+	public boolean isNonnegative() {
+		return _annotations.contains(Annotation.NONNEGATIVE);
+	}
+
+	public boolean isNonnull() {
+		return _annotations.contains(Annotation.NONNULL);
+	}
+
+	public boolean isNullable() {
+		return _annotations.contains(Annotation.NULLABLE) || !(isNonnull() || isNonnegative());
 	}
 
 	@Override
