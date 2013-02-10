@@ -1,0 +1,339 @@
+immutableCompilationUnit(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation) ::= <<
+<package(clazz.package.name)>
+
+<clazz.imports:importStatement(); separator = "\n">
+<immutableAnnotation:importStatement()>
+<if(builderName)><builderNotThreadSafeAnnotation:importStatement()><endif>
+
+<immutableClass(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation)>
+>>
+
+
+immutableClass(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation) ::= <<
+<if(immutableAnnotation)>@<immutableAnnotation.type.name><endif>
+<clazz.visibility.name> <clazz.final.name> class <immutableName> implements <clazz.interfaces:interface(); separator = ","> {
+
+	<if(builderName)><builderClass(builderName, clazz, copyConstructorAttribute, true, builderNotThreadSafeAnnotation, useGuava)><endif>
+
+	<clazz.fields:constant(); separator = "\n">
+
+	<copyOfMethod(clazz,immutableName,copyConstructorAttribute); separator = "\n">
+
+	<clazz.fields:finalField(); separator = "\n">
+
+	<immutableConstructor(immutableName, clazz.fields, useGuava)>
+
+	<equalsMethod(immutableName, clazz.fields, useGuava)>
+
+	<clazz.fields:accessorMethod(); separator = "\n">
+
+	<hashCodeMethod(clazz.fields, useGuava)>
+
+}
+>>
+
+
+accessorMethod(field) ::= <<
+<if(field.static.undefined)>
+<field.annotations:annotate(); separator = "\n">
+public <importedType(field.type)> <field.accessorMethodName>() {
+	return <field.name>;
+}
+<endif>
+>>
+
+
+accessToMemberField(field) ::= <<
+<if(field.static.undefined)>this.<field.name><endif>
+>>
+
+
+annotate(annotation) ::= <<
+@<annotation.type.name>
+>>
+
+
+attribute(field) ::= <<
+<if(field.static.undefined)><field.annotations:annotate()> final <importedType(field.type)> <field.name><endif>
+>>
+
+
+constant(field) ::= <<
+<if(!field.static.undefined)>
+<field.annotations:annotate(); separator = "\n">
+<field.visibility.name> static final <importedType(field.type)> <field.name> = <field.value>;
+<endif>
+>>
+
+
+immutableConstructor(name, fields, useGuava) ::= <<
+public <name>(<fields:attribute(); separator = ",">) {
+	<setupFieldsImmutable(fields, useGuava)>}
+>>
+
+
+copyOfMethod(clazz, immutableName, attribute) ::= <<
+@Nonnull
+public static <immutableName> copyOf(@Nonnull final <first(clazz.interfaces):interface()> <attribute.name>) {
+	Check.notNull(<attribute.name>, "<attribute.name>");
+	return new <immutableName>(<copyOfAttributes(clazz.fields, attribute.name)>);
+}
+>>
+
+
+copyOfAttribute(field, attributeName) ::= <<
+<if(field.static.undefined)><attributeName>.<field.accessorMethodName>()<endif>
+>>
+
+
+copyOfAttributes(fields, attributeName) ::= <<
+<fields:{ f |
+	<copyOfAttribute(f, attributeName)>
+}; separator = ",">
+>>
+
+
+equalsMethod(name, fields, useGuava) ::= <<
+@Override
+public boolean equals(final Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	<name> other = (<name>) obj;
+	<if(useGuava)>
+	return <fields:equalsMemberFieldWithOther(); separator = " && ">;
+	<else>
+	<fields:equalsFieldBlock()>
+	return true;
+	<endif>
+}
+>>
+
+
+equalsFieldBlock(field) ::= <<
+<if(field.static.undefined)><if(field.nullable)>
+if (<field.name> == null) {
+	if (other.<field.name> != null)
+		return false;
+} else <endif>
+if (<if(field.type.primitive)><field.name> != other.<field.name><else>!<field.name>.equals(other.<field.name>)<endif>)
+	return false;<endif>
+>>
+
+
+equalsMemberFieldWithOther(field) ::= <<
+<if(field.static.undefined)>Objects.equal(this.<field.name>, other.<field.name>)<endif>
+>>
+
+
+hashCodeMethod(fields, useGuava) ::= <<
+@Override
+public int hashCode() {
+	<if(useGuava)>
+	return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);
+	<else>
+	final int prime = 31;
+	int result = 1;
+	<fields:hashCodeField()>
+	return result;
+	<endif>
+}
+>>
+hashCodeField(field) ::= <<
+<if(field.static.undefined)>
+result = prime * result + 
+<if(field.type.primitive)><field.name>
+<elseif(field.nullable)>(<field.name> == null ? 0 : <field.name>.hashCode())
+<else><field.name>.hashCode()
+<endif>;<endif>
+>>
+
+
+finalField(field) ::= <<
+<if(field.static.undefined)>
+<field.annotations:annotate(); separator = "\n">
+private final <importedType(field.type)> <field.name>;
+<endif>
+>>
+
+
+importStatement(i) ::= <<
+<if(i)>import <i.type.package.name>.<i.type.name>;<endif>
+>>
+
+
+importedType(type) ::= <<
+<type.name>
+<if(!type.genericDeclaration.undefined)>
+\<<type.genericDeclaration.declaration>\>
+<endif>
+>>
+
+
+interface(interface) ::= <<
+<interface.type.name>
+>>
+
+
+package(package) ::= <<
+<if(package)>package <package>;<endif>
+>>
+
+
+setupFieldsMutable(fields, useGuava) ::= <<
+<fields: { f|
+	<setupFieldMutable(f, useGuava)>
+}>
+>>
+setupFieldMutable(field, useGuava) ::= <<
+<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionCopy(field, useGuava)>;<endif>
+>>
+setupFieldsImmutable(fields, useGuava) ::= <<
+<fields: { f|
+	<setupFieldImmutable(f, useGuava)>
+}>
+>>
+setupFieldImmutable(field, useGuava) ::= <<
+<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionImmutability(field, useGuava)>;<endif>
+>>
+setupFieldRegardCollectionImmutability(field, useGuava) ::= <<
+<if(field.type.collectionVariant)>
+	<if(field.nonnull && useGuava)><field; format="check,immutable,guava">
+	<elseif(field.nonnull && !useGuava)><field; format="check,immutable">
+	<elseif(!field.nonnull && useGuava)><field; format="immutable,guava">
+	<else><field; format="immutable"><endif>
+<else>
+	<if(!field.nullable)><field; format="check">
+	<else><field.name><endif>
+<endif>
+>>
+setupFieldRegardCollectionCopy(field, useGuava) ::= <<
+<if(field.type.collectionVariant)>
+	<if(field.nonnull && useGuava)><field; format="check,copy,guava">
+	<elseif(field.nonnull && !useGuava)><field; format="check,copy">
+	<elseif(!field.nonnull && useGuava)><field; format="copy,guava">
+	<else><field; format="immutable"><endif>
+<else>
+	<if(!field.nullable)><field; format="check">
+	<else><field.name><endif>
+<endif>
+>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+builderCompilationUnit(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava) ::= <<
+<package(clazz.package.name)>
+
+<clazz.imports:importStatement(); separator = "\n">
+<notThreadSafeAnnotation:importStatement()>
+
+<builderClass(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava)>
+>>
+
+
+builderClass(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava) ::= <<
+<if(notThreadSafeAnnotation)>@<notThreadSafeAnnotation.type.name><endif>
+<clazz.visibility.name> <if(innerClass)>static<endif> <clazz.final.name> class <builderName> implements <clazz.interfaces:interface(); separator = ","> {
+
+	<clazz.fields:nonfinalField(); separator = "\n">
+	<defaultConstructor(builderName)>
+	<copyConstructor(builderName,copyConstructorAttribute,clazz.fields)>
+	<clazz.fields:accessorMethod(); separator = "\n">
+	<mutatorMethods(builderName, clazz.fields, useGuava); separator = "\n">
+	<buildMethod(clazz); separator = "\n">
+
+}
+>>
+
+
+defaultConstructor(name) ::= <<
+public <name>() {
+	// default constructor
+}
+>>
+
+
+buildMethod(clazz) ::= <<
+@Nonnull
+public <clazz.name> build() {
+	return new <clazz.name>(<clazz.fields:buildMethodAttribute(); separator = ",">);
+}
+>>
+buildMethodAttribute(field) ::= <<
+<if(field.static.undefined)><field.name><endif>
+>>
+
+
+copyConstructor(name,attribute,fields) ::= <<
+<if(attribute)>
+public <name>(<attribute.annotations:annotate(); separator = " "> final <importedType(attribute.type)> <attribute.name>) {
+	<fields:{ f | <copyConstructorField(f, attribute.name)> }>
+}
+<endif>
+>>
+copyConstructorField(field, attributeName) ::= <<
+<if(field.static.undefined)>this.<field.name> = <attributeName>.<field.accessorMethodName>();<endif>
+>>
+copyConstructorFieldRegardCollectionCopy(field, useGuava) ::= <<
+<if(field.type.collectionVariant)>
+	<if(field.nonnull && useGuava)><field; format="check,copy,guava">
+	<elseif(field.nonnull && !useGuava)><field; format="check,copy">
+	<elseif(!field.nonnull && useGuava)><field; format="copy,guava">
+	<else><field; format="immutable"><endif>
+<else>
+	<if(!field.nullable)><field; format="check">
+	<else><field.name><endif>
+<endif>
+>>
+
+
+nonfinalField(field) ::= <<
+<field.annotations:annotate(); separator = "\n">
+<if(field.static.undefined)>
+private <importedType(field.type)> <field.name>;
+<else>
+<field.visibility.name> <field.static.name> <field.final.name> <importedType(field.type)> <field.name> = <field.value>;
+<endif>
+>>
+
+
+mutatorMethods(builderName, fields, useGuava) ::= <<
+<fields:{ field | <mutatorMethod(builderName, field, useGuava)>}>
+>>
+mutatorMethod(builderName, field, useGuava) ::= <<
+<if(field.static.undefined)>
+@Nonnull
+public <builderName:mutatorReturnType()> <field.mutatorMethodName>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
+	<setupFieldMutable(field, useGuava)>
+	<mutatorReturnStatement(builderName)>
+}
+<endif>
+>>
+
+
+mutatorReturnStatement(builderName) ::= <<
+<if(builderName)>return this;<endif>
+>>
+
+
+mutatorReturnType(builderName) ::= <<
+<if(builderName)><builderName><else>void<endif>
+>>

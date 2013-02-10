@@ -127,7 +127,7 @@ public final class ImmutableObjectGenerator {
 			throw new RuntimeException("Failed to parse interface: " + e.getLocalizedMessage(), e);
 		}
 
-		return SourceCodeFormatter.format(clazz.toString());
+		return SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz));
 	}
 
 	/**
@@ -166,7 +166,7 @@ public final class ImmutableObjectGenerator {
 		final Clazz clazz = new Clazz(name, pkg, fields, constructors, methods, visibility, finalModifier, abstractModifier, interfaces,
 				imports.asList(), annotations);
 
-		return SourceCodeFormatter.format(clazz.toString());
+		return SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz));
 	}
 
 	/**
