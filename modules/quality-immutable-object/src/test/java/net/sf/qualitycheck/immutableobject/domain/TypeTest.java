@@ -2,6 +2,8 @@ package net.sf.qualitycheck.immutableobject.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstancesOf;
+import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,11 +11,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
-import net.sf.qualitycheck.immutableobject.domain.Type.CollectionVariant;
-
 import org.junit.Test;
 
 public class TypeTest {
+
+	@Test
+	public void checkClassIsImmutable() {
+		assertInstancesOf(Type.class, areImmutable());
+	}
 
 	@Test
 	public void collectionVariant_checkAll() {

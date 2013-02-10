@@ -5,9 +5,9 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
 import net.sf.qualitycheck.immutableobject.domain.Field;
 import net.sf.qualitycheck.immutableobject.domain.Type;
-import net.sf.qualitycheck.immutableobject.domain.Type.CollectionVariant;
 
 import org.stringtemplate.v4.AttributeRenderer;
 
