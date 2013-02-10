@@ -1,7 +1,0 @@
-return Objects.hashCode(
-#set ($counter = 0) 
-#foreach ( $field in $fields )
-#if ($foreach.count > 1), #end
-this.${field.name}
-#end
-);
