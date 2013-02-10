@@ -26,19 +26,26 @@ public final class Type {
 
 	public enum CollectionVariant {
 
-		COLLECTION(Type.of(Collection.class), "new ArrayList", "Collections.unmodifiableCollection", "ImmutableCollection.copyOf"),
+		COLLECTION(Type.of(Collection.class), "new ArrayList%s(%s)", "Lists.newArrayList(%s)",
+				"Collections.unmodifiableList(new ArrayList%s(%s))", "ImmutableCollection.copyOf(%s)"),
 
-		ITERABLE(Type.of(Iterable.class), "new ArrayList", "Collections.unmodifiableCollection", "ImmutableCollection.copyOf"),
+		ITERABLE(Type.of(Iterable.class), "new ArrayList%s(%s)", "Lists.newArrayList(%s)",
+				"Collections.unmodifiableList(new ArrayList%s(%s))", "ImmutableCollection.copyOf(%s)"),
 
-		LIST(Type.of(List.class), "new ArrayList", "Collections.unmodifiableList", "ImmutableList.copyOf"),
+		LIST(Type.of(List.class), "new ArrayList%s(%s)", "Lists.newArrayList(%s)", "Collections.unmodifiableList(new ArrayList%s(%s))",
+				"ImmutableList.copyOf(%s)"),
 
-		MAP(Type.of(Map.class), "new HashMap", "Collections.unmodifiableMap", "ImmutableMap.copyOf"),
+		MAP(Type.of(Map.class), "new HashMap%s(%s)", "Maps.newHashMap(%s)", "Collections.unmodifiableMap(new HashMap%s(%s))",
+				"ImmutableMap.copyOf(%s)"),
 
-		SET(Type.of(Set.class), "new HashSet", "Collections.unmodifiableSet", "ImmutableSet.copyOf"),
+		SET(Type.of(Set.class), "new HashSet%s(%s)", "Sets.newHashSet(%s)", "Collections.unmodifiableSet(new HashSet%s(%s))",
+				"ImmutableSet.copyOf(%s)"),
 
-		SORTEDMAP(Type.of(SortedMap.class), "new LinkedHashMap", "Collections.unmodifiableSortedMap", "ImmutableSortedMap.copyOf"),
+		SORTEDMAP(Type.of(SortedMap.class), "new LinkedHashMap%s(%s)", "Maps.newLinkedHashMap(%s)",
+				"Collections.unmodifiableSortedMap(new LinkedHashMap%s(%s))", "ImmutableSortedMap.copyOf(%s)"),
 
-		SORTEDSET(Type.of(SortedSet.class), "new LinkedHashSet", "Collections.unmodifiableSortedSet", "ImmutableSortedSet.copyOf");
+		SORTEDSET(Type.of(SortedSet.class), "new LinkedHashSet%s(%s)", "Sets.newLinkedHashSet(%)",
+				"Collections.unmodifiableSortedSet(new LinkedHashSet%s(%s))", "ImmutableSortedSet.copyOf(%s)");
 
 		private static boolean equal(final Type a, final Type b) {
 			return Objects.equal(a.getPackage(), b.getPackage()) && Objects.equal(a.getName(), b.getName());
@@ -58,35 +65,39 @@ public final class Type {
 			return variant;
 		}
 
-		private final String _copy;
-		private final String _guava;
-
+		private final String _defaultCopy;
+		private final String _defaultImmutable;
+		private final String _guavaCopy;
+		private final String _guavaImmutable;
 		private final Type _type;
 
-		private final String _unmodifiable;
-
-		CollectionVariant(@Nonnull final Type type, @Nonnull final String copy, @Nonnull final String unmodifiable,
-				@Nonnull final String guava) {
+		CollectionVariant(@Nonnull final Type type, @Nonnull final String defaultCopy, @Nonnull final String guavaCopy,
+				@Nonnull final String defaultImmutable, @Nonnull final String guavaImmutable) {
 			_type = Check.notNull(type, "type");
-			_copy = Check.notNull(copy, "copy");
-			_unmodifiable = Check.notNull(unmodifiable, "unmodifiable");
-			_guava = Check.notNull(guava, "guava");
+			_defaultCopy = Check.notNull(defaultCopy, "defaultCopy");
+			_guavaCopy = Check.notNull(guavaCopy, "guavaCopy");
+			_defaultImmutable = Check.notNull(defaultImmutable, "defaultImmutable");
+			_guavaImmutable = Check.notNull(guavaImmutable, "guavaImmutable");
 		}
 
-		public String getCopy() {
-			return _copy;
+		public String getDefaultCopy() {
+			return _defaultCopy;
 		}
 
-		public String getGuava() {
-			return _guava;
+		public String getDefaultImmutable() {
+			return _defaultImmutable;
+		}
+
+		public String getGuavaCopy() {
+			return _guavaCopy;
+		}
+
+		public String getGuavaImmutable() {
+			return _guavaImmutable;
 		}
 
 		public Type getType() {
 			return _type;
-		}
-
-		public String getUnmodifiable() {
-			return _unmodifiable;
 		}
 
 	}
@@ -133,7 +144,7 @@ public final class Type {
 	}
 
 	@Nullable
-	private transient CollectionVariant _collectionVariant;
+	private transient Boolean _collectionVariant;
 
 	@Nonnull
 	private final GenericDeclaration _genericDeclaration;
@@ -198,13 +209,6 @@ public final class Type {
 		return true;
 	}
 
-	public CollectionVariant getCollectionVariant() {
-		if (_collectionVariant == null) {
-			_collectionVariant = CollectionVariant.evaluate(this);
-		}
-		return _collectionVariant;
-	}
-
 	@Nonnull
 	public GenericDeclaration getGenericDeclaration() {
 		return _genericDeclaration;
@@ -228,6 +232,13 @@ public final class Type {
 		result = prime * result + _package.hashCode();
 		result = prime * result + _name.hashCode();
 		return result;
+	}
+
+	public boolean isCollectionVariant() {
+		if (_collectionVariant == null) {
+			_collectionVariant = CollectionVariant.evaluate(this) != null ? true : false;
+		}
+		return _collectionVariant;
 	}
 
 	public boolean isPrimitive() {

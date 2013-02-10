@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,13 +17,13 @@ public class TypeTest {
 
 	@Test
 	public void collectionVariant_checkAll() {
-		assertEquals(CollectionVariant.COLLECTION, Type.of(Collection.class).getCollectionVariant());
-		assertEquals(CollectionVariant.ITERABLE, Type.of(Iterable.class).getCollectionVariant());
-		assertEquals(CollectionVariant.LIST, Type.of(List.class).getCollectionVariant());
-		assertEquals(CollectionVariant.MAP, Type.of(Map.class).getCollectionVariant());
-		assertEquals(CollectionVariant.SET, Type.of(Set.class).getCollectionVariant());
-		assertEquals(CollectionVariant.SORTEDSET, Type.of(SortedSet.class).getCollectionVariant());
-		assertEquals(CollectionVariant.SORTEDSET, Type.of(SortedSet.class).getCollectionVariant());
+		assertTrue(Type.of(Collection.class).isCollectionVariant());
+		assertTrue(Type.of(Iterable.class).isCollectionVariant());
+		assertTrue(Type.of(List.class).isCollectionVariant());
+		assertTrue(Type.of(Map.class).isCollectionVariant());
+		assertTrue(Type.of(Set.class).isCollectionVariant());
+		assertTrue(Type.of(SortedSet.class).isCollectionVariant());
+		assertTrue(Type.of(SortedSet.class).isCollectionVariant());
 		assertEquals(7, CollectionVariant.values().length);
 	}
 
