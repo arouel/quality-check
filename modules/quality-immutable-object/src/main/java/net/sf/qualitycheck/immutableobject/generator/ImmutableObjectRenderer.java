@@ -9,6 +9,7 @@ import net.sf.qualitycheck.immutableobject.domain.Attribute;
 import net.sf.qualitycheck.immutableobject.domain.Clazz;
 import net.sf.qualitycheck.immutableobject.domain.Field;
 import net.sf.qualitycheck.immutableobject.domain.Final;
+import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.domain.Interface;
 import net.sf.qualitycheck.immutableobject.util.SourceCodeFormatter;
 
@@ -34,14 +35,35 @@ final class ImmutableObjectRenderer {
 		Check.notNull(clazz, "clazz");
 		final STGroup group = new STGroupFile("templates/default.stg");
 		group.registerRenderer(Field.class, new FieldRenderer());
+		group.registerRenderer(String.class, new BasicFormatRenderer());
 		final ST template = group.getInstanceOf("immutableCompilationUnit");
+		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
+
+		// global settings
+		settings.jsr305Annotations(true);
+		settings.guava(false);
+
+		// immutable settings
+		settings.fields(clazz.getFields());
+		settings.immutableName(clazz.getName());
+		settings.imports(clazz.getImports());
+		settings.interfaceDeclaration(clazz.getInterfaces().get(0));
+		settings.packageDeclaration(clazz.getPackage());
+
+		// builder settings
+		settings.builderCopyConstructor(true);
+		settings.builderFlatMutators(true);
+		settings.builderFluentMutators(true);
+		settings.builderName("Builder");
+		settings.builderSameInterface(false);
+
 		template.add("builderName", "Builder");
 		template.add("builderNotThreadSafeAnnotation", Annotation.NOT_THREAD_SAFE);
 		template.add("clazz", clazz);
 		template.add("copyConstructorAttribute", determineCopyConstructorAttribute(clazz));
 		template.add("immutableAnnotation", Annotation.IMMUTABLE);
 		template.add("immutableName", clazz.getName());
-		template.add("useGuava", false);
+		template.add("settings", settings.build());
 		return SourceCodeFormatter.format(template.render());
 	}
 

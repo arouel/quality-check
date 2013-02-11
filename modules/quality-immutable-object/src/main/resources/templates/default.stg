@@ -1,33 +1,33 @@
-immutableCompilationUnit(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation) ::= <<
-<package(clazz.package.name)>
+immutableCompilationUnit(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, settings, builderName, builderNotThreadSafeAnnotation) ::= <<
+<package(settings.packageDeclaration.name)>
 
-<clazz.imports:importStatement(); separator = "\n">
+<settings.imports:importStatement(); separator = "\n">
 <immutableAnnotation:importStatement()>
 <if(builderName)><builderNotThreadSafeAnnotation:importStatement()><endif>
 
-<immutableClass(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation)>
+<immutableClass(settings)>
 >>
 
 
-immutableClass(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, useGuava, builderName, builderNotThreadSafeAnnotation) ::= <<
-<if(immutableAnnotation)>@<immutableAnnotation.type.name><endif>
-<clazz.visibility.name> <clazz.final.name> class <immutableName> implements <clazz.interfaces:interface(); separator = ","> {
+immutableClass(settings) ::= <<
+<annotateImmutable(settings)>
+public final class <settings.immutableName> implements <settings.interfaceDeclaration:interface(); separator = ","> {
 
-	<if(builderName)><builderClass(builderName, clazz, copyConstructorAttribute, true, builderNotThreadSafeAnnotation, useGuava)><endif>
+	<if(settings.builderName)><builderClass(settings, true)><endif>
 
-	<clazz.fields:constant(); separator = "\n">
+	<settings.fields:constant(); separator = "\n">
 
-	<copyOfMethod(clazz,immutableName,copyConstructorAttribute); separator = "\n">
+	<copyOfMethod(settings); separator = "\n">
 
-	<clazz.fields:finalField(); separator = "\n">
+	<settings.fields:asFinalField(); separator = "\n">
 
-	<immutableConstructor(immutableName, clazz.fields, useGuava)>
+	<immutableConstructor(settings.immutableName, settings.fields, settings.guava)>
 
-	<equalsMethod(immutableName, clazz.fields, useGuava)>
+	<equalsMethod(settings.immutableName, settings.fields, settings.guava)>
 
-	<clazz.fields:accessorMethod(); separator = "\n">
+	<settings.fields:accessorMethod(); separator = "\n">
 
-	<hashCodeMethod(clazz.fields, useGuava)>
+	<hashCodeMethod(settings.fields, settings.guava)>
 
 }
 >>
@@ -53,6 +53,17 @@ annotate(annotation) ::= <<
 >>
 
 
+annotateImmutable(settings) ::= <<
+<if(settings.jsr305Annotations)>@Immutable<endif>
+>>
+annotateNonnull(settings) ::= <<
+<if(settings.jsr305Annotations)>@Nonnull<endif>
+>>
+annotateNotThreadSafe(settings) ::= <<
+<if(settings.jsr305Annotations)>@NotThreadSafe<endif>
+>>
+
+
 attribute(field) ::= <<
 <if(field.static.undefined)><field.annotations:annotate()> final <importedType(field.type)> <field.name><endif>
 >>
@@ -72,23 +83,23 @@ public <name>(<fields:attribute(); separator = ",">) {
 >>
 
 
-copyOfMethod(clazz, immutableName, attribute) ::= <<
-@Nonnull
-public static <immutableName> copyOf(@Nonnull final <first(clazz.interfaces):interface()> <attribute.name>) {
-	Check.notNull(<attribute.name>, "<attribute.name>");
-	return new <immutableName>(<copyOfAttributes(clazz.fields, attribute.name)>);
+copyOfMethod(settings) ::= <<
+<annotateNonnull(settings)>
+public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.interfaceDeclaration:interface()> <settings.interfaceDeclaration.type.name; format="toLower">) {
+	Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");
+	return new <settings.immutableName>(<copyOfAttributes(settings)>);
 }
 >>
 
 
-copyOfAttribute(field, attributeName) ::= <<
-<if(field.static.undefined)><attributeName>.<field.accessorMethodName>()<endif>
+copyOfAttribute(field, settings) ::= <<
+<if(field.static.undefined)><settings.interfaceDeclaration.type.name; format="toLower">.<field.accessorMethodName>()<endif>
 >>
 
 
-copyOfAttributes(fields, attributeName) ::= <<
-<fields:{ f |
-	<copyOfAttribute(f, attributeName)>
+copyOfAttributes(settings) ::= <<
+<settings.fields:{ f |
+	<copyOfAttribute(f, settings)>
 }; separator = ",">
 >>
 
@@ -152,10 +163,18 @@ result = prime * result +
 >>
 
 
-finalField(field) ::= <<
+asFinalField(field) ::= <<
 <if(field.static.undefined)>
 <field.annotations:annotate(); separator = "\n">
 private final <importedType(field.type)> <field.name>;
+<endif>
+>>
+asNonFinalField(field) ::= <<
+<field.annotations:annotate(); separator = "\n">
+<if(field.static.undefined)>
+private <importedType(field.type)> <field.name>;
+<else>
+<field.visibility.name> <field.static.name> <field.final.name> <importedType(field.type)> <field.name> = <field.value>;
 <endif>
 >>
 
@@ -239,26 +258,26 @@ setupFieldRegardCollectionCopy(field, useGuava) ::= <<
 
 
 
-builderCompilationUnit(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava) ::= <<
-<package(clazz.package.name)>
+builderCompilationUnit(settings) ::= <<
+<package(settings.packageDeclaration.name)>
 
-<clazz.imports:importStatement(); separator = "\n">
-<notThreadSafeAnnotation:importStatement()>
+<settings.imports:importStatement(); separator = "\n">
+<if(settings.jsr305Annotations)>import javax.annotation.concurrent.NotThreadSafe;<endif>
 
-<builderClass(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava)>
+<builderClass(settings, false)>
 >>
 
 
-builderClass(builderName, clazz, copyConstructorAttribute, innerClass, notThreadSafeAnnotation, useGuava) ::= <<
-<if(notThreadSafeAnnotation)>@<notThreadSafeAnnotation.type.name><endif>
-<clazz.visibility.name> <if(innerClass)>static<endif> <clazz.final.name> class <builderName> implements <clazz.interfaces:interface(); separator = ","> {
+builderClass(settings, innerClass) ::= <<
+<annotateNotThreadSafe(settings)>
+public <if(innerClass)>static<endif> final class <settings.builderName> implements <interface(settings.interfaceDeclaration); separator = ","> {
 
-	<clazz.fields:nonfinalField(); separator = "\n">
-	<defaultConstructor(builderName)>
-	<copyConstructor(builderName,copyConstructorAttribute,clazz.fields)>
-	<clazz.fields:accessorMethod(); separator = "\n">
-	<mutatorMethods(builderName, clazz.fields, useGuava); separator = "\n">
-	<buildMethod(clazz); separator = "\n">
+	<settings.fields:asNonFinalField(); separator = "\n">
+	<defaultConstructor(settings.builderName)>
+	<copyConstructor(settings)>
+	<settings.fields:accessorMethod(); separator = "\n">
+	<mutatorMethods(settings.builderName, settings.fields, settings.guava); separator = "\n">
+	<buildMethod(settings); separator = "\n">
 
 }
 >>
@@ -271,10 +290,10 @@ public <name>() {
 >>
 
 
-buildMethod(clazz) ::= <<
-@Nonnull
-public <clazz.name> build() {
-	return new <clazz.name>(<clazz.fields:buildMethodAttribute(); separator = ",">);
+buildMethod(settings) ::= <<
+<annotateNonnull(settings)>
+public <settings.immutableName> build() {
+	return new <settings.immutableName>(<settings.fields:buildMethodAttribute(); separator = ",">);
 }
 >>
 buildMethodAttribute(field) ::= <<
@@ -282,15 +301,15 @@ buildMethodAttribute(field) ::= <<
 >>
 
 
-copyConstructor(name,attribute,fields) ::= <<
-<if(attribute)>
-public <name>(<attribute.annotations:annotate(); separator = " "> final <importedType(attribute.type)> <attribute.name>) {
-	<fields:{ f | <copyConstructorField(f, attribute.name)> }>
+copyConstructor(settings) ::= <<
+<if(settings.builderCopyConstructor)>
+public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.interfaceDeclaration.type)> <settings.interfaceDeclaration.type.name; format="toLower">) {
+	<settings.fields:{ f | <copyConstructorField(f, settings)> }>
 }
 <endif>
 >>
-copyConstructorField(field, attributeName) ::= <<
-<if(field.static.undefined)>this.<field.name> = <attributeName>.<field.accessorMethodName>();<endif>
+copyConstructorField(field, settings) ::= <<
+<if(field.static.undefined)>this.<field.name> = <settings.interfaceDeclaration.type.name; format="toLower">.<field.accessorMethodName>();<endif>
 >>
 copyConstructorFieldRegardCollectionCopy(field, useGuava) ::= <<
 <if(field.type.collectionVariant)>
@@ -301,16 +320,6 @@ copyConstructorFieldRegardCollectionCopy(field, useGuava) ::= <<
 <else>
 	<if(!field.nullable)><field; format="check">
 	<else><field.name><endif>
-<endif>
->>
-
-
-nonfinalField(field) ::= <<
-<field.annotations:annotate(); separator = "\n">
-<if(field.static.undefined)>
-private <importedType(field.type)> <field.name>;
-<else>
-<field.visibility.name> <field.static.name> <field.final.name> <importedType(field.type)> <field.name> = <field.value>;
 <endif>
 >>
 
