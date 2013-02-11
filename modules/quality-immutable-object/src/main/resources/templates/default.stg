@@ -3,6 +3,8 @@ immutableCompilationUnit(settings) ::= <<
 
 <importJsr305Annotations(settings)>
 
+<importQualityCheck(settings)>
+
 <importGuavaClasses(settings)>
 
 <settings.imports:importStatement(); separator = "\n">
@@ -25,11 +27,11 @@ public final class <settings.immutableName> implements <settings.interfaceDeclar
 
 	<immutableConstructor(settings.immutableName, settings.fields, settings.guava)>
 
-	<equalsMethod(settings.immutableName, settings.fields, settings.guava)>
+	<equalsMethod(settings.immutableName, settings.fields, settings)>
 
 	<settings.fields:accessorMethod(); separator = "\n">
 
-	<hashCodeMethod(settings.fields, settings.guava)>
+	<hashCodeMethod(settings.fields, settings)>
 
 }
 >>
@@ -79,16 +81,16 @@ constant(field) ::= <<
 >>
 
 
-immutableConstructor(name, fields, useGuava) ::= <<
+immutableConstructor(name, fields, settings) ::= <<
 public <name>(<fields:attribute(); separator = ",">) {
-	<setupFieldsImmutable(fields, useGuava)>}
+	<setupFieldsImmutable(fields, settings)>}
 >>
 
 
 copyOfMethod(settings) ::= <<
 <annotateNonnull(settings)>
 public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.interfaceDeclaration:interface()> <settings.interfaceDeclaration.type.name; format="toLower">) {
-	Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");
+	<if(settings.qualityCheck)>Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");<endif>
 	return new <settings.immutableName>(<copyOfAttributes(settings)>);
 }
 >>
@@ -106,7 +108,7 @@ copyOfAttributes(settings) ::= <<
 >>
 
 
-equalsMethod(name, fields, useGuava) ::= <<
+equalsMethod(name, fields, settings) ::= <<
 @Override
 public boolean equals(final Object obj) {
 	if (this == obj)
@@ -116,7 +118,7 @@ public boolean equals(final Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	<name> other = (<name>) obj;
-	<if(useGuava)>
+	<if(settings.guava)>
 	return <fields:equalsMemberFieldWithOther(); separator = " && ">;
 	<else>
 	<fields:equalsFieldBlock()>
@@ -142,10 +144,10 @@ equalsMemberFieldWithOther(field) ::= <<
 >>
 
 
-hashCodeMethod(fields, useGuava) ::= <<
+hashCodeMethod(fields, settings) ::= <<
 @Override
 public int hashCode() {
-	<if(useGuava)>
+	<if(settings.guava)>
 	return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);
 	<else>
 	final int prime = 31;
@@ -199,6 +201,9 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
 <endif>
 >>
+importQualityCheck(settings) ::= <<
+<if(settings.qualityCheck)>import net.sf.qualitycheck.Check;<endif>
+>>
 
 
 importedType(type) ::= <<
@@ -219,38 +224,33 @@ package(package) ::= <<
 >>
 
 
-setupFieldsMutable(fields, useGuava) ::= <<
+setupFieldMutable(field, settings) ::= <<
+<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionCopy(field, settings)>;<endif>
+>>
+setupFieldsImmutable(fields, settings) ::= <<
 <fields: { f|
-	<setupFieldMutable(f, useGuava)>
+	<setupFieldImmutable(f, settings)>
 }>
 >>
-setupFieldMutable(field, useGuava) ::= <<
-<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionCopy(field, useGuava)>;<endif>
+setupFieldImmutable(field, settings) ::= <<
+<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionImmutability(field, settings)>;<endif>
 >>
-setupFieldsImmutable(fields, useGuava) ::= <<
-<fields: { f|
-	<setupFieldImmutable(f, useGuava)>
-}>
->>
-setupFieldImmutable(field, useGuava) ::= <<
-<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionImmutability(field, useGuava)>;<endif>
->>
-setupFieldRegardCollectionImmutability(field, useGuava) ::= <<
+setupFieldRegardCollectionImmutability(field, settings) ::= <<
 <if(field.type.collectionVariant)>
-	<if(field.nonnull && useGuava)><field; format="check,immutable,guava">
-	<elseif(field.nonnull && !useGuava)><field; format="check,immutable">
-	<elseif(!field.nonnull && useGuava)><field; format="immutable,guava">
+	<if(field.nonnull && settings.guava)><field; format="check,immutable,guava">
+	<elseif(field.nonnull && !settings.guava)><field; format="check,immutable">
+	<elseif(!field.nonnull && settings.guava)><field; format="immutable,guava">
 	<else><field; format="immutable"><endif>
 <else>
 	<if(!field.nullable)><field; format="check">
 	<else><field.name><endif>
 <endif>
 >>
-setupFieldRegardCollectionCopy(field, useGuava) ::= <<
+setupFieldRegardCollectionCopy(field, settings) ::= <<
 <if(field.type.collectionVariant)>
-	<if(field.nonnull && useGuava)><field; format="check,copy,guava">
-	<elseif(field.nonnull && !useGuava)><field; format="check,copy">
-	<elseif(!field.nonnull && useGuava)><field; format="copy,guava">
+	<if(field.nonnull && settings.guava)><field; format="check,copy,guava">
+	<elseif(field.nonnull && !settings.guava)><field; format="check,copy">
+	<elseif(!field.nonnull && settings.guava)><field; format="copy,guava">
 	<else><field; format="immutable"><endif>
 <else>
 	<if(!field.nullable)><field; format="check">
@@ -352,7 +352,7 @@ mutatorMethod(field, settings) ::= <<
 <if(field.static.undefined)>
 <if(settings.builderFluentMutators)><annotateNonnull(settings)><endif>
 public <mutatorMethodReturnType(settings)> <mutatorMethodName(field, settings)>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
-	<setupFieldMutable(field, settings.guava)>
+	<setupFieldMutable(field, settings)>
 	<mutatorMethodReturnStatement(settings)>
 }
 <endif>

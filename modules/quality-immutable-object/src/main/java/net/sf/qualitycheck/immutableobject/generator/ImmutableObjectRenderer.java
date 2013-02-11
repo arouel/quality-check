@@ -25,6 +25,7 @@ final class ImmutableObjectRenderer {
 		// global settings
 		settings.jsr305Annotations(true);
 		settings.guava(false);
+		settings.qualityCheck(true);
 
 		// immutable settings
 		settings.fields(clazz.getFields());
