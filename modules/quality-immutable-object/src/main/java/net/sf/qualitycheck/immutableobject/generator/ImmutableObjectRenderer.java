@@ -14,34 +14,15 @@ import org.stringtemplate.v4.STGroupFile;
 
 final class ImmutableObjectRenderer {
 
-	public static String toString(@Nonnull final Clazz clazz) {
+	public static String toString(@Nonnull final Clazz clazz, @Nonnull final ImmutableSettings settings) {
 		Check.notNull(clazz, "clazz");
+		Check.notNull(settings, "settings");
+
 		final STGroup group = new STGroupFile("templates/default.stg");
 		group.registerRenderer(Field.class, new FieldRenderer());
 		group.registerRenderer(String.class, new BasicFormatRenderer());
 		final ST template = group.getInstanceOf("immutableCompilationUnit");
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
-
-		// global settings
-		settings.jsr305Annotations(true);
-		settings.guava(false);
-		settings.qualityCheck(true);
-
-		// immutable settings
-		settings.fields(clazz.getFields());
-		settings.immutableName(clazz.getName());
-		settings.imports(clazz.getImports());
-		settings.interfaceDeclaration(clazz.getInterfaces().get(0));
-		settings.packageDeclaration(clazz.getPackage());
-
-		// builder settings
-		settings.builderCopyConstructor(true);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(true);
-		settings.builderName("Builder");
-		settings.builderImplementsInterface(false);
-
-		template.add("settings", settings.build());
+		template.add("settings", settings);
 
 		return SourceCodeFormatter.format(template.render());
 	}

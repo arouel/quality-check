@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.generator.ImmutableObjectGenerator;
 
 import org.junit.Test;
@@ -33,8 +34,25 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	private String readInterfaceAndGenerate(final String name) throws IOException {
+		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
+
+		// global settings
+		settings.jsr305Annotations(true);
+		settings.guava(false);
+		settings.qualityCheck(true);
+
+		// immutable settings
+		settings.serializable(false);
+
+		// builder settings
+		settings.builderCopyConstructor(true);
+		settings.builderFlatMutators(false);
+		settings.builderFluentMutators(true);
+		settings.builderName("Builder");
+		settings.builderImplementsInterface(false);
+
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
-		return ImmutableObjectGenerator.generateByCode(CharStreams.toString(new InputStreamReader(stream)));
+		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings.build());
 	}
 
 	private String readReferenceImmutable(final String name) throws IOException {
