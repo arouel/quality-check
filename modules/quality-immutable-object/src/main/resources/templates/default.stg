@@ -1,4 +1,4 @@
-immutableCompilationUnit(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, settings, builderName, builderNotThreadSafeAnnotation) ::= <<
+immutableCompilationUnit(settings) ::= <<
 <package(settings.packageDeclaration.name)>
 
 <importJsr305Annotations(settings)>
