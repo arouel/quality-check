@@ -80,11 +80,12 @@ public interface Settings {
 	boolean hasBuilderFluentMutators();
 
 	/**
-	 * Implements the related interface into corresponding builder too.
+	 * Implements the related interface also into corresponding builder class.
 	 * 
-	 * @return {@code true} to generate accessor methods into builder otherwise {@code false}
+	 * @return {@code true} to generate accessor methods also into builder class otherwise {@code false} to suppress
+	 *         their rendering
 	 */
-	boolean hasBuilderSameInterface();
+	boolean hasBuilderImplementsInterface();
 
 	/**
 	 * Use <i>Guava</i> (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and

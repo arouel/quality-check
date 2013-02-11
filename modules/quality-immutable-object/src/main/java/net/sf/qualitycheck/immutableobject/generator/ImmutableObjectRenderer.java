@@ -38,7 +38,7 @@ final class ImmutableObjectRenderer {
 		settings.builderFlatMutators(false);
 		settings.builderFluentMutators(true);
 		settings.builderName("Builder");
-		settings.builderSameInterface(false);
+		settings.builderImplementsInterface(false);
 
 		template.add("settings", settings.build());
 

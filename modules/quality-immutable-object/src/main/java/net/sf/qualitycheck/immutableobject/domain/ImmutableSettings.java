@@ -43,7 +43,7 @@ public final class ImmutableSettings implements Settings {
 
 		private boolean builderFluentMutators;
 
-		private boolean builderSameInterface;
+		private boolean builderImplementsInterface;
 
 		private boolean guava;
 
@@ -67,7 +67,7 @@ public final class ImmutableSettings implements Settings {
 			builderCopyConstructor = settings.hasBuilderCopyConstructor();
 			builderFlatMutators = settings.hasBuilderFlatMutators();
 			builderFluentMutators = settings.hasBuilderFluentMutators();
-			builderSameInterface = settings.hasBuilderSameInterface();
+			builderImplementsInterface = settings.hasBuilderImplementsInterface();
 			guava = settings.hasGuava();
 			jsr305Annotations = settings.hasJsr305Annotations();
 			qualityCheck = settings.hasQualityCheck();
@@ -77,8 +77,8 @@ public final class ImmutableSettings implements Settings {
 		@Nonnull
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
-					builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderSameInterface, guava, jsr305Annotations,
-					qualityCheck, serialVersion);
+					builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava,
+					jsr305Annotations, qualityCheck, serialVersion);
 		}
 
 		@Nonnull
@@ -100,14 +100,14 @@ public final class ImmutableSettings implements Settings {
 		}
 
 		@Nonnull
-		public Builder builderName(@Nullable final String builderName) {
-			this.builderName = builderName;
+		public Builder builderImplementsInterface(final boolean builderImplementsInterface) {
+			this.builderImplementsInterface = builderImplementsInterface;
 			return this;
 		}
 
 		@Nonnull
-		public Builder builderSameInterface(final boolean builderSameInterface) {
-			this.builderSameInterface = builderSameInterface;
+		public Builder builderName(@Nullable final String builderName) {
+			this.builderName = builderName;
 			return this;
 		}
 
@@ -172,7 +172,7 @@ public final class ImmutableSettings implements Settings {
 		Check.notNull(settings, "settings");
 		return new ImmutableSettings(settings.getBuilderName(), settings.getFields(), settings.getImmutableName(), settings.getImports(),
 				settings.getInterfaceDeclaration(), settings.getPackageDeclaration(), settings.hasBuilderCopyConstructor(),
-				settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(), settings.hasBuilderSameInterface(),
+				settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(), settings.hasBuilderImplementsInterface(),
 				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.hasSerialVersion());
 	}
 
@@ -200,7 +200,7 @@ public final class ImmutableSettings implements Settings {
 
 	private final boolean builderFluentMutators;
 
-	private final boolean builderSameInterface;
+	private final boolean builderImplementsInterface;
 
 	private final boolean guava;
 
@@ -213,7 +213,7 @@ public final class ImmutableSettings implements Settings {
 	public ImmutableSettings(@Nullable final String builderName, @Nonnull final List<Field> fields, @Nonnull final String immutableName,
 			@Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration, @Nonnull final Package packageDeclaration,
 			final boolean builderCopyConstructor, final boolean builderFlatMutators, final boolean builderFluentMutators,
-			final boolean builderSameInterface, final boolean guava, final boolean jsr305Annotations, final boolean qualityCheck,
+			final boolean builderImplementsInterface, final boolean guava, final boolean jsr305Annotations, final boolean qualityCheck,
 			final boolean serialVersion) {
 		this.builderName = builderName;
 		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
@@ -224,7 +224,7 @@ public final class ImmutableSettings implements Settings {
 		this.builderCopyConstructor = builderCopyConstructor;
 		this.builderFlatMutators = builderFlatMutators;
 		this.builderFluentMutators = builderFluentMutators;
-		this.builderSameInterface = builderSameInterface;
+		this.builderImplementsInterface = builderImplementsInterface;
 		this.guava = guava;
 		this.jsr305Annotations = jsr305Annotations;
 		this.qualityCheck = qualityCheck;
@@ -250,7 +250,7 @@ public final class ImmutableSettings implements Settings {
 				&& Objects.equal(builderCopyConstructor, other.builderCopyConstructor)
 				&& Objects.equal(builderFlatMutators, other.builderFlatMutators)
 				&& Objects.equal(builderFluentMutators, other.builderFluentMutators)
-				&& Objects.equal(builderSameInterface, other.builderSameInterface) && Objects.equal(guava, other.guava)
+				&& Objects.equal(builderImplementsInterface, other.builderImplementsInterface) && Objects.equal(guava, other.guava)
 				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(qualityCheck, other.qualityCheck)
 				&& Objects.equal(serialVersion, other.serialVersion);
 	}
@@ -307,8 +307,8 @@ public final class ImmutableSettings implements Settings {
 	}
 
 	@Override
-	public boolean hasBuilderSameInterface() {
-		return builderSameInterface;
+	public boolean hasBuilderImplementsInterface() {
+		return builderImplementsInterface;
 	}
 
 	@Override
@@ -319,7 +319,7 @@ public final class ImmutableSettings implements Settings {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
-				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderSameInterface, guava, jsr305Annotations,
+				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava, jsr305Annotations,
 				qualityCheck, serialVersion);
 	}
 
