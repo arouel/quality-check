@@ -49,6 +49,8 @@ public final class ImmutableSettings implements Settings {
 
 		private boolean jsr305Annotations;
 
+		private boolean qualityCheck;
+
 		private boolean serialVersion;
 
 		public Builder() {
@@ -68,6 +70,7 @@ public final class ImmutableSettings implements Settings {
 			builderSameInterface = settings.hasBuilderSameInterface();
 			guava = settings.hasGuava();
 			jsr305Annotations = settings.hasJsr305Annotations();
+			qualityCheck = settings.hasQualityCheck();
 			serialVersion = settings.hasSerialVersion();
 		}
 
@@ -75,7 +78,7 @@ public final class ImmutableSettings implements Settings {
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
 					builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderSameInterface, guava, jsr305Annotations,
-					serialVersion);
+					qualityCheck, serialVersion);
 		}
 
 		@Nonnull
@@ -151,6 +154,12 @@ public final class ImmutableSettings implements Settings {
 		}
 
 		@Nonnull
+		public Builder qualityCheck(final boolean qualityCheck) {
+			this.qualityCheck = qualityCheck;
+			return this;
+		}
+
+		@Nonnull
 		public Builder serialVersion(final boolean serialVersion) {
 			this.serialVersion = serialVersion;
 			return this;
@@ -164,7 +173,7 @@ public final class ImmutableSettings implements Settings {
 		return new ImmutableSettings(settings.getBuilderName(), settings.getFields(), settings.getImmutableName(), settings.getImports(),
 				settings.getInterfaceDeclaration(), settings.getPackageDeclaration(), settings.hasBuilderCopyConstructor(),
 				settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(), settings.hasBuilderSameInterface(),
-				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasSerialVersion());
+				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.hasSerialVersion());
 	}
 
 	@Nullable
@@ -197,12 +206,15 @@ public final class ImmutableSettings implements Settings {
 
 	private final boolean jsr305Annotations;
 
+	private final boolean qualityCheck;
+
 	private final boolean serialVersion;
 
 	public ImmutableSettings(@Nullable final String builderName, @Nonnull final List<Field> fields, @Nonnull final String immutableName,
 			@Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration, @Nonnull final Package packageDeclaration,
 			final boolean builderCopyConstructor, final boolean builderFlatMutators, final boolean builderFluentMutators,
-			final boolean builderSameInterface, final boolean guava, final boolean jsr305Annotations, final boolean serialVersion) {
+			final boolean builderSameInterface, final boolean guava, final boolean jsr305Annotations, final boolean qualityCheck,
+			final boolean serialVersion) {
 		this.builderName = builderName;
 		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
 		this.immutableName = Check.notNull(immutableName, "immutableName");
@@ -215,6 +227,7 @@ public final class ImmutableSettings implements Settings {
 		this.builderSameInterface = builderSameInterface;
 		this.guava = guava;
 		this.jsr305Annotations = jsr305Annotations;
+		this.qualityCheck = qualityCheck;
 		this.serialVersion = serialVersion;
 	}
 
@@ -238,7 +251,8 @@ public final class ImmutableSettings implements Settings {
 				&& Objects.equal(builderFlatMutators, other.builderFlatMutators)
 				&& Objects.equal(builderFluentMutators, other.builderFluentMutators)
 				&& Objects.equal(builderSameInterface, other.builderSameInterface) && Objects.equal(guava, other.guava)
-				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(serialVersion, other.serialVersion);
+				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(qualityCheck, other.qualityCheck)
+				&& Objects.equal(serialVersion, other.serialVersion);
 	}
 
 	@Override
@@ -306,12 +320,17 @@ public final class ImmutableSettings implements Settings {
 	public int hashCode() {
 		return Objects.hashCode(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
 				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderSameInterface, guava, jsr305Annotations,
-				serialVersion);
+				qualityCheck, serialVersion);
 	}
 
 	@Override
 	public boolean hasJsr305Annotations() {
 		return jsr305Annotations;
+	}
+
+	@Override
+	public boolean hasQualityCheck() {
+		return qualityCheck;
 	}
 
 	@Override

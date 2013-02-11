@@ -87,8 +87,8 @@ public interface Settings {
 	boolean hasBuilderSameInterface();
 
 	/**
-	 * Use Guava (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and <code>hashCode()</code>
-	 * methods and to copy or to make <i>immutable</i> {@code Iterable}s and {@code Map}s.
+	 * Use <i>Guava</i> (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and
+	 * <code>hashCode()</code> methods and to copy or to make <i>immutable</i> {@code Iterable}s and {@code Map}s.
 	 * 
 	 * @return {@code true} to use Guava classes otherwise {@code false}
 	 */
@@ -100,6 +100,15 @@ public interface Settings {
 	 * @return {@code true} to generate such annotations otherwise {@code false}
 	 */
 	boolean hasJsr305Annotations();
+
+	/**
+	 * Use <i>Quality-Check</i> to prevent technical errors in generated class(es), because they only have to work with
+	 * valid arguments. <i>Quality-Check</i> will be applied when reading argument values which are annotated with
+	 * <code>@Nonnull</code> or <code>@Nonnegative</code>.
+	 * 
+	 * @return {@code true} to apply technical checks in generated classes otherwise {@code false}
+	 */
+	boolean hasQualityCheck();
 
 	/**
 	 * Generates <code>serialVersionUID</code> constant (with default value <code>1L</code>) into immutable object class
