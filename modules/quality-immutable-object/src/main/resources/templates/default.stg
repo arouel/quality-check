@@ -338,10 +338,10 @@ mutatorMethods(settings) ::= <<
 >>
 mutatorMethod(field, settings) ::= <<
 <if(field.static.undefined)>
-<annotateNonnull(settings)>
-public <settings.builderName:mutatorReturnType()> <mutatorMethodName(field, settings)>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
+<if(settings.builderFluentMutators)><annotateNonnull(settings)><endif>
+public <mutatorMethodReturnType(settings)> <mutatorMethodName(field, settings)>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
 	<setupFieldMutable(field, settings.guava)>
-	<mutatorReturnStatement(settings.builderName)>
+	<mutatorMethodReturnStatement(settings)>
 }
 <endif>
 >>
@@ -352,13 +352,9 @@ mutatorMethodName(field, settings) ::= <<
 <field.mutatorMethodName>
 <endif>
 >>
-
-
-mutatorReturnStatement(builderName) ::= <<
-<if(builderName)>return this;<endif>
+mutatorMethodReturnStatement(settings) ::= <<
+<if(settings.builderFluentMutators)>return this;<endif>
 >>
-
-
-mutatorReturnType(builderName) ::= <<
-<if(builderName)><builderName><else>void<endif>
+mutatorMethodReturnType(settings) ::= <<
+<if(settings.builderFluentMutators)><settings.builderName><else>void<endif>
 >>
