@@ -13,7 +13,7 @@ immutableClass(settings) ::= <<
 <annotateImmutable(settings)>
 public final class <settings.immutableName> implements <settings.interfaceDeclaration:interface(); separator = ","> {
 
-	<if(settings.builderName)><builderClass(settings, true)><endif>
+	<builderClass(settings, true)>
 
 	<settings.fields:constant(); separator = "\n">
 
@@ -268,16 +268,19 @@ setupFieldRegardCollectionCopy(field, useGuava) ::= <<
 
 
 builderCompilationUnit(settings) ::= <<
+<if(settings.builderName)>
 <package(settings.packageDeclaration.name)>
 
 <settings.imports:importStatement(); separator = "\n">
 <if(settings.jsr305Annotations)>import javax.annotation.concurrent.NotThreadSafe;<endif>
 
 <builderClass(settings, false)>
+<endif>
 >>
 
 
 builderClass(settings, innerClass) ::= <<
+<if(settings.builderName)>
 <annotateNotThreadSafe(settings)>
 public <if(innerClass)>static<endif> final class <settings.builderName> implements <interface(settings.interfaceDeclaration); separator = ","> {
 
@@ -289,6 +292,7 @@ public <if(innerClass)>static<endif> final class <settings.builderName> implemen
 	<buildMethod(settings); separator = "\n">
 
 }
+<endif>
 >>
 
 
