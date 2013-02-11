@@ -225,7 +225,7 @@ package(package) ::= <<
 
 
 setupFieldMutable(field, settings) ::= <<
-<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionCopy(field, settings)>;<endif>
+<if(field.static.undefined)>this.<field.name> = <field; format="copy">;<endif>
 >>
 setupFieldsImmutable(fields, settings) ::= <<
 <fields: { f|
@@ -233,24 +233,8 @@ setupFieldsImmutable(fields, settings) ::= <<
 }>
 >>
 setupFieldImmutable(field, settings) ::= <<
-<if(field.static.undefined)>this.<field.name> = <setupFieldRegardCollectionImmutability(field, settings)>;<endif>
+<if(field.static.undefined)>this.<field.name> = <field; format="immutable">;<endif>
 >>
-setupFieldRegardCollectionImmutability(field, settings) ::= <<
-<if(field.type.collectionVariant)>
-<field; format="immutable">
-<else><field>
-<endif>
->>
-setupFieldRegardCollectionCopy(field, settings) ::= <<
-<if(field.type.collectionVariant)>
-<field; format="copy">
-<else><field>
-<endif>
->>
-
-
-
-
 
 
 
@@ -320,18 +304,7 @@ public <settings.builderName>(<annotateNonnull(settings)> final <importedType(se
 <endif>
 >>
 copyConstructorField(field, settings) ::= <<
-<if(field.static.undefined)>this.<field.name> = <settings.interfaceDeclaration.type.name; format="toLower">.<field.accessorMethodName>();<endif>
->>
-copyConstructorFieldRegardCollectionCopy(field, useGuava) ::= <<
-<if(field.type.collectionVariant)>
-	<if(field.nonnull && useGuava)><field; format="check,copy,guava">
-	<elseif(field.nonnull && !useGuava)><field; format="check,copy">
-	<elseif(!field.nonnull && useGuava)><field; format="copy,guava">
-	<else><field; format="immutable"><endif>
-<else>
-	<if(!field.nullable)><field; format="check">
-	<else><field.name><endif>
-<endif>
+<if(field.static.undefined)>this.<field.name> = <field; format="copy_from_interface">;<endif>
 >>
 
 

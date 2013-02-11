@@ -16,7 +16,7 @@ import org.stringtemplate.v4.AttributeRenderer;
 final class FieldRenderer implements AttributeRenderer {
 
 	public enum Option {
-		COPY, IMMUTABLE;
+		COPY, COPY_FROM_INTERFACE, IMMUTABLE;
 		@Nullable
 		public static Option evaluate(@Nonnull final String option) {
 			Check.notNull(option, "option");
@@ -34,12 +34,13 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	@Nonnull
-	static String insertCheck(@Nonnull final Field field) {
-		String result = field.getName();
+	static String surroundWithCheck(@Nonnull final Field field, @Nonnull final String referenceAccess) {
+		Check.notEmpty(referenceAccess, "referenceAccess");
+		String result = referenceAccess;
 		if (field.isNonnegative()) {
-			result = String.format(CHECK_NONNEGATIVE, field.getName(), field.getName());
+			result = String.format(CHECK_NONNEGATIVE, result, result);
 		} else if (field.isNonnull()) {
-			result = String.format(CHECK_NONNULL, field.getName(), field.getName());
+			result = String.format(CHECK_NONNULL, result, result);
 		}
 		return result;
 	}
@@ -87,16 +88,22 @@ final class FieldRenderer implements AttributeRenderer {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
 		String result = field.getName();
+		final Option option = formatOption != null ? Option.evaluate(formatOption) : null;
+
+		if (Option.COPY_FROM_INTERFACE == option) {
+			result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName();
+		}
+
 		if (_settings.hasQualityCheck()) {
-			result = insertCheck(field);
+			result = surroundWithCheck(field, result);
 		}
-		if (formatOption != null) {
-			if (Option.evaluate(formatOption) == Option.IMMUTABLE) {
-				result = makeCollectionImmutable(field, result);
-			} else if (Option.evaluate(formatOption) == Option.COPY) {
-				result = copyCollection(field, result);
-			}
+
+		if (option == Option.IMMUTABLE) {
+			result = makeCollectionImmutable(field, result);
+		} else if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE) {
+			result = copyCollection(field, result);
 		}
+
 		return result;
 	}
 
