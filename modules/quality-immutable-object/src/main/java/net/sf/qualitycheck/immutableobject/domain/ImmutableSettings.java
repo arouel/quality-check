@@ -51,7 +51,7 @@ public final class ImmutableSettings implements Settings {
 
 		private boolean qualityCheck;
 
-		private boolean serialVersion;
+		private boolean serializable;
 
 		public Builder() {
 			// default constructor
@@ -71,14 +71,14 @@ public final class ImmutableSettings implements Settings {
 			guava = settings.hasGuava();
 			jsr305Annotations = settings.hasJsr305Annotations();
 			qualityCheck = settings.hasQualityCheck();
-			serialVersion = settings.hasSerialVersion();
+			serializable = settings.isSerializable();
 		}
 
 		@Nonnull
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
 					builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava,
-					jsr305Annotations, qualityCheck, serialVersion);
+					jsr305Annotations, qualityCheck, serializable);
 		}
 
 		@Nonnull
@@ -160,8 +160,8 @@ public final class ImmutableSettings implements Settings {
 		}
 
 		@Nonnull
-		public Builder serialVersion(final boolean serialVersion) {
-			this.serialVersion = serialVersion;
+		public Builder serializable(final boolean serializable) {
+			this.serializable = serializable;
 			return this;
 		}
 
@@ -173,7 +173,7 @@ public final class ImmutableSettings implements Settings {
 		return new ImmutableSettings(settings.getBuilderName(), settings.getFields(), settings.getImmutableName(), settings.getImports(),
 				settings.getInterfaceDeclaration(), settings.getPackageDeclaration(), settings.hasBuilderCopyConstructor(),
 				settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(), settings.hasBuilderImplementsInterface(),
-				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.hasSerialVersion());
+				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.isSerializable());
 	}
 
 	@Nullable
@@ -208,13 +208,13 @@ public final class ImmutableSettings implements Settings {
 
 	private final boolean qualityCheck;
 
-	private final boolean serialVersion;
+	private final boolean serializable;
 
 	public ImmutableSettings(@Nullable final String builderName, @Nonnull final List<Field> fields, @Nonnull final String immutableName,
 			@Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration, @Nonnull final Package packageDeclaration,
 			final boolean builderCopyConstructor, final boolean builderFlatMutators, final boolean builderFluentMutators,
 			final boolean builderImplementsInterface, final boolean guava, final boolean jsr305Annotations, final boolean qualityCheck,
-			final boolean serialVersion) {
+			final boolean serializable) {
 		this.builderName = builderName;
 		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
 		this.immutableName = Check.notNull(immutableName, "immutableName");
@@ -228,7 +228,7 @@ public final class ImmutableSettings implements Settings {
 		this.guava = guava;
 		this.jsr305Annotations = jsr305Annotations;
 		this.qualityCheck = qualityCheck;
-		this.serialVersion = serialVersion;
+		this.serializable = serializable;
 	}
 
 	@Override
@@ -252,7 +252,7 @@ public final class ImmutableSettings implements Settings {
 				&& Objects.equal(builderFluentMutators, other.builderFluentMutators)
 				&& Objects.equal(builderImplementsInterface, other.builderImplementsInterface) && Objects.equal(guava, other.guava)
 				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(qualityCheck, other.qualityCheck)
-				&& Objects.equal(serialVersion, other.serialVersion);
+				&& Objects.equal(serializable, other.serializable);
 	}
 
 	@Override
@@ -320,7 +320,7 @@ public final class ImmutableSettings implements Settings {
 	public int hashCode() {
 		return Objects.hashCode(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
 				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava, jsr305Annotations,
-				qualityCheck, serialVersion);
+				qualityCheck, serializable);
 	}
 
 	@Override
@@ -334,8 +334,8 @@ public final class ImmutableSettings implements Settings {
 	}
 
 	@Override
-	public boolean hasSerialVersion() {
-		return serialVersion;
+	public boolean isSerializable() {
+		return serializable;
 	}
 
 }

@@ -117,6 +117,6 @@ public interface Settings {
 	 * 
 	 * @return {@code true} to generate <code>serialVersionUID</code> otherwise {@code false}
 	 */
-	boolean hasSerialVersion();
+	boolean isSerializable();
 
 }
