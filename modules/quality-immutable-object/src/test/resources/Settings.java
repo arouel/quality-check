@@ -80,15 +80,16 @@ public interface Settings {
 	boolean hasBuilderFluentMutators();
 
 	/**
-	 * Implements the related interface into corresponding builder too.
+	 * Implements the related interface also into corresponding builder class.
 	 * 
-	 * @return {@code true} to generate accessor methods into builder otherwise {@code false}
+	 * @return {@code true} to generate accessor methods also into builder class otherwise {@code false} to suppress
+	 *         their rendering
 	 */
-	boolean hasBuilderSameInterface();
+	boolean hasBuilderImplementsInterface();
 
 	/**
-	 * Use Guava (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and <code>hashCode()</code>
-	 * methods and to copy or to make <i>immutable</i> {@code Iterable}s and {@code Map}s.
+	 * Use <i>Guava</i> (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and
+	 * <code>hashCode()</code> methods and to copy or to make <i>immutable</i> {@code Iterable}s and {@code Map}s.
 	 * 
 	 * @return {@code true} to use Guava classes otherwise {@code false}
 	 */
@@ -102,11 +103,20 @@ public interface Settings {
 	boolean hasJsr305Annotations();
 
 	/**
+	 * Use <i>Quality-Check</i> to prevent technical errors in generated class(es), because they only have to work with
+	 * valid arguments. <i>Quality-Check</i> will be applied when reading argument values which are annotated with
+	 * <code>@Nonnull</code> or <code>@Nonnegative</code>.
+	 * 
+	 * @return {@code true} to apply technical checks in generated classes otherwise {@code false}
+	 */
+	boolean hasQualityCheck();
+
+	/**
 	 * Generates <code>serialVersionUID</code> constant (with default value <code>1L</code>) into immutable object class
 	 * and adds implementation hint to {@code Serializable} interface.
 	 * 
 	 * @return {@code true} to generate <code>serialVersionUID</code> otherwise {@code false}
 	 */
-	boolean hasSerialVersion();
+	boolean isSerializable();
 
 }

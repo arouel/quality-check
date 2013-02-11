@@ -1,17 +1,19 @@
 package net.sf.qualitycheck.immutableobject;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
+
+import net.sf.qualitycheck.Check;
+
 import java.io.Serializable;
-import java.lang.Override;
 import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.Car;
-import javax.annotation.concurrent.Immutable;
-import javax.annotation.concurrent.NotThreadSafe;
 
 @Immutable
 public final class ImmutableCar implements Car {
@@ -35,9 +37,9 @@ public final class ImmutableCar implements Car {
 		}
 
 		public Builder(@Nonnull final Car car) {
-			this.codes = car.getCodes();
-			this.wheels = car.getWheels();
-			this.name = car.getName();
+			this.codes = new ArrayList<String>(Check.notNull(car.getCodes, "car.getCodes"));
+			this.wheels = Check.notNegative(car.getWheels, "car.getWheels");
+			this.name = Check.notNull(car.getName, "car.getName");
 		}
 
 		@Nonnull
