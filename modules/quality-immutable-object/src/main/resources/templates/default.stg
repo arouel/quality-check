@@ -237,24 +237,20 @@ setupFieldImmutable(field, settings) ::= <<
 >>
 setupFieldRegardCollectionImmutability(field, settings) ::= <<
 <if(field.type.collectionVariant)>
-	<if(field.nonnull && settings.guava)><field; format="check,immutable,guava">
-	<elseif(field.nonnull && !settings.guava)><field; format="check,immutable">
+	<if(field.nonnull && settings.guava)><field; format="immutable,guava">
+	<elseif(field.nonnull && !settings.guava)><field; format="immutable">
 	<elseif(!field.nonnull && settings.guava)><field; format="immutable,guava">
 	<else><field; format="immutable"><endif>
-<else>
-	<if(!field.nullable)><field; format="check">
-	<else><field.name><endif>
+<else><field>
 <endif>
 >>
 setupFieldRegardCollectionCopy(field, settings) ::= <<
 <if(field.type.collectionVariant)>
-	<if(field.nonnull && settings.guava)><field; format="check,copy,guava">
-	<elseif(field.nonnull && !settings.guava)><field; format="check,copy">
+	<if(field.nonnull && settings.guava)><field; format="copy,guava">
+	<elseif(field.nonnull && !settings.guava)><field; format="copy">
 	<elseif(!field.nonnull && settings.guava)><field; format="copy,guava">
-	<else><field; format="immutable"><endif>
-<else>
-	<if(!field.nullable)><field; format="check">
-	<else><field.name><endif>
+	<else><field; format="copy"><endif>
+<else><field>
 <endif>
 >>
 

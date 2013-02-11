@@ -5,8 +5,10 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
 import net.sf.qualitycheck.immutableobject.domain.Field;
+import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.domain.Type;
 
 import org.stringtemplate.v4.AttributeRenderer;
@@ -18,7 +20,7 @@ import com.google.common.collect.ImmutableSet.Builder;
 final class FieldRenderer implements AttributeRenderer {
 
 	public enum Option {
-		CHECK, COPY, GUAVA, IMMUTABLE;
+		COPY, GUAVA, IMMUTABLE;
 		public static Set<Option> evaluate(final Iterable<String> options) {
 			final Builder<Option> builder = ImmutableSet.builder();
 			for (final String option : options) {
@@ -72,16 +74,23 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	@Nonnull
+	private final ImmutableSettings _settings;
+
+	public FieldRenderer(@Nonnull final ImmutableSettings settings) {
+		_settings = Check.notNull(settings, "settings");
+	}
+
+	@Nonnull
 	@Override
 	public String toString(final Object o, final String formatOptions, final Locale locale) {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
 		String result = field.getName();
+		if (_settings.hasQualityCheck()) {
+			result = insertCheck(field);
+		}
 		if (formatOptions != null) {
 			final Set<Option> opts = Option.evaluate(Splitter.on(",").trimResults().omitEmptyStrings().split(formatOptions));
-			if (opts.contains(Option.CHECK)) {
-				result = insertCheck(field);
-			}
 			result = convertCollection(field, opts, result);
 		}
 		return result;

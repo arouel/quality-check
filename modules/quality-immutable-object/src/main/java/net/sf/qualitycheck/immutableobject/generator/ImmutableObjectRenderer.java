@@ -19,7 +19,7 @@ final class ImmutableObjectRenderer {
 		Check.notNull(settings, "settings");
 
 		final STGroup group = new STGroupFile("templates/default.stg");
-		group.registerRenderer(Field.class, new FieldRenderer());
+		group.registerRenderer(Field.class, new FieldRenderer(settings));
 		group.registerRenderer(String.class, new BasicFormatRenderer());
 		final ST template = group.getInstanceOf("immutableCompilationUnit");
 		template.add("settings", settings);
