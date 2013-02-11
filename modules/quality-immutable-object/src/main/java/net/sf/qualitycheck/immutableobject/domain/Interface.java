@@ -8,6 +8,8 @@ import net.sf.qualitycheck.Check;
 @Immutable
 public final class Interface {
 
+	public static final Interface UNDEFINED = new Interface();
+
 	public static Interface of(@Nonnull final Class<?> interfaceType) {
 		Check.notNull(interfaceType, "interfaceType");
 		Check.stateIsTrue(interfaceType.isInterface(), "requires an interface");
@@ -19,7 +21,12 @@ public final class Interface {
 		return new Interface(new Type(interfaceType));
 	}
 
+	@Nonnull
 	final Type _type;
+
+	public Interface() {
+		_type = new Type("void");
+	}
 
 	public Interface(final Type interfaceType) {
 		_type = Check.notNull(interfaceType, "interfaceType");

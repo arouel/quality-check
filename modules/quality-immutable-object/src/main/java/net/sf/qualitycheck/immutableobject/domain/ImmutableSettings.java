@@ -23,19 +23,19 @@ public final class ImmutableSettings implements Settings {
 		private String builderName;
 
 		@Nonnull
-		private List<Field> fields;
+		private List<Field> fields = Lists.newArrayList();
 
 		@Nonnull
-		private String immutableName;
+		private String immutableName = "ImmutableUnknownObject";
 
 		@Nonnull
-		private List<Import> imports;
+		private List<Import> imports = Lists.newArrayList();
 
 		@Nonnull
-		private Interface interfaceDeclaration;
+		private Interface interfaceDeclaration = Interface.UNDEFINED;
 
 		@Nonnull
-		private Package packageDeclaration;
+		private Package packageDeclaration = Package.UNDEFINED;
 
 		private boolean builderCopyConstructor;
 
