@@ -3,6 +3,8 @@ immutableCompilationUnit(settings) ::= <<
 
 <importJsr305Annotations(settings)>
 
+<importGuavaClasses(settings)>
+
 <settings.imports:importStatement(); separator = "\n">
 
 <immutableClass(settings)>
@@ -181,6 +183,12 @@ private <importedType(field.type)> <field.name>;
 
 importStatement(i) ::= <<
 <if(i)>import <i.type.package.name>.<i.type.name>;<endif>
+>>
+importGuavaClasses(settings) ::= <<
+<if(settings.guava)>
+import com.google.common.base.Objects;
+import com.google.common.collect.*;
+<endif>
 >>
 importJsr305Annotations(settings) ::= <<
 <if(settings.jsr305Annotations)>
