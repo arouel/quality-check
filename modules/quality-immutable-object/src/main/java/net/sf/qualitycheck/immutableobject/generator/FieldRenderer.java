@@ -1,9 +1,9 @@
 package net.sf.qualitycheck.immutableobject.generator;
 
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
@@ -13,49 +13,20 @@ import net.sf.qualitycheck.immutableobject.domain.Type;
 
 import org.stringtemplate.v4.AttributeRenderer;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSet.Builder;
-
 final class FieldRenderer implements AttributeRenderer {
 
 	public enum Option {
-		COPY, GUAVA, IMMUTABLE;
-		public static Set<Option> evaluate(final Iterable<String> options) {
-			final Builder<Option> builder = ImmutableSet.builder();
-			for (final String option : options) {
-				final Option value = valueOf(option.toUpperCase());
-				if (value != null) {
-					builder.add(value);
-				}
-			}
-			return builder.build();
+		COPY, IMMUTABLE;
+		@Nullable
+		public static Option evaluate(@Nonnull final String option) {
+			Check.notNull(option, "option");
+			return valueOf(option.trim().toUpperCase());
 		}
 	}
-
-	private static final String CHECK_NONNULL = "Check.notNull(%s, \"%s\")";
 
 	private static final String CHECK_NONNEGATIVE = "Check.notNegative(%s, \"%s\")";
 
-	@Nonnull
-	static String convertCollection(@Nonnull final Field field, @Nonnull final Set<Option> opts, @Nonnull final String currentResult) {
-		String result = currentResult;
-		final CollectionVariant variant = CollectionVariant.evaluate(field.getType());
-		if (variant != null) {
-			if (opts.contains(Option.IMMUTABLE) && opts.contains(Option.GUAVA)) {
-				result = String.format(variant.getGuavaImmutable(), result);
-			} else if (opts.contains(Option.IMMUTABLE)) {
-				final String generic = determineGeneric(field.getType());
-				result = String.format(variant.getDefaultImmutable(), generic, result);
-			} else if (opts.contains(Option.COPY) && opts.contains(Option.GUAVA)) {
-				result = String.format(variant.getGuavaCopy(), result);
-			} else if (opts.contains(Option.COPY)) {
-				final String generic = determineGeneric(field.getType());
-				result = String.format(variant.getDefaultCopy(), generic, result);
-			}
-		}
-		return result;
-	}
+	private static final String CHECK_NONNULL = "Check.notNull(%s, \"%s\")";
 
 	@Nonnull
 	public static final String determineGeneric(@Nonnull final Type type) {
@@ -81,17 +52,50 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	@Nonnull
+	String copyCollection(@Nonnull final Field field, @Nonnull final String currentResult) {
+		String result = currentResult;
+		final CollectionVariant variant = CollectionVariant.evaluate(field.getType());
+		if (variant != null) {
+			if (_settings.hasGuava()) {
+				result = String.format(variant.getGuavaCopy(), result);
+			} else {
+				final String generic = determineGeneric(field.getType());
+				result = String.format(variant.getDefaultCopy(), generic, result);
+			}
+		}
+		return result;
+	}
+
+	@Nonnull
+	String makeCollectionImmutable(@Nonnull final Field field, @Nonnull final String currentResult) {
+		String result = currentResult;
+		final CollectionVariant variant = CollectionVariant.evaluate(field.getType());
+		if (variant != null) {
+			if (_settings.hasGuava()) {
+				result = String.format(variant.getGuavaImmutable(), result);
+			} else {
+				final String generic = determineGeneric(field.getType());
+				result = String.format(variant.getDefaultImmutable(), generic, result);
+			}
+		}
+		return result;
+	}
+
+	@Nonnull
 	@Override
-	public String toString(final Object o, final String formatOptions, final Locale locale) {
+	public String toString(final Object o, final String formatOption, final Locale locale) {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
 		String result = field.getName();
 		if (_settings.hasQualityCheck()) {
 			result = insertCheck(field);
 		}
-		if (formatOptions != null) {
-			final Set<Option> opts = Option.evaluate(Splitter.on(",").trimResults().omitEmptyStrings().split(formatOptions));
-			result = convertCollection(field, opts, result);
+		if (formatOption != null) {
+			if (Option.evaluate(formatOption) == Option.IMMUTABLE) {
+				result = makeCollectionImmutable(field, result);
+			} else if (Option.evaluate(formatOption) == Option.COPY) {
+				result = copyCollection(field, result);
+			}
 		}
 		return result;
 	}
