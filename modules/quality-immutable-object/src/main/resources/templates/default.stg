@@ -1,9 +1,9 @@
 immutableCompilationUnit(clazz, copyConstructorAttribute, immutableAnnotation, immutableName, settings, builderName, builderNotThreadSafeAnnotation) ::= <<
 <package(settings.packageDeclaration.name)>
 
+<importJsr305Annotations(settings)>
+
 <settings.imports:importStatement(); separator = "\n">
-<immutableAnnotation:importStatement()>
-<if(builderName)><builderNotThreadSafeAnnotation:importStatement()><endif>
 
 <immutableClass(settings)>
 >>
@@ -182,6 +182,15 @@ private <importedType(field.type)> <field.name>;
 importStatement(i) ::= <<
 <if(i)>import <i.type.package.name>.<i.type.name>;<endif>
 >>
+importJsr305Annotations(settings) ::= <<
+<if(settings.jsr305Annotations)>
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
+<endif>
+>>
 
 
 importedType(type) ::= <<
@@ -273,18 +282,18 @@ builderClass(settings, innerClass) ::= <<
 public <if(innerClass)>static<endif> final class <settings.builderName> implements <interface(settings.interfaceDeclaration); separator = ","> {
 
 	<settings.fields:asNonFinalField(); separator = "\n">
-	<defaultConstructor(settings.builderName)>
+	<defaultConstructor(settings)>
 	<copyConstructor(settings)>
 	<settings.fields:accessorMethod(); separator = "\n">
-	<mutatorMethods(settings.builderName, settings.fields, settings.guava); separator = "\n">
+	<mutatorMethods(settings); separator = "\n">
 	<buildMethod(settings); separator = "\n">
 
 }
 >>
 
 
-defaultConstructor(name) ::= <<
-public <name>() {
+defaultConstructor(settings) ::= <<
+public <settings.builderName>() {
 	// default constructor
 }
 >>
@@ -324,15 +333,15 @@ copyConstructorFieldRegardCollectionCopy(field, useGuava) ::= <<
 >>
 
 
-mutatorMethods(builderName, fields, useGuava) ::= <<
-<fields:{ field | <mutatorMethod(builderName, field, useGuava)>}>
+mutatorMethods(settings) ::= <<
+<settings.fields:{ field | <mutatorMethod(field, settings)>}>
 >>
-mutatorMethod(builderName, field, useGuava) ::= <<
+mutatorMethod(field, settings) ::= <<
 <if(field.static.undefined)>
-@Nonnull
-public <builderName:mutatorReturnType()> <field.mutatorMethodName>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
-	<setupFieldMutable(field, useGuava)>
-	<mutatorReturnStatement(builderName)>
+<annotateNonnull(settings)>
+public <settings.builderName:mutatorReturnType()> <field.mutatorMethodName>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field.name>) {
+	<setupFieldMutable(field, settings.guava)>
+	<mutatorReturnStatement(settings.builderName)>
 }
 <endif>
 >>
