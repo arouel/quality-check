@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject.util;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.immutableobject.domain.ReservedWord;
 
 public final class ReservedWordConverter {
 

@@ -19,11 +19,11 @@ import net.sf.qualitycheck.immutableobject.domain.Final;
 import net.sf.qualitycheck.immutableobject.domain.Import;
 import net.sf.qualitycheck.immutableobject.domain.Imports;
 import net.sf.qualitycheck.immutableobject.domain.Method;
+import net.sf.qualitycheck.immutableobject.domain.Primitive;
 import net.sf.qualitycheck.immutableobject.domain.ReturnType;
 import net.sf.qualitycheck.immutableobject.domain.Static;
 import net.sf.qualitycheck.immutableobject.domain.Type;
 import net.sf.qualitycheck.immutableobject.domain.Visibility;
-import net.sf.qualitycheck.immutableobject.util.Primitive;
 
 import com.google.common.collect.Lists;
 

@@ -1,4 +1,4 @@
-package net.sf.qualitycheck.immutableobject.util;
+package net.sf.qualitycheck.immutableobject.domain;
 
 import net.sf.qualitycheck.Check;
 

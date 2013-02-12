@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitycheck.immutableobject.util.Primitive;
 
 /**
  * Represents a type which can be a class, interface or annotation
