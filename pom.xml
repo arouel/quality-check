@@ -67,6 +67,7 @@ at FindBugs™ JSR-305 support.
 
 	<modules>
 		<module>modules/quality-check</module>
+		<module>modules/quality-immutable-object</module>
 		<module>modules/quality-test</module>
 		<module>distribution</module>
 	</modules>
