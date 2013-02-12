@@ -112,9 +112,11 @@ public final class ImmutableObjectGenerator {
 
 	private static boolean isSerializable(@Nonnull final ClassOrInterfaceDeclaration type) {
 		boolean ret = false;
-		for (final ClassOrInterfaceType extend : type.getExtends()) {
-			if ("Serializable".equals(extend.getName())) {
-				ret = true;
+		if (type.getExtends() != null) {
+			for (final ClassOrInterfaceType extend : type.getExtends()) {
+				if ("Serializable".equals(extend.getName())) {
+					ret = true;
+				}
 			}
 		}
 		return ret;
