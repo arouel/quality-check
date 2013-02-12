@@ -88,20 +88,22 @@ final class FieldRenderer implements AttributeRenderer {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
 		String result = field.getName();
-		final Option option = formatOption != null ? Option.evaluate(formatOption) : null;
+		final Option option = formatOption != null && !formatOption.isEmpty() ? Option.evaluate(formatOption) : null;
 
-		if (Option.COPY_FROM_INTERFACE == option) {
-			result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
-		}
+		if (option != null) {
+			if (Option.COPY_FROM_INTERFACE == option) {
+				result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
+			}
 
-		if (_settings.hasQualityCheck()) {
-			result = surroundWithCheck(field, result);
-		}
+			if (_settings.hasQualityCheck()) {
+				result = surroundWithCheck(field, result);
+			}
 
-		if (option == Option.IMMUTABLE) {
-			result = makeCollectionImmutable(field, result);
-		} else if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE) {
-			result = copyCollection(field, result);
+			if (option == Option.IMMUTABLE) {
+				result = makeCollectionImmutable(field, result);
+			} else if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE) {
+				result = copyCollection(field, result);
+			}
 		}
 
 		return result;
