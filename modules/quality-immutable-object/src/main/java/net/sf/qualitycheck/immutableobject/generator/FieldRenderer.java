@@ -91,7 +91,7 @@ final class FieldRenderer implements AttributeRenderer {
 		final Option option = formatOption != null ? Option.evaluate(formatOption) : null;
 
 		if (Option.COPY_FROM_INTERFACE == option) {
-			result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName();
+			result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
 		}
 
 		if (_settings.hasQualityCheck()) {
