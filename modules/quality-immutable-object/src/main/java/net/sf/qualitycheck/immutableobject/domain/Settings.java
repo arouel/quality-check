@@ -16,6 +16,14 @@ public interface Settings {
 	String getBuilderName();
 
 	/**
+	 * Defines a field prefix as convention in all generated classes.
+	 * 
+	 * @return prefix for all fields in a class or an empty string
+	 */
+	@Nonnull
+	String getFieldPrefix();
+
+	/**
 	 * The fields of the immutable object class (and corresponding builder class) to be generated.
 	 * 
 	 * @return a list of fields to be generated

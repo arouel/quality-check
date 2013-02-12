@@ -23,6 +23,9 @@ public final class ImmutableSettings implements Settings {
 		private String builderName;
 
 		@Nonnull
+		private String fieldPrefix = "";
+
+		@Nonnull
 		private List<Field> fields = Lists.newArrayList();
 
 		@Nonnull
@@ -59,11 +62,12 @@ public final class ImmutableSettings implements Settings {
 
 		public Builder(@Nonnull final Settings settings) {
 			builderName = settings.getBuilderName();
-			fields = settings.getFields();
-			immutableName = settings.getImmutableName();
-			imports = settings.getImports();
-			interfaceDeclaration = settings.getInterfaceDeclaration();
-			packageDeclaration = settings.getPackageDeclaration();
+			fieldPrefix = Check.notNull(settings.getFieldPrefix(), "settings.getFieldPrefix()");
+			fields = Lists.newArrayList(Check.notNull(settings.getFields(), "settings.getFields()"));
+			immutableName = Check.notNull(settings.getImmutableName(), "settings.getImmutableName()");
+			imports = Lists.newArrayList(Check.notNull(settings.getImports(), "settings.getImports()"));
+			interfaceDeclaration = Check.notNull(settings.getInterfaceDeclaration(), "settings.getInterfaceDeclaration()");
+			packageDeclaration = Check.notNull(settings.getPackageDeclaration(), "settings.getPackageDeclaration()");
 			builderCopyConstructor = settings.hasBuilderCopyConstructor();
 			builderFlatMutators = settings.hasBuilderFlatMutators();
 			builderFluentMutators = settings.hasBuilderFluentMutators();
@@ -76,9 +80,9 @@ public final class ImmutableSettings implements Settings {
 
 		@Nonnull
 		public ImmutableSettings build() {
-			return new ImmutableSettings(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
-					builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava,
-					jsr305Annotations, qualityCheck, serializable);
+			return new ImmutableSettings(builderName, fieldPrefix, fields, immutableName, imports, interfaceDeclaration,
+					packageDeclaration, builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface,
+					guava, jsr305Annotations, qualityCheck, serializable);
 		}
 
 		@Nonnull
@@ -108,6 +112,12 @@ public final class ImmutableSettings implements Settings {
 		@Nonnull
 		public Builder builderName(@Nullable final String builderName) {
 			this.builderName = builderName;
+			return this;
+		}
+
+		@Nonnull
+		public Builder fieldPrefix(@Nonnull final String fieldPrefix) {
+			this.fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
 			return this;
 		}
 
@@ -170,14 +180,18 @@ public final class ImmutableSettings implements Settings {
 	@Nonnull
 	public static ImmutableSettings copyOf(@Nonnull final Settings settings) {
 		Check.notNull(settings, "settings");
-		return new ImmutableSettings(settings.getBuilderName(), settings.getFields(), settings.getImmutableName(), settings.getImports(),
-				settings.getInterfaceDeclaration(), settings.getPackageDeclaration(), settings.hasBuilderCopyConstructor(),
-				settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(), settings.hasBuilderImplementsInterface(),
-				settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.isSerializable());
+		return new ImmutableSettings(settings.getBuilderName(), settings.getFieldPrefix(), settings.getFields(),
+				settings.getImmutableName(), settings.getImports(), settings.getInterfaceDeclaration(), settings.getPackageDeclaration(),
+				settings.hasBuilderCopyConstructor(), settings.hasBuilderFlatMutators(), settings.hasBuilderFluentMutators(),
+				settings.hasBuilderImplementsInterface(), settings.hasGuava(), settings.hasJsr305Annotations(), settings.hasQualityCheck(),
+				settings.isSerializable());
 	}
 
 	@Nullable
 	private final String builderName;
+
+	@Nonnull
+	private final String fieldPrefix;
 
 	@Nonnull
 	private final List<Field> fields;
@@ -210,12 +224,13 @@ public final class ImmutableSettings implements Settings {
 
 	private final boolean serializable;
 
-	public ImmutableSettings(@Nullable final String builderName, @Nonnull final List<Field> fields, @Nonnull final String immutableName,
-			@Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration, @Nonnull final Package packageDeclaration,
-			final boolean builderCopyConstructor, final boolean builderFlatMutators, final boolean builderFluentMutators,
-			final boolean builderImplementsInterface, final boolean guava, final boolean jsr305Annotations, final boolean qualityCheck,
-			final boolean serializable) {
+	public ImmutableSettings(@Nullable final String builderName, @Nonnull final String fieldPrefix, @Nonnull final List<Field> fields,
+			@Nonnull final String immutableName, @Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration,
+			@Nonnull final Package packageDeclaration, final boolean builderCopyConstructor, final boolean builderFlatMutators,
+			final boolean builderFluentMutators, final boolean builderImplementsInterface, final boolean guava,
+			final boolean jsr305Annotations, final boolean qualityCheck, final boolean serializable) {
 		this.builderName = builderName;
+		this.fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
 		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
 		this.immutableName = Check.notNull(immutableName, "immutableName");
 		this.imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
@@ -243,9 +258,9 @@ public final class ImmutableSettings implements Settings {
 			return false;
 		}
 		final ImmutableSettings other = (ImmutableSettings) obj;
-		return Objects.equal(builderName, other.builderName) && Objects.equal(fields, other.fields)
-				&& Objects.equal(immutableName, other.immutableName) && Objects.equal(imports, other.imports)
-				&& Objects.equal(interfaceDeclaration, other.interfaceDeclaration)
+		return Objects.equal(builderName, other.builderName) && Objects.equal(fieldPrefix, other.fieldPrefix)
+				&& Objects.equal(fields, other.fields) && Objects.equal(immutableName, other.immutableName)
+				&& Objects.equal(imports, other.imports) && Objects.equal(interfaceDeclaration, other.interfaceDeclaration)
 				&& Objects.equal(packageDeclaration, other.packageDeclaration)
 				&& Objects.equal(builderCopyConstructor, other.builderCopyConstructor)
 				&& Objects.equal(builderFlatMutators, other.builderFlatMutators)
@@ -259,6 +274,12 @@ public final class ImmutableSettings implements Settings {
 	@Nullable
 	public String getBuilderName() {
 		return builderName;
+	}
+
+	@Override
+	@Nonnull
+	public String getFieldPrefix() {
+		return fieldPrefix;
 	}
 
 	@Override
@@ -318,7 +339,7 @@ public final class ImmutableSettings implements Settings {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(builderName, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
+		return Objects.hashCode(builderName, fieldPrefix, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
 				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava, jsr305Annotations,
 				qualityCheck, serializable);
 	}
