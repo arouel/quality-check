@@ -49,7 +49,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderFlatMutators(false);
 		settings.builderFluentMutators(true);
 		settings.builderName("Builder");
-		settings.builderImplementsInterface(false);
+		settings.builderImplementsInterface(true);
 
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
 		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings.build());

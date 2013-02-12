@@ -3,7 +3,9 @@ package net.sf.qualitycheck.immutableobject.generator;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 import japa.parser.ast.body.TypeDeclaration;
+import japa.parser.ast.type.ClassOrInterfaceType;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
@@ -71,7 +73,7 @@ public final class ImmutableObjectGenerator {
 		final List<TypeDeclaration> types = Check.notEmpty(unit.getTypes(), "typeDeclarations");
 		Check.stateIsTrue(types.size() == 1, "more than one interface declaration per compilation unit is not supported");
 
-		final TypeDeclaration type = types.get(0);
+		final ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) types.get(0);
 		final Imports imports = SourceCodeReader.findImports(unit.getImports());
 		final String name = CLAZZ_PREFIX + type.getName();
 		final Package pkg = new Package(unit.getPackage().getName().toString());
@@ -79,7 +81,9 @@ public final class ImmutableObjectGenerator {
 		annotations.add(Annotation.IMMUTABLE);
 		final List<Method> methods = generateAccessorMethods(SourceCodeReader.findMethods(type.getMembers(), imports));
 		final List<Field> fields = new ArrayList<Field>();
-		fields.add(SerialVersionGenerator.generate());
+		if (settings.isSerializable() || isSerializable(type)) {
+			fields.add(SerialVersionGenerator.generate());
+		}
 		fields.addAll(findFields(methods));
 
 		final List<Constructor> constructors = ImmutableList.of();
@@ -104,6 +108,16 @@ public final class ImmutableObjectGenerator {
 			members.add(AccessorMethodGenerator.generate(method));
 		}
 		return members;
+	}
+
+	private static boolean isSerializable(@Nonnull final ClassOrInterfaceDeclaration type) {
+		boolean ret = false;
+		for (final ClassOrInterfaceType extend : type.getExtends()) {
+			if ("Serializable".equals(extend.getName())) {
+				ret = true;
+			}
+		}
+		return ret;
 	}
 
 	@Nullable

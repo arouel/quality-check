@@ -177,8 +177,6 @@ asNonFinalField(field) ::= <<
 <field.annotations:annotate(); separator = "\n">
 <if(field.static.undefined)>
 private <importedType(field.type)> <field.name>;
-<else>
-<field.visibility.name> <field.static.name> <field.final.name> <importedType(field.type)> <field.name> = <field.value>;
 <endif>
 >>
 
@@ -264,13 +262,20 @@ builderCompilationUnit(settings) ::= <<
 builderClass(settings, innerClass) ::= <<
 <if(settings.builderName)>
 <annotateNotThreadSafe(settings)>
-public <if(innerClass)>static<endif> final class <settings.builderName> implements <interface(settings.interfaceDeclaration); separator = ","> {
+public <if(innerClass)>static<endif> final class <settings.builderName><if(settings.builderImplementsInterface)> implements <interface(settings.interfaceDeclaration); separator = ","><endif> {
+
+	<if(settings.builderImplementsInterface)><settings.fields:constant(); separator = "\n"><endif>
 
 	<settings.fields:asNonFinalField(); separator = "\n">
+
 	<defaultConstructor(settings)>
+
 	<copyConstructor(settings)>
-	<settings.fields:accessorMethod(); separator = "\n">
+
+	<if(settings.builderImplementsInterface)><settings.fields:accessorMethod(); separator = "\n"><endif>
+
 	<mutatorMethods(settings); separator = "\n">
+
 	<buildMethod(settings); separator = "\n">
 
 }
