@@ -76,7 +76,7 @@ public final class SourceCodeReader {
 	@Nonnull
 	public static Imports findImports(@Nullable final List<ImportDeclaration> importDeclarations) {
 		final List<Import> imports = Lists.newArrayList();
-		if (imports != null) {
+		if (importDeclarations != null) {
 			for (final ImportDeclaration importDeclaration : importDeclarations) {
 				imports.add(Import.of(importDeclaration.getName().toString()));
 			}
