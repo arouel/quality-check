@@ -78,7 +78,6 @@ public final class ImmutableObjectGenerator {
 		final String name = CLAZZ_PREFIX + type.getName();
 		final Package pkg = new Package(unit.getPackage().getName().toString());
 		final List<Annotation> annotations = SourceCodeReader.findAnnotations(type.getAnnotations(), imports);
-		annotations.add(Annotation.IMMUTABLE);
 		final List<Method> methods = generateAccessorMethods(SourceCodeReader.findMethods(type.getMembers(), imports));
 		final List<Field> fields = new ArrayList<Field>();
 		if (settings.isSerializable() || isSerializable(type)) {

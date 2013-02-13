@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
 import net.sf.qualitycheck.immutableobject.Car;
 
 @Immutable
