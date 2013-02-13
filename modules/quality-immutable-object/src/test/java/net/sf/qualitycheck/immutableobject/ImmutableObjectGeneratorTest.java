@@ -19,24 +19,22 @@ public class ImmutableObjectGeneratorTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ImmutableObjectGeneratorTest.class);
 
-	@Test
-	public void createBy() throws IOException {
-		LOG.info(readInterfaceAndGenerate("Settings.java"));
+	private String readInterfaceAndGenerate(final String name, final ImmutableSettings settings) throws IOException {
+		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
+		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings);
+	}
+
+	private String readReferenceImmutable(final String name) throws IOException {
+		final InputStream stream = getClass().getClassLoader().getResourceAsStream("Immutable" + name);
+		return CharStreams.toString(new InputStreamReader(stream));
 	}
 
 	@Test
-	public void createByReadingSourceCode() throws IOException {
-		readInterfaceAndCompareToReference("Car.java");
-	}
-
-	private void readInterfaceAndCompareToReference(final String name) throws IOException {
-		assertEquals(readReferenceImmutable(name), readInterfaceAndGenerate(name));
-	}
-
-	private String readInterfaceAndGenerate(final String name) throws IOException {
+	public void testCarInterface() throws IOException {
 		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
 
 		// global settings
+		settings.fieldPrefix("");
 		settings.jsr305Annotations(true);
 		settings.guava(false);
 		settings.qualityCheck(true);
@@ -51,13 +49,32 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderName("Builder");
 		settings.builderImplementsInterface(true);
 
-		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
-		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings.build());
+		final String file = "Car.java";
+		assertEquals(readReferenceImmutable(file), readInterfaceAndGenerate(file, settings.build()));
 	}
 
-	private String readReferenceImmutable(final String name) throws IOException {
-		final InputStream stream = getClass().getClassLoader().getResourceAsStream("Immutable" + name);
-		return CharStreams.toString(new InputStreamReader(stream));
+	@Test
+	public void testSettingsInterface() throws IOException {
+		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
+
+		// global settings
+		settings.fieldPrefix("_");
+		settings.jsr305Annotations(true);
+		settings.guava(true);
+		settings.qualityCheck(true);
+
+		// immutable settings
+		settings.serializable(false);
+
+		// builder settings
+		settings.builderCopyConstructor(true);
+		settings.builderFlatMutators(true);
+		settings.builderFluentMutators(true);
+		settings.builderName("Builder");
+		settings.builderImplementsInterface(false);
+
+		final String file = "Settings.java";
+		LOG.info("\n" + readInterfaceAndGenerate(file, settings.build()));
 	}
 
 }
