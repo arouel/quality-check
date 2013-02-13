@@ -148,4 +148,5 @@ final class FieldRenderer implements AttributeRenderer {
 
 		return result;
 	}
+
 }
