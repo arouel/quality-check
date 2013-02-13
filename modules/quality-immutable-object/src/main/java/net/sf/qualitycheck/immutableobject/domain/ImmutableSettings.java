@@ -20,158 +20,158 @@ public final class ImmutableSettings implements Settings {
 	public static final class Builder {
 
 		@Nullable
-		private String builderName;
+		private String _builderName;
 
 		@Nonnull
-		private String fieldPrefix = "";
+		private String _fieldPrefix;
 
 		@Nonnull
-		private List<Field> fields = Lists.newArrayList();
+		private List<Field> _fields;
 
 		@Nonnull
-		private String immutableName = "ImmutableUnknownObject";
+		private String _immutableName;
 
 		@Nonnull
-		private List<Import> imports = Lists.newArrayList();
+		private List<Import> _imports;
 
 		@Nonnull
-		private Interface interfaceDeclaration = Interface.UNDEFINED;
+		private Interface _interfaceDeclaration;
 
 		@Nonnull
-		private Package packageDeclaration = Package.UNDEFINED;
+		private Package _packageDeclaration;
 
-		private boolean builderCopyConstructor;
+		private boolean _builderCopyConstructor;
 
-		private boolean builderFlatMutators;
+		private boolean _builderFlatMutators;
 
-		private boolean builderFluentMutators;
+		private boolean _builderFluentMutators;
 
-		private boolean builderImplementsInterface;
+		private boolean _builderImplementsInterface;
 
-		private boolean guava;
+		private boolean _guava;
 
-		private boolean jsr305Annotations;
+		private boolean _jsr305Annotations;
 
-		private boolean qualityCheck;
+		private boolean _qualityCheck;
 
-		private boolean serializable;
+		private boolean _serializable;
 
 		public Builder() {
 			// default constructor
 		}
 
 		public Builder(@Nonnull final Settings settings) {
-			builderName = settings.getBuilderName();
-			fieldPrefix = Check.notNull(settings.getFieldPrefix(), "settings.getFieldPrefix()");
-			fields = Lists.newArrayList(Check.notNull(settings.getFields(), "settings.getFields()"));
-			immutableName = Check.notNull(settings.getImmutableName(), "settings.getImmutableName()");
-			imports = Lists.newArrayList(Check.notNull(settings.getImports(), "settings.getImports()"));
-			interfaceDeclaration = Check.notNull(settings.getInterfaceDeclaration(), "settings.getInterfaceDeclaration()");
-			packageDeclaration = Check.notNull(settings.getPackageDeclaration(), "settings.getPackageDeclaration()");
-			builderCopyConstructor = settings.hasBuilderCopyConstructor();
-			builderFlatMutators = settings.hasBuilderFlatMutators();
-			builderFluentMutators = settings.hasBuilderFluentMutators();
-			builderImplementsInterface = settings.hasBuilderImplementsInterface();
-			guava = settings.hasGuava();
-			jsr305Annotations = settings.hasJsr305Annotations();
-			qualityCheck = settings.hasQualityCheck();
-			serializable = settings.isSerializable();
+			_builderName = settings.getBuilderName();
+			_fieldPrefix = Check.notNull(settings.getFieldPrefix(), "settings.getFieldPrefix()");
+			_fields = Lists.newArrayList(Check.notNull(settings.getFields(), "settings.getFields()"));
+			_immutableName = Check.notNull(settings.getImmutableName(), "settings.getImmutableName()");
+			_imports = Lists.newArrayList(Check.notNull(settings.getImports(), "settings.getImports()"));
+			_interfaceDeclaration = Check.notNull(settings.getInterfaceDeclaration(), "settings.getInterfaceDeclaration()");
+			_packageDeclaration = Check.notNull(settings.getPackageDeclaration(), "settings.getPackageDeclaration()");
+			_builderCopyConstructor = settings.hasBuilderCopyConstructor();
+			_builderFlatMutators = settings.hasBuilderFlatMutators();
+			_builderFluentMutators = settings.hasBuilderFluentMutators();
+			_builderImplementsInterface = settings.hasBuilderImplementsInterface();
+			_guava = settings.hasGuava();
+			_jsr305Annotations = settings.hasJsr305Annotations();
+			_qualityCheck = settings.hasQualityCheck();
+			_serializable = settings.isSerializable();
 		}
 
 		@Nonnull
 		public ImmutableSettings build() {
-			return new ImmutableSettings(builderName, fieldPrefix, fields, immutableName, imports, interfaceDeclaration,
-					packageDeclaration, builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface,
-					guava, jsr305Annotations, qualityCheck, serializable);
+			return new ImmutableSettings(_builderName, _fieldPrefix, _fields, _immutableName, _imports, _interfaceDeclaration,
+					_packageDeclaration, _builderCopyConstructor, _builderFlatMutators, _builderFluentMutators,
+					_builderImplementsInterface, _guava, _jsr305Annotations, _qualityCheck, _serializable);
 		}
 
 		@Nonnull
 		public Builder builderCopyConstructor(final boolean builderCopyConstructor) {
-			this.builderCopyConstructor = builderCopyConstructor;
+			_builderCopyConstructor = builderCopyConstructor;
 			return this;
 		}
 
 		@Nonnull
 		public Builder builderFlatMutators(final boolean builderFlatMutators) {
-			this.builderFlatMutators = builderFlatMutators;
+			_builderFlatMutators = builderFlatMutators;
 			return this;
 		}
 
 		@Nonnull
 		public Builder builderFluentMutators(final boolean builderFluentMutators) {
-			this.builderFluentMutators = builderFluentMutators;
+			_builderFluentMutators = builderFluentMutators;
 			return this;
 		}
 
 		@Nonnull
 		public Builder builderImplementsInterface(final boolean builderImplementsInterface) {
-			this.builderImplementsInterface = builderImplementsInterface;
+			_builderImplementsInterface = builderImplementsInterface;
 			return this;
 		}
 
 		@Nonnull
 		public Builder builderName(@Nullable final String builderName) {
-			this.builderName = builderName;
+			_builderName = builderName;
 			return this;
 		}
 
 		@Nonnull
 		public Builder fieldPrefix(@Nonnull final String fieldPrefix) {
-			this.fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
+			_fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
 			return this;
 		}
 
 		@Nonnull
 		public Builder fields(@Nonnull final List<Field> fields) {
-			this.fields = Lists.newArrayList(Check.notNull(fields, "fields"));
+			_fields = Lists.newArrayList(Check.notNull(fields, "fields"));
 			return this;
 		}
 
 		@Nonnull
 		public Builder guava(final boolean guava) {
-			this.guava = guava;
+			_guava = guava;
 			return this;
 		}
 
 		@Nonnull
 		public Builder immutableName(@Nonnull final String immutableName) {
-			this.immutableName = Check.notNull(immutableName, "immutableName");
+			_immutableName = Check.notNull(immutableName, "immutableName");
 			return this;
 		}
 
 		@Nonnull
 		public Builder imports(@Nonnull final List<Import> imports) {
-			this.imports = Lists.newArrayList(Check.notNull(imports, "imports"));
+			_imports = Lists.newArrayList(Check.notNull(imports, "imports"));
 			return this;
 		}
 
 		@Nonnull
 		public Builder interfaceDeclaration(@Nonnull final Interface interfaceDeclaration) {
-			this.interfaceDeclaration = Check.notNull(interfaceDeclaration, "interfaceDeclaration");
+			_interfaceDeclaration = Check.notNull(interfaceDeclaration, "interfaceDeclaration");
 			return this;
 		}
 
 		@Nonnull
 		public Builder jsr305Annotations(final boolean jsr305Annotations) {
-			this.jsr305Annotations = jsr305Annotations;
+			_jsr305Annotations = jsr305Annotations;
 			return this;
 		}
 
 		@Nonnull
 		public Builder packageDeclaration(@Nonnull final Package packageDeclaration) {
-			this.packageDeclaration = Check.notNull(packageDeclaration, "packageDeclaration");
+			_packageDeclaration = Check.notNull(packageDeclaration, "packageDeclaration");
 			return this;
 		}
 
 		@Nonnull
 		public Builder qualityCheck(final boolean qualityCheck) {
-			this.qualityCheck = qualityCheck;
+			_qualityCheck = qualityCheck;
 			return this;
 		}
 
 		@Nonnull
 		public Builder serializable(final boolean serializable) {
-			this.serializable = serializable;
+			_serializable = serializable;
 			return this;
 		}
 
@@ -188,62 +188,62 @@ public final class ImmutableSettings implements Settings {
 	}
 
 	@Nullable
-	private final String builderName;
+	private final String _builderName;
 
 	@Nonnull
-	private final String fieldPrefix;
+	private final String _fieldPrefix;
 
 	@Nonnull
-	private final List<Field> fields;
+	private final List<Field> _fields;
 
 	@Nonnull
-	private final String immutableName;
+	private final String _immutableName;
 
 	@Nonnull
-	private final List<Import> imports;
+	private final List<Import> _imports;
 
 	@Nonnull
-	private final Interface interfaceDeclaration;
+	private final Interface _interfaceDeclaration;
 
 	@Nonnull
-	private final Package packageDeclaration;
+	private final Package _packageDeclaration;
 
-	private final boolean builderCopyConstructor;
+	private final boolean _builderCopyConstructor;
 
-	private final boolean builderFlatMutators;
+	private final boolean _builderFlatMutators;
 
-	private final boolean builderFluentMutators;
+	private final boolean _builderFluentMutators;
 
-	private final boolean builderImplementsInterface;
+	private final boolean _builderImplementsInterface;
 
-	private final boolean guava;
+	private final boolean _guava;
 
-	private final boolean jsr305Annotations;
+	private final boolean _jsr305Annotations;
 
-	private final boolean qualityCheck;
+	private final boolean _qualityCheck;
 
-	private final boolean serializable;
+	private final boolean _serializable;
 
 	public ImmutableSettings(@Nullable final String builderName, @Nonnull final String fieldPrefix, @Nonnull final List<Field> fields,
 			@Nonnull final String immutableName, @Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration,
 			@Nonnull final Package packageDeclaration, final boolean builderCopyConstructor, final boolean builderFlatMutators,
 			final boolean builderFluentMutators, final boolean builderImplementsInterface, final boolean guava,
 			final boolean jsr305Annotations, final boolean qualityCheck, final boolean serializable) {
-		this.builderName = builderName;
-		this.fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
-		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
-		this.immutableName = Check.notNull(immutableName, "immutableName");
-		this.imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
-		this.interfaceDeclaration = Check.notNull(interfaceDeclaration, "interfaceDeclaration");
-		this.packageDeclaration = Check.notNull(packageDeclaration, "packageDeclaration");
-		this.builderCopyConstructor = builderCopyConstructor;
-		this.builderFlatMutators = builderFlatMutators;
-		this.builderFluentMutators = builderFluentMutators;
-		this.builderImplementsInterface = builderImplementsInterface;
-		this.guava = guava;
-		this.jsr305Annotations = jsr305Annotations;
-		this.qualityCheck = qualityCheck;
-		this.serializable = serializable;
+		_builderName = builderName;
+		_fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
+		_fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
+		_immutableName = Check.notNull(immutableName, "immutableName");
+		_imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
+		_interfaceDeclaration = Check.notNull(interfaceDeclaration, "interfaceDeclaration");
+		_packageDeclaration = Check.notNull(packageDeclaration, "packageDeclaration");
+		_builderCopyConstructor = builderCopyConstructor;
+		_builderFlatMutators = builderFlatMutators;
+		_builderFluentMutators = builderFluentMutators;
+		_builderImplementsInterface = builderImplementsInterface;
+		_guava = guava;
+		_jsr305Annotations = jsr305Annotations;
+		_qualityCheck = qualityCheck;
+		_serializable = serializable;
 	}
 
 	@Override
@@ -258,105 +258,105 @@ public final class ImmutableSettings implements Settings {
 			return false;
 		}
 		final ImmutableSettings other = (ImmutableSettings) obj;
-		return Objects.equal(builderName, other.builderName) && Objects.equal(fieldPrefix, other.fieldPrefix)
-				&& Objects.equal(fields, other.fields) && Objects.equal(immutableName, other.immutableName)
-				&& Objects.equal(imports, other.imports) && Objects.equal(interfaceDeclaration, other.interfaceDeclaration)
-				&& Objects.equal(packageDeclaration, other.packageDeclaration)
-				&& Objects.equal(builderCopyConstructor, other.builderCopyConstructor)
-				&& Objects.equal(builderFlatMutators, other.builderFlatMutators)
-				&& Objects.equal(builderFluentMutators, other.builderFluentMutators)
-				&& Objects.equal(builderImplementsInterface, other.builderImplementsInterface) && Objects.equal(guava, other.guava)
-				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(qualityCheck, other.qualityCheck)
-				&& Objects.equal(serializable, other.serializable);
+		return Objects.equal(_builderName, other._builderName) && Objects.equal(_fieldPrefix, other._fieldPrefix)
+				&& Objects.equal(_fields, other._fields) && Objects.equal(_immutableName, other._immutableName)
+				&& Objects.equal(_imports, other._imports) && Objects.equal(_interfaceDeclaration, other._interfaceDeclaration)
+				&& Objects.equal(_packageDeclaration, other._packageDeclaration)
+				&& Objects.equal(_builderCopyConstructor, other._builderCopyConstructor)
+				&& Objects.equal(_builderFlatMutators, other._builderFlatMutators)
+				&& Objects.equal(_builderFluentMutators, other._builderFluentMutators)
+				&& Objects.equal(_builderImplementsInterface, other._builderImplementsInterface) && Objects.equal(_guava, other._guava)
+				&& Objects.equal(_jsr305Annotations, other._jsr305Annotations) && Objects.equal(_qualityCheck, other._qualityCheck)
+				&& Objects.equal(_serializable, other._serializable);
 	}
 
 	@Override
 	@Nullable
 	public String getBuilderName() {
-		return builderName;
+		return _builderName;
 	}
 
 	@Override
 	@Nonnull
 	public String getFieldPrefix() {
-		return fieldPrefix;
+		return _fieldPrefix;
 	}
 
 	@Override
 	@Nonnull
 	public List<Field> getFields() {
-		return fields;
+		return _fields;
 	}
 
 	@Override
 	@Nonnull
 	public String getImmutableName() {
-		return immutableName;
+		return _immutableName;
 	}
 
 	@Override
 	@Nonnull
 	public List<Import> getImports() {
-		return imports;
+		return _imports;
 	}
 
 	@Override
 	@Nonnull
 	public Interface getInterfaceDeclaration() {
-		return interfaceDeclaration;
+		return _interfaceDeclaration;
 	}
 
 	@Override
 	@Nonnull
 	public Package getPackageDeclaration() {
-		return packageDeclaration;
+		return _packageDeclaration;
 	}
 
 	@Override
 	public boolean hasBuilderCopyConstructor() {
-		return builderCopyConstructor;
+		return _builderCopyConstructor;
 	}
 
 	@Override
 	public boolean hasBuilderFlatMutators() {
-		return builderFlatMutators;
+		return _builderFlatMutators;
 	}
 
 	@Override
 	public boolean hasBuilderFluentMutators() {
-		return builderFluentMutators;
+		return _builderFluentMutators;
 	}
 
 	@Override
 	public boolean hasBuilderImplementsInterface() {
-		return builderImplementsInterface;
+		return _builderImplementsInterface;
 	}
 
 	@Override
 	public boolean hasGuava() {
-		return guava;
+		return _guava;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(builderName, fieldPrefix, fields, immutableName, imports, interfaceDeclaration, packageDeclaration,
-				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava, jsr305Annotations,
-				qualityCheck, serializable);
+		return Objects.hashCode(_builderName, _fieldPrefix, _fields, _immutableName, _imports, _interfaceDeclaration, _packageDeclaration,
+				_builderCopyConstructor, _builderFlatMutators, _builderFluentMutators, _builderImplementsInterface, _guava,
+				_jsr305Annotations, _qualityCheck, _serializable);
 	}
 
 	@Override
 	public boolean hasJsr305Annotations() {
-		return jsr305Annotations;
+		return _jsr305Annotations;
 	}
 
 	@Override
 	public boolean hasQualityCheck() {
-		return qualityCheck;
+		return _qualityCheck;
 	}
 
 	@Override
 	public boolean isSerializable() {
-		return serializable;
+		return _serializable;
 	}
 
 }
