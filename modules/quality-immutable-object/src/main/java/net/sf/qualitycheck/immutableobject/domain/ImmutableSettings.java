@@ -3,7 +3,6 @@ package net.sf.qualitycheck.immutableobject.domain;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -19,8 +18,8 @@ public final class ImmutableSettings implements Settings {
 	@NotThreadSafe
 	public static final class Builder {
 
-		@Nullable
-		private String _builderName;
+		@Nonnull
+		private String _builderName = "Builder";
 
 		@Nonnull
 		private String _fieldPrefix = "";
@@ -61,7 +60,7 @@ public final class ImmutableSettings implements Settings {
 		}
 
 		public Builder(@Nonnull final Settings settings) {
-			_builderName = settings.getBuilderName();
+			_builderName = Check.notNull(settings.getBuilderName(), "settings.getBuilderName()");
 			_fieldPrefix = Check.notNull(settings.getFieldPrefix(), "settings.getFieldPrefix()");
 			_fields = Lists.newArrayList(Check.notNull(settings.getFields(), "settings.getFields()"));
 			_immutableName = Check.notNull(settings.getImmutableName(), "settings.getImmutableName()");
@@ -110,8 +109,8 @@ public final class ImmutableSettings implements Settings {
 		}
 
 		@Nonnull
-		public Builder builderName(@Nullable final String builderName) {
-			_builderName = builderName;
+		public Builder builderName(@Nonnull final String builderName) {
+			_builderName = Check.notNull(builderName, "builderName");
 			return this;
 		}
 
@@ -187,7 +186,7 @@ public final class ImmutableSettings implements Settings {
 				settings.isSerializable());
 	}
 
-	@Nullable
+	@Nonnull
 	private final String _builderName;
 
 	@Nonnull
@@ -224,12 +223,12 @@ public final class ImmutableSettings implements Settings {
 
 	private final boolean _serializable;
 
-	public ImmutableSettings(@Nullable final String builderName, @Nonnull final String fieldPrefix, @Nonnull final List<Field> fields,
+	public ImmutableSettings(@Nonnull final String builderName, @Nonnull final String fieldPrefix, @Nonnull final List<Field> fields,
 			@Nonnull final String immutableName, @Nonnull final List<Import> imports, @Nonnull final Interface interfaceDeclaration,
 			@Nonnull final Package packageDeclaration, final boolean builderCopyConstructor, final boolean builderFlatMutators,
 			final boolean builderFluentMutators, final boolean builderImplementsInterface, final boolean guava,
 			final boolean jsr305Annotations, final boolean qualityCheck, final boolean serializable) {
-		_builderName = builderName;
+		_builderName = Check.notNull(builderName, "builderName");
 		_fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
 		_fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
 		_immutableName = Check.notNull(immutableName, "immutableName");
@@ -271,7 +270,7 @@ public final class ImmutableSettings implements Settings {
 	}
 
 	@Override
-	@Nullable
+	@Nonnull
 	public String getBuilderName() {
 		return _builderName;
 	}

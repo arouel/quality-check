@@ -46,7 +46,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderCopyConstructor(true);
 		settings.builderFlatMutators(false);
 		settings.builderFluentMutators(true);
-		settings.builderName("Builder");
+		settings.builderName("");
 		settings.builderImplementsInterface(true);
 
 		final String file = "Car.java";

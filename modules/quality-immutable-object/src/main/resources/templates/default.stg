@@ -249,7 +249,7 @@ setupFieldImmutable(field, settings) ::= <<
 
 
 builderCompilationUnit(settings) ::= <<
-<if(settings.builderName)>
+<if(!settings.builderName.empty)>
 <package(settings.packageDeclaration.name)>
 
 <settings.imports:importStatement(); separator = "\n">
@@ -261,7 +261,7 @@ builderCompilationUnit(settings) ::= <<
 
 
 builderClass(settings, innerClass) ::= <<
-<if(settings.builderName)>
+<if(!settings.builderName.empty)>
 <annotateNotThreadSafe(settings)>
 public <if(innerClass)>static<endif> final class <settings.builderName><if(settings.builderImplementsInterface)> implements <interface(settings.interfaceDeclaration); separator = ","><endif> {
 

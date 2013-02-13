@@ -3,7 +3,6 @@ package net.sf.qualitycheck.immutableobject.domain;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public interface Settings {
 
@@ -12,7 +11,7 @@ public interface Settings {
 	 * 
 	 * @return name of builder class or {@code null} to suppress generating of it
 	 */
-	@Nullable
+	@Nonnull
 	String getBuilderName();
 
 	/**
