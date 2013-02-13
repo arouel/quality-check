@@ -40,7 +40,11 @@ public final class FieldUtil {
 		return m.group(2).substring(0, 1).toLowerCase() + m.group(2).substring(1);
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
 	private FieldUtil() {
+		// This class is not intended to create objects from it.
 	}
 
 }

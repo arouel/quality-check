@@ -47,7 +47,11 @@ public final class MethodUtil {
 		return METHOD_SET_PREFIX + name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
 	private MethodUtil() {
+		// This class is not intended to create objects from it.
 	}
 
 }

@@ -135,4 +135,11 @@ public final class ImmutableObjectGenerator {
 		return unit;
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private ImmutableObjectGenerator() {
+		// This class is not intended to create objects from it.
+	}
+
 }

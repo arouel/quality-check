@@ -190,7 +190,11 @@ public final class SourceCodeFormatter {
 		return formattedCode;
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
 	private SourceCodeFormatter() {
+		// This class is not intended to create objects from it.
 	}
 
 }

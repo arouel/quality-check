@@ -15,7 +15,7 @@ import net.sf.qualitycheck.immutableobject.domain.Visibility;
 import com.google.common.collect.ImmutableList;
 
 @Immutable
-public final class SerialVersionGenerator {
+final class SerialVersionGenerator {
 
 	private static final String FIELD_NAME = "serialVersionUID";
 
@@ -26,6 +26,13 @@ public final class SerialVersionGenerator {
 
 	public static Field generate() {
 		return SERIAL_VERSION_UID;
+	}
+
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private SerialVersionGenerator() {
+		// This class is not intended to create objects from it.
 	}
 
 }

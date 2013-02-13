@@ -10,7 +10,11 @@ public final class ReservedWordConverter {
 		return ReservedWord.isReserved(name) ? name + 1 : name;
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
 	private ReservedWordConverter() {
+		// This class is not intended to create objects from it.
 	}
 
 }

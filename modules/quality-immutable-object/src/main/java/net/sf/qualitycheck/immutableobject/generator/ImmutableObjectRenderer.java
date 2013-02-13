@@ -27,4 +27,11 @@ final class ImmutableObjectRenderer {
 		return SourceCodeFormatter.format(template.render());
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private ImmutableObjectRenderer() {
+		// This class is not intended to create objects from it.
+	}
+
 }

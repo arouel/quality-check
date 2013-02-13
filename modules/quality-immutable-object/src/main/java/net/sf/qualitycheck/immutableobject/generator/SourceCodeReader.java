@@ -112,4 +112,11 @@ public final class SourceCodeReader {
 		return ret;
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private SourceCodeReader() {
+		// This class is not intended to create objects from it.
+	}
+
 }
