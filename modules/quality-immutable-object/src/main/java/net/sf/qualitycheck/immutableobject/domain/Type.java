@@ -16,6 +16,11 @@ import net.sf.qualitycheck.Check;
 public final class Type {
 
 	/**
+	 * Represents the primitive type boolean and not {@link Boolean}
+	 */
+	public static final Type BOOLEAN = new Type(Package.UNDEFINED, "boolean", GenericDeclaration.UNDEFINED);
+
+	/**
 	 * Pattern to parse a full qualified name of a type
 	 * <p>
 	 * ^(((\d|\w)+\.)*)((\d|\w)+)(\$((\d|\w)+))?(<(\w.*)>)?$
@@ -140,6 +145,10 @@ public final class Type {
 		result = prime * result + _package.hashCode();
 		result = prime * result + _name.hashCode();
 		return result;
+	}
+
+	public boolean isBoolean() {
+		return equals(BOOLEAN);
 	}
 
 	public boolean isCollectionVariant() {

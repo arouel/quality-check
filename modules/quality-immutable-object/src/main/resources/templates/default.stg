@@ -129,7 +129,7 @@ public boolean equals(final Object obj) {
 
 
 equalsFieldBlock(field) ::= <<
-<if(field.static.undefined)><if(field.nullable)>
+<if(field.static.undefined)><if(!field.type.primitive && field.nullable)>
 if (<field> == null) {
 	if (other.<field> != null)
 		return false;
@@ -160,7 +160,8 @@ public int hashCode() {
 hashCodeField(field) ::= <<
 <if(field.static.undefined)>
 result = prime * result + 
-<if(field.type.primitive)><field>
+<if(field.type.boolean)>(<field> ? 1231 : 1237)
+<elseif(field.type.primitive)><field>
 <elseif(field.nullable)>(<field> == null ? 0 : <field>.hashCode())
 <else><field>.hashCode()
 <endif>;<endif>

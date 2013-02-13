@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstancesOf;
 import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
@@ -62,6 +63,14 @@ public class TypeTest {
 	@Test
 	public void construct_typeWithPackage() {
 		new Type("com.github.before.Immutable");
+	}
+
+	@Test
+	public void isBoolean() {
+		assertTrue(new Type("boolean").isBoolean());
+		assertFalse(new Type("Boolean").isBoolean());
+		assertFalse(new Type("int").isBoolean());
+		assertFalse(new Type("Long").isBoolean());
 	}
 
 	@Test
