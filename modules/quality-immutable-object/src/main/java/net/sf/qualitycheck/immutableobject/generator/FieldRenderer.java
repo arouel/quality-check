@@ -46,9 +46,16 @@ final class FieldRenderer implements AttributeRenderer {
 		@Nonnull
 		public static Option evaluate(@Nonnull final String option) {
 			Check.notNull(option, "option");
-			final Option ret = valueOf(option.trim().toUpperCase());
-			return ret != null ? ret : UNDEFINED;
+			Option ret = UNDEFINED;
+			for (final Option value : values()) {
+				if (value.toString().equals(option.trim().toUpperCase())) {
+					ret = value;
+					break;
+				}
+			}
+			return ret;
 		}
+
 	}
 
 	private static final String CHECK_NONNEGATIVE = "Check.notNegative(%s, \"%s\")";
@@ -119,7 +126,7 @@ final class FieldRenderer implements AttributeRenderer {
 	public String toString(final Object o, final String formatOption, final Locale locale) {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
-		final Option option = formatOption != null && !formatOption.isEmpty() ? Option.evaluate(formatOption) : Option.UNDEFINED;
+		final Option option = formatOption != null ? Option.evaluate(formatOption) : Option.UNDEFINED;
 		String result = regardPrefix(field, option);
 		if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE || option == Option.IMMUTABLE) {
 			if (Option.COPY_FROM_INTERFACE == option) {
