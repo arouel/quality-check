@@ -3,12 +3,12 @@ package net.sf.qualitycheck.immutableobject.generator;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
 import net.sf.qualitycheck.immutableobject.domain.Field;
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
+import net.sf.qualitycheck.immutableobject.domain.Static;
 import net.sf.qualitycheck.immutableobject.domain.Type;
 
 import org.stringtemplate.v4.AttributeRenderer;
@@ -16,11 +16,38 @@ import org.stringtemplate.v4.AttributeRenderer;
 final class FieldRenderer implements AttributeRenderer {
 
 	public enum Option {
-		COPY, COPY_FROM_INTERFACE, IMMUTABLE;
-		@Nullable
+
+		/**
+		 * Rendering as attribute
+		 */
+		ATTRIBUTE,
+
+		/**
+		 * Access as attribute, will be copied in new data structure if necessary (for iterables and maps)
+		 */
+		COPY,
+
+		/**
+		 * Access by accessor method of an object with corresponding interface, will be copied in new data structure if
+		 * necessary (for iterables and maps)
+		 */
+		COPY_FROM_INTERFACE,
+
+		/**
+		 * Access as attribute, will be copied in immutable data structure if necessary (for iterables and maps)
+		 */
+		IMMUTABLE,
+
+		/**
+		 * Undefined format, will be rendered as field access
+		 */
+		UNDEFINED;
+
+		@Nonnull
 		public static Option evaluate(@Nonnull final String option) {
 			Check.notNull(option, "option");
-			return valueOf(option.trim().toUpperCase());
+			final Option ret = valueOf(option.trim().toUpperCase());
+			return ret != null ? ret : UNDEFINED;
 		}
 	}
 
@@ -82,17 +109,23 @@ final class FieldRenderer implements AttributeRenderer {
 		return result;
 	}
 
+	private String regardPrefix(final Field field, final Option option) {
+		return Static.STATIC != field.getStatic() && option != Option.ATTRIBUTE ? _settings.getFieldPrefix() + field.getName() : field
+				.getName();
+	}
+
 	@Nonnull
 	@Override
 	public String toString(final Object o, final String formatOption, final Locale locale) {
 		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
-		String result = field.getName();
-		final Option option = formatOption != null && !formatOption.isEmpty() ? Option.evaluate(formatOption) : null;
-
-		if (option != null) {
+		final Option option = formatOption != null && !formatOption.isEmpty() ? Option.evaluate(formatOption) : Option.UNDEFINED;
+		String result = regardPrefix(field, option);
+		if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE || option == Option.IMMUTABLE) {
 			if (Option.COPY_FROM_INTERFACE == option) {
 				result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
+			} else {
+				result = field.getName();
 			}
 
 			if (_settings.hasQualityCheck()) {
@@ -108,5 +141,4 @@ final class FieldRenderer implements AttributeRenderer {
 
 		return result;
 	}
-
 }

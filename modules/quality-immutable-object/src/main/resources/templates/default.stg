@@ -69,7 +69,7 @@ annotateNotThreadSafe(settings) ::= <<
 
 
 attribute(field) ::= <<
-<if(field.static.undefined)><field.annotations:annotate()> final <importedType(field.type)> <field><endif>
+<if(field.static.undefined)><field.annotations:annotate()> final <importedType(field.type)> <field; format="attribute"><endif>
 >>
 
 
@@ -319,7 +319,7 @@ mutatorMethods(settings) ::= <<
 mutatorMethod(field, settings) ::= <<
 <if(field.static.undefined)>
 <if(settings.builderFluentMutators)><annotateNonnull(settings)><endif>
-public <mutatorMethodReturnType(settings)> <mutatorMethodName(field, settings)>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field>) {
+public <mutatorMethodReturnType(settings)> <mutatorMethodName(field, settings)>(<field.annotations:annotate(); separator = " "> final <importedType(field.type)> <field; format="attribute">) {
 	<setupFieldMutable(field, settings)>
 	<mutatorMethodReturnStatement(settings)>
 }
@@ -327,7 +327,7 @@ public <mutatorMethodReturnType(settings)> <mutatorMethodName(field, settings)>(
 >>
 mutatorMethodName(field, settings) ::= <<
 <if(settings.builderFlatMutators)>
-<field>
+<field; format="attribute">
 <else>
 <field.mutatorMethodName>
 <endif>
