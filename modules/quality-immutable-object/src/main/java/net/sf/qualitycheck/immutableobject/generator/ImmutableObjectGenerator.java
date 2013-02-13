@@ -78,7 +78,7 @@ public final class ImmutableObjectGenerator {
 		final String name = CLAZZ_PREFIX + type.getName();
 		final Package pkg = new Package(unit.getPackage().getName().toString());
 		final List<Annotation> annotations = SourceCodeReader.findAnnotations(type.getAnnotations(), imports);
-		final List<Method> methods = generateAccessorMethods(SourceCodeReader.findMethods(type.getMembers(), imports));
+		final List<Method> methods = SourceCodeReader.findMethods(type.getMembers(), imports);
 		final List<Field> fields = new ArrayList<Field>();
 		if (settings.isSerializable() || isSerializable(type)) {
 			fields.add(SerialVersionGenerator.generate());
@@ -98,15 +98,6 @@ public final class ImmutableObjectGenerator {
 		settingsBuilder.packageDeclaration(clazz.getPackage());
 
 		return SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz, settingsBuilder.build()));
-	}
-
-	@Nonnull
-	private static List<Method> generateAccessorMethods(@Nonnull final List<Method> methods) {
-		final List<Method> members = Lists.newArrayList();
-		for (final Method method : methods) {
-			members.add(AccessorMethodGenerator.generate(method));
-		}
-		return members;
 	}
 
 	private static boolean isSerializable(@Nonnull final ClassOrInterfaceDeclaration type) {
