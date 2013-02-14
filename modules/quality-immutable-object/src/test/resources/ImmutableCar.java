@@ -36,6 +36,7 @@ public final class ImmutableCar implements Car {
 		}
 
 		public Builder(@Nonnull final Car car) {
+			Check.notNull(car, "car");
 			this.codes = new ArrayList<String>(Check.notNull(car.getCodes(), "car.getCodes()"));
 			this.wheels = Check.notNegative(car.getWheels(), "car.getWheels()");
 			this.name = Check.notNull(car.getName(), "car.getName()");

@@ -305,6 +305,7 @@ buildMethodAttribute(field) ::= <<
 copyConstructor(settings) ::= <<
 <if(settings.builderCopyConstructor)>
 public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.interfaceDeclaration.type)> <settings.interfaceDeclaration.type.name; format="toLower">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");<endif>
 	<settings.fields:{ f | <copyConstructorField(f, settings)> }>
 }
 <endif>
