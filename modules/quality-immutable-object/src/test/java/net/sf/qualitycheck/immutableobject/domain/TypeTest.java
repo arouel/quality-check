@@ -2,6 +2,8 @@ package net.sf.qualitycheck.immutableobject.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstancesOf;
 import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
@@ -11,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 
 import org.junit.Test;
 
@@ -63,6 +67,43 @@ public class TypeTest {
 	@Test
 	public void construct_typeWithPackage() {
 		new Type("com.github.before.Immutable");
+	}
+
+	@Test
+	public void evaluateJavaLangValueType() {
+		assertNotNull(Type.evaluateJavaLangType("Boolean"));
+		assertTrue(Type.evaluateJavaLangType("Boolean").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Byte").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Character").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Double").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Float").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Integer").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Long").isBoxedType());
+		assertFalse(Type.evaluateJavaLangType("Number").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("Short").isBoxedType());
+		assertFalse(Type.evaluateJavaLangType("String").isBoxedType());
+
+		assertNotNull(Type.evaluateJavaLangType("java.lang.Boolean"));
+		assertTrue(Type.evaluateJavaLangType("java.lang.Boolean").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Byte").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Character").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Double").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Float").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Integer").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Long").isBoxedType());
+		assertFalse(Type.evaluateJavaLangType("java.lang.Number").isBoxedType());
+		assertTrue(Type.evaluateJavaLangType("java.lang.Short").isBoxedType());
+		assertFalse(Type.evaluateJavaLangType("java.lang.String").isBoxedType());
+	}
+
+	@Test
+	public void evaluateJavaLangValueType_typeName_isEmpty() {
+		assertNull(Type.evaluateJavaLangType(""));
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void evaluateJavaLangValueType_typeName_isNull() {
+		Type.evaluateJavaLangType(null);
 	}
 
 	@Test
@@ -142,6 +183,35 @@ public class TypeTest {
 		assertFalse(new Type("Short").isBoxedShort());
 		assertFalse(new Type("int").isBoxedShort());
 		assertFalse(new Type("Long").isBoxedShort());
+	}
+
+	@Test
+	public void isBoxedType() {
+		assertTrue(new Type("java.lang.Boolean").isBoxedType());
+		assertTrue(Type.of(Boolean.class).isBoxedType());
+		assertTrue(new Type("java.lang.Byte").isBoxedType());
+		assertTrue(Type.of(Byte.class).isBoxedType());
+		assertTrue(new Type("java.lang.Character").isBoxedType());
+		assertTrue(Type.of(Character.class).isBoxedType());
+		assertTrue(new Type("java.lang.Double").isBoxedType());
+		assertTrue(Type.of(Double.class).isBoxedType());
+		assertTrue(new Type("java.lang.Float").isBoxedType());
+		assertTrue(Type.of(Float.class).isBoxedType());
+		assertTrue(new Type("java.lang.Integer").isBoxedType());
+		assertTrue(Type.of(Integer.class).isBoxedType());
+		assertTrue(new Type("java.lang.Long").isBoxedType());
+		assertTrue(Type.of(Long.class).isBoxedType());
+		assertTrue(new Type("java.lang.Short").isBoxedType());
+		assertTrue(Type.of(Short.class).isBoxedType());
+
+		assertFalse(new Type("Boolean").isBoxedType());
+		assertFalse(new Type("Byte").isBoxedType());
+		assertFalse(new Type("Character").isBoxedType());
+		assertFalse(new Type("Double").isBoxedType());
+		assertFalse(new Type("Float").isBoxedType());
+		assertFalse(new Type("Integer").isBoxedType());
+		assertFalse(new Type("Long").isBoxedType());
+		assertFalse(new Type("Short").isBoxedType());
 	}
 
 	@Test

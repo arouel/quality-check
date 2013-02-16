@@ -24,8 +24,27 @@ public class ImportsTest {
 	}
 
 	@Test
+	public void filter_java_lang() {
+		assertEquals(0, Imports.of(Import.of(String.class)).filter().asList().size());
+		assertEquals(0, Imports.of(Import.of(new Type("String"))).filter().asList().size());
+		assertEquals(0, Imports.of(Import.of(new Type("java.lang.String"))).filter().asList().size());
+	}
+
+	@Test
 	public void find() {
 		final List<Import> set = ImmutableList.of(Import.of(String.class), Import.of(Date.class), Import.of(Integer.class));
+		final Imports imports = Imports.copyOf(set);
+		assertEquals(Import.of(String.class), imports.find("String"));
+		assertEquals(Import.of(String.class), imports.find("java.lang.String"));
+		assertEquals(Import.of(Date.class), imports.find("Date"));
+		assertEquals(Import.of(Date.class), imports.find("java.util.Date"));
+		assertEquals(Import.of(Integer.class), imports.find("Integer"));
+		assertEquals(Import.of(Integer.class), imports.find("java.lang.Integer"));
+	}
+
+	@Test
+	public void find_StringClass_withoutExplicitImport() {
+		final List<Import> set = ImmutableList.of(Import.of(Date.class), Import.of(Integer.class));
 		final Imports imports = Imports.copyOf(set);
 		assertEquals(Import.of(String.class), imports.find("String"));
 		assertEquals(Import.of(String.class), imports.find("java.lang.String"));

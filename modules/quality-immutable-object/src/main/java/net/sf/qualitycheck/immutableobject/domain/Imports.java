@@ -11,6 +11,7 @@ import javax.annotation.concurrent.Immutable;
 import net.sf.qualitycheck.Check;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -23,7 +24,14 @@ import com.google.common.collect.Sets;
 @Immutable
 public final class Imports {
 
-	private static final Predicate<Import> IGNORE = new Predicate<Import>() {
+	private static final Predicate<Import> IGNORE_JAVA_LANG = new Predicate<Import>() {
+		@Override
+		public boolean apply(final Import imp) {
+			return !Package.JAVA_LANG.equals(imp.getType().getPackage());
+		}
+	};
+
+	private static final Predicate<Import> IGNORE_UNDEFINED = new Predicate<Import>() {
 		@Override
 		public boolean apply(final Import imp) {
 			return !Package.UNDEFINED.equals(imp.getType().getPackage());
@@ -188,7 +196,7 @@ public final class Imports {
 	 */
 	@Nonnull
 	public Imports filter() {
-		return new Imports(Sets.newHashSet(Collections2.filter(_imports, IGNORE)));
+		return new Imports(Sets.newHashSet(Collections2.filter(_imports, Predicates.and(IGNORE_JAVA_LANG, IGNORE_UNDEFINED))));
 	}
 
 	/**
@@ -207,6 +215,12 @@ public final class Imports {
 			if (imp.getType().getName().equals(type.getName())) {
 				ret = imp;
 				break;
+			}
+		}
+		if (ret == null) {
+			final Type javaLangType = Type.evaluateJavaLangType(typeName);
+			if (javaLangType != null) {
+				ret = Import.of(javaLangType);
 			}
 		}
 		return ret;

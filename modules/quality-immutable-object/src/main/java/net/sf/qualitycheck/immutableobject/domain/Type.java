@@ -1,5 +1,6 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,6 +9,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a type which can be a class, interface or annotation
@@ -86,6 +89,11 @@ public final class Type {
 	public static final Type LONG_BOXED = new Type(Package.JAVA_LANG, Long.class.getSimpleName(), GenericDeclaration.UNDEFINED);
 
 	/**
+	 * Represents the abstract type {@link java.lang.Number}
+	 */
+	public static final Type NUMBER = new Type(Package.JAVA_LANG, Number.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
 	 * Pattern to parse a full qualified name of a type
 	 * <p>
 	 * ^(((\d|\w)+\.)*)((\d|\w)+)(\$((\d|\w)+))?(<(\w.*)>)?$
@@ -106,6 +114,12 @@ public final class Type {
 	 * Represents the type {@link java.lang.String}
 	 */
 	public static final Type STRING = new Type(Package.JAVA_LANG, String.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents a list of all basic value types in package <code>java.lang</code>
+	 */
+	public static final List<Type> JAVA_LANG_VALUE_TYPES = ImmutableList.of(BOOLEAN_BOXED, BYTE_BOXED, CHARACTER_BOXED, DOUBLE_BOXED,
+			FLOAT_BOXED, INTEGER_BOXED, LONG_BOXED, NUMBER, SHORT_BOXED, STRING);
 
 	/**
 	 * Creates a new instance of {@code GenericDeclaration} when the given declaration is not empty other wise it
@@ -133,6 +147,27 @@ public final class Type {
 	private static Package createPackage(@Nonnull final String packageName) {
 		Check.notNull(packageName, "packageName");
 		return packageName.isEmpty() ? Package.UNDEFINED : new Package(packageName);
+	}
+
+	/**
+	 * Checks if the passed type is a type of <code>java.lang</code>. If it is a type of <code>java.lang</code> the
+	 * matching type will be returned otherwise {@code null}.
+	 * 
+	 * @param name
+	 *            simple or qualified name of a type
+	 * @return matching type or {@code null}
+	 */
+	@Nullable
+	public static Type evaluateJavaLangType(@Nonnull final String name) {
+		Check.notEmpty(name, "name");
+		Type ret = null;
+		for (final Type type : JAVA_LANG_VALUE_TYPES) {
+			if (type.getName().equals(name.replace("java.lang.", ""))) {
+				ret = type;
+				break;
+			}
+		}
+		return ret;
 	}
 
 	@Nonnull
@@ -263,6 +298,11 @@ public final class Type {
 		return equals(SHORT_BOXED);
 	}
 
+	public boolean isBoxedType() {
+		return isBoxedBoolean() || isBoxedByte() || isBoxedCharacter() || isBoxedDouble() || isBoxedFloat() || isBoxedInteger()
+				|| isBoxedLong() || isBoxedShort();
+	}
+
 	public boolean isByte() {
 		return equals(BYTE);
 	}
@@ -287,8 +327,16 @@ public final class Type {
 		return equals(INT);
 	}
 
+	public boolean isJavaLangType() {
+		return isBoxedType() || isNumber() || isString();
+	}
+
 	public boolean isLong() {
 		return equals(LONG);
+	}
+
+	public boolean isNumber() {
+		return equals(NUMBER);
 	}
 
 	public boolean isPrimitive() {
