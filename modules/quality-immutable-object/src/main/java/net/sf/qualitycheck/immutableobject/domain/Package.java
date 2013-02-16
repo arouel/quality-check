@@ -16,6 +16,11 @@ public final class Package implements Characters {
 	public static final Package UNDEFINED = new Package();
 
 	/**
+	 * Represents the package <code>java.lang</code>
+	 */
+	public static final Package JAVA_LANG = new Package("java.lang");
+
+	/**
 	 * Prefix when written in class file
 	 */
 	private static final String PREFIX = "package";
