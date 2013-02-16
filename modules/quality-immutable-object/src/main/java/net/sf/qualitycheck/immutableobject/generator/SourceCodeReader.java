@@ -1,16 +1,24 @@
 package net.sf.qualitycheck.immutableobject.generator;
 
+import japa.parser.JavaParser;
+import japa.parser.ParseException;
+import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.ImportDeclaration;
 import japa.parser.ast.body.BodyDeclaration;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.Parameter;
 import japa.parser.ast.body.VariableDeclaratorId;
 import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.type.ClassOrInterfaceType;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.Annotation;
@@ -18,6 +26,7 @@ import net.sf.qualitycheck.immutableobject.domain.Attribute;
 import net.sf.qualitycheck.immutableobject.domain.Final;
 import net.sf.qualitycheck.immutableobject.domain.Import;
 import net.sf.qualitycheck.immutableobject.domain.Imports;
+import net.sf.qualitycheck.immutableobject.domain.Interface;
 import net.sf.qualitycheck.immutableobject.domain.Method;
 import net.sf.qualitycheck.immutableobject.domain.Primitive;
 import net.sf.qualitycheck.immutableobject.domain.ReturnType;
@@ -25,9 +34,11 @@ import net.sf.qualitycheck.immutableobject.domain.Static;
 import net.sf.qualitycheck.immutableobject.domain.Type;
 import net.sf.qualitycheck.immutableobject.domain.Visibility;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 
-public final class SourceCodeReader {
+@ThreadSafe
+final class SourceCodeReader {
 
 	@Nonnull
 	public static Method createMethod(@Nonnull final MethodDeclaration methodDeclaration, @Nonnull final Imports imports) {
@@ -73,6 +84,16 @@ public final class SourceCodeReader {
 		return attributes;
 	}
 
+	public static List<Interface> findExtends(@Nonnull final ClassOrInterfaceDeclaration type) {
+		final List<Interface> ret = Lists.newArrayList();
+		if (type.getExtends() != null) {
+			for (final ClassOrInterfaceType extend : type.getExtends()) {
+				ret.add(Interface.of(extend.getName()));
+			}
+		}
+		return ret;
+	}
+
 	@Nonnull
 	public static Imports findImports(@Nullable final List<ImportDeclaration> importDeclarations) {
 		final List<Import> imports = Lists.newArrayList();
@@ -110,6 +131,20 @@ public final class SourceCodeReader {
 			ret = imp != null ? new Type(imp.getType().getPackage(), imp.getType().getName(), t.getGenericDeclaration()) : t;
 		}
 		return ret;
+	}
+
+	@Nullable
+	static CompilationUnit parse(@Nonnull final String code) {
+		Check.notNull(code, "code");
+		CompilationUnit unit = null;
+		try {
+			unit = JavaParser.parse(new ByteArrayInputStream(code.getBytes(Charsets.UTF_8.displayName())));
+		} catch (final UnsupportedEncodingException e) {
+			throw new RuntimeException("Character encoding is not supported: switch to UTF-8");
+		} catch (final ParseException e) {
+			throw new RuntimeException("Failed to parse interface: " + e.getLocalizedMessage(), e);
+		}
+		return unit;
 	}
 
 	/**
