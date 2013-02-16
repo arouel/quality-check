@@ -124,7 +124,6 @@ final class FieldRenderer implements AttributeRenderer {
 	@Nonnull
 	@Override
 	public String toString(final Object o, final String formatOption, final Locale locale) {
-		// o will be instanceof CollectionVariant
 		final Field field = (Field) o;
 		final Option option = formatOption != null ? Option.evaluate(formatOption) : Option.UNDEFINED;
 		String result = regardPrefix(field, option);
