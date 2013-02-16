@@ -16,9 +16,74 @@ import net.sf.qualitycheck.Check;
 public final class Type {
 
 	/**
-	 * Represents the primitive type boolean and not {@link Boolean}
+	 * Represents the primitive type boolean and not {@link java.lang.Boolean}
 	 */
-	public static final Type BOOLEAN = new Type(Package.UNDEFINED, "boolean", GenericDeclaration.UNDEFINED);
+	public static final Type BOOLEAN = new Type(Package.UNDEFINED, Primitive.BOOLEAN.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Boolean}
+	 */
+	public static final Type BOOLEAN_BOXED = new Type(Package.JAVA_LANG, Boolean.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>byte</code> and not {@link java.lang.Byte}
+	 */
+	public static final Type BYTE = new Type(Package.UNDEFINED, Primitive.BYTE.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Byte}
+	 */
+	public static final Type BYTE_BOXED = new Type(Package.JAVA_LANG, Byte.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>char</code> and not {@link java.lang.Character}
+	 */
+	public static final Type CHAR = new Type(Package.UNDEFINED, Primitive.CHAR.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Character}
+	 */
+	public static final Type CHARACTER_BOXED = new Type(Package.JAVA_LANG, Character.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>double</code> and not {@link java.lang.Double}
+	 */
+	public static final Type DOUBLE = new Type(Package.UNDEFINED, Primitive.DOUBLE.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Double}
+	 */
+	public static final Type DOUBLE_BOXED = new Type(Package.JAVA_LANG, Double.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>float</code> and not {@link java.lang.Float}
+	 */
+	public static final Type FLOAT = new Type(Package.UNDEFINED, Primitive.FLOAT.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Float}
+	 */
+	public static final Type FLOAT_BOXED = new Type(Package.JAVA_LANG, Float.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>int</code> and not {@link java.lang.Integer}
+	 */
+	public static final Type INT = new Type(Package.UNDEFINED, Primitive.INT.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Integer}
+	 */
+	public static final Type INTEGER_BOXED = new Type(Package.JAVA_LANG, Integer.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the primitive type <code>long</code> and not {@link java.lang.Long}
+	 */
+	public static final Type LONG = new Type(Package.UNDEFINED, Primitive.LONG.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Long}
+	 */
+	public static final Type LONG_BOXED = new Type(Package.JAVA_LANG, Long.class.getSimpleName(), GenericDeclaration.UNDEFINED);
 
 	/**
 	 * Pattern to parse a full qualified name of a type
@@ -26,6 +91,21 @@ public final class Type {
 	 * ^(((\d|\w)+\.)*)((\d|\w)+)(\$((\d|\w)+))?(<(\w.*)>)?$
 	 */
 	private static final Pattern PATTERN = Pattern.compile("^(((\\d|\\w)+\\.)*)((\\d|\\w)+)(\\$((\\d|\\w)+))?(<(\\w.*)>)?$");
+
+	/**
+	 * Represents the primitive type <code>short</code> and not {@link java.lang.Short}
+	 */
+	public static final Type SHORT = new Type(Package.UNDEFINED, Primitive.SHORT.getName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.Short}
+	 */
+	public static final Type SHORT_BOXED = new Type(Package.JAVA_LANG, Short.class.getSimpleName(), GenericDeclaration.UNDEFINED);
+
+	/**
+	 * Represents the type {@link java.lang.String}
+	 */
+	public static final Type STRING = new Type(Package.JAVA_LANG, String.class.getSimpleName(), GenericDeclaration.UNDEFINED);
 
 	/**
 	 * Creates a new instance of {@code GenericDeclaration} when the given declaration is not empty other wise it
@@ -151,12 +231,76 @@ public final class Type {
 		return equals(BOOLEAN);
 	}
 
+	public boolean isBoxedBoolean() {
+		return equals(BOOLEAN_BOXED);
+	}
+
+	public boolean isBoxedByte() {
+		return equals(BYTE_BOXED);
+	}
+
+	public boolean isBoxedCharacter() {
+		return equals(CHARACTER_BOXED);
+	}
+
+	public boolean isBoxedDouble() {
+		return equals(DOUBLE_BOXED);
+	}
+
+	public boolean isBoxedFloat() {
+		return equals(FLOAT_BOXED);
+	}
+
+	public boolean isBoxedInteger() {
+		return equals(INTEGER_BOXED);
+	}
+
+	public boolean isBoxedLong() {
+		return equals(LONG_BOXED);
+	}
+
+	public boolean isBoxedShort() {
+		return equals(SHORT_BOXED);
+	}
+
+	public boolean isByte() {
+		return equals(BYTE);
+	}
+
+	public boolean isChar() {
+		return equals(CHAR);
+	}
+
 	public boolean isCollectionVariant() {
 		return _collectionVariant;
 	}
 
+	public boolean isDouble() {
+		return equals(DOUBLE);
+	}
+
+	public boolean isFloat() {
+		return equals(FLOAT);
+	}
+
+	public boolean isInt() {
+		return equals(INT);
+	}
+
+	public boolean isLong() {
+		return equals(LONG);
+	}
+
 	public boolean isPrimitive() {
 		return Primitive.isPrimitive(_name);
+	}
+
+	public boolean isShort() {
+		return equals(SHORT);
+	}
+
+	public boolean isString() {
+		return equals(STRING);
 	}
 
 	@Override
