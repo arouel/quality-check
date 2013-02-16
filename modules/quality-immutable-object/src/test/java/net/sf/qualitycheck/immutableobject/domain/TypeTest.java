@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 
 import org.junit.Test;
@@ -96,7 +97,7 @@ public class TypeTest {
 		assertFalse(Type.evaluateJavaLangType("java.lang.String").isBoxedType());
 	}
 
-	@Test
+	@Test(expected = IllegalEmptyArgumentException.class)
 	public void evaluateJavaLangValueType_typeName_isEmpty() {
 		assertNull(Type.evaluateJavaLangType(""));
 	}
