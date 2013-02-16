@@ -8,6 +8,7 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
 import net.sf.qualitycheck.immutableobject.domain.Field;
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
+import net.sf.qualitycheck.immutableobject.domain.ReservedWord;
 import net.sf.qualitycheck.immutableobject.domain.Static;
 import net.sf.qualitycheck.immutableobject.domain.Type;
 
@@ -61,6 +62,11 @@ final class FieldRenderer implements AttributeRenderer {
 	private static final String CHECK_NONNEGATIVE = "Check.notNegative(%s, \"%s\")";
 
 	private static final String CHECK_NONNULL = "Check.notNull(%s, \"%s\")";
+
+	@Nonnull
+	private static String convertIfReservedWord(@Nonnull final String name) {
+		return ReservedWord.isReserved(name) ? name + "1" : name;
+	}
 
 	@Nonnull
 	public static final String determineGeneric(@Nonnull final Type type) {
@@ -126,12 +132,12 @@ final class FieldRenderer implements AttributeRenderer {
 	public String toString(final Object o, final String formatOption, final Locale locale) {
 		final Field field = (Field) o;
 		final Option option = formatOption != null ? Option.evaluate(formatOption) : Option.UNDEFINED;
-		String result = regardPrefix(field, option);
+		String result = convertIfReservedWord(regardPrefix(field, option));
 		if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE || option == Option.IMMUTABLE) {
 			if (Option.COPY_FROM_INTERFACE == option) {
 				result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
 			} else {
-				result = field.getName();
+				result = convertIfReservedWord(field.getName());
 			}
 
 			if (_settings.hasQualityCheck()) {
