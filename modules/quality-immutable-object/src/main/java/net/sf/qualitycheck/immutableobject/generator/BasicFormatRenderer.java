@@ -2,9 +2,12 @@ package net.sf.qualitycheck.immutableobject.generator;
 
 import java.util.Locale;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.stringtemplate.v4.AttributeRenderer;
 
-class BasicFormatRenderer implements AttributeRenderer {
+@ThreadSafe
+final class BasicFormatRenderer implements AttributeRenderer {
 
 	@Override
 	public String toString(final Object o, final String formatName, final Locale locale) {

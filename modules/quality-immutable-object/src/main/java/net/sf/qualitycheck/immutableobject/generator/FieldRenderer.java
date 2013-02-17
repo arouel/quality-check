@@ -3,6 +3,7 @@ package net.sf.qualitycheck.immutableobject.generator;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.ThreadSafe;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.CollectionVariant;
@@ -14,6 +15,7 @@ import net.sf.qualitycheck.immutableobject.domain.Type;
 
 import org.stringtemplate.v4.AttributeRenderer;
 
+@ThreadSafe
 final class FieldRenderer implements AttributeRenderer {
 
 	public enum Option {
