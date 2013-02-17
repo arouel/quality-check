@@ -47,4 +47,11 @@ final class InterfaceAnalyzer {
 		return new ImmutableInterfaceAnalysis(annotations, extendsInterfaces, imports.asList(), interfaceName, methods, pkg);
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private InterfaceAnalyzer() {
+		// This class is not intended to create objects from it.
+	}
+
 }
