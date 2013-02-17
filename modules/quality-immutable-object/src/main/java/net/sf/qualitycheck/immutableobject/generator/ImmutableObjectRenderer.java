@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject.generator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.ThreadSafe;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.Clazz;
@@ -12,6 +13,7 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+@ThreadSafe
 final class ImmutableObjectRenderer {
 
 	public static String toString(@Nonnull final Clazz clazz, @Nonnull final ImmutableSettings settings) {
