@@ -914,8 +914,8 @@ public final class Check {
 	 * We recommend to use the overloaded method {@link Check#notNegative(int, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
-	 * @param reference
-	 *            an object reference
+	 * @param value
+	 *            a number
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the non-null reference that was validated
@@ -923,30 +923,30 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static int notNegative(@Nonnull final int reference) {
-		if (reference < 0) {
+	public static int notNegative(@Nonnull final int value) {
+		if (value < 0) {
 			throw new IllegalNegativeArgumentException();
 		}
-		return reference;
+		return value;
 	}
 
 	/**
 	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
 	 * 
-	 * @param reference
-	 *            an object reference
+	 * @param value
+	 *            a number
 	 * @param name
-	 *            name of object reference (in source code)
+	 *            name of the number argument (in source code)
 	 * @return the non-null reference that was validated
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static int notNegative(@Nonnull final int reference, @Nullable final String name) {
-		if (reference < 0) {
+	public static int notNegative(@Nonnull final int value, @Nullable final String name) {
+		if (value < 0) {
 			throw new IllegalNegativeArgumentException();
 		}
-		return reference;
+		return value;
 	}
 
 	/**
