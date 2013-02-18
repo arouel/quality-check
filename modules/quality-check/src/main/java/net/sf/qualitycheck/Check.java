@@ -944,7 +944,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(@Nonnull final int value, @Nullable final String name) {
 		if (value < 0) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(name);
 		}
 		return value;
 	}
