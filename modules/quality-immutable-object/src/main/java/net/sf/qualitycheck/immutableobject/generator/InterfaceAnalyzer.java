@@ -40,7 +40,7 @@ final class InterfaceAnalyzer {
 		final ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) types.get(0);
 
 		final Imports imports = SourceCodeReader.findImports(unit.getImports());
-		final Package pkg = new Package(unit.getPackage().getName().toString());
+		final Package pkg = unit.getPackage() != null ? new Package(unit.getPackage().getName().toString()) : Package.UNDEFINED;
 		final List<Annotation> annotations = SourceCodeReader.findAnnotations(type.getAnnotations(), imports);
 		final List<Method> methods = SourceCodeReader.findMethods(type.getMembers(), imports);
 		Check.stateIsTrue(!hasPossibleMutatingMethods(methods), "The passed interface '%s' seems to have mutating methods", type.getName());

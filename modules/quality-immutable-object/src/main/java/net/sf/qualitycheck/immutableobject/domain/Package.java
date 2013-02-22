@@ -1,5 +1,6 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
@@ -39,6 +40,7 @@ public final class Package implements Characters {
 	/**
 	 * Name of the package
 	 */
+	@Nonnull
 	private final String _name;
 
 	/**
@@ -54,7 +56,7 @@ public final class Package implements Characters {
 	 * @param packageName
 	 *            package name
 	 */
-	public Package(final String packageName) {
+	public Package(@Nonnull final String packageName) {
 		Check.notEmpty(packageName, "packageName");
 		_name = Check.notEmpty(removeLastDot(packageName.trim()), "packageName");
 	}
@@ -82,6 +84,7 @@ public final class Package implements Characters {
 	 * 
 	 * @return package name
 	 */
+	@Nonnull
 	public String getName() {
 		return _name;
 	}

@@ -1,5 +1,5 @@
 immutableCompilationUnit(settings) ::= <<
-<package(settings.packageDeclaration.name)>
+<package(settings.packageDeclaration)>
 
 <importJsr305Annotations(settings)>
 
@@ -219,7 +219,7 @@ interface(interface) ::= <<
 
 
 package(package) ::= <<
-<if(package)>package <package>;<endif>
+<if(!package.undefined)>package <package.name>;<endif>
 >>
 
 
