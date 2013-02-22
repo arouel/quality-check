@@ -65,7 +65,10 @@ import net.sf.qualitycheck.exception.RuntimeInstantiationException;
  * Use {@code ConditionalCheck} with care! Coditional checks are often an indicator for bad design. Good APIs accept
  * only values that are always valid. Seldom there are arguments which must be checked only in certain cases.
  * Additionally, take care that you do not mix up technical and functional checks. Conditional checks often tend to be
- * more functional than the technical checks offered by {@code Check}
+ * more functional than the technical checks offered by {@code Check}.
+ * 
+ * Logical checks should not be done using {@code ConditionalCheck}, because the way checks work one cannot be sure if
+ * every branch is covered by measuring the branch coverage.
  * 
  * @author Dominik Seichter
  */
@@ -114,7 +117,6 @@ public final class ConditionalCheck {
 	public static <T extends Object> T equals(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
 			final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
-
 		if (condition) {
 			return Check.equals(expected, check);
 		}
@@ -214,7 +216,6 @@ public final class ConditionalCheck {
 	 * @param type
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
-	 * @return the given string argument converted to a number of the requested type
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
@@ -233,7 +234,6 @@ public final class ConditionalCheck {
 	 *            value which must be a number
 	 * @param name
 	 *            name of object reference (in source code)
-	 * @return the given string argument converted to an int
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
@@ -259,7 +259,6 @@ public final class ConditionalCheck {
 	 * @param type
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
-	 * @return the given string argument converted to a number of the requested type
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
@@ -289,10 +288,12 @@ public final class ConditionalCheck {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends CharSequence> void isNumeric(final boolean condition, @Nonnull final T value) {
+	public static <T extends CharSequence> T isNumeric(final boolean condition, @Nonnull final T value) {
 		if (condition) {
-			Check.isNumeric(value);
+			return (T) Check.isNumeric(value);
 		}
+
+		return (T) value;
 	}
 
 	/**
@@ -310,11 +311,12 @@ public final class ConditionalCheck {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends CharSequence> void isNumeric(final boolean condition, @Nonnull final T value, @Nullable final String name) {
+	public static <T extends CharSequence> T isNumeric(final boolean condition, @Nonnull final T value, @Nullable final String name) {
 		if (condition) {
-			Check.isNumeric(value, name);
+			return (T) Check.isNumeric(value, name);
 		}
 
+		return (T) value;
 	}
 
 	/**
@@ -339,7 +341,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends CharSequence> T matchesPattern(final boolean condition, @Nonnull final Pattern pattern, @Nonnull final T chars) {
 		if (condition) {
-			Check.matchesPattern(pattern, chars);
+			return Check.matchesPattern(pattern, chars);
 		}
 
 		return chars;
@@ -366,7 +368,7 @@ public final class ConditionalCheck {
 	public static <T extends CharSequence> T matchesPattern(final boolean condition, @Nonnull final Pattern pattern,
 			@Nonnull final T chars, @Nullable final String name) {
 		if (condition) {
-			Check.matchesPattern(pattern, chars, name);
+			return Check.matchesPattern(pattern, chars, name);
 		}
 
 		return chars;
@@ -390,7 +392,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Iterable<?>> T noNullElements(final boolean condition, @Nonnull final T iterable) {
 		if (condition) {
-			Check.noNullElements(iterable);
+			return Check.noNullElements(iterable);
 		}
 
 		return iterable;
@@ -411,7 +413,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Iterable<?>> T noNullElements(final boolean condition, @Nonnull final T iterable, final String name) {
 		if (condition) {
-			Check.noNullElements(iterable, name);
+			return Check.noNullElements(iterable, name);
 		}
 
 		return iterable;
@@ -434,7 +436,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(final boolean condition, @Nonnull final T[] array) {
 		if (condition) {
-			Check.noNullElements(array);
+			return Check.noNullElements(array);
 		}
 
 		return array;
@@ -455,7 +457,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T[] noNullElements(final boolean condition, @Nonnull final T[] array, @Nullable final String name) {
 		if (condition) {
-			Check.noNullElements(array, name);
+			return Check.noNullElements(array, name);
 		}
 
 		return array;
@@ -526,7 +528,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends CharSequence> T notEmpty(final boolean condition, @Nonnull final T chars) {
 		if (condition) {
-			Check.notEmpty(chars);
+			return Check.notEmpty(chars);
 		}
 
 		return chars;
@@ -551,7 +553,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(final boolean condition, @Nonnull final T collection) {
 		if (condition) {
-			Check.notEmpty(collection);
+			return Check.notEmpty(collection);
 		}
 
 		return collection;
@@ -576,7 +578,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Map<?, ?>> T notEmpty(final boolean condition, @Nonnull final T map) {
 		if (condition) {
-			Check.notEmpty(map);
+			return Check.notEmpty(map);
 		}
 
 		return map;
@@ -614,7 +616,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T notEmpty(final boolean condition, @Nonnull final T reference, final boolean expression, @Nullable final String name) {
 		if (condition) {
-			Check.notEmpty(reference, expression, name);
+			return Check.notEmpty(reference, expression, name);
 		}
 
 		return reference;
@@ -647,7 +649,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends CharSequence> T notEmpty(final boolean condition, @Nonnull final T chars, @Nullable final String name) {
 		if (condition) {
-			Check.notEmpty(chars, name);
+			return Check.notEmpty(chars, name);
 		}
 
 		return chars;
@@ -674,7 +676,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Map<?, ?>> T notEmpty(final boolean condition, @Nonnull final T map, @Nullable final String name) {
 		if (condition) {
-			Check.notEmpty(map, name);
+			return Check.notEmpty(map, name);
 		}
 
 		return map;
@@ -707,7 +709,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T extends Collection<?>> T notEmpty(final boolean condition, @Nonnull final T collection, @Nullable final String name) {
 		if (condition) {
-			Check.notEmpty(collection, name);
+			return Check.notEmpty(collection, name);
 		}
 
 		return collection;
@@ -732,7 +734,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T[] notEmpty(final boolean condition, @Nonnull final T[] array) {
 		if (condition) {
-			Check.notEmpty(array);
+			return Check.notEmpty(array);
 		}
 
 		return array;
@@ -755,7 +757,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static <T> T[] notEmpty(final boolean condition, @Nonnull final T[] array, @Nullable final String name) {
 		if (condition) {
-			Check.notEmpty(array, name);
+			return Check.notEmpty(array, name);
 		}
 
 		return array;
@@ -779,7 +781,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNaNArgumentException.class })
 	public static double notNaN(final boolean condition, final double value) {
 		if (condition) {
-			Check.notNaN(value);
+			return Check.notNaN(value);
 		}
 
 		return value;
@@ -801,7 +803,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNaNArgumentException.class })
 	public static double notNaN(final boolean condition, final double value, @Nullable final String name) {
 		if (condition) {
-			Check.notNaN(value, name);
+			return Check.notNaN(value, name);
 		}
 
 		return value;
@@ -825,7 +827,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNaNArgumentException.class })
 	public static float notNaN(final boolean condition, final float value) {
 		if (condition) {
-			Check.notNaN(value);
+			return Check.notNaN(value);
 		}
 
 		return value;
@@ -847,7 +849,7 @@ public final class ConditionalCheck {
 	@Throws({ IllegalNaNArgumentException.class })
 	public static float notNaN(final boolean condition, final float value, @Nullable final String name) {
 		if (condition) {
-			Check.notNaN(value, name);
+			return Check.notNaN(value, name);
 		}
 
 		return value;
@@ -871,7 +873,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static int notNegative(final boolean condition, @Nonnull final int value) {
 		if (condition) {
-			Check.notNegative(value);
+			return Check.notNegative(value);
 		}
 
 		return value;
@@ -891,7 +893,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(final boolean condition, @Nonnull final int value, @Nullable final String name) {
 		if (condition) {
-			Check.notNegative(value, name);
+			return Check.notNegative(value, name);
 		}
 
 		return value;
@@ -913,7 +915,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T notNull(final boolean condition, @Nonnull final T reference) {
 		if (condition) {
-			Check.notNull(reference);
+			return Check.notNull(reference);
 		}
 
 		return reference;
@@ -933,7 +935,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T notNull(final boolean condition, @Nonnull final T reference, @Nullable final String name) {
 		if (condition) {
-			Check.notNull(reference, name);
+			return Check.notNull(reference, name);
 		}
 
 		return reference;
@@ -955,7 +957,7 @@ public final class ConditionalCheck {
 	@Throws(IllegalPositionIndexException.class)
 	public static int positionIndex(final boolean condition, final int index, final int size) {
 		if (condition) {
-			Check.positionIndex(index, size);
+			return Check.positionIndex(index, size);
 		}
 
 		return index;
