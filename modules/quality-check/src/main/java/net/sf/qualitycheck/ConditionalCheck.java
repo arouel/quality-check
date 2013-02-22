@@ -41,8 +41,31 @@ import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 import net.sf.qualitycheck.exception.RuntimeInstantiationException;
 
 /**
- * This class adds conditional methods to test your arguments to be valid. The checks are the same as offered in
- * {@code Check}, but all have an additional condition. The check is only executed if the condition is true.
+ * This class adds conditional checks to test your arguments to be valid. The checks are the same as offered in
+ * {@code Check}, but all have an additional condition. The check is only executed if the condition is @code
+ * <code>true</code>.
+ * 
+ * Examples for ConditionalCheck's are parameters that must be checked if they are not null. E.g. <code>
+ *   public void method(@Nullable final String numericArgument, @Nullable final List<Value> list) {
+ *   	ConditionalCheck.isNumeric( numericArgument != null, numericArgument, "numericArgument" );
+ *   	ConditionalCheck.isNumeric( list != null, list, "list" );
+ *   }
+ * </code>
+ * 
+ * There are also cases where you can do more optimized technical checks: <code>
+ *   public void method(final String address) {
+ *   	ConditionalCheck.matchesPattern(address.length() <= 15,
+ *   			Pattern.compile("\\d{3}.\\d{3}.\\d{3}.\\d{3}"), address);
+ *   	ConditionalCheck.matchesPattern(address.length() > 15, 
+ *   			Pattern.compile("[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}"), address);
+ *   }
+ * 
+ * </code>
+ * 
+ * Use {@code ConditionalCheck} with care! Coditional checks are often an indicator for bad design. Good APIs accept
+ * only values that are always valid. Seldom there are arguments which must be checked only in certain cases.
+ * Additionally, take care that you do not mix up technical and functional checks. Conditional checks often tend to be
+ * more functional than the technical checks offered by {@code Check}
  * 
  * @author Dominik Seichter
  */
@@ -137,7 +160,7 @@ public final class ConditionalCheck {
 	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(final boolean condition, @Nonnull final Class<?> type, @Nonnull final Object obj) {
 		if (condition) {
-			return Check.instanceOf(type, obj);
+			return (T) Check.instanceOf(type, obj);
 		}
 
 		return (T) obj;
@@ -161,7 +184,7 @@ public final class ConditionalCheck {
 	public static <T> T instanceOf(final boolean condition, @Nonnull final Class<?> type, @Nonnull final Object obj,
 			@Nullable final String name) {
 		if (condition) {
-			return Check.instanceOf(type, obj, name);
+			return (T) Check.instanceOf(type, obj, name);
 		}
 
 		return (T) obj;
