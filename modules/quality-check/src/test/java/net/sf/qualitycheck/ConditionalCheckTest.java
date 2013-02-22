@@ -17,6 +17,7 @@
 
 package net.sf.qualitycheck;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,14 @@ public class ConditionalCheckTest {
 
 	@Resource
 	private static class FakeAnnotatedClass {
+	}
+
+	@Test
+	public void giveMeCoverageForMyPrivateConstructor() throws Exception {
+		// reduces only some noise in coverage report
+		final Constructor<ConditionalCheck> constructor = ConditionalCheck.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		constructor.newInstance();
 	}
 
 	@Test
@@ -550,6 +559,54 @@ public class ConditionalCheckTest {
 	}
 
 	@Test
+	public void testNotEmptyReferenceArgName_Negative() {
+		final String str = "";
+		ConditionalCheck.notEmpty(false, str, str.isEmpty(), "arg");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void testNotEmptyReferenceArgName_Positive_Failure() {
+		final String str = "";
+		ConditionalCheck.notEmpty(true, str, str.isEmpty(), "arg");
+	}
+
+	@Test
+	public void testNotEmptyReferenceArgName_Positive_NoFailure() {
+		final String str = "Quality-Check";
+		ConditionalCheck.notEmpty(true, str, str.isEmpty(), "arg");
+	}
+
+	@Test
+	public void testNotEmptyString_Negative() {
+		ConditionalCheck.notEmpty(false, "");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void testNotEmptyString_Positive_Failure() {
+		ConditionalCheck.notEmpty(true, "");
+	}
+
+	@Test
+	public void testNotEmptyString_Positive_NoFailure() {
+		ConditionalCheck.notEmpty(true, "Quality-Check");
+	}
+
+	@Test
+	public void testNotEmptyStringArgName_Negative() {
+		ConditionalCheck.notEmpty(false, "", "arg");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void testNotEmptyStringArgName_Positive_Failure() {
+		ConditionalCheck.notEmpty(true, "", "arg");
+	}
+
+	@Test
+	public void testNotEmptyStringArgName_Positive_NoFailure() {
+		ConditionalCheck.notEmpty(true, "Quality-Check", "arg");
+	}
+
+	@Test
 	public void testNotNegative_Negative() {
 		ConditionalCheck.notNegative(false, -42);
 	}
@@ -697,6 +754,13 @@ public class ConditionalCheckTest {
 	@Test
 	public void testStateMessage_Positive_NoFailure() {
 		ConditionalCheck.stateIsTrue(true, 2 < 4, "arg {0}", Long.valueOf(4));
+	}
+
+	@Test(expected = java.lang.IllegalAccessException.class)
+	public void testValidatesThatClassConditionalCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		final Class<?> cls = Class.forName("net.sf.qualitycheck.ConditionalCheck");
+		cls.newInstance(); // exception here
 	}
 
 }
