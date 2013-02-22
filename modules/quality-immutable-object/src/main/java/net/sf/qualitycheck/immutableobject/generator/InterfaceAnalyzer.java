@@ -38,13 +38,33 @@ final class InterfaceAnalyzer {
 		Check.stateIsTrue(types.size() == 1, "more than one interface declaration per compilation unit is not supported");
 
 		final ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) types.get(0);
+
 		final Imports imports = SourceCodeReader.findImports(unit.getImports());
 		final Package pkg = new Package(unit.getPackage().getName().toString());
 		final List<Annotation> annotations = SourceCodeReader.findAnnotations(type.getAnnotations(), imports);
 		final List<Method> methods = SourceCodeReader.findMethods(type.getMembers(), imports);
+		Check.stateIsTrue(!hasPossibleMutatingMethods(methods), "The passed interface '%s' seems to have mutating methods", type.getName());
 		final List<Interface> extendsInterfaces = SourceCodeReader.findExtends(type);
 		final String interfaceName = type.getName();
 		return new ImmutableInterfaceAnalysis(annotations, extendsInterfaces, imports.asList(), interfaceName, methods, pkg);
+	}
+
+	/**
+	 * Checks if the given type has possible mutating methods (e.g. setter methods or methods with parameters).
+	 * 
+	 * @param type
+	 *            interface
+	 * @return {@code true} if possible mutating methods were found otherwise {@code false}
+	 */
+	private static boolean hasPossibleMutatingMethods(@Nonnull final List<Method> methods) {
+		boolean result = false;
+		for (final Method method : methods) {
+			if (!method.getAttributes().isEmpty()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 	/**
