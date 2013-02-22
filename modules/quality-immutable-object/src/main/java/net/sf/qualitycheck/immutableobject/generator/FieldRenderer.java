@@ -137,7 +137,7 @@ final class FieldRenderer implements AttributeRenderer {
 		String result = convertIfReservedWord(regardPrefix(field, option));
 		if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE || option == Option.IMMUTABLE) {
 			if (Option.COPY_FROM_INTERFACE == option) {
-				result = _settings.getInterfaceDeclaration().getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
+				result = _settings.getInterfaces().get(0).getType().getName().toLowerCase() + "." + field.getAccessorMethodName() + "()";
 			} else {
 				result = convertIfReservedWord(field.getName());
 			}

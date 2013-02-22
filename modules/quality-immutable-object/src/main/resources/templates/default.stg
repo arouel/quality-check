@@ -15,7 +15,7 @@ immutableCompilationUnit(settings) ::= <<
 
 immutableClass(settings) ::= <<
 <annotateImmutable(settings)>
-public final class <settings.immutableName> implements <settings.interfaceDeclaration:interface(); separator = ","> {
+public final class <settings.immutableName> implements <settings.interfaces:interface(); separator = ", "> {
 
 	<builderClass(settings, true)>
 
@@ -89,15 +89,15 @@ public <name>(<fields:attribute(); separator = ",">) {
 
 copyOfMethod(settings) ::= <<
 <annotateNonnull(settings)>
-public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.interfaceDeclaration:interface()> <settings.interfaceDeclaration.type.name; format="toLower">) {
-	<if(settings.qualityCheck)>Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");<endif>
+public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLower">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLower">, "<settings.mainInterface.type.name; format="toLower">");<endif>
 	return new <settings.immutableName>(<copyOfAttributes(settings)>);
 }
 >>
 
 
 copyOfAttribute(field, settings) ::= <<
-<if(field.static.undefined)><settings.interfaceDeclaration.type.name; format="toLower">.<field.accessorMethodName>()<endif>
+<if(field.static.undefined)><settings.mainInterface.type.name; format="toLower">.<field.accessorMethodName>()<endif>
 >>
 
 
@@ -263,7 +263,7 @@ builderCompilationUnit(settings) ::= <<
 builderClass(settings, innerClass) ::= <<
 <if(!settings.builderName.empty)>
 <annotateNotThreadSafe(settings)>
-public <if(innerClass)>static<endif> final class <settings.builderName><if(settings.builderImplementsInterface)> implements <interface(settings.interfaceDeclaration); separator = ","><endif> {
+public <if(innerClass)>static<endif> final class <settings.builderName><if(settings.builderImplementsInterface)> implements <interface(settings.mainInterface); separator = ","><endif> {
 
 	<if(settings.builderImplementsInterface)><settings.fields:constant(); separator = "\n"><endif>
 
@@ -304,8 +304,8 @@ buildMethodAttribute(field) ::= <<
 
 copyConstructor(settings) ::= <<
 <if(settings.builderCopyConstructor)>
-public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.interfaceDeclaration.type)> <settings.interfaceDeclaration.type.name; format="toLower">) {
-	<if(settings.qualityCheck)>Check.notNull(<settings.interfaceDeclaration.type.name; format="toLower">, "<settings.interfaceDeclaration.type.name; format="toLower">");<endif>
+public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.mainInterface.type)> <settings.mainInterface.type.name; format="toLower">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLower">, "<settings.mainInterface.type.name; format="toLower">");<endif>
 	<settings.fields:{ f | <copyConstructorField(f, settings)> }>
 }
 <endif>

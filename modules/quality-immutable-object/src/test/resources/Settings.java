@@ -47,12 +47,16 @@ public interface Settings {
 	List<Import> getImports();
 
 	/**
-	 * The interface as starting point to generate an immutable object class.
+	 * A list of interfaces which must be implemented.
+	 * <p>
+	 * The first interface in list is the starting point to generate an immutable object class. All accessor methods in
+	 * this interface will be taken to scaffold the class. All following interfaces will not be used as a object
+	 * definition. It is intended to serve interfaces like {@link java.io.Serializable} or {@link java.lang.Comparable}.
 	 * 
-	 * @return scaffold of an immutable object class
+	 * @return list of interfaces to scaffold an immutable object class
 	 */
 	@Nonnull
-	Interface getInterfaceDeclaration();
+	List<Interface> getInterfaces();
 
 	/**
 	 * The package declaration of the immutable object class to be generated.

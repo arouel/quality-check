@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 import net.sf.qualitycheck.immutableobject.Car;
 
 @Immutable
-public final class ImmutableCar implements Car {
+public final class ImmutableCar implements Car, Serializable {
 
 	@NotThreadSafe
 	public static final class Builder implements Car {

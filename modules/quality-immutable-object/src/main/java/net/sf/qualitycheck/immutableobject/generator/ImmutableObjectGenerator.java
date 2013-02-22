@@ -1,5 +1,6 @@
 package net.sf.qualitycheck.immutableobject.generator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public final class ImmutableObjectGenerator {
 		settingsBuilder.fields(clazz.getFields());
 		settingsBuilder.immutableName(clazz.getName());
 		settingsBuilder.imports(clazz.getImports());
-		settingsBuilder.interfaceDeclaration(clazz.getInterfaces().get(0));
+		settingsBuilder.interfaces(clazz.getInterfaces());
 		settingsBuilder.packageDeclaration(clazz.getPackage());
 
 		return SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz, settingsBuilder.build()));
@@ -84,15 +85,18 @@ public final class ImmutableObjectGenerator {
 	private static Clazz scaffoldClazz(@Nonnull final InterfaceAnalysis analysis, @Nonnull final ImmutableSettings settings) {
 		final String name = CLAZZ_PREFIX + analysis.getInterfaceName();
 		final Package pkg = analysis.getPackage();
+
+		final List<Interface> interfaces = new ArrayList<Interface>();
+		interfaces.add(new Interface(new Type(pkg, analysis.getInterfaceName(), GenericDeclaration.UNDEFINED)));
+
 		final List<Field> fields = new ArrayList<Field>();
 		if (settings.isSerializable() || isSerializable(analysis.getExtends())) {
+			interfaces.add(Interface.of(Serializable.class));
 			fields.add(SerialVersionGenerator.generate());
 		}
 		fields.addAll(findFields(analysis.getMethods()));
 
 		final List<Constructor> constructors = ImmutableList.of();
-		final Interface toImplement = new Interface(new Type(pkg, analysis.getInterfaceName(), GenericDeclaration.UNDEFINED));
-		final List<Interface> interfaces = ImmutableList.of(toImplement);
 		return new Clazz(name, pkg, fields, constructors, analysis.getMethods(), Visibility.PUBLIC, Final.FINAL, Abstract.UNDEFINED,
 				interfaces, analysis.getImports(), analysis.getAnnotations());
 	}
