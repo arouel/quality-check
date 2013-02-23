@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.generator.ImmutableObjectGenerator;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,30 @@ import com.google.common.io.CharStreams;
 public class ImmutableObjectGeneratorTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ImmutableObjectGeneratorTest.class);
+
+	private ImmutableSettings.Builder settingsBuilder;
+
+	@Before
+	public void before() {
+		settingsBuilder = new ImmutableSettings.Builder();
+
+		// global settings
+		settingsBuilder.fieldPrefix("");
+		settingsBuilder.jsr305Annotations(false);
+		settingsBuilder.guava(true);
+		settingsBuilder.qualityCheck(false);
+
+		// immutable settings
+		settingsBuilder.serializable(false);
+
+		// builder settings
+		settingsBuilder.builderCopyConstructor(false);
+		settingsBuilder.builderFlatMutators(false);
+		settingsBuilder.builderFluentMutators(false);
+		settingsBuilder.builderName("");
+		settingsBuilder.builderImplementsInterface(false);
+
+	}
 
 	private String readInterfaceAndGenerate(final String name, final ImmutableSettings settings) throws IOException {
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
@@ -31,59 +56,46 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
-	public void renderingOf_fieldPrefix() throws IOException {
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
-
-		// global settings
-		settings.fieldPrefix("_");
-		settings.jsr305Annotations(false);
-		settings.guava(false);
-		settings.qualityCheck(false);
-
-		// immutable settings
-		settings.serializable(false);
-
-		// builder settings
-		settings.builderCopyConstructor(false);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(false);
-		settings.builderName("");
-		settings.builderImplementsInterface(false);
-
+	public void renderingOf_fieldPrefix() {
 		final StringBuilder b = new StringBuilder();
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings.build());
+		final ImmutableSettings settings = settingsBuilder.fieldPrefix("_").build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
 		assertTrue(generatedCode.contains("private final String _name;"));
 	}
 
 	@Test
-	public void renderingOf_jsr305Annotations() throws IOException {
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
+	public void renderingOf_guava() {
+		final StringBuilder b = new StringBuilder();
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNames();\n");
+		b.append("}");
 
-		// global settings
-		settings.fieldPrefix("");
-		settings.jsr305Annotations(true);
-		settings.guava(false);
-		settings.qualityCheck(false);
+		final ImmutableSettings settingsWithGuava = settingsBuilder.guava(true).build();
+		final String generatedCodeWithGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithGuava);
+		assertTrue(generatedCodeWithGuava.contains("this.names = ImmutableList.copyOf(names);"));
+		assertTrue(generatedCodeWithGuava.contains("return Objects.equal(this.names, other.names);"));
+		assertTrue(generatedCodeWithGuava.contains("return Objects.hashCode(this.names);"));
 
-		// immutable settings
-		settings.serializable(false);
+		final ImmutableSettings settingsWithoutGuava = settingsBuilder.guava(false).build();
+		final String generatedCodeWithoutGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutGuava);
+		assertTrue(generatedCodeWithoutGuava.contains("this.names = Collections.unmodifiableList(new ArrayList<String>(names));"));
+		assertTrue(generatedCodeWithoutGuava.contains("} else if (!names.equals(other.names))"));
+		assertTrue(generatedCodeWithoutGuava.contains("result = prime * result + (names == null ? 0 : names.hashCode());"));
+	}
 
-		// builder settings
-		settings.builderCopyConstructor(false);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(false);
-		settings.builderName("");
-		settings.builderImplementsInterface(false);
-
+	@Test
+	public void renderingOf_jsr305Annotations() {
 		final StringBuilder b = new StringBuilder();
 		b.append("import javax.annotation.Nonnull;");
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings.build());
+		final ImmutableSettings settings = settingsBuilder.jsr305Annotations(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
 		assertTrue(generatedCode.contains("@Immutable\npublic final class"));
 		assertTrue(generatedCode.contains("@Nonnull\n\tpublic static ImmutableTestObject copyOf(@Nonnull "));
 		assertTrue(generatedCode.contains("public ImmutableTestObject(@Nonnull "));
@@ -92,61 +104,26 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
-	public void renderingOf_qualityCheck() throws IOException {
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
-
-		// global settings
-		settings.fieldPrefix("");
-		settings.jsr305Annotations(false);
-		settings.guava(false);
-		settings.qualityCheck(true);
-
-		// immutable settings
-		settings.serializable(false);
-
-		// builder settings
-		settings.builderCopyConstructor(false);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(false);
-		settings.builderName("");
-		settings.builderImplementsInterface(false);
-
+	public void renderingOf_qualityCheck() {
 		final StringBuilder b = new StringBuilder();
 		b.append("import javax.annotation.Nonnull;");
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings.build());
+		final ImmutableSettings settings = settingsBuilder.qualityCheck(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
 		assertTrue(generatedCode.contains("Check.notNull(testobject, \"testobject\");"));
 		assertTrue(generatedCode.contains("this.name = Check.notNull(name, \"name\");"));
 	}
 
 	@Test
 	public void renderingOf_serializable() throws IOException {
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
-
-		// global settings
-		settings.fieldPrefix("");
-		settings.jsr305Annotations(false);
-		settings.guava(false);
-		settings.qualityCheck(false);
-
-		// immutable settings
-		settings.serializable(true);
-
-		// builder settings
-		settings.builderCopyConstructor(false);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(false);
-		settings.builderName("");
-		settings.builderImplementsInterface(false);
-
 		final StringBuilder b = new StringBuilder();
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings.build());
-		LOG.info("\n" + generatedCode);
+		final ImmutableSettings settings = settingsBuilder.serializable(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
 		assertTrue(generatedCode.contains("class ImmutableTestObject implements TestObject, Serializable {"));
 		assertTrue(generatedCode.contains("private static final long serialVersionUID = 1L;"));
 	}
