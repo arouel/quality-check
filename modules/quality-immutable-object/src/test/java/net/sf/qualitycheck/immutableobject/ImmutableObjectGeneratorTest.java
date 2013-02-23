@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -101,6 +102,21 @@ public class ImmutableObjectGeneratorTest {
 		assertTrue(generatedCode.contains("public ImmutableTestObject(@Nonnull "));
 		assertTrue(generatedCode.contains("@Nonnull\n\tprivate final String name;"));
 		assertTrue(generatedCode.contains("@Nonnull\n\tpublic String getName() {"));
+	}
+
+	@Test
+	public void renderingOf_packageDeclaration() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+
+		final String generatedCodeWithUndefinedPackage = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		assertFalse(generatedCodeWithUndefinedPackage.contains("package "));
+
+		final String withPackage = "package net.sf.qualitycheck;\n";
+		final String generatedCodeWithPackage = ImmutableObjectGenerator.generate(withPackage + b.toString(), settingsBuilder.build());
+		assertTrue(generatedCodeWithPackage.contains(withPackage));
 	}
 
 	@Test
