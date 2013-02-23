@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.generator.ImmutableObjectGenerator;
@@ -54,6 +55,23 @@ public class ImmutableObjectGeneratorTest {
 	private String readReferenceImmutable(final String name) throws IOException {
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream("Immutable" + name);
 		return CharStreams.toString(new InputStreamReader(stream));
+	}
+
+	@Test
+	public void renderingOf_builder() {
+		final StringBuilder b = new StringBuilder();
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNames();\n");
+		b.append("}");
+
+		final ImmutableSettings settingsWithoutBuilder = settingsBuilder.builderName("").build();
+		final String generatedCodeWithoutBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutBuilder);
+		assertFalse(Pattern.compile("public\\s+static\\s+final\\s+class\\s+").matcher(generatedCodeWithoutBuilder).find());
+
+		final ImmutableSettings settingsWithBuilder = settingsBuilder.builderName("Builder").build();
+		final String generatedCodeWithBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithBuilder);
+		assertTrue(Pattern.compile("public\\s+static\\s+final\\s+class\\s+Builder\\s+").matcher(generatedCodeWithBuilder).find());
 	}
 
 	@Test
