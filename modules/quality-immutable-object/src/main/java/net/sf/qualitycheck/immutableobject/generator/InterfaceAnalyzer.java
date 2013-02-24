@@ -35,7 +35,7 @@ final class InterfaceAnalyzer {
 
 		final CompilationUnit unit = Check.notNull(SourceCodeReader.parse(code), "compilationUnit");
 		final List<TypeDeclaration> types = Check.notEmpty(unit.getTypes(), "typeDeclarations");
-		Check.stateIsTrue(types.size() == 1, "more than one interface declaration per compilation unit is not supported");
+		Check.stateIsTrue(types.size() == 1, "only one interface declaration per analysis is supported");
 
 		final ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) types.get(0);
 
