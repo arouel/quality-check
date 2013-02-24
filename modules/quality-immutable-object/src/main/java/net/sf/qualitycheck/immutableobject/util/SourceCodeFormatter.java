@@ -165,6 +165,7 @@ public final class SourceCodeFormatter {
 	public static String format(final String code, final Properties options, final LineEnding lineEnding) {
 		Check.notEmpty(code, "code");
 		Check.notEmpty(options, "options");
+		Check.notNull(lineEnding, "lineEnding");
 
 		final CodeFormatter formatter = ToolFactory.createCodeFormatter(options);
 		final String lineSeparator = LineEnding.find(lineEnding, code);
