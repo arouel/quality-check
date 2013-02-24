@@ -33,7 +33,7 @@ public class ImmutableObjectGeneratorTest {
 		// global settings
 		settingsBuilder.fieldPrefix("");
 		settingsBuilder.jsr305Annotations(false);
-		settingsBuilder.guava(true);
+		settingsBuilder.guava(false);
 		settingsBuilder.qualityCheck(false);
 
 		// immutable settings
@@ -171,8 +171,18 @@ public class ImmutableObjectGeneratorTest {
 		b.append("String getName();\n");
 		b.append("}");
 		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
-		assertTrue(generatedCode.contains("private final InnerInterface innerInterface;"));
-		assertTrue(generatedCode.contains("public InnerInterface getInnerInterface()"));
+		assertFalse(generatedCode.contains("DEFAULT_NAME"));
+	}
+
+	@Test
+	public void renderingOf_withGeneric() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNames();\n");
+		b.append("}");
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		assertTrue(generatedCode.contains("private final List<String> names;"));
+		assertTrue(generatedCode.contains("public List<String> getNames() {"));
 	}
 
 	@Test
@@ -187,6 +197,18 @@ public class ImmutableObjectGeneratorTest {
 		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
 		assertTrue(generatedCode.contains("private final InnerInterface innerInterface;"));
 		assertTrue(generatedCode.contains("public InnerInterface getInnerInterface()"));
+	}
+
+	@Test
+	public void renderingOf_withReservedWord() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("Import getImport();\n");
+		b.append("}");
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		assertTrue(generatedCode.contains("private final Import import1;"));
+		assertTrue(generatedCode.contains("ImmutableTestObject(final Import import1)"));
+		assertTrue(generatedCode.contains("public Import getImport() {"));
 	}
 
 	@Test
