@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
+import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
 import net.sf.qualitycheck.immutableobject.generator.ImmutableObjectGenerator;
 
@@ -163,6 +164,32 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_withConstants() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("String DEFAULT_NAME = \"default\";\n");
+		b.append("String getName();\n");
+		b.append("}");
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		assertTrue(generatedCode.contains("private final InnerInterface innerInterface;"));
+		assertTrue(generatedCode.contains("public InnerInterface getInnerInterface()"));
+	}
+
+	@Test
+	public void renderingOf_withInnerCompilationUnit() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("interface InnerInterface {\n");
+		b.append("String getName();\n");
+		b.append("}\n");
+		b.append("InnerInterface getInnerInterface();\n");
+		b.append("}");
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		assertTrue(generatedCode.contains("private final InnerInterface innerInterface;"));
+		assertTrue(generatedCode.contains("public InnerInterface getInnerInterface()"));
+	}
+
+	@Test
 	public void testCarInterface() throws IOException {
 		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
 
@@ -208,6 +235,36 @@ public class ImmutableObjectGeneratorTest {
 
 		final String file = "Settings.java";
 		LOG.info("\n" + readInterfaceAndGenerate(file, settings.build()));
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void throwsException_hasPossibleMutatingMethods_withGetterArguments() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("String getName(int index);\n");
+		b.append("}");
+		ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void throwsException_hasPossibleMutatingMethods_withSetter() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("void setName(String name);\n");
+		b.append("}");
+		ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void throwsException_moreThenOneCompilationUnit() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}\n");
+		b.append("interface TestObject2 {\n");
+		b.append("String getName();\n");
+		b.append("}");
+		ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
 	}
 
 }
