@@ -81,7 +81,8 @@ public final class SourceCodeFormatter {
 		 * @return line ending parameter as characters
 		 */
 		@Nonnull
-		public static String find(final LineEnding lineEnding, final String code) {
+		public static String find(@Nonnull final LineEnding lineEnding, @Nonnull final String code) {
+			Check.notNull(lineEnding, "lineEnding");
 			Check.notNull(code, "code");
 			String ret = DEFAULT_LINE_ENDING.asString();
 			if (LineEnding.KEEP == lineEnding) {
