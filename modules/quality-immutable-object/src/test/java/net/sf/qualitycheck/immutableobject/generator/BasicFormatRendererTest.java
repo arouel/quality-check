@@ -2,6 +2,7 @@ package net.sf.qualitycheck.immutableobject.generator;
 
 import static org.junit.Assert.assertEquals;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 
 import org.junit.Test;
 
@@ -10,6 +11,11 @@ public class BasicFormatRendererTest {
 	@Test
 	public void toString_formatName_isNull() {
 		assertEquals("text", new BasicFormatRenderer().toString("text", null, null));
+	}
+
+	@Test(expected = IllegalStateOfArgumentException.class)
+	public void toString_formatName_unknownName() {
+		new BasicFormatRenderer().toString("text", "unknownFormat", null);
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
