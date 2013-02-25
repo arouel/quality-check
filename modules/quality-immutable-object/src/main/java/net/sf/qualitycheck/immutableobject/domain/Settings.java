@@ -115,6 +115,14 @@ public interface Settings {
 	boolean hasGuava();
 
 	/**
+	 * Generate <code>hashcode()</code> and <code>equals()</code> methods in immutable object class.
+	 * 
+	 * @return {@code true} to override <code>hashcode()</code> and <code>equals()</code> methods otherwise
+	 *         {@code false}
+	 */
+	boolean hasHashCodeAndEquals();
+
+	/**
 	 * Add JSR 305 Annotations for Software Defect Detection in Java.
 	 * 
 	 * @return {@code true} to generate such annotations otherwise {@code false}
@@ -129,6 +137,13 @@ public interface Settings {
 	 * @return {@code true} to apply technical checks in generated classes otherwise {@code false}
 	 */
 	boolean hasQualityCheck();
+
+	/**
+	 * Generate <code>toString()</code> method in immutable object class.
+	 * 
+	 * @return {@code true} to override <code>toString()</code> method otherwise {@code false}
+	 */
+	boolean hasToString();
 
 	/**
 	 * Generates <code>serialVersionUID</code> constant (with default value <code>1L</code>) into immutable object class
