@@ -109,6 +109,7 @@ copyOfAttributes(settings) ::= <<
 
 
 equalsMethod(name, fields, settings) ::= <<
+<if(settings.hashCodeAndEquals)>
 @Override
 public boolean equals(final Object obj) {
 	if (this == obj)
@@ -125,6 +126,7 @@ public boolean equals(final Object obj) {
 	return true;
 	<endif>
 }
+<endif>
 >>
 
 
@@ -145,6 +147,7 @@ equalsMemberFieldWithOther(field) ::= <<
 
 
 hashCodeMethod(fields, settings) ::= <<
+<if(settings.hashCodeAndEquals)>
 @Override
 public int hashCode() {
 	<if(settings.guava)>
@@ -156,6 +159,7 @@ public int hashCode() {
 	return result;
 	<endif>
 }
+<endif>
 >>
 hashCodeField(field) ::= <<
 <if(field.static.undefined)>

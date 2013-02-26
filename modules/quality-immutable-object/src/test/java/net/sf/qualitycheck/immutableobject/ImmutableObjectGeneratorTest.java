@@ -94,17 +94,35 @@ public class ImmutableObjectGeneratorTest {
 		b.append("List<String> getNames();\n");
 		b.append("}");
 
-		final ImmutableSettings settingsWithGuava = settingsBuilder.guava(true).build();
+		final ImmutableSettings settingsWithGuava = settingsBuilder.guava(true).hashCodeAndEquals(true).build();
 		final String generatedCodeWithGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithGuava).getImplCode();
 		assertTrue(generatedCodeWithGuava.contains("this.names = ImmutableList.copyOf(names);"));
 		assertTrue(generatedCodeWithGuava.contains("return Objects.equal(this.names, other.names);"));
 		assertTrue(generatedCodeWithGuava.contains("return Objects.hashCode(this.names);"));
 
-		final ImmutableSettings settingsWithoutGuava = settingsBuilder.guava(false).build();
+		final ImmutableSettings settingsWithoutGuava = settingsBuilder.guava(false).hashCodeAndEquals(true).build();
 		final String generatedCodeWithoutGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutGuava).getImplCode();
 		assertTrue(generatedCodeWithoutGuava.contains("this.names = Collections.unmodifiableList(new ArrayList<String>(names));"));
 		assertTrue(generatedCodeWithoutGuava.contains("} else if (!names.equals(other.names))"));
 		assertTrue(generatedCodeWithoutGuava.contains("result = prime * result + (names == null ? 0 : names.hashCode());"));
+	}
+
+	@Test
+	public void renderingOf_hashCodeAndEquals() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+
+		final ImmutableSettings settingsWithHaE = settingsBuilder.hashCodeAndEquals(true).build();
+		final String generatedCodeWithHaE = ImmutableObjectGenerator.generate(b.toString(), settingsWithHaE).getImplCode();
+		assertTrue(generatedCodeWithHaE.contains("public boolean equals(final Object obj) {"));
+		assertTrue(generatedCodeWithHaE.contains("public int hashCode() {"));
+
+		final ImmutableSettings settingsWithoutHaE = settingsBuilder.hashCodeAndEquals(false).build();
+		final String generatedCodeWithoutHaE = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutHaE).getImplCode();
+		assertFalse(generatedCodeWithoutHaE.contains("public boolean equals(final Object obj) {"));
+		assertFalse(generatedCodeWithoutHaE.contains("public int hashCode() {"));
 	}
 
 	@Test
@@ -221,6 +239,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.fieldPrefix("");
 		settings.jsr305Annotations(true);
 		settings.guava(false);
+		settings.hashCodeAndEquals(true);
 		settings.qualityCheck(true);
 
 		// immutable settings
