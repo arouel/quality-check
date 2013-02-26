@@ -1,0 +1,193 @@
+immutableTestCompilationUnit(settings) ::= <<
+<package(settings.packageDeclaration.name)>
+
+import static org.junit.Assert.*;
+import java.util.*;
+import org.junit.Test;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
+
+<settings.imports:importStatement(); separator = "\n">
+
+<immutableTestClass(settings)>
+
+>>
+immutableTestClass(settings) ::= <<
+public final class <settings.immutableName>Test {
+
+	<blueprintClass(settings)>
+
+	<copyOfTests(settings)>
+	
+	<equalsAndHashCodeTests(settings)>
+	
+	<preconditionTests(settings)>
+
+}
+>>
+importStatement(i) ::= <<
+<if(i)>import <i.type.package.name>.<i.type.name>;<endif>
+>>
+
+
+annotateTest() ::= <<
+@Test
+>>
+annotateTestWithExpected(className) ::= <<
+@Test(expected = <className>.class)
+>>
+
+
+preconditionTests(settings) ::= <<
+<settings.fields:{ field |
+	<if(field.static.undefined && field.nonnull)><nullablilityTest(field, settings)><endif>
+	<if(field.static.undefined && field.nonnegative)><negativeNumberTest(field, settings)><endif>
+}>
+>>
+nullablilityTest(field, settings) ::= <<
+<annotateTestWithExpected("IllegalNullArgumentException")>
+public void precondition_<field.name; format="toUpper">() {
+	new Blueprint().<field; format="attribute">(null).build();
+}
+>>
+negativeNumberTest(field, settings) ::= <<
+<annotateTestWithExpected("IllegalNegativeArgumentException")>
+public void precondition_<field.name; format="toUpper">() {
+	new Blueprint().<field; format="attribute">(<negativeNumberValue(field)>).build();
+}
+>>
+negativeNumberValue(field) ::= <<
+<if(field.type.double)>-1d<elseif(field.type.float)>-1f<elseif(field.type.int)>-1<elseif(field.type.long)>-1l<elseif(field.type.short)>-1<endif>
+>>
+
+
+defaultValue(field) ::= <<
+<if(field.type.boolean)>false<elseif(field.type.byte)>0<elseif(field.type.char)>0<elseif(field.type.double)>0d<elseif(field.type.float)>0f<elseif(field.type.int)>0<elseif(field.type.long)>0l<elseif(field.type.short)>0<elseif(field.type.string)>"test"<else>null<endif>
+>>
+
+
+copyOfTests(settings) ::= <<
+<annotateTestWithExpected("IllegalNullArgumentException")>
+public void copyOf_argIsNull() {
+	<settings.immutableName>.copyOf(null);
+}
+
+<annotateTest()>
+public void copyOf_successful() {
+	assertNotNull(<settings.immutableName>.copyOf(new Blueprint().build()));
+}
+>>
+
+
+equalsAndHashCodeTests(settings) ::= <<
+<settings.fields:{ field |
+	<if(field.static.undefined)><equalsAndHashCodeTest(field, settings)><endif>
+}>
+
+<annotateTest()>
+public void equals_identical() {
+	<settings.immutableName> a = new Blueprint().build();
+	<settings.immutableName> b = new Blueprint().build();
+	assertEquals(a, b);
+	assertTrue(a.hashCode() == b.hashCode());
+}
+
+<annotateTest()>
+public void equals_null() {
+	<settings.immutableName> a = new Blueprint().build();
+	assertFalse(a.equals(null));
+}
+
+<annotateTest()>
+public void equals_otherClass() {
+	<settings.immutableName> a = new Blueprint().build();
+	assertFalse(a.equals(""));
+}
+
+<annotateTest()>
+public void equals_same() {
+	<settings.immutableName> a = new Blueprint().build();
+	assertEquals(a, a);
+	assertSame(a, a);
+	assertTrue(a.hashCode() == a.hashCode());
+}
+>>
+equalsAndHashCodeTest(field, settings) ::= <<
+<annotateTest()>
+public void equals_different_<field.name; format="toUpper">() {
+	// TODO test equality and hash-code if field '<field.name>' is different
+	<settings.fields.keys:{k | <settings.fields.(k)>}; separator="\n">
+	<settings.immutableName> a = new Blueprint().<field; format="attribute">(<defaultValue(field)>).build();
+	<settings.immutableName> b = new Blueprint().<field; format="attribute">(<defaultValue(field)>).build();
+	assertFalse(a.equals(b));
+	assertFalse(a.hashCode() == b.hashCode());
+}
+>>
+
+
+importedType(type) ::= <<
+<type.name><if(!type.genericDeclaration.undefined)>\<<type.genericDeclaration.declaration>\><endif>
+>>
+
+
+package(package) ::= <<
+<if(package)>package <package>;<endif>
+>>
+
+
+
+
+
+
+
+
+
+
+blueprintClass(settings) ::= <<
+private static final class Blueprint {
+
+	<settings.fields:setupField(); separator = "\n">
+
+	public Blueprint() {
+		// default constructor
+	}
+
+	<mutatorMethods(settings); separator = "\n">
+
+	<buildMethod(settings); separator = "\n">
+
+}
+>>
+annotate(annotation) ::= <<
+@<annotation.type.name>
+>>
+annotateNonnull(settings) ::= <<
+<if(settings.jsr305Annotations)>@Nonnull<endif>
+>>
+annotateNotThreadSafe(settings) ::= <<
+<if(settings.jsr305Annotations)>@NotThreadSafe<endif>
+>>
+setupField(field) ::= <<
+<if(field.static.undefined)>private <importedType(field.type)> <field> = <defaultValue(field)>; // TODO you must setup a default value for all test cases
+<endif>
+>>
+buildMethod(settings) ::= <<
+<annotateNonnull(settings)>
+public <settings.immutableName> build() {
+	return new <settings.immutableName>(<settings.fields:buildMethodAttribute(); separator = ",">);
+}
+>>
+buildMethodAttribute(field) ::= <<
+<if(field.static.undefined)><field><endif>
+>>
+mutatorMethods(settings) ::= <<
+<settings.fields:{ field | <mutatorMethod(field, settings)>}>
+>>
+mutatorMethod(field, settings) ::= <<
+<if(field.static.undefined)>
+public Blueprint <field; format="attribute">(final <importedType(field.type)> <field; format="attribute">) {
+	this.<field> = <field; format="attribute">;
+	return this;
+}
+<endif>
+>>

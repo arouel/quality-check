@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.Abstract;
@@ -29,8 +30,44 @@ import net.sf.qualitycheck.immutableobject.util.SourceCodeFormatter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-@Immutable
+@ThreadSafe
 public final class ImmutableObjectGenerator {
+
+	@Immutable
+	public static class Result {
+
+		@Nonnull
+		private final String implementationCode;
+
+		@Nonnull
+		private final String testCode;
+
+		private Result(@Nonnull final String implementationCode, @Nonnull final String testCode) {
+			this.implementationCode = Check.notNull(implementationCode, "implementationCode");
+			this.testCode = Check.notNull(testCode, "testCode");
+		}
+
+		/**
+		 * Gets the implementation code as string.
+		 * 
+		 * @return the generated immutable object class
+		 */
+		@Nonnull
+		public String getImplCode() {
+			return implementationCode;
+		}
+
+		/**
+		 * Gets the implementation's test code as string.
+		 * 
+		 * @return the generated immutable object class
+		 */
+		@Nonnull
+		public String getTestCode() {
+			return testCode;
+		}
+
+	}
 
 	public static final String CLAZZ_PREFIX = "Immutable";
 
@@ -52,9 +89,9 @@ public final class ImmutableObjectGenerator {
 	 *            source code of an interface which describes how to generate the <i>immutable</i>
 	 * @param settings
 	 *            settings to generate code
-	 * @return generated source code as string
+	 * @return generated source code as string in a result wrapper
 	 */
-	public static String generate(@Nonnull final String code, @Nonnull final ImmutableSettings settings) {
+	public static Result generate(@Nonnull final String code, @Nonnull final ImmutableSettings settings) {
 		Check.notNull(code, "code");
 		final ImmutableSettings.Builder settingsBuilder = new ImmutableSettings.Builder(Check.notNull(settings, "settings"));
 
@@ -65,10 +102,13 @@ public final class ImmutableObjectGenerator {
 		settingsBuilder.fields(clazz.getFields());
 		settingsBuilder.immutableName(clazz.getName());
 		settingsBuilder.imports(clazz.getImports());
+		settingsBuilder.mainInterface(clazz.getInterfaces().get(0));
 		settingsBuilder.interfaces(clazz.getInterfaces());
 		settingsBuilder.packageDeclaration(clazz.getPackage());
 
-		return SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz, settingsBuilder.build()));
+		final String implementationCode = SourceCodeFormatter.format(ImmutableObjectRenderer.toString(clazz, settingsBuilder.build()));
+		final String testCode = SourceCodeFormatter.format(ImmutableObjectTestRenderer.toString(clazz, settingsBuilder.build()));
+		return new Result(implementationCode, testCode);
 	}
 
 	private static boolean isSerializable(@Nonnull final List<Interface> interfaces) {

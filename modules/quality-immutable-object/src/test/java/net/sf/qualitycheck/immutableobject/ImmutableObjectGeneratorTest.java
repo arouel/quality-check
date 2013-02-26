@@ -50,7 +50,7 @@ public class ImmutableObjectGeneratorTest {
 
 	private String readInterfaceAndGenerate(final String name, final ImmutableSettings settings) throws IOException {
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
-		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings);
+		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings).getImplCode();
 	}
 
 	private String readReferenceImmutable(final String name) throws IOException {
@@ -67,11 +67,11 @@ public class ImmutableObjectGeneratorTest {
 		b.append("}");
 
 		final ImmutableSettings settingsWithoutBuilder = settingsBuilder.builderName("").build();
-		final String generatedCodeWithoutBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutBuilder);
+		final String generatedCodeWithoutBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutBuilder).getImplCode();
 		assertFalse(Pattern.compile("public\\s+static\\s+final\\s+class\\s+").matcher(generatedCodeWithoutBuilder).find());
 
 		final ImmutableSettings settingsWithBuilder = settingsBuilder.builderName("Builder").build();
-		final String generatedCodeWithBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithBuilder);
+		final String generatedCodeWithBuilder = ImmutableObjectGenerator.generate(b.toString(), settingsWithBuilder).getImplCode();
 		assertTrue(Pattern.compile("public\\s+static\\s+final\\s+class\\s+Builder\\s+").matcher(generatedCodeWithBuilder).find());
 	}
 
@@ -82,7 +82,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("String getName();\n");
 		b.append("}");
 		final ImmutableSettings settings = settingsBuilder.fieldPrefix("_").build();
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("private final String _name;"));
 	}
 
@@ -95,13 +95,13 @@ public class ImmutableObjectGeneratorTest {
 		b.append("}");
 
 		final ImmutableSettings settingsWithGuava = settingsBuilder.guava(true).build();
-		final String generatedCodeWithGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithGuava);
+		final String generatedCodeWithGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithGuava).getImplCode();
 		assertTrue(generatedCodeWithGuava.contains("this.names = ImmutableList.copyOf(names);"));
 		assertTrue(generatedCodeWithGuava.contains("return Objects.equal(this.names, other.names);"));
 		assertTrue(generatedCodeWithGuava.contains("return Objects.hashCode(this.names);"));
 
 		final ImmutableSettings settingsWithoutGuava = settingsBuilder.guava(false).build();
-		final String generatedCodeWithoutGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutGuava);
+		final String generatedCodeWithoutGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutGuava).getImplCode();
 		assertTrue(generatedCodeWithoutGuava.contains("this.names = Collections.unmodifiableList(new ArrayList<String>(names));"));
 		assertTrue(generatedCodeWithoutGuava.contains("} else if (!names.equals(other.names))"));
 		assertTrue(generatedCodeWithoutGuava.contains("result = prime * result + (names == null ? 0 : names.hashCode());"));
@@ -115,7 +115,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
 		final ImmutableSettings settings = settingsBuilder.jsr305Annotations(true).build();
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("@Immutable\npublic final class"));
 		assertTrue(generatedCode.contains("@Nonnull\n\tpublic static ImmutableTestObject copyOf(@Nonnull "));
 		assertTrue(generatedCode.contains("public ImmutableTestObject(@Nonnull "));
@@ -130,11 +130,13 @@ public class ImmutableObjectGeneratorTest {
 		b.append("String getName();\n");
 		b.append("}");
 
-		final String generatedCodeWithUndefinedPackage = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		final String generatedCodeWithUndefinedPackage = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build())
+				.getImplCode();
 		assertFalse(generatedCodeWithUndefinedPackage.contains("package "));
 
 		final String withPackage = "package net.sf.qualitycheck;\n";
-		final String generatedCodeWithPackage = ImmutableObjectGenerator.generate(withPackage + b.toString(), settingsBuilder.build());
+		final String generatedCodeWithPackage = ImmutableObjectGenerator.generate(withPackage + b.toString(), settingsBuilder.build())
+				.getImplCode();
 		assertTrue(generatedCodeWithPackage.contains(withPackage));
 	}
 
@@ -146,7 +148,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
 		final ImmutableSettings settings = settingsBuilder.qualityCheck(true).build();
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("Check.notNull(testobject, \"testobject\");"));
 		assertTrue(generatedCode.contains("this.name = Check.notNull(name, \"name\");"));
 	}
@@ -158,7 +160,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("String getName();\n");
 		b.append("}");
 		final ImmutableSettings settings = settingsBuilder.serializable(true).build();
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings);
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("class ImmutableTestObject implements TestObject, Serializable {"));
 		assertTrue(generatedCode.contains("private static final long serialVersionUID = 1L;"));
 	}
@@ -170,7 +172,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("String DEFAULT_NAME = \"default\";\n");
 		b.append("String getName();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build()).getImplCode();
 		assertFalse(generatedCode.contains("DEFAULT_NAME"));
 	}
 
@@ -180,7 +182,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("interface TestObject {\n");
 		b.append("List<String> getNames();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build()).getImplCode();
 		assertTrue(generatedCode.contains("private final List<String> names;"));
 		assertTrue(generatedCode.contains("public List<String> getNames() {"));
 	}
@@ -194,7 +196,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("}\n");
 		b.append("InnerInterface getInnerInterface();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build()).getImplCode();
 		assertTrue(generatedCode.contains("private final InnerInterface innerInterface;"));
 		assertTrue(generatedCode.contains("public InnerInterface getInnerInterface()"));
 	}
@@ -205,7 +207,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("interface TestObject {\n");
 		b.append("Import getImport();\n");
 		b.append("}");
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build());
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build()).getImplCode();
 		assertTrue(generatedCode.contains("private final Import import1;"));
 		assertTrue(generatedCode.contains("ImmutableTestObject(final Import import1)"));
 		assertTrue(generatedCode.contains("public Import getImport() {"));

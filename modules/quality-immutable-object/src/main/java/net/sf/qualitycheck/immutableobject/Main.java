@@ -49,7 +49,7 @@ public class Main {
 		for (final String path : args) {
 			final File file = new File(path);
 			final String code = Files.toString(file, Charsets.UTF_8);
-			final String generated = ImmutableObjectGenerator.generate(code, defaultSettings());
+			final String generated = ImmutableObjectGenerator.generate(code, defaultSettings()).getImplCode();
 			LOG.info("\n" + generated);
 		}
 		LOG.info("--");
