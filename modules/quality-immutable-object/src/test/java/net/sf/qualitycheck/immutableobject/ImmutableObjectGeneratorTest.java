@@ -184,6 +184,26 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_toString() {
+		final StringBuilder b = new StringBuilder();
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNames();\n");
+		b.append("int getCount();\n");
+		b.append("}");
+
+		final ImmutableSettings settingsWithToString = settingsBuilder.toString(true).hashCodeAndEquals(true).build();
+		final String generatedCodeWithToString = ImmutableObjectGenerator.generate(b.toString(), settingsWithToString).getImplCode();
+		assertTrue(generatedCodeWithToString.contains("public String toString() {"));
+		assertTrue(generatedCodeWithToString
+				.contains("return \"ImmutableTestObject [names=\" + this.names + \", count=\" + this.count + \"]\";"));
+
+		final ImmutableSettings settingsWithoutToString = settingsBuilder.toString(false).hashCodeAndEquals(true).build();
+		final String generatedCodeWithoutToString = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutToString).getImplCode();
+		assertFalse(generatedCodeWithoutToString.contains("public String toString() {"));
+	}
+
+	@Test
 	public void renderingOf_withConstants() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("interface TestObject {\n");

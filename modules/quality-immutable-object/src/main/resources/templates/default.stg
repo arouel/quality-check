@@ -33,6 +33,8 @@ public final class <settings.immutableName> implements <settings.interfaces:inte
 
 	<hashCodeMethod(settings.fields, settings)>
 
+	<toStringMethod(settings.fields, settings)>
+
 }
 >>
 
@@ -240,7 +242,17 @@ setupFieldImmutable(field, settings) ::= <<
 >>
 
 
-
+toStringMethod(fields, settings) ::= <<
+<if(settings.toString)>
+@Override
+public String toString() {
+	return "<settings.immutableName> [<fields:toStringField(); separator=", ">]";
+}
+<endif>
+>>
+toStringField(field) ::= <<
+<if(field.static.undefined)><field>=" + this.<field> + "<endif>
+>>
 
 
 
