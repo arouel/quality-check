@@ -50,7 +50,7 @@ public <importedType(field.type)> <field.accessorMethodName>() {
 
 
 accessToMemberField(field) ::= <<
-<if(field.static.undefined)>this.<field><endif>
+<if(field.static.undefined)><field><endif>
 >>
 
 

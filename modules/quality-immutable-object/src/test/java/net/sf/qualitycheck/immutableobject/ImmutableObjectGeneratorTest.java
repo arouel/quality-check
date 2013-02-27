@@ -98,7 +98,7 @@ public class ImmutableObjectGeneratorTest {
 		final String generatedCodeWithGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithGuava).getImplCode();
 		assertTrue(generatedCodeWithGuava.contains("this.names = ImmutableList.copyOf(names);"));
 		assertTrue(generatedCodeWithGuava.contains("return Objects.equal(this.names, other.names);"));
-		assertTrue(generatedCodeWithGuava.contains("return Objects.hashCode(this.names);"));
+		assertTrue(generatedCodeWithGuava.contains("return Objects.hashCode(names);"));
 
 		final ImmutableSettings settingsWithoutGuava = settingsBuilder.guava(false).hashCodeAndEquals(true).build();
 		final String generatedCodeWithoutGuava = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutGuava).getImplCode();
