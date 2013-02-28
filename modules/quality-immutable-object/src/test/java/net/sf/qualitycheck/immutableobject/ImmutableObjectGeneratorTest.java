@@ -61,6 +61,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_builder() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import java.util.List;\n");
 		b.append("interface TestObject {\n");
 		b.append("List<String> getNames();\n");
@@ -78,6 +79,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_fieldPrefix() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
@@ -89,6 +91,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_guava() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import java.util.List;\n");
 		b.append("interface TestObject {\n");
 		b.append("List<String> getNames();\n");
@@ -110,6 +113,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_hashCodeAndEquals() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
@@ -128,6 +132,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_hashCodePrecomputation() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import java.util.List;\n");
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
@@ -153,6 +158,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_jsr305Annotations() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import javax.annotation.Nonnull;");
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
@@ -186,6 +192,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_qualityCheck() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import javax.annotation.Nonnull;");
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
@@ -199,6 +206,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_serializable() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
@@ -211,6 +219,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_toString() {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("import java.util.List;\n");
 		b.append("interface TestObject {\n");
 		b.append("List<String> getNames();\n");
@@ -231,6 +240,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_withConstants() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("String DEFAULT_NAME = \"default\";\n");
 		b.append("String getName();\n");
@@ -242,6 +252,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_withGeneric() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("List<String> getNames();\n");
 		b.append("}");
@@ -253,6 +264,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_withInnerCompilationUnit() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("interface InnerInterface {\n");
 		b.append("String getName();\n");
@@ -267,6 +279,7 @@ public class ImmutableObjectGeneratorTest {
 	@Test
 	public void renderingOf_withReservedWord() throws IOException {
 		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
 		b.append("interface TestObject {\n");
 		b.append("Import getImport();\n");
 		b.append("}");
