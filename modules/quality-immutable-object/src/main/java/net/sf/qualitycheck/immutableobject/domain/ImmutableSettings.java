@@ -39,6 +39,8 @@ public final class ImmutableSettings implements Settings {
 
 		private boolean hashCodeAndEquals;
 
+		private boolean hashCodePrecomputation;
+
 		@Nonnull
 		private String immutableName = "ImmutableUnknownObject";
 
@@ -82,6 +84,7 @@ public final class ImmutableSettings implements Settings {
 			builderImplementsInterface = settings.hasBuilderImplementsInterface();
 			guava = settings.hasGuava();
 			hashCodeAndEquals = settings.hasHashCodeAndEquals();
+			hashCodePrecomputation = settings.hasHashCodePrecomputation();
 			jsr305Annotations = settings.hasJsr305Annotations();
 			qualityCheck = settings.hasQualityCheck();
 			toString = settings.hasToString();
@@ -92,7 +95,7 @@ public final class ImmutableSettings implements Settings {
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fieldPrefix, fields, immutableName, imports, interfaces, mainInterface,
 					packageDeclaration, builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface,
-					guava, hashCodeAndEquals, jsr305Annotations, qualityCheck, toString, serializable);
+					guava, hashCodeAndEquals, hashCodePrecomputation, jsr305Annotations, qualityCheck, toString, serializable);
 		}
 
 		@Nonnull
@@ -146,6 +149,12 @@ public final class ImmutableSettings implements Settings {
 		@Nonnull
 		public Builder hashCodeAndEquals(final boolean hashCodeAndEquals) {
 			this.hashCodeAndEquals = hashCodeAndEquals;
+			return this;
+		}
+
+		@Nonnull
+		public Builder hashCodePrecomputation(final boolean hashCodePrecomputation) {
+			this.hashCodePrecomputation = hashCodePrecomputation;
 			return this;
 		}
 
@@ -212,8 +221,8 @@ public final class ImmutableSettings implements Settings {
 				settings.getImmutableName(), settings.getImports(), settings.getInterfaces(), settings.getMainInterface(),
 				settings.getPackageDeclaration(), settings.hasBuilderCopyConstructor(), settings.hasBuilderFlatMutators(),
 				settings.hasBuilderFluentMutators(), settings.hasBuilderImplementsInterface(), settings.hasGuava(),
-				settings.hasHashCodeAndEquals(), settings.hasJsr305Annotations(), settings.hasQualityCheck(), settings.hasToString(),
-				settings.isSerializable());
+				settings.hasHashCodeAndEquals(), settings.hasHashCodePrecomputation(), settings.hasJsr305Annotations(),
+				settings.hasQualityCheck(), settings.hasToString(), settings.isSerializable());
 	}
 
 	private final boolean builderCopyConstructor;
@@ -236,6 +245,8 @@ public final class ImmutableSettings implements Settings {
 	private final boolean guava;
 
 	private final boolean hashCodeAndEquals;
+
+	private final boolean hashCodePrecomputation;
 
 	@Nonnull
 	private final String immutableName;
@@ -264,8 +275,8 @@ public final class ImmutableSettings implements Settings {
 			@Nonnull final String immutableName, @Nonnull final List<Import> imports, @Nonnull final List<Interface> interfaces,
 			@Nonnull final Interface mainInterface, @Nonnull final Package packageDeclaration, final boolean builderCopyConstructor,
 			final boolean builderFlatMutators, final boolean builderFluentMutators, final boolean builderImplementsInterface,
-			final boolean guava, final boolean hashCodeAndEquals, final boolean jsr305Annotations, final boolean qualityCheck,
-			final boolean toString, final boolean serializable) {
+			final boolean guava, final boolean hashCodeAndEquals, final boolean hashCodePrecomputation, final boolean jsr305Annotations,
+			final boolean qualityCheck, final boolean toString, final boolean serializable) {
 		this.builderName = Check.notNull(builderName, "builderName");
 		this.fieldPrefix = Check.notNull(fieldPrefix, "fieldPrefix");
 		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
@@ -280,6 +291,7 @@ public final class ImmutableSettings implements Settings {
 		this.builderImplementsInterface = builderImplementsInterface;
 		this.guava = guava;
 		this.hashCodeAndEquals = hashCodeAndEquals;
+		this.hashCodePrecomputation = hashCodePrecomputation;
 		this.jsr305Annotations = jsr305Annotations;
 		this.qualityCheck = qualityCheck;
 		this.toString = toString;
@@ -306,9 +318,10 @@ public final class ImmutableSettings implements Settings {
 				&& Objects.equal(builderFlatMutators, other.builderFlatMutators)
 				&& Objects.equal(builderFluentMutators, other.builderFluentMutators)
 				&& Objects.equal(builderImplementsInterface, other.builderImplementsInterface) && Objects.equal(guava, other.guava)
-				&& Objects.equal(hashCodeAndEquals, other.hashCodeAndEquals) && Objects.equal(jsr305Annotations, other.jsr305Annotations)
-				&& Objects.equal(qualityCheck, other.qualityCheck) && Objects.equal(toString, other.toString)
-				&& Objects.equal(serializable, other.serializable);
+				&& Objects.equal(hashCodeAndEquals, other.hashCodeAndEquals)
+				&& Objects.equal(hashCodePrecomputation, other.hashCodePrecomputation)
+				&& Objects.equal(jsr305Annotations, other.jsr305Annotations) && Objects.equal(qualityCheck, other.qualityCheck)
+				&& Objects.equal(toString, other.toString) && Objects.equal(serializable, other.serializable);
 	}
 
 	@Override
@@ -389,11 +402,16 @@ public final class ImmutableSettings implements Settings {
 		return hashCodeAndEquals;
 	}
 
+	public boolean hasHashCodePrecomputation() {
+		return hashCodePrecomputation;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(builderName, fieldPrefix, fields, immutableName, imports, interfaces, mainInterface, packageDeclaration,
 				builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface, guava, hashCodeAndEquals,
-				jsr305Annotations, qualityCheck, toString, serializable);
+				hashCodePrecomputation, jsr305Annotations, qualityCheck, toString, serializable);
+
 	}
 
 	@Override

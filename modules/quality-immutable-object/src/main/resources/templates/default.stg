@@ -21,11 +21,15 @@ public final class <settings.immutableName> implements <settings.interfaces:inte
 
 	<settings.fields:constant(); separator = "\n">
 
+	<hashCodePrecomputationMethod(settings.fields, settings)>
+
 	<copyOfMethod(settings); separator = "\n">
 
 	<settings.fields:asFinalField(); separator = "\n">
 
-	<immutableConstructor(settings.immutableName, settings.fields, settings.guava)>
+	<if(settings.hashCodePrecomputation)>private final int hash;<endif>
+
+	<immutableConstructor(settings.immutableName, settings.fields, settings)>
 
 	<equalsMethod(settings.immutableName, settings.fields, settings)>
 
@@ -85,7 +89,9 @@ constant(field) ::= <<
 
 immutableConstructor(name, fields, settings) ::= <<
 public <name>(<fields:attribute(); separator = ",">) {
-	<setupFieldsImmutable(fields, settings)>}
+<setupFieldsImmutable(fields, settings)>
+<if(settings.hashCodePrecomputation)>hash = buildHashCode(<fields:accessToMemberField(); separator = ",">);<endif>
+}
 >>
 
 
@@ -152,16 +158,22 @@ hashCodeMethod(fields, settings) ::= <<
 <if(settings.hashCodeAndEquals)>
 @Override
 public int hashCode() {
-	<if(settings.guava)>
-	return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);
-	<else>
-	final int prime = 31;
-	int result = 1;
-	<fields:hashCodeField()>
-	return result;
-	<endif>
+<if(settings.hashCodePrecomputation)>
+return hash;
+<else>
+<hashCodeMethodBody(fields, settings)>
+<endif>
 }
 <endif>
+>>
+hashCodeMethodBody(fields, settings) ::= <<
+<if(settings.guava)>
+return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);
+<else>
+final int prime = 31;
+int result = 1;
+<fields:hashCodeField()>
+return result;<endif>
 >>
 hashCodeField(field) ::= <<
 <if(field.static.undefined)>
@@ -171,6 +183,12 @@ result = prime * result +
 <elseif(field.nullable)>(<field> == null ? 0 : <field>.hashCode())
 <else><field>.hashCode()
 <endif>;<endif>
+>>
+hashCodePrecomputationMethod(fields, settings) ::= <<
+<if(settings.hashCodePrecomputation)>
+private static int buildHashCode(<fields:attribute(); separator = ",">) {
+	<hashCodeMethodBody(fields, settings)>
+}<endif>
 >>
 
 
@@ -233,9 +251,7 @@ setupFieldMutable(field, settings) ::= <<
 <if(field.static.undefined)>this.<field> = <field; format="copy">;<endif>
 >>
 setupFieldsImmutable(fields, settings) ::= <<
-<fields: { f|
-	<setupFieldImmutable(f, settings)>
-}>
+<fields: { f| <setupFieldImmutable(f, settings)> }>
 >>
 setupFieldImmutable(field, settings) ::= <<
 <if(field.static.undefined)>this.<field> = <field; format="immutable">;<endif>

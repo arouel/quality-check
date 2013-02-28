@@ -15,7 +15,8 @@ import javax.annotation.Nonnull;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 
 import org.junit.Test;
-import org.mutabilitydetector.repackaged.com.google.common.collect.Lists;
+
+import com.google.common.collect.Lists;
 
 public final class ImmutableSettingsTest {
 
@@ -49,6 +50,8 @@ public final class ImmutableSettingsTest {
 
 		private boolean hashCodeAndEquals = false;
 
+		private boolean hashCodePrecomputation = false;
+
 		private boolean jsr305Annotations = false;
 
 		private boolean qualityCheck = false;
@@ -65,7 +68,7 @@ public final class ImmutableSettingsTest {
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fieldPrefix, fields, immutableName, imports, interfaces, mainInterface,
 					packageDeclaration, builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface,
-					guava, hashCodeAndEquals, jsr305Annotations, qualityCheck, toString, serializable);
+					guava, hashCodeAndEquals, hashCodePrecomputation, jsr305Annotations, qualityCheck, toString, serializable);
 		}
 
 		public Blueprint builderCopyConstructor(final boolean builderCopyConstructor) {
@@ -110,6 +113,11 @@ public final class ImmutableSettingsTest {
 
 		public Blueprint hashCodeAndEquals(final boolean hashCodeAndEquals) {
 			this.hashCodeAndEquals = hashCodeAndEquals;
+			return this;
+		}
+
+		public Blueprint hashCodePrecomputation(final boolean hashCodePrecomputation) {
+			this.hashCodePrecomputation = hashCodePrecomputation;
 			return this;
 		}
 
@@ -242,6 +250,14 @@ public final class ImmutableSettingsTest {
 	public void equals_different_HASHCODEANDEQUALS() {
 		final ImmutableSettings a = new Blueprint().hashCodeAndEquals(true).build();
 		final ImmutableSettings b = new Blueprint().hashCodeAndEquals(false).build();
+		assertFalse(a.equals(b));
+		assertFalse(a.hashCode() == b.hashCode());
+	}
+
+	@Test
+	public void equals_different_HASHCODEPRECOMPUTATION() {
+		final ImmutableSettings a = new Blueprint().hashCodePrecomputation(true).build();
+		final ImmutableSettings b = new Blueprint().hashCodePrecomputation(false).build();
 		assertFalse(a.equals(b));
 		assertFalse(a.hashCode() == b.hashCode());
 	}

@@ -1,6 +1,8 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -115,12 +117,24 @@ public interface Settings {
 	boolean hasGuava();
 
 	/**
-	 * Generate <code>hashcode()</code> and <code>equals()</code> methods in immutable object class.
+	 * Generate <code>hashCode()</code> and <code>equals()</code> methods in immutable object class.
 	 * 
-	 * @return {@code true} to override <code>hashcode()</code> and <code>equals()</code> methods otherwise
+	 * @return {@code true} to override <code>hashCode()</code> and <code>equals()</code> methods otherwise
 	 *         {@code false}
 	 */
 	boolean hasHashCodeAndEquals();
+
+	/**
+	 * Generate code to precompute the {@code hashCode} during construction time.
+	 * <p>
+	 * Consider to choose this option when and only when you'll get better performance in your application (because you
+	 * want to use objects of the class in {@link Set}s and {@link Map}s) and you take care that the class to be
+	 * generated is guaranteed to be immutable. This means all fields of this class can never change his state, like
+	 * {@link String} does.
+	 * 
+	 * @return {@code true} to precompute <code>hashCode</code> during instaniation of an object otherwise {@code false}
+	 */
+	boolean hasHashCodePrecomputation();
 
 	/**
 	 * Add JSR 305 Annotations for Software Defect Detection in Java.

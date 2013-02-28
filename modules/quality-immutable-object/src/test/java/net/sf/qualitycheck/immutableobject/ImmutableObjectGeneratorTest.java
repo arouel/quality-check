@@ -126,6 +126,31 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_hashCodePrecomputation() {
+		final StringBuilder b = new StringBuilder();
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("List<String> getNames();\n");
+		b.append("}");
+
+		final ImmutableSettings settingsWithHashCodePrecomp = settingsBuilder.hashCodePrecomputation(true).hashCodeAndEquals(true).build();
+		final String withHashCodePrecomp = ImmutableObjectGenerator.generate(b.toString(), settingsWithHashCodePrecomp).getImplCode();
+		assertTrue(withHashCodePrecomp.contains("private static int buildHashCode(final String name, final List<String> names) {"));
+		assertTrue(withHashCodePrecomp.contains("private final int hash;"));
+		assertTrue(withHashCodePrecomp.contains("hash = buildHashCode(name, names);"));
+		assertTrue(withHashCodePrecomp.contains("return hash;"));
+
+		final ImmutableSettings settingsWithoutHashCodePrecomp = settingsBuilder.hashCodePrecomputation(false).hashCodeAndEquals(true)
+				.build();
+		final String withoutHashCodePrecomp = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutHashCodePrecomp).getImplCode();
+		assertFalse(withoutHashCodePrecomp.contains("private static int buildHashCode(final String name, final List<String> names) {"));
+		assertFalse(withoutHashCodePrecomp.contains("private final int hash;"));
+		assertFalse(withoutHashCodePrecomp.contains("hash = buildHashCode(name, names);"));
+		assertFalse(withoutHashCodePrecomp.contains("return hash;"));
+	}
+
+	@Test
 	public void renderingOf_jsr305Annotations() {
 		final StringBuilder b = new StringBuilder();
 		b.append("import javax.annotation.Nonnull;");
@@ -259,10 +284,11 @@ public class ImmutableObjectGeneratorTest {
 		settings.fieldPrefix("");
 		settings.jsr305Annotations(true);
 		settings.guava(false);
-		settings.hashCodeAndEquals(true);
 		settings.qualityCheck(true);
 
 		// immutable settings
+		settings.hashCodePrecomputation(false);
+		settings.hashCodeAndEquals(true);
 		settings.serializable(false);
 
 		// builder settings
@@ -287,6 +313,8 @@ public class ImmutableObjectGeneratorTest {
 		settings.qualityCheck(true);
 
 		// immutable settings
+		settings.hashCodePrecomputation(false);
+		settings.hashCodeAndEquals(true);
 		settings.serializable(false);
 
 		// builder settings
