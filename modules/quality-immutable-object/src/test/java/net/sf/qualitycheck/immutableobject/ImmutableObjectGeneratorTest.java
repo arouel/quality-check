@@ -250,6 +250,22 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_withCovariance() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<? extends TestObject> getChildren();\n");
+		b.append("}");
+		final ImmutableSettings settings = settingsBuilder.fieldPrefix("_").build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("private final List<? extends TestObject> _children;"));
+		assertTrue(generatedCode.contains("public ImmutableTestObject(final List<? extends TestObject> children) {"));
+		assertTrue(generatedCode.contains("this._children = Collections.unmodifiableList(new ArrayList<? extends TestObject>(children));"));
+		assertTrue(generatedCode.contains("public List<? extends TestObject> getChildren() {"));
+	}
+
+	@Test
 	public void renderingOf_withGeneric() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");

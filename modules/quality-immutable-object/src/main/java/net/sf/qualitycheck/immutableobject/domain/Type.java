@@ -96,9 +96,9 @@ public final class Type {
 	/**
 	 * Pattern to parse a full qualified name of a type
 	 * <p>
-	 * ^(((\d|\w)+\.)*)((\d|\w)+)(\$((\d|\w)+))?(<(\w.*)>)?$
+	 * ^(((\d|\w)+\.)*)((\d|\w)+)(\$((\d|\w)+))?(<([\w\?].*)>)?$
 	 */
-	private static final Pattern PATTERN = Pattern.compile("^(((\\d|\\w)+\\.)*)((\\d|\\w)+)(\\$((\\d|\\w)+))?(<(\\w.*)>)?$");
+	private static final Pattern PATTERN = Pattern.compile("^(((\\d|\\w)+\\.)*)((\\d|\\w)+)(\\$((\\d|\\w)+))?(<([\\w\\?].*)>)?$");
 
 	/**
 	 * Represents the primitive type <code>short</code> and not {@link java.lang.Short}
