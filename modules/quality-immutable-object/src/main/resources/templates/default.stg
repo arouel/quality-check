@@ -169,8 +169,7 @@ public int hashCode() {
 <if(settings.hashCodePrecomputation)>
 return hash;
 <else>
-<hashCodeMethodBody(fields, settings)>
-<endif>
+<hashCodeMethodBody(fields, settings)><endif>
 }
 <endif>
 >>
