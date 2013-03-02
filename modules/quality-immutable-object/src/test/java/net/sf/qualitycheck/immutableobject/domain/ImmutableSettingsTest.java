@@ -22,22 +22,6 @@ public final class ImmutableSettingsTest {
 
 	private static final class Blueprint {
 
-		private String builderName = "TestBuilder";
-
-		private String fieldPrefix = "_";
-
-		private List<Field> fields = Lists.newArrayList();
-
-		private String immutableName = "ImmutableTestObject";
-
-		private List<Import> imports = Lists.newArrayList();
-
-		private List<Interface> interfaces = Lists.newArrayList();
-
-		private Interface mainInterface = Interface.UNDEFINED;
-
-		private Package packageDeclaration = new Package("net.sf.qualitycheck.test");
-
 		private boolean builderCopyConstructor = false;
 
 		private boolean builderFlatMutators = false;
@@ -46,19 +30,39 @@ public final class ImmutableSettingsTest {
 
 		private boolean builderImplementsInterface = false;
 
+		private String builderName = "TestBuilder";
+
+		private boolean copyMethods = false;
+
+		private String fieldPrefix = "_";
+
+		private List<Field> fields = Lists.newArrayList();
+
 		private boolean guava = false;
 
 		private boolean hashCodeAndEquals = false;
 
 		private boolean hashCodePrecomputation = false;
 
+		private String immutableName = "ImmutableTestObject";
+
+		private List<Import> imports = Lists.newArrayList();
+
+		private List<Interface> interfaces = Lists.newArrayList();
+
 		private boolean jsr305Annotations = false;
+
+		private Interface mainInterface = Interface.UNDEFINED;
+
+		private Package packageDeclaration = new Package("net.sf.qualitycheck.test");
 
 		private boolean qualityCheck = false;
 
-		private boolean toString = false;
+		private boolean replacement = false;
 
 		private boolean serializable = false;
+
+		private boolean toString = false;
 
 		public Blueprint() {
 			// default constructor
@@ -68,7 +72,8 @@ public final class ImmutableSettingsTest {
 		public ImmutableSettings build() {
 			return new ImmutableSettings(builderName, fieldPrefix, fields, immutableName, imports, interfaces, mainInterface,
 					packageDeclaration, builderCopyConstructor, builderFlatMutators, builderFluentMutators, builderImplementsInterface,
-					guava, hashCodeAndEquals, hashCodePrecomputation, jsr305Annotations, qualityCheck, toString, serializable);
+					copyMethods, guava, hashCodeAndEquals, hashCodePrecomputation, jsr305Annotations, qualityCheck, toString, replacement,
+					serializable);
 		}
 
 		public Blueprint builderCopyConstructor(final boolean builderCopyConstructor) {
@@ -93,6 +98,11 @@ public final class ImmutableSettingsTest {
 
 		public Blueprint builderName(final String builderName) {
 			this.builderName = builderName;
+			return this;
+		}
+
+		public Blueprint copyMethods(final boolean copyMethods) {
+			this.copyMethods = copyMethods;
 			return this;
 		}
 
@@ -156,6 +166,11 @@ public final class ImmutableSettingsTest {
 			return this;
 		}
 
+		public Blueprint replacement(final boolean replacement) {
+			this.replacement = replacement;
+			return this;
+		}
+
 		public Blueprint serializable(final boolean serializable) {
 			this.serializable = serializable;
 			return this;
@@ -214,6 +229,14 @@ public final class ImmutableSettingsTest {
 	public void equals_different_BUILDERNAME() {
 		final ImmutableSettings a = new Blueprint().builderName("Builder1").build();
 		final ImmutableSettings b = new Blueprint().builderName("Builder2").build();
+		assertFalse(a.equals(b));
+		assertFalse(a.hashCode() == b.hashCode());
+	}
+
+	@Test
+	public void equals_different_COPYMETHODS() {
+		final ImmutableSettings a = new Blueprint().copyMethods(true).build();
+		final ImmutableSettings b = new Blueprint().copyMethods(false).build();
 		assertFalse(a.equals(b));
 		assertFalse(a.hashCode() == b.hashCode());
 	}
@@ -318,6 +341,14 @@ public final class ImmutableSettingsTest {
 	public void equals_different_QUALITYCHECK() {
 		final ImmutableSettings a = new Blueprint().qualityCheck(true).build();
 		final ImmutableSettings b = new Blueprint().qualityCheck(false).build();
+		assertFalse(a.equals(b));
+		assertFalse(a.hashCode() == b.hashCode());
+	}
+
+	@Test
+	public void equals_different_REPLACEMENT() {
+		final ImmutableSettings a = new Blueprint().replacement(true).build();
+		final ImmutableSettings b = new Blueprint().replacement(false).build();
 		assertFalse(a.equals(b));
 		assertFalse(a.hashCode() == b.hashCode());
 	}

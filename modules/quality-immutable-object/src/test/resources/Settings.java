@@ -109,6 +109,13 @@ public interface Settings {
 	boolean hasBuilderImplementsInterface();
 
 	/**
+	 * Add static methods to copy an interface conform object into an immutable representation.
+	 * 
+	 * @return {@code true} to generate such methods otherwise {@code false}
+	 */
+	boolean hasCopyMethods();
+
+	/**
 	 * Use <i>Guava</i> (Google Core Libraries for Java 1.6+) when generating <code>equals()</code> and
 	 * <code>hashCode()</code> methods and to copy or to make <i>immutable</i> {@code Iterable}s and {@code Map}s.
 	 * 
@@ -132,7 +139,8 @@ public interface Settings {
 	 * generated is guaranteed to be immutable. This means all fields of this class can never change his state, like
 	 * {@link String} does.
 	 * 
-	 * @return {@code true} to precompute <code>hashCode</code> during instaniation of an object otherwise {@code false}
+	 * @return {@code true} to precompute <code>hashCode</code> during instantiation of an object otherwise
+	 *         {@code false}
 	 */
 	boolean hasHashCodePrecomputation();
 
@@ -158,6 +166,14 @@ public interface Settings {
 	 * @return {@code true} to override <code>toString()</code> method otherwise {@code false}
 	 */
 	boolean hasToString();
+
+	/**
+	 * Uses the interface as definition of an immutable class but will be replaced by the new class. Otherwise the
+	 * immutable class implements the given interface and gets a new name.
+	 * 
+	 * @return {@code true} to replace the interface with generated immutable class otherwise {@code false}
+	 */
+	boolean isReplacement();
 
 	/**
 	 * Generates <code>serialVersionUID</code> constant (with default value <code>1L</code>) into immutable object class
