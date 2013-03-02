@@ -102,7 +102,8 @@ public final class ImmutableObjectGenerator {
 		settingsBuilder.fields(clazz.getFields());
 		settingsBuilder.immutableName(clazz.getName());
 		settingsBuilder.imports(clazz.getImports());
-		settingsBuilder.mainInterface(clazz.getInterfaces().get(0));
+		final Interface definition = new Interface(new Type(clazz.getPackage(), analysis.getInterfaceName(), GenericDeclaration.UNDEFINED));
+		settingsBuilder.mainInterface(definition);
 		settingsBuilder.interfaces(clazz.getInterfaces());
 		settingsBuilder.packageDeclaration(clazz.getPackage());
 
@@ -123,11 +124,15 @@ public final class ImmutableObjectGenerator {
 
 	@Nonnull
 	private static Clazz scaffoldClazz(@Nonnull final InterfaceAnalysis analysis, @Nonnull final ImmutableSettings settings) {
-		final String name = CLAZZ_PREFIX + analysis.getInterfaceName();
+		final String name;
 		final Package pkg = analysis.getPackage();
-
 		final List<Interface> interfaces = new ArrayList<Interface>();
-		interfaces.add(new Interface(new Type(pkg, analysis.getInterfaceName(), GenericDeclaration.UNDEFINED)));
+		if (settings.isReplacement()) {
+			name = analysis.getInterfaceName();
+		} else {
+			name = CLAZZ_PREFIX + analysis.getInterfaceName();
+			interfaces.add(new Interface(new Type(pkg, analysis.getInterfaceName(), GenericDeclaration.UNDEFINED)));
+		}
 
 		final List<Field> fields = new ArrayList<Field>();
 		if (settings.isSerializable() || isSerializable(analysis.getExtends())) {

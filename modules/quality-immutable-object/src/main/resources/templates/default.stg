@@ -15,7 +15,7 @@ immutableCompilationUnit(settings) ::= <<
 
 immutableClass(settings) ::= <<
 <annotateImmutable(settings)>
-public final class <settings.immutableName> implements <settings.interfaces:interface(); separator = ", "> {
+public final class <settings.immutableName><if(settings.interfaces)> implements <settings.interfaces:interface(); separator = ", "><endif> {
 
 	<builderClass(settings, true)>
 

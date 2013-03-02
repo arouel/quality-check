@@ -228,6 +228,33 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_replacement() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+		final ImmutableSettings settings = settingsBuilder.replacement(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("class TestObject {"));
+		assertTrue(generatedCode.contains("public TestObject(final String name) {"));
+	}
+
+	@Test
+	public void renderingOf_replacement_serializable() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+		final ImmutableSettings settings = settingsBuilder.replacement(true).serializable(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("class TestObject implements Serializable {"));
+		assertTrue(generatedCode.contains("private static final long serialVersionUID = 1L;"));
+		assertTrue(generatedCode.contains("public TestObject(final String name) {"));
+	}
+
+	@Test
 	public void renderingOf_serializable() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");
@@ -370,6 +397,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.copyMethods(true);
 		settings.hashCodePrecomputation(false);
 		settings.hashCodeAndEquals(true);
+		settings.replacement(true);
 		settings.serializable(false);
 
 		// builder settings
