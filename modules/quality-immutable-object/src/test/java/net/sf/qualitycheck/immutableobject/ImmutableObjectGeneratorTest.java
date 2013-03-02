@@ -77,6 +77,22 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_copyMethods() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+		final ImmutableSettings settings = settingsBuilder.build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("public static ImmutableTestObject copyOf(final TestObject testObject) {"));
+		assertTrue(generatedCode.contains("return new ImmutableTestObject(testObject.getName());"));
+		assertTrue(generatedCode.contains("public static ImmutableTestObject copyOnlyIfNecessary(final TestObject testObject) {"));
+		assertTrue(generatedCode
+				.contains("return testObject instanceof ImmutableTestObject ? (ImmutableTestObject) testObject : copyOf(testObject);"));
+	}
+
+	@Test
 	public void renderingOf_fieldPrefix() {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");

@@ -23,7 +23,7 @@ public final class <settings.immutableName> implements <settings.interfaces:inte
 
 	<hashCodePrecomputationMethod(settings.fields, settings)>
 
-	<copyOfMethod(settings); separator = "\n">
+	<copyOfMethods(settings); separator = "\n">
 
 	<settings.fields:asFinalField(); separator = "\n">
 
@@ -95,11 +95,17 @@ public <name>(<fields:attribute(); separator = ",">) {
 >>
 
 
-copyOfMethod(settings) ::= <<
+copyOfMethods(settings) ::= <<
 <annotateNonnull(settings)>
 public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLowerCamelCase">) {
 	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
 	return new <settings.immutableName>(<copyOfAttributes(settings)>);
+}
+
+<annotateNonnull(settings)>
+public static <settings.immutableName> copyOnlyIfNecessary(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLowerCamelCase">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
+	return <settings.mainInterface.type.name; format="toLowerCamelCase"> instanceof <settings.immutableName> ? (<settings.immutableName>) <settings.mainInterface.type.name; format="toLowerCamelCase"> : copyOf(<settings.mainInterface.type.name; format="toLowerCamelCase">);
 }
 >>
 

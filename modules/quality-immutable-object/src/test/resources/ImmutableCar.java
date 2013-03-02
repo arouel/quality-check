@@ -91,6 +91,12 @@ public final class ImmutableCar implements Car, Serializable {
 	}
 
 	@Nonnull
+	public static ImmutableCar copyOnlyIfNecessary(@Nonnull final Car car) {
+		Check.notNull(car, "car");
+		return car instanceof ImmutableCar ? (ImmutableCar) car : copyOf(car);
+	}
+
+	@Nonnull
 	private final List<String> codes;
 
 	@Nonnegative
