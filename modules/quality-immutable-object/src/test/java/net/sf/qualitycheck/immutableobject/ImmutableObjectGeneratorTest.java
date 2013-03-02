@@ -289,6 +289,20 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_withCollection_withoutGeneric() throws IOException {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List getElements();\n");
+		b.append("}");
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settingsBuilder.build()).getImplCode();
+		assertTrue(generatedCode.contains("private final List elements;"));
+		assertTrue(generatedCode.contains("this.elements = Collections.unmodifiableList(new ArrayList(elements));"));
+		assertTrue(generatedCode.contains("public List getElements() {"));
+	}
+
+	@Test
 	public void renderingOf_withConstants() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");
