@@ -199,7 +199,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("}");
 		final ImmutableSettings settings = settingsBuilder.qualityCheck(true).build();
 		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
-		assertTrue(generatedCode.contains("Check.notNull(testobject, \"testobject\");"));
+		assertTrue(generatedCode.contains("Check.notNull(testObject, \"testObject\");"));
 		assertTrue(generatedCode.contains("this.name = Check.notNull(name, \"name\");"));
 	}
 

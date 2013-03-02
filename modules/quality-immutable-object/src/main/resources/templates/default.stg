@@ -97,15 +97,15 @@ public <name>(<fields:attribute(); separator = ",">) {
 
 copyOfMethod(settings) ::= <<
 <annotateNonnull(settings)>
-public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLower">) {
-	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLower">, "<settings.mainInterface.type.name; format="toLower">");<endif>
+public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLowerCamelCase">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
 	return new <settings.immutableName>(<copyOfAttributes(settings)>);
 }
 >>
 
 
 copyOfAttribute(field, settings) ::= <<
-<if(field.static.undefined)><settings.mainInterface.type.name; format="toLower">.<field.accessorMethodName>()<endif>
+<if(field.static.undefined)><settings.mainInterface.type.name; format="toLowerCamelCase">.<field.accessorMethodName>()<endif>
 >>
 
 
@@ -336,8 +336,8 @@ buildMethodAttribute(field) ::= <<
 
 copyConstructor(settings) ::= <<
 <if(settings.builderCopyConstructor)>
-public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.mainInterface.type)> <settings.mainInterface.type.name; format="toLower">) {
-	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLower">, "<settings.mainInterface.type.name; format="toLower">");<endif>
+public <settings.builderName>(<annotateNonnull(settings)> final <importedType(settings.mainInterface.type)> <settings.mainInterface.type.name; format="toLowerCamelCase">) {
+	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
 	<settings.fields:{ f | <copyConstructorField(f, settings)> }>
 }
 <endif>
