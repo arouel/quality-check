@@ -83,12 +83,20 @@ public class ImmutableObjectGeneratorTest {
 		b.append("interface TestObject {\n");
 		b.append("String getName();\n");
 		b.append("}");
-		final ImmutableSettings settings = settingsBuilder.build();
-		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
-		assertTrue(generatedCode.contains("public static ImmutableTestObject copyOf(final TestObject testObject) {"));
-		assertTrue(generatedCode.contains("return new ImmutableTestObject(testObject.getName());"));
-		assertTrue(generatedCode.contains("public static ImmutableTestObject copyOnlyIfNecessary(final TestObject testObject) {"));
-		assertTrue(generatedCode
+		final ImmutableSettings settingsWithCopyMethods = settingsBuilder.copyMethods(true).build();
+		final String codeWithCopyMethods = ImmutableObjectGenerator.generate(b.toString(), settingsWithCopyMethods).getImplCode();
+		assertTrue(codeWithCopyMethods.contains("public static ImmutableTestObject copyOf(final TestObject testObject) {"));
+		assertTrue(codeWithCopyMethods.contains("return new ImmutableTestObject(testObject.getName());"));
+		assertTrue(codeWithCopyMethods.contains("public static ImmutableTestObject copyOnlyIfNecessary(final TestObject testObject) {"));
+		assertTrue(codeWithCopyMethods
+				.contains("return testObject instanceof ImmutableTestObject ? (ImmutableTestObject) testObject : copyOf(testObject);"));
+
+		final ImmutableSettings settingsWithoutCopyMethods = settingsBuilder.copyMethods(false).build();
+		final String codeWithoutCopyMethods = ImmutableObjectGenerator.generate(b.toString(), settingsWithoutCopyMethods).getImplCode();
+		assertFalse(codeWithoutCopyMethods.contains("public static ImmutableTestObject copyOf(final TestObject testObject) {"));
+		assertFalse(codeWithoutCopyMethods.contains("return new ImmutableTestObject(testObject.getName());"));
+		assertFalse(codeWithoutCopyMethods.contains("public static ImmutableTestObject copyOnlyIfNecessary(final TestObject testObject) {"));
+		assertFalse(codeWithoutCopyMethods
 				.contains("return testObject instanceof ImmutableTestObject ? (ImmutableTestObject) testObject : copyOf(testObject);"));
 	}
 
@@ -179,7 +187,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
-		final ImmutableSettings settings = settingsBuilder.jsr305Annotations(true).build();
+		final ImmutableSettings settings = settingsBuilder.jsr305Annotations(true).copyMethods(true).build();
 		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("@Immutable\npublic final class"));
 		assertTrue(generatedCode.contains("@Nonnull\n\tpublic static ImmutableTestObject copyOf(@Nonnull "));
@@ -213,7 +221,7 @@ public class ImmutableObjectGeneratorTest {
 		b.append("interface TestObject {\n");
 		b.append("@Nonnull String getName();\n");
 		b.append("}");
-		final ImmutableSettings settings = settingsBuilder.qualityCheck(true).build();
+		final ImmutableSettings settings = settingsBuilder.qualityCheck(true).copyMethods(true).build();
 		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
 		assertTrue(generatedCode.contains("Check.notNull(testObject, \"testObject\");"));
 		assertTrue(generatedCode.contains("this.name = Check.notNull(name, \"name\");"));
@@ -332,6 +340,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.qualityCheck(true);
 
 		// immutable settings
+		settings.copyMethods(true);
 		settings.hashCodePrecomputation(false);
 		settings.hashCodeAndEquals(true);
 		settings.serializable(false);
@@ -358,6 +367,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.qualityCheck(true);
 
 		// immutable settings
+		settings.copyMethods(true);
 		settings.hashCodePrecomputation(false);
 		settings.hashCodeAndEquals(true);
 		settings.serializable(false);

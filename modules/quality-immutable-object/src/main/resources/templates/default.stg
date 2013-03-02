@@ -96,6 +96,7 @@ public <name>(<fields:attribute(); separator = ",">) {
 
 
 copyOfMethods(settings) ::= <<
+<if(settings.copyMethods)>
 <annotateNonnull(settings)>
 public static <settings.immutableName> copyOf(<annotateNonnull(settings)> final <settings.mainInterface:interface()> <settings.mainInterface.type.name; format="toLowerCamelCase">) {
 	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
@@ -107,6 +108,7 @@ public static <settings.immutableName> copyOnlyIfNecessary(<annotateNonnull(sett
 	<if(settings.qualityCheck)>Check.notNull(<settings.mainInterface.type.name; format="toLowerCamelCase">, "<settings.mainInterface.type.name; format="toLowerCamelCase">");<endif>
 	return <settings.mainInterface.type.name; format="toLowerCamelCase"> instanceof <settings.immutableName> ? (<settings.immutableName>) <settings.mainInterface.type.name; format="toLowerCamelCase"> : copyOf(<settings.mainInterface.type.name; format="toLowerCamelCase">);
 }
+<endif>
 >>
 
 
