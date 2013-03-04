@@ -289,6 +289,35 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_withBuilder_withBuilderCopyConstructor() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		final ImmutableSettings settings = settingsBuilder.builderName("Builder").builderCopyConstructor(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("public Builder(final TestObject testObject) {"));
+		assertTrue(generatedCode.contains("this.namesOfFields = new ArrayList<String>(testObject.getNamesOfFields());"));
+	}
+
+	@Test
+	public void renderingOf_withBuilder_withoutBuilderCopyConstructor() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		final ImmutableSettings settings = settingsBuilder.builderName("Builder").builderCopyConstructor(false).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertFalse(generatedCode.contains("public Builder(final TestObject testObject) {"));
+	}
+
+	@Test
 	public void renderingOf_withCollection_withoutGeneric() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");
@@ -402,26 +431,27 @@ public class ImmutableObjectGeneratorTest {
 		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
 
 		// global settings
-		settings.fieldPrefix("");
+		settings.fieldPrefix("_");
 		settings.jsr305Annotations(true);
 		settings.guava(true);
 		settings.qualityCheck(true);
 
 		// immutable settings
 		settings.copyMethods(true);
-		settings.hashCodePrecomputation(false);
+		settings.hashCodePrecomputation(true);
 		settings.hashCodeAndEquals(true);
-		settings.replacement(true);
-		settings.serializable(false);
+		settings.replacement(false);
+		settings.serializable(true);
+		settings.toString(true);
 
 		// builder settings
 		settings.builderCopyConstructor(true);
-		settings.builderFlatMutators(true);
+		settings.builderFlatMutators(false);
 		settings.builderFluentMutators(true);
 		settings.builderName("Builder");
 		settings.builderImplementsInterface(false);
 
-		final String file = "Settings.java";
+		final String file = "VirtualFilePermission.java";
 		LOG.info("\n" + readInterfaceAndGenerate(file, settings.build()));
 	}
 
