@@ -451,7 +451,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderName("Builder");
 		settings.builderImplementsInterface(false);
 
-		final String file = "VirtualFilePermission.java";
+		final String file = "Settings.java";
 		LOG.info("\n" + readInterfaceAndGenerate(file, settings.build()));
 	}
 
