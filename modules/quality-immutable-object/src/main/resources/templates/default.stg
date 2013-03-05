@@ -58,6 +58,11 @@ accessToMemberField(field) ::= <<
 >>
 
 
+accessToArgument(field) ::= <<
+<if(field.static.undefined)><field.name><endif>
+>>
+
+
 annotate(annotation) ::= <<
 @<annotation.type.name>
 >>
@@ -175,8 +180,7 @@ return hash;
 >>
 hashCodeMethodBody(fields, settings) ::= <<
 <if(settings.guava)>
-return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);
-<else>
+return Objects.hashCode(<fields:accessToMemberField(); separator = ",">);<else>
 final int prime = 31;
 int result = 1;
 <fields:hashCodeField()>
@@ -194,8 +198,25 @@ result = prime * result +
 hashCodePrecomputationMethod(fields, settings) ::= <<
 <if(settings.hashCodePrecomputation)>
 private static int buildHashCode(<fields:attribute(); separator = ",">) {
-	<hashCodeMethodBody(fields, settings)>
+	<hashCodePrecomputationMethodBody(fields, settings)>
 }<endif>
+>>
+hashCodePrecomputationMethodBody(fields, settings) ::= <<
+<if(settings.guava)>
+return Objects.hashCode(<fields:accessToArgument(); separator = ",">);<else>
+final int prime = 31;
+int result = 1;
+<fields:hashCodePrecomputationField()>
+return result;<endif>
+>>
+hashCodePrecomputationField(field) ::= <<
+<if(field.static.undefined)>
+result = prime * result + 
+<if(field.type.boolean)>(<field.name> ? 1231 : 1237)
+<elseif(field.type.primitive)><field.name>
+<elseif(field.nullable)>(<field.name> == null ? 0 : <field.name>.hashCode())
+<else><field>.hashCode()
+<endif>;<endif>
 >>
 
 

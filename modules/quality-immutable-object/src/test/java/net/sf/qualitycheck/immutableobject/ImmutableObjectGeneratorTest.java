@@ -372,6 +372,84 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_withHashCodeAndEquals_withFieldPrefix() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		settingsBuilder.hashCodeAndEquals(true);
+		settingsBuilder.fieldPrefix("_PREFIX_");
+		final ImmutableSettings settings = settingsBuilder.build();
+		final String code = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertFalse(code.contains("private static int buildHashCode(final String name, final List<String> namesOfFields) {"));
+		assertTrue(code.contains("result = prime * result + (_PREFIX_name == null ? 0 : _PREFIX_name.hashCode());"));
+		assertTrue(code.contains("result = prime * result + (_PREFIX_namesOfFields == null ? 0 : _PREFIX_namesOfFields.hashCode());"));
+	}
+
+	@Test
+	public void renderingOf_withHashCodeAndEquals_withFieldPrefix_withGuava() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		settingsBuilder.hashCodeAndEquals(true);
+		settingsBuilder.fieldPrefix("_PREFIX_");
+		settingsBuilder.guava(true);
+		final ImmutableSettings settings = settingsBuilder.build();
+		final String code = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertFalse(code.contains("private static int buildHashCode(final String name, final List<String> namesOfFields) {"));
+		assertTrue(code.contains("return Objects.hashCode(_PREFIX_name, _PREFIX_namesOfFields);"));
+	}
+
+	@Test
+	public void renderingOf_withHashCodePrecomputation_withFieldPrefix() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		settingsBuilder.hashCodeAndEquals(true);
+		settingsBuilder.hashCodePrecomputation(true);
+		settingsBuilder.fieldPrefix("_PREFIX_");
+		final ImmutableSettings settings = settingsBuilder.build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("private static int buildHashCode(final String name, final List<String> namesOfFields) {"));
+		assertTrue(generatedCode.contains("result = prime * result + (name == null ? 0 : name.hashCode());"));
+		assertTrue(generatedCode.contains("result = prime * result + (namesOfFields == null ? 0 : namesOfFields.hashCode());"));
+	}
+
+	@Test
+	public void renderingOf_withHashCodePrecomputation_withFieldPrefix_withGuava() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("import java.util.List;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("List<String> getNamesOfFields();\n");
+		b.append("}");
+
+		settingsBuilder.hashCodeAndEquals(true);
+		settingsBuilder.hashCodePrecomputation(true);
+		settingsBuilder.fieldPrefix("_PREFIX_");
+		settingsBuilder.guava(true);
+		final ImmutableSettings settings = settingsBuilder.build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		assertTrue(generatedCode.contains("private static int buildHashCode(final String name, final List<String> namesOfFields) {"));
+		assertTrue(generatedCode.contains("return Objects.hashCode(name, namesOfFields);"));
+	}
+
+	@Test
 	public void renderingOf_withInnerCompilationUnit() throws IOException {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");
