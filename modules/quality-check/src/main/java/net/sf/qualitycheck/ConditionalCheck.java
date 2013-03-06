@@ -30,6 +30,7 @@ import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
@@ -103,6 +104,8 @@ public final class ConditionalCheck {
 	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
 	 * {@code expected.equals(check) }.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -127,6 +130,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a passed class has an annotation of a specific type
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param clazz
 	 *            the class that must have a required annotation
 	 * @param annotation
@@ -150,6 +155,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a passed argument is a member of a specific type.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param type
 	 *            class that the given object is a member of
 	 * @param obj
@@ -171,6 +178,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a passed argument is a member of a specific type.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param type
 	 *            class that the given object is a member of
 	 * @param obj
@@ -193,8 +202,55 @@ public final class ConditionalCheck {
 	}
 
 	/**
+	 * Ensures that a given argument is {@code null}.
+	 * 
+	 * Normally, the usage of {@code null} arguments is disregarded by the authors of quality-check. Still, there are
+	 * certain circumstances where null is required, e.g. the primary key of an entity before it is written to the
+	 * database for the first time. In such cases it is ok to use null values and there should also be checks for them.
+	 * For example, to avoid overwriting an existing primary key with a new one.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param reference
+	 *            reference which must be null.
+	 * @throws IllegalNotNullArgumentException
+	 *             if the given argument {@code reference} is not null
+	 */
+	public static void isNull(final boolean condition, @Nullable final Object reference) {
+		if (condition) {
+			Check.isNull(reference);
+		}
+	}
+
+	/**
+	 * Ensures that a given argument is {@code null}.
+	 * 
+	 * Normally, the usage of {@code null} arguments is disregarded by the authors of quality-check. Still, there are
+	 * certain circumstances where null is required, e.g. the primary key of an entity before it is written to the
+	 * database for the first time. In such cases it is ok to use null values and there should also be checks for them.
+	 * For example, to avoid overwriting an existing primary key with a new one.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param reference
+	 *            reference which must be null.
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNotNullArgumentException
+	 *             if the given argument {@code reference} is not null
+	 */
+	public static void isNull(final boolean condition, @Nullable final Object reference, @Nullable final String name) {
+		if (condition) {
+			Check.isNull(reference, name);
+		}
+	}
+
+	/**
 	 * Ensures that a String argument is a number.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which must be a number
 	 * @throws IllegalNumberArgumentException
@@ -211,6 +267,8 @@ public final class ConditionalCheck {
 	 * Ensures that a String argument is a number. This overload supports all subclasses of {@code Number}. The number
 	 * is first converted to a BigInteger
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which must be a number
 	 * @param type
@@ -230,6 +288,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a string argument is a number according to {@code Integer.parseInt}
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which must be a number
 	 * @param name
@@ -252,6 +312,8 @@ public final class ConditionalCheck {
 	 * 
 	 * This method does also check against the ranges of the given datatypes.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which must be a number and in the range of the given datatype.
 	 * @param name
@@ -280,6 +342,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#isNumeric(CharSequence, String)} and pass as second
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            a readable sequence of {@code char} values which must be a number
 	 * @return the given string argument
@@ -301,6 +365,8 @@ public final class ConditionalCheck {
 	 * characters 0-9 and may start with 0 (compared to number arguments, which must be valid numbers - think of a bank
 	 * account number).
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            a readable sequence of {@code char} values which must be a number
 	 * @param name
@@ -327,6 +393,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#matchesPattern(Pattern, CharSequence, String)} and pass as
 	 * second argument the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param pattern
 	 *            pattern, that the {@code chars} must correspond to
 	 * @param chars
@@ -351,6 +419,8 @@ public final class ConditionalCheck {
 	 * Ensures that a readable sequence of {@code char} values matches a specified pattern. If the given character
 	 * sequence does not match against the passed pattern, an {@link IllegalPatternArgumentException} will be thrown.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param pattern
 	 *            pattern, that the {@code chars} must correspond to
 	 * @param chars
@@ -382,6 +452,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#noNullElements(Iterable, String)} and pass as second
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param iterable
 	 *            the iterable reference which should not contain {@code null}
 	 * @return the passed reference which contains no elements that are {@code null}
@@ -401,6 +473,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that an iterable reference is neither {@code null} nor contains any elements that are {@code null}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param iterable
 	 *            the iterable reference which should not contain {@code null}
 	 * @param name
@@ -426,6 +500,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#noNullElements(Object[], String)} and pass as second
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param array
 	 *            reference to an array
 	 * @return the passed reference which contains no elements that are {@code null}
@@ -445,6 +521,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that an array does not contain {@code null}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param array
 	 *            reference to an array
 	 * @param name
@@ -471,6 +549,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(boolean, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
 	 *            {@code false} means not empty)
@@ -492,6 +572,8 @@ public final class ConditionalCheck {
 	 * Ensures that a passed parameter of the calling method is not empty, using the passed expression to evaluate the
 	 * emptiness.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
 	 *            {@code false} means not empty)
@@ -516,6 +598,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(CharSequence, String)} and pass as second
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should not be empty
 	 * @return the passed reference that is not empty
@@ -541,6 +625,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
 	 * the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param collection
 	 *            a collection which should not be empty
 	 * @return the passed reference that is not empty
@@ -566,6 +652,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
 	 * the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param map
 	 *            a map which should not be empty
 	 * @return the passed reference that is not empty
@@ -594,11 +682,13 @@ public final class ConditionalCheck {
 	 * <pre>
 	 * &#064;ArgumentsChecked
 	 * public setText(String text) {
-	 * 	Check.notEmpty(text, text.isEmpty(), &quot;text&quot;);
+	 * 	ConditionalCheck.notEmpty(true, text, text.isEmpty(), &quot;text&quot;);
 	 * 	this.text = text;
 	 * }
 	 * </pre>
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param reference
 	 *            an object reference which should not be empty
 	 * @param expression
@@ -635,6 +725,8 @@ public final class ConditionalCheck {
 	 * }
 	 * </pre>
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should not be empty
 	 * @param name
@@ -662,6 +754,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(Collection, String)} and pass as second argument
 	 * the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param map
 	 *            a map which should not be empty
 	 * @param name
@@ -695,6 +789,8 @@ public final class ConditionalCheck {
 	 * }
 	 * </pre>
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param collection
 	 *            a collection which should not be empty
 	 * @param name
@@ -722,6 +818,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notEmpty(Object[], String)} and pass as second argument
 	 * the name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param array
 	 *            a map which should not be empty
 	 * @return the passed reference that is not empty
@@ -743,6 +841,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a passed map as a parameter of the calling method is not empty.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param array
 	 *            a map which should not be empty
 	 * @param name
@@ -772,6 +872,8 @@ public final class ConditionalCheck {
 	 * 
 	 * @see java.lang.Double#NaN
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which should not be NaN
 	 * @return the given double value
@@ -792,6 +894,8 @@ public final class ConditionalCheck {
 	 * 
 	 * @see java.lang.Double#NaN
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which should not be NaN
 	 * @param name
@@ -818,6 +922,8 @@ public final class ConditionalCheck {
 	 * 
 	 * @see java.lang.Float#NaN
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which should not be NaN
 	 * @return the given double value
@@ -838,6 +944,8 @@ public final class ConditionalCheck {
 	 * 
 	 * @see java.lang.Float#NaN
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            value which should not be NaN
 	 * @param name
@@ -862,6 +970,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notNegative(int, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            a number
 	 * @param name
@@ -882,6 +992,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param value
 	 *            a number
 	 * @param name
@@ -906,6 +1018,8 @@ public final class ConditionalCheck {
 	 * We recommend to use the overloaded method {@link Check#notNull(Object, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param reference
 	 *            an object reference
 	 * @return the non-null reference that was validated
@@ -924,6 +1038,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param reference
 	 *            an object reference
 	 * @param name
@@ -944,6 +1060,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a given position index is valid within the size of an array, list or string ...
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param index
 	 *            index of an array, list or string
 	 * @param size
@@ -976,6 +1094,8 @@ public final class ConditionalCheck {
 	 * <li>end >= 0</li>
 	 * </ul>
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param start
 	 *            the start value of the range (must be a positive integer or 0)
 	 * @param end
@@ -1002,6 +1122,8 @@ public final class ConditionalCheck {
 	 * good wording) for your case and to use the overloaded method {@link Check#stateIsTrue(boolean, Class)} and pass
 	 * as second argument your exception.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            an expression that must be true to indicate a valid state
 	 * 
@@ -1019,6 +1141,8 @@ public final class ConditionalCheck {
 	 * Ensures that a given state is {@code true} and allows to specify the class of exception which is thrown in case
 	 * the state is not {@code true}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param clazz
@@ -1041,6 +1165,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a given state is {@code true}.
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param description
@@ -1058,6 +1184,8 @@ public final class ConditionalCheck {
 	/**
 	 * Ensures that a given state is {@code true}
 	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param descriptionTemplate

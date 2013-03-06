@@ -33,6 +33,7 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
@@ -257,6 +258,47 @@ public final class Check {
 			throw new IllegalInstanceOfArgumentException(name, type, obj.getClass());
 		}
 		return (T) obj;
+	}
+
+	/**
+	 * Ensures that a given argument is {@code null}.
+	 * 
+	 * Normally, the usage of {@code null} arguments is disregarded by the authors of quality-check. Still, there are
+	 * certain circumstances where null is required, e.g. the primary key of an entity before it is written to the
+	 * database for the first time. In such cases it is ok to use null values and there should also be checks for them.
+	 * For example, to avoid overwriting an existing primary key with a new one.
+	 * 
+	 * @param reference
+	 *            reference which must be null.
+	 * @throws IllegalNotNullArgumentException
+	 *             if the given argument {@code reference} is not null
+	 */
+	public static void isNull(@Nullable final Object reference) {
+		if (reference != null) {
+			throw new IllegalNotNullArgumentException();
+		}
+	}
+
+	/**
+	 * Ensures that a given argument is {@code null}.
+	 * 
+	 * Normally, the usage of {@code null} arguments is disregarded by the authors of quality-check. Still, there are
+	 * certain circumstances where null is required, e.g. the primary key of an entity before it is written to the
+	 * database for the first time. In such cases it is ok to use null values and there should also be checks for them.
+	 * For example, to avoid overwriting an existing primary key with a new one.
+	 * 
+	 * @param reference
+	 *            reference which must be null.
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNotNullArgumentException
+	 *             if the given argument {@code reference} is not null
+	 */
+	public static void isNull(@Nullable final Object reference, @Nullable final String name) {
+		if (reference != null) {
+			throw new IllegalNotNullArgumentException(name);
+		}
 	}
 
 	/**
@@ -1143,5 +1185,4 @@ public final class Check {
 	private Check() {
 		// This class is not intended to create objects from it.
 	}
-
 }

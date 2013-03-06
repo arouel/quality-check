@@ -117,6 +117,34 @@
 							</code>
 						</td>
 					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;reference)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;object)
+							</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;reference, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>
+								<strong>isNull</strong>
+								(Object&#160;object, String&#160;message)
+							</code>
+						</td>
+					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
 							<code>
@@ -611,28 +639,6 @@
 								<strong>isAssignable</strong>
 								(Class&#160;superType,
 								Class&#160;subType, String&#160;message)
-							</code>
-						</td>
-					</tr>
-					<tr class="rowColor">
-						<td class="colFirst">
-							<code>-</code>
-						</td>
-						<td class="colLast">
-							<code>
-								<strong>isNull</strong>
-								(Object&#160;object)
-							</code>
-						</td>
-					</tr>
-					<tr class="altColor">
-						<td class="colFirst">
-							<code>-</code>
-						</td>
-						<td class="colLast">
-							<code>
-								<strong>isNull</strong>
-								(Object&#160;object, String&#160;message)
 							</code>
 						</td>
 					</tr>
