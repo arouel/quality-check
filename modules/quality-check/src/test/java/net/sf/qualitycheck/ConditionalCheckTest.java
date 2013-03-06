@@ -32,6 +32,7 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
@@ -130,6 +131,36 @@ public class ConditionalCheckTest {
 	@Test
 	public void testInstanceOfArgName_Positive_NoFailure() {
 		ConditionalCheck.instanceOf(true, Long.class, Long.valueOf(3), "arg");
+	}
+
+	@Test
+	public void testIsNull_Negative() {
+		ConditionalCheck.isNull(false, "Quality-Check");
+	}
+
+	@Test(expected = IllegalNotNullArgumentException.class)
+	public void testIsNull_Positive_Failure() {
+		ConditionalCheck.isNull(true, "Quality-Check");
+	}
+
+	@Test
+	public void testIsNull_Positive_NoFailure() {
+		ConditionalCheck.isNull(true, null);
+	}
+
+	@Test
+	public void testIsNullArgName_Negative() {
+		ConditionalCheck.isNull(false, "Quality-Check", "foo");
+	}
+
+	@Test(expected = IllegalNotNullArgumentException.class)
+	public void testIsNullArgName_Positive_Failure() {
+		ConditionalCheck.isNull(true, "Quality-Check", "foo");
+	}
+
+	@Test
+	public void testIsNullArgName_Positive_NoFailure() {
+		ConditionalCheck.isNull(true, null, "foo");
 	}
 
 	@Test
@@ -762,5 +793,4 @@ public class ConditionalCheckTest {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.ConditionalCheck");
 		cls.newInstance(); // exception here
 	}
-
 }
