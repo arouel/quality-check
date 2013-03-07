@@ -68,6 +68,17 @@
 							<em>Assert</em>
 						</th>
 					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>contains</strong>(Collection&lt;T&gt;&#160;haystack,
+								T&#160;needle)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
 							<code>
@@ -691,6 +702,17 @@
 							<em>Preconditions</em>
 						</th>
 					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>contains</strong>(Collection&lt;T&gt;&#160;haystack,
+								T&#160;needle)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
+					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
 							<code>
@@ -1247,6 +1269,17 @@
 							Method of
 							<em>Validate</em>
 						</th>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>contains</strong>(Collection&lt;T&gt;&#160;haystack,
+								T&#160;needle)
+							</code>
+						</td>
+						<td class="colLast">
+								<code>-</code>
+						</td>
 					</tr>
 					<tr class="altColor">
 						<td class="colFirst">
