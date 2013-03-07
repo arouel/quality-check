@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
@@ -124,6 +125,62 @@ public final class Check {
 			throw new IllegalNumberArgumentException("Return value is no known subclass of 'java.lang.Number': " + type.getName());
 		}
 		return ret;
+	}
+
+	/**
+	 * Ensures that an elemen {@code needle} is contained in a collection {@code hackstack}.
+	 * 
+	 * This is in particular useful if you want to check whether an enum value is contained in an {@code EnumSet}. The
+	 * check is implemented using {@code Collection.contains}.
+	 * 
+	 * @param haystack
+	 *            A collection which must contain {@code needle}
+	 * @param needle
+	 *            An object that must be contained into a collection.
+	 * @return {@code needle}
+	 * 
+	 * @throws IllegalArgumentNotContainedException
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle) {
+		Check.notNull(haystack, "haystack");
+		Check.notNull(needle, "needle");
+
+		if (!haystack.contains(needle)) {
+			throw new IllegalArgumentNotContainedException();
+		}
+
+		return needle;
+	}
+
+	/**
+	 * Ensures that an elemen {@code needle} is contained in a collection {@code hackstack}.
+	 * 
+	 * This is in particular useful if you want to check whether an enum value is contained in an {@code EnumSet}. The
+	 * check is implemented using {@code Collection.contains}.
+	 * 
+	 * @param haystack
+	 *            A collection which must contain {@code needle}
+	 * @param needle
+	 *            An object that must be contained into a collection.
+	 * @param name
+	 *            name of argument of {@code needle}
+	 * @return {@code needle}
+	 * 
+	 * @throws IllegalArgumentNotContainedException
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle, @Nonnull final String name) {
+		Check.notNull(haystack, "haystack");
+		Check.notNull(needle, "needle");
+
+		if (!haystack.contains(needle)) {
+			throw new IllegalArgumentNotContainedException(name);
+		}
+
+		return needle;
 	}
 
 	/**

@@ -19,6 +19,7 @@ package net.sf.qualitycheck;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
@@ -50,12 +52,48 @@ public class ConditionalCheckTest {
 	private static class FakeAnnotatedClass {
 	}
 
+	private enum Letter {
+		A, B, C, D
+	}
+
+	private final EnumSet<Letter> set = EnumSet.of(Letter.A, Letter.D);;
+
 	@Test
 	public void giveMeCoverageForMyPrivateConstructor() throws Exception {
 		// reduces only some noise in coverage report
 		final Constructor<ConditionalCheck> constructor = ConditionalCheck.class.getDeclaredConstructor();
 		constructor.setAccessible(true);
 		constructor.newInstance();
+	}
+
+	@Test
+	public void testContains_Negative() {
+		ConditionalCheck.contains(false, set, Letter.B);
+	}
+
+	@Test(expected = IllegalArgumentNotContainedException.class)
+	public void testContains_Positive_Failure() {
+		ConditionalCheck.contains(true, set, Letter.C);
+	}
+
+	@Test
+	public void testContains_Positive_NoFailure() {
+		ConditionalCheck.contains(true, set, Letter.A);
+	}
+
+	@Test
+	public void testContainsMsg_Negative() {
+		ConditionalCheck.contains(false, set, Letter.C, "msg");
+	}
+
+	@Test(expected = IllegalArgumentNotContainedException.class)
+	public void testContainsMsg_Positive_Failure() {
+		ConditionalCheck.contains(true, set, Letter.C, "msg");
+	}
+
+	@Test
+	public void testContainsMsg_Positive_NoFailure() {
+		ConditionalCheck.contains(true, set, Letter.D, "msg");
 	}
 
 	@Test
