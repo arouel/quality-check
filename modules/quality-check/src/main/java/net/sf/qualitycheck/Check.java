@@ -679,7 +679,7 @@ public final class Check {
 	 * @param check
 	 *            Comparable to be checked
 	 * @param message
-	 *            an error message describing why the comparables must be greater than a value (will be passed to
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
 	 *            {@code IllegalNotGreaterThanException})
 	 * @return the passed {@code Comparable} argument {@code check}
 	 * 
@@ -816,7 +816,7 @@ public final class Check {
 	 *            value which must be a number
 	 * @return the given string argument converted to an int
 	 * @throws IllegalNumberArgumentException
-	 *             if the given argument {@code value} is no number
+	 *             if the given argument {@code value} is not a number
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -1544,7 +1544,7 @@ public final class Check {
 	 * @param value
 	 *            a number
 	 * @param name
-	 *            name of the number argument (in source code)
+	 *            name of the number reference (in source code)
 	 * @return the non-null reference that was validated
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}

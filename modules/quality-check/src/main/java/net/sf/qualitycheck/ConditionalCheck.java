@@ -31,6 +31,7 @@ import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -77,10 +78,18 @@ import net.sf.qualitycheck.exception.RuntimeInstantiationException;
 public final class ConditionalCheck {
 
 	/**
-	 * Ensures that an elemen {@code needle} is contained in a collection {@code hackstack}.
+	 * Ensures that an element {@code needle} is contained in a collection {@code haystack}.
 	 * 
+	 * <p>
 	 * This is in particular useful if you want to check whether an enum value is contained in an {@code EnumSet}. The
-	 * check is implemented using {@code Collection.contains}.
+	 * check is implemented using {@link java.util.Collection#contains(Object)}.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#contains(Collection, Object, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -88,9 +97,10 @@ public final class ConditionalCheck {
 	 *            A collection which must contain {@code needle}
 	 * @param needle
 	 *            An object that must be contained into a collection.
-	 * @return {@code needle}
+	 * @return the passed argument {@code needle}
 	 * 
 	 * @throws IllegalArgumentNotContainedException
+	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -103,10 +113,14 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that an elemen {@code needle} is contained in a collection {@code hackstack}.
+	 * Ensures that an element {@code needle} is contained in a collection {@code haystack}.
 	 * 
+	 * <p>
 	 * This is in particular useful if you want to check whether an enum value is contained in an {@code EnumSet}. The
-	 * check is implemented using {@code Collection.contains}.
+	 * check is implemented using {@link java.util.Collection#contains(Object)}.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -116,9 +130,10 @@ public final class ConditionalCheck {
 	 *            An object that must be contained into a collection.
 	 * @param name
 	 *            name of argument of {@code needle}
-	 * @return {@code needle}
+	 * @return the passed argument {@code needle}
 	 * 
 	 * @throws IllegalArgumentNotContainedException
+	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -133,7 +148,14 @@ public final class ConditionalCheck {
 
 	/**
 	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
-	 * {@code expected != check }.
+	 * <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(boolean, boolean, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -141,7 +163,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            boolean to be checked
-	 * @return {@code check} The checked boolean
+	 * @return the passed boolean argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -155,7 +180,10 @@ public final class ConditionalCheck {
 
 	/**
 	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
-	 * {@code expected != check }.
+	 * <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -166,7 +194,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the booleans must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked boolean
+	 * @return the passed boolean argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check,
 			final String message) { // NOSONAR
@@ -180,7 +211,14 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed byteH is equal to another byte. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(byte, byte, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -188,7 +226,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            byte to be checked
-	 * @return {@code check} The checked byte
+	 * @return the passed byte argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -201,7 +242,10 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed byte is equal to another byte. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -212,7 +256,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the bytes must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked byte
+	 * @return the byte boolean argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -225,7 +272,14 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed char is equal to another char. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(char, char, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -233,7 +287,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            char to be checked
-	 * @return {@code check} The checked char
+	 * @return the passed char argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -246,7 +303,10 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed char is equal to another char. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -257,7 +317,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the chars must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked char
+	 * @return the passed char argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -270,7 +333,14 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed intH is equal to another int. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed intH is equal to another int. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(int, int, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -278,7 +348,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            int to be checked
-	 * @return {@code check} The checked int
+	 * @return the passed int argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -291,7 +364,10 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed int is equal to another int. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed int is equal to another int. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -302,7 +378,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the ints must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked int
+	 * @return the passed int argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -315,7 +394,14 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed long is equal to another long. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(long, long, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -323,7 +409,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            long to be checked
-	 * @return {@code check} The checked long
+	 * @return the passed long argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -336,7 +425,10 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed long is equal to another long. The comparison is made using <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -347,7 +439,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the longs must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked long
+	 * @return the passed long argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -360,7 +455,15 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed short is equal to another short. The comparison is made using
+	 * <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#equals(short, short, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -368,7 +471,10 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            short to be checked
-	 * @return {@code check} The checked short
+	 * @return the passed short argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -381,7 +487,11 @@ public final class ConditionalCheck {
 	}
 
 	/**
-	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed short is equal to another short. The comparison is made using
+	 * <code>expected != check</code>.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
@@ -392,7 +502,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the shorts must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked short
+	 * @return the passed short {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -408,6 +521,7 @@ public final class ConditionalCheck {
 	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
 	 * {@code expected.equals(check) }.
 	 * 
+	 * <p>
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
@@ -433,6 +547,9 @@ public final class ConditionalCheck {
 	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
 	 * {@code expected.equals(check) }.
 	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
 	 * @param expected
@@ -442,7 +559,10 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the objects must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
-	 * @return {@code check} The checked object
+	 * @return the passed argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
@@ -460,13 +580,20 @@ public final class ConditionalCheck {
 	 * Ensures that a passed {@code Comparable} is greater to another {@code Comparable}. The comparison is made using
 	 * {@code expected.compareTo(check) >= 0}.
 	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
 	 * @param expected
 	 *            Expected value
 	 * @param check
 	 *            Comparable to be checked
-	 * @return {@code check} The checked {@code Comparable}
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected} when using method
+	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -486,6 +613,9 @@ public final class ConditionalCheck {
 	 * Ensures that a passed {@code Comparable} is greater than another {@code Comparable}. The comparison is made using
 	 * {@code expected.compareTo(check) >= 0}.
 	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
 	 * @param condition
 	 *            condition must be true so that the check is performed.
 	 * @param expected
@@ -493,9 +623,13 @@ public final class ConditionalCheck {
 	 * @param check
 	 *            Comparable to be checked
 	 * @param message
-	 *            an error message describing why the comparables must be greater than a value (will be passed to
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
 	 *            {@code IllegalNotGreaterThanException})
-	 * @return {@code check} The checked {@code Comparable}
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected} when using method
+	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -521,7 +655,10 @@ public final class ConditionalCheck {
 	 *            the class that must have a required annotation
 	 * @param annotation
 	 *            the type of annotation that is required on the class
-	 * @return the annotation which is present on the checked class
+	 * @return the given annotation which is present on the checked class
+	 * 
+	 * @throws IllegalMissingAnnotationException
+	 *             if the passed annotation is not annotated at the given class
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -546,6 +683,7 @@ public final class ConditionalCheck {
 	 *            class that the given object is a member of
 	 * @param obj
 	 *            the object reference that should be a member of a specific {@code type}
+	 * 
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
@@ -571,6 +709,7 @@ public final class ConditionalCheck {
 	 *            the object reference that should be a member of a specific {@code type}
 	 * @param name
 	 *            name of object reference (in source code)
+	 * 
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
@@ -597,7 +736,8 @@ public final class ConditionalCheck {
 	 * @param condition
 	 *            condition must be true so that the check is performed.
 	 * @param reference
-	 *            reference which must be null.
+	 *            reference which must be null
+	 * 
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
 	 */
@@ -639,7 +779,7 @@ public final class ConditionalCheck {
 	 * @param value
 	 *            value which must be a number
 	 * @throws IllegalNumberArgumentException
-	 *             if the given argument {@code value} is no number
+	 *             if the given argument {@code value} is not a number
 	 */
 	@ArgumentsChecked
 	public static void isNumber(final boolean condition, @Nonnull final String value) {
@@ -695,6 +835,7 @@ public final class ConditionalCheck {
 	 * is first converted to a {@code BigDecimal} or {@code BigInteger}. Floating point types are only supported if the
 	 * {@code type} is one of {@code Float, Double, BigDecimal}.
 	 * 
+	 * <p>
 	 * This method does also check against the ranges of the given datatypes.
 	 * 
 	 * @param condition
@@ -780,7 +921,11 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            Comparable to be checked
-	 * @return {@code check} The checked {@code Comparable}
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected} when using method
+	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -809,7 +954,11 @@ public final class ConditionalCheck {
 	 * @param message
 	 *            an error message describing why the comparables must be less than a value (will be passed to
 	 *            {@code IllegalNotLessThanException})
-	 * @return {@code check} The checked {@code Comparable}
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected} when using method
+	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
@@ -1438,7 +1587,7 @@ public final class ConditionalCheck {
 	 * @param value
 	 *            a number
 	 * @param name
-	 *            name of object reference (in source code)
+	 *            name of the number reference (in source code)
 	 * @return the non-null reference that was validated
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}
