@@ -1,6 +1,6 @@
 /*******************************************************************************
- * Copyright 2012 André Rouél
- * Copyright 2012 Dominik Seichter
+ * Copyright 2013 André Rouél
+ * Copyright 2013 Dominik Seichter
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -200,6 +200,254 @@ public final class Check {
 			}
 		}
 		return containsNull;
+	}
+
+	/**
+	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
+	 * {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @return {@code check} The checked boolean
+	 */
+	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
+	 * {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @param message
+	 *            an error message describing why the booleans must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked boolean
+	 */
+	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byteH is equal to another byte. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @return {@code check} The checked byte
+	 */
+	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @param message
+	 *            an error message describing why the bytes must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked byte
+	 */
+	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @return {@code check} The checked char
+	 */
+	public static char equals(@Nonnull final char expected, @Nonnull final char check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @param message
+	 *            an error message describing why the chars must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked char
+	 */
+	public static char equals(@Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed intH is equal to another int. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @return {@code check} The checked int
+	 */
+	public static int equals(@Nonnull final int expected, @Nonnull final int check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed int is equal to another int. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @param message
+	 *            an error message describing why the ints must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked int
+	 */
+	public static int equals(@Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @return {@code check} The checked long
+	 */
+	public static long equals(@Nonnull final long expected, @Nonnull final long check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @param message
+	 *            an error message describing why the longs must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked long
+	 */
+	public static long equals(@Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @return {@code check} The checked short
+	 */
+	public static short equals(@Nonnull final short expected, @Nonnull final short check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @param message
+	 *            an error message describing why the shorts must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked short
+	 */
+	public static short equals(@Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (expected != check) {
+			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
 	}
 
 	/**
