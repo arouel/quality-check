@@ -34,6 +34,8 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
+import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -124,6 +126,54 @@ public class ConditionalCheckTest {
 	@Test
 	public void testEqualsMsg_Positive_NoFailure() {
 		ConditionalCheck.equals(true, Long.valueOf(42), Long.valueOf(42), "msg");
+	}
+
+	@Test
+	public void testGreaterThan_Negative() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(false, expected, check);
+	}
+
+	@Test
+	public void testGreaterThan_Positive() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(true, expected, check);
+	}
+
+	@Test(expected = IllegalNotGreaterThanException.class)
+	public void testGreaterThan_Positive_Failure() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(true, expected, check);
+	}
+
+	@Test
+	public void testGreaterThanMessage_Negative() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(false, expected, check, "Must be greater than 0.");
+	}
+
+	@Test
+	public void testGreaterThanMessage_Positive() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(true, expected, check, "Must be greater than 0.");
+	}
+
+	@Test(expected = IllegalNotGreaterThanException.class)
+	public void testGreaterThanMessage_Positive_Failure() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterThan(true, expected, check, "Must be greater than 0.");
 	}
 
 	@Test
@@ -289,6 +339,54 @@ public class ConditionalCheckTest {
 	@Test
 	public void testIsNumericArgName_Positive_NoFailure() {
 		ConditionalCheck.isNumeric(true, "042", "arg");
+	}
+
+	@Test
+	public void testLesserThan_Negative() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(false, expected, check);
+	}
+
+	@Test
+	public void testLesserThan_Positive() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(true, expected, check);
+	}
+
+	@Test(expected = IllegalNotLesserThanException.class)
+	public void testLesserThan_Positive_Failure() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(true, expected, check);
+	}
+
+	@Test
+	public void testLesserThanMessage_Negative() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(false, expected, check, "Must be lesser than 0.");
+	}
+
+	@Test
+	public void testLesserThanMessage_Positive() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(true, expected, check, "Must be lesser than 0.");
+	}
+
+	@Test(expected = IllegalNotLesserThanException.class)
+	public void testLesserThanMessage_Positive_Failure() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.lesserThan(true, expected, check, "Must be lesser than 0.");
 	}
 
 	@Test
@@ -831,4 +929,5 @@ public class ConditionalCheckTest {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.ConditionalCheck");
 		cls.newInstance(); // exception here
 	}
+
 }
