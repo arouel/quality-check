@@ -659,8 +659,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -690,8 +689,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -963,8 +961,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -994,8 +991,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
