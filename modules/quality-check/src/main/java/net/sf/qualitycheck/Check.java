@@ -1546,8 +1546,6 @@ public final class Check {
 	 * 
 	 * @param value
 	 *            a number
-	 * @param name
-	 *            name of object reference (in source code)
 	 * @return the non-null reference that was validated
 	 * @throws IllegalNegativeArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}
