@@ -813,7 +813,6 @@ public final class Check {
 	 *            reference which must be null.
 	 * @param name
 	 *            name of object reference (in source code)
-	 * @return the non-null reference that was validated
 	 * 
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
