@@ -103,9 +103,69 @@ public class ConditionalCheckTest {
 		ConditionalCheck.equals(false, Long.valueOf(412), Long.valueOf(42));
 	}
 
+	@Test
+	public void testEquals_Negative_boolean() {
+		ConditionalCheck.equals(false, false, true);
+	}
+
+	@Test
+	public void testEquals_Negative_byte() {
+		ConditionalCheck.equals(false, (byte) 4, (byte) 5);
+	}
+
+	@Test
+	public void testEquals_Negative_char() {
+		ConditionalCheck.equals(false, 'A', 'B');
+	}
+
+	@Test
+	public void testEquals_Negative_int() {
+		ConditionalCheck.equals(false, 3, 2);
+	}
+
+	@Test
+	public void testEquals_Negative_long() {
+		ConditionalCheck.equals(false, 3l, 2l);
+	}
+
+	@Test
+	public void testEquals_Negative_short() {
+		ConditionalCheck.equals(false, (short) 3, (short) 2);
+	}
+
 	@Test(expected = IllegalNotEqualException.class)
 	public void testEquals_Positive_Failure() {
 		ConditionalCheck.equals(true, Long.valueOf(1543), Long.valueOf(42));
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_boolean() {
+		ConditionalCheck.equals(true, false, true);
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_byte() {
+		ConditionalCheck.equals(true, (byte) 5, (byte) 3);
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_char() {
+		ConditionalCheck.equals(true, 'A', 'B');
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_int() {
+		ConditionalCheck.equals(true, 3, 32);
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_long() {
+		ConditionalCheck.equals(true, 3l, 2l);
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEquals_Positive_Failure_short() {
+		ConditionalCheck.equals(true, (short) 3, (short) 13);
 	}
 
 	@Test
@@ -114,8 +174,68 @@ public class ConditionalCheckTest {
 	}
 
 	@Test
+	public void testEquals_Positive_NoFailure_boolean() {
+		ConditionalCheck.equals(true, true, true);
+	}
+
+	@Test
+	public void testEquals_Positive_NoFailure_byte() {
+		ConditionalCheck.equals(true, (byte) 5, (byte) 5);
+	}
+
+	@Test
+	public void testEquals_Positive_NoFailure_char() {
+		ConditionalCheck.equals(true, 'A', 'A');
+	}
+
+	@Test
+	public void testEquals_Positive_NoFailure_int() {
+		ConditionalCheck.equals(true, 3, 3);
+	}
+
+	@Test
+	public void testEquals_Positive_NoFailure_long() {
+		ConditionalCheck.equals(true, 3l, 3l);
+	}
+
+	@Test
+	public void testEquals_Positive_NoFailure_short() {
+		ConditionalCheck.equals(true, (short) 3, (short) 3);
+	}
+
+	@Test
 	public void testEqualsMsg_Negative() {
 		ConditionalCheck.equals(false, Long.valueOf(42), Long.valueOf(42), "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_boolean() {
+		ConditionalCheck.equals(false, false, true, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_byte() {
+		ConditionalCheck.equals(false, (byte) 4, (byte) 5, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_char() {
+		ConditionalCheck.equals(false, 'A', 'B', "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_int() {
+		ConditionalCheck.equals(false, 3, 2, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_long() {
+		ConditionalCheck.equals(false, 3l, 2l, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Negative_short() {
+		ConditionalCheck.equals(false, (short) 3, (short) 2, "msg");
 	}
 
 	@Test(expected = IllegalNotEqualException.class)
@@ -123,9 +243,69 @@ public class ConditionalCheckTest {
 		ConditionalCheck.equals(true, Long.valueOf(1543), Long.valueOf(42), "msg");
 	}
 
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_boolean() {
+		ConditionalCheck.equals(true, false, true, "msg");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_byte() {
+		ConditionalCheck.equals(true, (byte) 4, (byte) 5, "msg");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_char() {
+		ConditionalCheck.equals(true, 'V', 'A', "msg");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_int() {
+		ConditionalCheck.equals(true, 3, 2, "msg");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_long() {
+		ConditionalCheck.equals(true, 3l, 2l, "msg");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testEqualsMsg_Positive_Failure_short() {
+		ConditionalCheck.equals(true, (short) 3, (short) 2, "msg");
+	}
+
 	@Test
 	public void testEqualsMsg_Positive_NoFailure() {
 		ConditionalCheck.equals(true, Long.valueOf(42), Long.valueOf(42), "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_boolean() {
+		ConditionalCheck.equals(true, false, false, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_byte() {
+		ConditionalCheck.equals(true, (byte) 42, (byte) 42, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_char() {
+		ConditionalCheck.equals(true, 'A', 'A', "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_int() {
+		ConditionalCheck.equals(true, 3, 3, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_long() {
+		ConditionalCheck.equals(true, 3l, 3l, "msg");
+	}
+
+	@Test
+	public void testEqualsMsg_Positive_NoFailure_short() {
+		ConditionalCheck.equals(true, (short) 3, (short) 3, "msg");
 	}
 
 	@Test

@@ -89,6 +89,29 @@
 								<code>-</code>
 						</td>
 					</tr>
+
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>greaterThan</strong>
+								(T&#160;expected, T&#160;check)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>greaterThan</strong>
+								(T&#160;expected, T&#160;check)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>					
 					<tr class="rowColor">
 						<td class="colFirst">
 							<code>
@@ -194,6 +217,28 @@
 							<code>
 								<strong>isNumeric</strong>
 								(T&#160;value, String&#160;name)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="altColor">
+						<td class="colFirst">
+							<code>
+								<strong>lesserThan</strong>
+								(T&#160;expected, T&#160;check)
+							</code>
+						</td>
+						<td class="colLast">
+							<code>-</code>
+						</td>
+					</tr>
+					<tr class="rowColor">
+						<td class="colFirst">
+							<code>
+								<strong>lesserThan</strong>
+								(T&#160;expected, T&#160;check)
 							</code>
 						</td>
 						<td class="colLast">
