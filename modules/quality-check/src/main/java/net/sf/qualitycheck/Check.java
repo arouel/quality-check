@@ -34,6 +34,8 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
+import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -555,6 +557,57 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed {@code Comparable} is greater to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) >= 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) >= 0) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) >= 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) >= 0) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
 	 * Ensures that a passed class has an annotation of a specific type
 	 * 
 	 * @param clazz
@@ -790,6 +843,57 @@ public final class Check {
 			throw new IllegalNumericArgumentException(name);
 		}
 		return value;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is less than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) <= 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) <= 0) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is less than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) <= 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) <= 0) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
 	}
 
 	/**
