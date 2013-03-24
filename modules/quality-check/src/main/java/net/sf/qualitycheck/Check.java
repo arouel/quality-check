@@ -40,7 +40,6 @@ import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
-import net.sf.qualitycheck.exception.IllegalNumberRangeException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
@@ -150,7 +149,7 @@ public final class Check {
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
 	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle) {
 		Check.notNull(haystack, "haystack");
 		Check.notNull(needle, "needle");
@@ -181,7 +180,7 @@ public final class Check {
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
 	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle, @Nonnull final String name) {
 		Check.notNull(haystack, "haystack");
 		Check.notNull(needle, "needle");
@@ -213,7 +212,7 @@ public final class Check {
 
 	/**
 	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
-	 * {@code expected != check }.
+	 * <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(boolean, boolean, String)} and pass as second
@@ -228,6 +227,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -240,7 +240,7 @@ public final class Check {
 
 	/**
 	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
-	 * {@code expected != check }.
+	 * <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -254,6 +254,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -265,7 +266,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed byteH is equal to another byte. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(byte, byte, String)} and pass as second argument
@@ -280,6 +281,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -291,7 +293,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed byte is equal to another byte. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -305,6 +307,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -316,7 +319,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed char is equal to another char. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(char, char, String)} and pass as second argument
@@ -331,6 +334,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static char equals(@Nonnull final char expected, @Nonnull final char check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -342,7 +346,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed char is equal to another char. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -356,6 +360,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static char equals(@Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -367,7 +372,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed intH is equal to another int. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed intH is equal to another int. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(int, int, String)} and pass as second argument the
@@ -382,6 +387,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static int equals(@Nonnull final int expected, @Nonnull final int check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -393,7 +399,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed int is equal to another int. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed int is equal to another int. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -407,6 +413,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static int equals(@Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -418,7 +425,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed long is equal to another long. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(long, long, String)} and pass as second argument
@@ -433,6 +440,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static long equals(@Nonnull final long expected, @Nonnull final long check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -444,7 +452,7 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed long is equal to another long. The comparison is made using <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -458,6 +466,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static long equals(@Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -469,7 +478,8 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed short is equal to another short. The comparison is made using
+	 * <code>expected != check</code>.
 	 * 
 	 * <p>
 	 * We recommend to use the overloaded method {@link Check#equals(short, short, String)} and pass as second argument
@@ -484,6 +494,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static short equals(@Nonnull final short expected, @Nonnull final short check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -495,7 +506,8 @@ public final class Check {
 	}
 
 	/**
-	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * Ensures that a passed short is equal to another short. The comparison is made using
+	 * <code>expected != check</code>.
 	 * 
 	 * @param expected
 	 *            Expected value
@@ -509,6 +521,7 @@ public final class Check {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static short equals(@Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -537,7 +550,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
 	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		Check.notNull(expected, "expected");
@@ -568,7 +581,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
 	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -599,7 +612,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
 	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		Check.notNull(expected, "expected");
@@ -658,7 +671,7 @@ public final class Check {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterThanException.class })
 	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -688,7 +701,7 @@ public final class Check {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterThanException.class })
 	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -713,7 +726,7 @@ public final class Check {
 	 *             if the passed annotation is not annotated at the given class
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalMissingAnnotationException.class })
 	public static Annotation hasAnnotation(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(annotation, "annotation");
@@ -736,7 +749,7 @@ public final class Check {
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalInstanceOfArgumentException.class })
 	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj) {
 		return (T) instanceOf(type, obj, EMPTY_ARGUMENT_NAME);
@@ -756,7 +769,7 @@ public final class Check {
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalInstanceOfArgumentException.class })
 	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(@Nonnull final Class<?> type, @Nonnull final Object obj, @Nullable final String name) {
 		Check.notNull(type, "type");
@@ -781,6 +794,7 @@ public final class Check {
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
 	 */
+	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(@Nullable final Object reference) {
 		if (reference != null) {
 			throw new IllegalNotNullArgumentException();
@@ -800,9 +814,11 @@ public final class Check {
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the non-null reference that was validated
+	 * 
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
 	 */
+	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(@Nullable final Object reference, @Nullable final String name) {
 		if (reference != null) {
 			throw new IllegalNotNullArgumentException(name);
@@ -815,11 +831,12 @@ public final class Check {
 	 * @param value
 	 *            value which must be a number
 	 * @return the given string argument converted to an int
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is not a number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static int isNumber(@Nonnull final String value) {
 		Check.notNull(value, "value");
 		return Check.isNumber(value, Integer.class).intValue();
@@ -835,11 +852,12 @@ public final class Check {
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
 	 * @return the given string argument converted to a number of the requested type
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends Number> T isNumber(@Nonnull final String value, @Nonnull final Class<T> type) {
 		return isNumber(value, null, type);
 	}
@@ -852,11 +870,12 @@ public final class Check {
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the given string argument converted to an int
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static int isNumber(@Nonnull final String value, @Nullable final String name) {
 		Check.notNull(value, "value");
 		return Check.isNumber(value, name, Integer.class).intValue();
@@ -878,11 +897,12 @@ public final class Check {
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
 	 * @return the given string argument converted to a number of the requested type
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(value = { IllegalNullArgumentException.class, IllegalNumberRangeException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends Number> T isNumber(@Nonnull final String value, @Nullable final String name, @Nonnull final Class<T> type) {
 		Check.notNull(value, "value");
 		Check.notNull(type, "type");
@@ -917,7 +937,7 @@ public final class Check {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends CharSequence> T isNumeric(@Nonnull final T value) {
 		return isNumeric(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -936,7 +956,7 @@ public final class Check {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumericArgumentException.class })
 	public static <T extends CharSequence> T isNumeric(@Nonnull final T value, @Nullable final String name) {
 		Check.notNull(value, "value");
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
@@ -960,7 +980,7 @@ public final class Check {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotLesserThanException.class })
 	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -990,7 +1010,7 @@ public final class Check {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotLesserThanException.class })
 	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -1028,13 +1048,14 @@ public final class Check {
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should match the given pattern
 	 * @return the passed {@code chars} that matches the given pattern
+	 * 
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code chars} is {@code null}
 	 * @throws IllegalPatternArgumentException
 	 *             if the given {@code chars} that does not match the {@code pattern}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalPatternArgumentException.class })
 	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nonnull final T chars) {
 		return matchesPattern(pattern, chars, EMPTY_ARGUMENT_NAME);
 	}
@@ -1050,13 +1071,14 @@ public final class Check {
 	 * @param name
 	 *            name of object reference (in source code)
 	 * @return the passed {@code chars} that matches the given pattern
+	 * 
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code chars} is {@code null}
 	 * @throws IllegalPatternArgumentException
 	 *             if the given {@code chars} that does not match the {@code pattern}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalPatternArgumentException.class })
 	public static <T extends CharSequence> T matchesPattern(@Nonnull final Pattern pattern, @Nonnull final T chars,
 			@Nullable final String name) {
 		Check.notNull(pattern, "pattern");
@@ -1077,11 +1099,12 @@ public final class Check {
 	 * @param iterable
 	 *            the iterable reference which should not contain {@code null}
 	 * @return the passed reference which contains no elements that are {@code null}
+	 * 
 	 * @throws IllegalNullElementsException
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T extends Iterable<?>> T noNullElements(@Nonnull final T iterable) {
 		return noNullElements(iterable, EMPTY_ARGUMENT_NAME);
 	}
@@ -1098,7 +1121,7 @@ public final class Check {
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T extends Iterable<?>> T noNullElements(@Nonnull final T iterable, final String name) {
 		Check.notNull(iterable, "iterable");
 		for (final Object element : iterable) {
@@ -1123,7 +1146,7 @@ public final class Check {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T> T[] noNullElements(@Nonnull final T[] array) {
 		return noNullElements(array, EMPTY_ARGUMENT_NAME);
 	}
@@ -1140,7 +1163,7 @@ public final class Check {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T> T[] noNullElements(@Nonnull final T[] array, @Nullable final String name) {
 		Check.notNull(array, "array");
 		if (containsNullElements(array)) {
@@ -1167,7 +1190,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalEmptyArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static void notEmpty(final boolean expression) {
 		notEmpty(expression, EMPTY_ARGUMENT_NAME);
 	}
@@ -1186,7 +1209,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalEmptyArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static void notEmpty(final boolean expression, @Nullable final String name) {
 		if (expression) {
 			throw new IllegalEmptyArgumentException(name);
@@ -1446,7 +1469,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static double notNaN(final double value) {
 		return notNaN(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -1464,7 +1487,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static double notNaN(final double value, @Nullable final String name) {
 		// most efficient check for NaN, see Double.isNaN(value))
 		if (value != value) {
@@ -1488,7 +1511,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static float notNaN(final float value) {
 		return notNaN(value, EMPTY_ARGUMENT_NAME);
 	}
@@ -1506,7 +1529,7 @@ public final class Check {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static float notNaN(final float value, @Nullable final String name) {
 		// most efficient check for NaN, see Float.isNaN(value))
 		if (value != value) {
@@ -1530,7 +1553,7 @@ public final class Check {
 	 * @throws IllegalNegativeArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
-	@Throws(IllegalNullArgumentException.class)
+	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(@Nonnull final int value) {
 		if (value < 0) {
 			throw new IllegalNegativeArgumentException();

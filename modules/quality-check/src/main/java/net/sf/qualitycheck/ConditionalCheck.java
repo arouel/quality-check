@@ -38,7 +38,7 @@ import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
 import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
-import net.sf.qualitycheck.exception.IllegalNumberRangeException;
+import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
@@ -105,7 +105,7 @@ public final class ConditionalCheck {
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
 	public static <T extends Object> T contains(final boolean condition, @Nonnull final Collection<T> haystack, @Nonnull final T needle) {
 		if (condition) {
 			Check.contains(haystack, needle);
@@ -138,7 +138,7 @@ public final class ConditionalCheck {
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
 	public static <T extends Object> T contains(final boolean condition, @Nonnull final Collection<T> haystack, @Nonnull final T needle,
 			@Nonnull final String name) {
 		if (condition) {
@@ -170,6 +170,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -201,6 +202,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check,
 			final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
@@ -233,6 +235,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -263,6 +266,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -294,6 +298,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -324,6 +329,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -355,6 +361,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -385,6 +392,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -416,6 +424,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -446,6 +455,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -478,6 +488,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -509,6 +520,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotEqualException
 	 *             if both argument values are not equal
 	 */
+	@Throws(IllegalNotEqualException.class)
 	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
@@ -532,10 +544,13 @@ public final class ConditionalCheck {
 	 *            Expected value
 	 * @param check
 	 *            Object to be checked
-	 * @return {@code check} The checked object
+	 * @return the passed argument {@code check}
+	 * 
+	 * @throws IllegalNotEqualException
+	 *             if both argument values are not equal
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
 	public static <T extends Object> T equals(final boolean condition, @Nonnull final T expected, @Nonnull final T check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		if (condition) {
@@ -598,7 +613,7 @@ public final class ConditionalCheck {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterThanException.class })
 	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -633,7 +648,7 @@ public final class ConditionalCheck {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterThanException.class })
 	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
 			final String message) {
 		Check.notNull(expected, "expected");
@@ -661,7 +676,7 @@ public final class ConditionalCheck {
 	 *             if the passed annotation is not annotated at the given class
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalMissingAnnotationException.class })
 	public static Annotation hasAnnotation(final boolean condition, @Nonnull final Class<?> clazz,
 			@Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(clazz, "clazz");
@@ -688,7 +703,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalInstanceOfArgumentException.class })
 	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(final boolean condition, @Nonnull final Class<?> type, @Nonnull final Object obj) {
 		if (condition) {
@@ -714,7 +729,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code obj} is not a member of {@code type}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalInstanceOfArgumentException.class })
 	@SuppressWarnings("unchecked")
 	public static <T> T instanceOf(final boolean condition, @Nonnull final Class<?> type, @Nonnull final Object obj,
 			@Nullable final String name) {
@@ -741,6 +756,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
 	 */
+	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(final boolean condition, @Nullable final Object reference) {
 		if (condition) {
 			Check.isNull(reference);
@@ -761,10 +777,11 @@ public final class ConditionalCheck {
 	 *            reference which must be null.
 	 * @param name
 	 *            name of object reference (in source code)
-	 * @return the non-null reference that was validated
+	 * 
 	 * @throws IllegalNotNullArgumentException
 	 *             if the given argument {@code reference} is not null
 	 */
+	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(final boolean condition, @Nullable final Object reference, @Nullable final String name) {
 		if (condition) {
 			Check.isNull(reference, name);
@@ -782,6 +799,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code value} is not a number
 	 */
 	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static void isNumber(final boolean condition, @Nonnull final String value) {
 		if (condition) {
 			Check.isNumber(value);
@@ -799,11 +817,12 @@ public final class ConditionalCheck {
 	 * @param type
 	 *            requested return value type, must be a subclass of {@code Number}, i.e. one of {@code BigDecimal,
 	 *            BigInteger, Byte, Double, Float, Integer, Long, Short}
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends Number> void isNumber(final boolean condition, @Nonnull final String value, @Nonnull final Class<T> type) {
 		if (condition) {
 			Check.isNumber(value, type);
@@ -819,11 +838,12 @@ public final class ConditionalCheck {
 	 *            value which must be a number
 	 * @param name
 	 *            name of object reference (in source code)
+	 * 
 	 * @throws IllegalNumberArgumentException
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static void isNumber(final boolean condition, @Nonnull final String value, @Nullable final String name) {
 		if (condition) {
 			Check.isNumber(value, name);
@@ -851,7 +871,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(value = { IllegalNullArgumentException.class, IllegalNumberRangeException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends Number> void isNumber(final boolean condition, @Nonnull final String value, @Nullable final String name,
 			@Nonnull final Class<T> type) {
 		if (condition) {
@@ -877,7 +897,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumberArgumentException.class })
 	public static <T extends CharSequence> T isNumeric(final boolean condition, @Nonnull final T value) {
 		if (condition) {
 			return (T) Check.isNumeric(value);
@@ -902,7 +922,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code value} is no number
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNumericArgumentException.class })
 	public static <T extends CharSequence> T isNumeric(final boolean condition, @Nonnull final T value, @Nullable final String name) {
 		if (condition) {
 			return (T) Check.isNumeric(value, name);
@@ -928,7 +948,7 @@ public final class ConditionalCheck {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotLesserThanException.class })
 	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -960,7 +980,7 @@ public final class ConditionalCheck {
 	 *             {@code compareTo}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNotLesserThanException.class })
 	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
 			final String message) {
 		Check.notNull(expected, "expected");
@@ -988,6 +1008,7 @@ public final class ConditionalCheck {
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should match the given pattern
 	 * @return the passed {@code chars} that matches the given pattern
+	 * 
 	 * @throws IllegalNullArgumentException
 	 *             if the given argument {@code chars} is {@code null}
 	 * @throws IllegalPatternArgumentException
@@ -1022,7 +1043,7 @@ public final class ConditionalCheck {
 	 *             if the given {@code chars} that does not match the {@code pattern}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalPatternArgumentException.class })
 	public static <T extends CharSequence> T matchesPattern(final boolean condition, @Nonnull final Pattern pattern,
 			@Nonnull final T chars, @Nullable final String name) {
 		if (condition) {
@@ -1049,7 +1070,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T extends Iterable<?>> T noNullElements(final boolean condition, @Nonnull final T iterable) {
 		if (condition) {
 			return Check.noNullElements(iterable);
@@ -1072,7 +1093,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code iterable} contains elements that are {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T extends Iterable<?>> T noNullElements(final boolean condition, @Nonnull final T iterable, final String name) {
 		if (condition) {
 			return Check.noNullElements(iterable, name);
@@ -1097,7 +1118,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T> T[] noNullElements(final boolean condition, @Nonnull final T[] array) {
 		if (condition) {
 			return Check.noNullElements(array);
@@ -1120,7 +1141,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code array} contains {@code null}
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalNullArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalNullElementsException.class })
 	public static <T> T[] noNullElements(final boolean condition, @Nonnull final T[] array, @Nullable final String name) {
 		if (condition) {
 			return Check.noNullElements(array, name);
@@ -1149,7 +1170,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalEmptyArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static void notEmpty(final boolean condition, final boolean expression) {
 		if (condition) {
 			Check.notEmpty(expression);
@@ -1172,7 +1193,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is empty
 	 */
 	@ArgumentsChecked
-	@Throws(IllegalEmptyArgumentException.class)
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public static void notEmpty(final boolean condition, final boolean expression, @Nullable final String name) {
 		if (condition) {
 			Check.notEmpty(expression, name);
@@ -1468,7 +1489,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static double notNaN(final boolean condition, final double value) {
 		if (condition) {
 			return Check.notNaN(value);
@@ -1492,7 +1513,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static double notNaN(final boolean condition, final double value, @Nullable final String name) {
 		if (condition) {
 			return Check.notNaN(value, name);
@@ -1518,7 +1539,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static float notNaN(final boolean condition, final float value) {
 		if (condition) {
 			return Check.notNaN(value);
@@ -1542,7 +1563,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNaNArgumentException
 	 *             if the given argument {@code value} is NaN
 	 */
-	@Throws({ IllegalNaNArgumentException.class })
+	@Throws(IllegalNaNArgumentException.class)
 	public static float notNaN(final boolean condition, final float value, @Nullable final String name) {
 		if (condition) {
 			return Check.notNaN(value, name);
@@ -1568,7 +1589,7 @@ public final class ConditionalCheck {
 	 * @throws IllegalNegativeArgumentException
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
-	@Throws(IllegalNullArgumentException.class)
+	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(final boolean condition, @Nonnull final int value) {
 		if (condition) {
 			return Check.notNegative(value);
