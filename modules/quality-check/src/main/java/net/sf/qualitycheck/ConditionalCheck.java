@@ -28,10 +28,12 @@ import javax.annotation.Nullable;
 import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
+import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
+import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullElementsException;
@@ -597,8 +599,7 @@ public final class ConditionalCheck {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -634,8 +635,7 @@ public final class ConditionalCheck {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
-			final String message) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+			final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -929,8 +929,7 @@ public final class ConditionalCheck {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -963,8 +962,7 @@ public final class ConditionalCheck {
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
 	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
-			final String message) { // NOSONAR
-		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+			final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
