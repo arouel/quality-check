@@ -451,6 +451,30 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed {@code Comparable} is equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) != 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) != 0) {
+			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
 	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
 	 * {@code expected.equals(check) }.
 	 * 
@@ -470,6 +494,33 @@ public final class Check {
 
 		if (!expected.equals(check)) {
 			throw new IllegalNotEqualException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) != 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the <a>s must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) != 0) {
+			throw new IllegalNotEqualException(message);
 		}
 
 		return check;

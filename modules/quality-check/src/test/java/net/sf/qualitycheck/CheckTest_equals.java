@@ -60,6 +60,14 @@ public class CheckTest_equals {
 	}
 
 	@Test
+	public void testEquality_Comparable() {
+		final Comparable<String> expected = "100001";
+		final Comparable<String> check = "100001";
+
+		Assert.assertEquals("100001", Check.equals(expected, check));
+	}
+
+	@Test
 	public void testEquality_int() {
 		final int expected = 100001;
 		final int check = 100001;
@@ -113,6 +121,14 @@ public class CheckTest_equals {
 		final char check = 'F';
 
 		Assert.assertEquals('F', Check.equals(expected, check, "Should be equal to 'F'."));
+	}
+
+	@Test
+	public void testEqualityMessage_Comparable() {
+		final Comparable<String> expected = "100001";
+		final Comparable<String> check = "100001";
+
+		Assert.assertEquals("100001", Check.equals(expected, check, "Should be equal to \"100001\"."));
 	}
 
 	@Test
@@ -177,6 +193,14 @@ public class CheckTest_equals {
 	}
 
 	@Test(expected = IllegalNotEqualException.class)
+	public void testNoEquality_Comparable() {
+		final Comparable<String> expected = "100001";
+		final Comparable<String> check = "100002";
+
+		Check.equals(expected, check);
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
 	public void testNoEquality_int() {
 		final int expected = 100001;
 		final int check = -100001;
@@ -230,6 +254,14 @@ public class CheckTest_equals {
 		final char check = 'E';
 
 		Check.equals(expected, check, "Should be equal to 'F'");
+	}
+
+	@Test(expected = IllegalNotEqualException.class)
+	public void testNoEqualityMessage_Comparable() {
+		final Comparable<String> expected = "100001";
+		final Comparable<String> check = "100002";
+
+		Check.equals(expected, check, "Should be equal to \"100001\"");
 	}
 
 	@Test(expected = IllegalNotEqualException.class)
