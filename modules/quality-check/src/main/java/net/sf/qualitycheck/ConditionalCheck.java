@@ -132,6 +132,279 @@ public final class ConditionalCheck {
 	}
 
 	/**
+	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
+	 * {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @return {@code check} The checked boolean
+	 */
+	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed boolean is equal to another boolean. The comparison is made using
+	 * {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @param message
+	 *            an error message describing why the booleans must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked boolean
+	 */
+	public static boolean equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check,
+			final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byteH is equal to another byte. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @return {@code check} The checked byte
+	 */
+	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byte is equal to another byte. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @param message
+	 *            an error message describing why the bytes must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked byte
+	 */
+	public static byte equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @return {@code check} The checked char
+	 */
+	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is equal to another char. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @param message
+	 *            an error message describing why the chars must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked char
+	 */
+	public static char equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed intH is equal to another int. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @return {@code check} The checked int
+	 */
+	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed int is equal to another int. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @param message
+	 *            an error message describing why the ints must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked int
+	 */
+	public static int equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @return {@code check} The checked long
+	 */
+	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is equal to another long. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @param message
+	 *            an error message describing why the longs must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked long
+	 */
+	public static long equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @return {@code check} The checked short
+	 */
+	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is equal to another short. The comparison is made using {@code expected != check }.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @param message
+	 *            an error message describing why the shorts must equal (will be passed to
+	 *            {@code IllegalNotEqualException})
+	 * @return {@code check} The checked short
+	 */
+	public static short equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+
+		if (condition) {
+			Check.equals(expected, check, message);
+		}
+
+		return check;
+	}
+
+	/**
 	 * Ensures that a passed object is equal to another object. The comparison is made using a call to
 	 * {@code expected.equals(check) }.
 	 * 
@@ -178,6 +451,62 @@ public final class ConditionalCheck {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		if (condition) {
 			return Check.equals(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) >= 0}.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.greaterThan(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) >= 0}.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T greaterThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
+			final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.greaterThan(expected, check, message);
 		}
 
 		return check;
@@ -439,6 +768,62 @@ public final class ConditionalCheck {
 		}
 
 		return (T) value;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is less than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) <= 0}.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.lesserThan(expected, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is less than another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) <= 0}.
+	 * 
+	 * @param condition
+	 *            condition must be true so that the check is performed.
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return {@code check} The checked {@code Comparable}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T extends Comparable<T>> T lesserThan(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
+			final String message) { // NOSONAR
+		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.lesserThan(expected, check, message);
+		}
+
+		return check;
 	}
 
 	/**
