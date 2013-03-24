@@ -106,7 +106,7 @@ at FindBugs™ JSR-305 support.
 		<maven-site-plugin.version>3.2</maven-site-plugin.version>
 		<maven-surefire-plugin.version>2.14</maven-surefire-plugin.version>
 		<maven-toolchains-plugin.version>1.0</maven-toolchains-plugin.version>
-		<wagon-ssh.version>2.3</wagon-ssh.version>
+		<wagon-ssh.version>2.4</wagon-ssh.version>
 		<pitest.version>0.29</pitest.version>
 
 		<!-- Dependencies -->
