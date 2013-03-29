@@ -34,7 +34,7 @@ import com.google.common.collect.Lists;
 public final class ImmutableObjectGenerator {
 
 	@Immutable
-	public static class Result {
+	public final static class Result {
 
 		@Nonnull
 		private final String implementationCode;
