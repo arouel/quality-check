@@ -526,10 +526,10 @@ public final class ConditionalCheck {
 	 * 
 	 * @param condition
 	 *            condition must be {@code true}^ so that the check will be performed
-	 * @param expected
-	 *            Expected value
+	 * @param expect
+	 *            expected value
 	 * @param check
-	 *            Object to be checked
+	 *            object to be checked
 	 * @param msg
 	 *            an error message describing why the objects must equal (will be passed to
 	 *            {@code IllegalNotEqualException})
@@ -539,11 +539,10 @@ public final class ConditionalCheck {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
-	public static <T extends Object> void equals(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
-			final String msg) { // NOSONAR
+	public static <T extends Object> void equals(final boolean condition, @Nonnull final T expect, @Nonnull final T check, final String msg) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		if (condition) {
-			Check.equals(expected, check);
+			Check.equals(expect, check);
 		}
 	}
 
