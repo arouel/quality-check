@@ -26,21 +26,21 @@ public final class Imports {
 
 	private static final Predicate<Import> IGNORE_JAVA_LANG = new Predicate<Import>() {
 		@Override
-		public boolean apply(@Nonnull final Import imp) {
+		public boolean apply(@Nonnull final Import imp) { // NOSONAR
 			return !Package.JAVA_LANG.equals(imp.getType().getPackage());
 		}
 	};
 
 	private static final Predicate<Import> IGNORE_UNDEFINED = new Predicate<Import>() {
 		@Override
-		public boolean apply(@Nonnull final Import imp) {
+		public boolean apply(@Nonnull final Import imp) { // NOSONAR
 			return !Package.UNDEFINED.equals(imp.getType().getPackage());
 		}
 	};
 
 	private static final Ordering<Import> ORDER = new Ordering<Import>() {
 		@Override
-		public int compare(@Nonnull final Import left, @Nonnull final Import right) {
+		public int compare(@Nonnull final Import left, @Nonnull final Import right) { // NOSONAR
 			return left.getType().toString().compareTo(right.getType().toString());
 		}
 	};
