@@ -71,7 +71,7 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	@Nonnull
-	public static final String determineGeneric(@Nonnull final Type type) {
+	public static String determineGeneric(@Nonnull final Type type) {
 		return type.getGenericDeclaration().isUndefined() ? "" : "<" + type.getGenericDeclaration().getDeclaration() + ">";
 	}
 
