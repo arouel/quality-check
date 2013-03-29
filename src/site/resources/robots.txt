@@ -1,4 +1,5 @@
 User-agent: *
-Disallow: /modules/quality-check/cobertura/
+Disallow: /modules/quality-check/jacoco/
+Disallow: /modules/quality-immutable-object/jacoco/
+Disallow: /modules/quality-test/jacoco/
 Allow: /
-
