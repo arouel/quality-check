@@ -27,12 +27,12 @@ final class BasicFormatRenderer implements AttributeRenderer {
 	public String toString(final Object o, final String formatName, final Locale locale) {
 		Check.notNull(o, "o");
 		final String text = Check.instanceOf(String.class, o);
-		String result = text.toString();
+		String result = text;
 		if (!text.trim().isEmpty() && formatName != null) {
 			if (formatName.equals("toUpper")) {
-				result = text.toString().toUpperCase();
+				result = text.toUpperCase();
 			} else if (formatName.equals("toLower")) {
-				result = text.toString().toLowerCase();
+				result = text.toLowerCase();
 			} else if (formatName.equals("toUpperCamelCase")) {
 				result = toUpperCamelCase(text);
 			} else if (formatName.equals("toLowerCamelCase")) {
