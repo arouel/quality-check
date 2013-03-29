@@ -94,7 +94,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param haystack
 	 *            A collection which must contain {@code needle}
 	 * @param needle
@@ -122,7 +122,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param haystack
 	 *            A collection which must contain {@code needle}
 	 * @param needle
@@ -154,7 +154,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -180,7 +180,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -212,7 +212,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -237,7 +237,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -269,7 +269,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -294,7 +294,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -326,7 +326,7 @@ public final class ConditionalCheck {
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -351,7 +351,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -384,7 +384,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -409,7 +409,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -442,7 +442,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -468,7 +468,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -497,7 +497,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -525,7 +525,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -555,7 +555,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -584,7 +584,7 @@ public final class ConditionalCheck {
 	 * The condition must evaluate to {@code true} so that the check is executed.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -613,7 +613,7 @@ public final class ConditionalCheck {
 	 * Ensures that a passed class has an annotation of a specific type
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param clazz
 	 *            the class that must have a required annotation
 	 * @param annotation
@@ -638,7 +638,7 @@ public final class ConditionalCheck {
 	 * Ensures that a passed argument is a member of a specific type.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param type
 	 *            class that the given object is a member of
 	 * @param obj
@@ -662,7 +662,7 @@ public final class ConditionalCheck {
 	 * Ensures that a passed argument is a member of a specific type.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param type
 	 *            class that the given object is a member of
 	 * @param obj
@@ -694,7 +694,7 @@ public final class ConditionalCheck {
 	 * For example, to avoid overwriting an existing primary key with a new one.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param reference
 	 *            reference which must be null
 	 * 
@@ -717,7 +717,7 @@ public final class ConditionalCheck {
 	 * For example, to avoid overwriting an existing primary key with a new one.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param reference
 	 *            reference which must be null.
 	 * @param name
@@ -737,7 +737,7 @@ public final class ConditionalCheck {
 	 * Ensures that a String argument is a number.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which must be a number
 	 * @throws IllegalNumberArgumentException
@@ -756,7 +756,7 @@ public final class ConditionalCheck {
 	 * is first converted to a BigInteger
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which must be a number
 	 * @param type
@@ -778,7 +778,7 @@ public final class ConditionalCheck {
 	 * Ensures that a string argument is a number according to {@code Integer.parseInt}
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which must be a number
 	 * @param name
@@ -804,7 +804,7 @@ public final class ConditionalCheck {
 	 * This method does also check against the ranges of the given datatypes.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which must be a number and in the range of the given datatype.
 	 * @param name
@@ -834,7 +834,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            a readable sequence of {@code char} values which must be a number
 	 * 
@@ -855,7 +855,7 @@ public final class ConditionalCheck {
 	 * account number).
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            a readable sequence of {@code char} values which must be a number
 	 * @param name
@@ -877,7 +877,7 @@ public final class ConditionalCheck {
 	 * {@code expected.compareTo(check) <= 0}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -903,7 +903,7 @@ public final class ConditionalCheck {
 	 * {@code expected.compareTo(check) <= 0}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expected
 	 *            Expected value
 	 * @param check
@@ -937,7 +937,7 @@ public final class ConditionalCheck {
 	 * second argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param pattern
 	 *            pattern, that the {@code chars} must correspond to
 	 * @param chars
@@ -962,7 +962,7 @@ public final class ConditionalCheck {
 	 * sequence does not match against the passed pattern, an {@link IllegalPatternArgumentException} will be thrown.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param pattern
 	 *            pattern, that the {@code chars} must correspond to
 	 * @param chars
@@ -992,7 +992,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param iterable
 	 *            the iterable reference which should not contain {@code null}
 	 * 
@@ -1011,7 +1011,7 @@ public final class ConditionalCheck {
 	 * Ensures that an iterable reference is neither {@code null} nor contains any elements that are {@code null}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param iterable
 	 *            the iterable reference which should not contain {@code null}
 	 * @param name
@@ -1036,7 +1036,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param array
 	 *            reference to an array
 	 * 
@@ -1055,7 +1055,7 @@ public final class ConditionalCheck {
 	 * Ensures that an array does not contain {@code null}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param array
 	 *            reference to an array
 	 * @param name
@@ -1081,7 +1081,7 @@ public final class ConditionalCheck {
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
 	 *            {@code false} means not empty)
@@ -1104,7 +1104,7 @@ public final class ConditionalCheck {
 	 * emptiness.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            the result of the expression to verify the emptiness of a reference ({@code true} means empty,
 	 *            {@code false} means not empty)
@@ -1130,7 +1130,7 @@ public final class ConditionalCheck {
 	 * argument the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should not be empty
 	 * 
@@ -1155,7 +1155,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param collection
 	 *            a collection which should not be empty
 	 * 
@@ -1180,7 +1180,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param map
 	 *            a map which should not be empty
 	 * 
@@ -1213,7 +1213,7 @@ public final class ConditionalCheck {
 	 * </pre>
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param reference
 	 *            an object reference which should not be empty
 	 * @param expression
@@ -1250,7 +1250,7 @@ public final class ConditionalCheck {
 	 * </pre>
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param chars
 	 *            a readable sequence of {@code char} values which should not be empty
 	 * @param name
@@ -1277,7 +1277,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param map
 	 *            a map which should not be empty
 	 * @param name
@@ -1310,7 +1310,7 @@ public final class ConditionalCheck {
 	 * </pre>
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param collection
 	 *            a collection which should not be empty
 	 * @param name
@@ -1337,7 +1337,7 @@ public final class ConditionalCheck {
 	 * the name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param array
 	 *            a map which should not be empty
 	 * 
@@ -1358,7 +1358,7 @@ public final class ConditionalCheck {
 	 * Ensures that a passed map as a parameter of the calling method is not empty.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param array
 	 *            a map which should not be empty
 	 * @param name
@@ -1387,7 +1387,7 @@ public final class ConditionalCheck {
 	 * @see java.lang.Double#NaN
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which should not be NaN
 	 * 
@@ -1407,7 +1407,7 @@ public final class ConditionalCheck {
 	 * @see java.lang.Double#NaN
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which should not be NaN
 	 * @param name
@@ -1433,7 +1433,7 @@ public final class ConditionalCheck {
 	 * @see java.lang.Float#NaN
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which should not be NaN
 	 * 
@@ -1453,7 +1453,7 @@ public final class ConditionalCheck {
 	 * @see java.lang.Float#NaN
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            value which should not be NaN
 	 * @param name
@@ -1477,7 +1477,7 @@ public final class ConditionalCheck {
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            a number
 	 * 
@@ -1495,7 +1495,7 @@ public final class ConditionalCheck {
 	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param value
 	 *            a number
 	 * @param name
@@ -1519,7 +1519,7 @@ public final class ConditionalCheck {
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param reference
 	 *            an object reference
 	 * 
@@ -1537,7 +1537,7 @@ public final class ConditionalCheck {
 	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param reference
 	 *            an object reference
 	 * @param name
@@ -1557,7 +1557,7 @@ public final class ConditionalCheck {
 	 * Ensures that a given position index is valid within the size of an array, list or string ...
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param index
 	 *            index of an array, list or string
 	 * @param size
@@ -1588,7 +1588,7 @@ public final class ConditionalCheck {
 	 * </ul>
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param start
 	 *            the start value of the range (must be a positive integer or 0)
 	 * @param end
@@ -1616,7 +1616,7 @@ public final class ConditionalCheck {
 	 * as second argument your exception.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            an expression that must be true to indicate a valid state
 	 * 
@@ -1635,7 +1635,7 @@ public final class ConditionalCheck {
 	 * the state is not {@code true}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param clazz
@@ -1659,7 +1659,7 @@ public final class ConditionalCheck {
 	 * Ensures that a given state is {@code true}.
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param description
@@ -1678,7 +1678,7 @@ public final class ConditionalCheck {
 	 * Ensures that a given state is {@code true}
 	 * 
 	 * @param condition
-	 *            condition must be true so that the check is performed.
+	 *            condition must be {@code true}^ so that the check will be performed
 	 * @param expression
 	 *            an expression that must be {@code true} to indicate a valid state
 	 * @param descriptionTemplate
