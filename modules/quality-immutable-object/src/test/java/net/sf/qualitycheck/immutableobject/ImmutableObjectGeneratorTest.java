@@ -15,14 +15,10 @@ import net.sf.qualitycheck.immutableobject.generator.ImmutableObjectGenerator;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.io.CharStreams;
 
 public class ImmutableObjectGeneratorTest {
-
-	private static final Logger LOG = LoggerFactory.getLogger(ImmutableObjectGeneratorTest.class);
 
 	private ImmutableSettings.Builder settingsBuilder;
 
@@ -502,35 +498,6 @@ public class ImmutableObjectGeneratorTest {
 
 		final String file = "Car.java";
 		assertEquals(readReferenceImmutable(file), readInterfaceAndGenerate(file, settings.build()));
-	}
-
-	@Test
-	public void testSettingsInterface() throws IOException {
-		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
-
-		// global settings
-		settings.fieldPrefix("_");
-		settings.jsr305Annotations(true);
-		settings.guava(true);
-		settings.qualityCheck(true);
-
-		// immutable settings
-		settings.copyMethods(true);
-		settings.hashCodePrecomputation(true);
-		settings.hashCodeAndEquals(true);
-		settings.replacement(false);
-		settings.serializable(true);
-		settings.toString(true);
-
-		// builder settings
-		settings.builderCopyConstructor(true);
-		settings.builderFlatMutators(false);
-		settings.builderFluentMutators(true);
-		settings.builderName("Builder");
-		settings.builderImplementsInterface(false);
-
-		final String file = "Settings.java";
-		LOG.info("\n" + readInterfaceAndGenerate(file, settings.build()));
 	}
 
 	@Test(expected = IllegalStateOfArgumentException.class)
