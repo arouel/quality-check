@@ -23,6 +23,9 @@ import java.lang.reflect.Modifier;
 
 import javax.annotation.Nonnull;
 
+import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.exception.IllegalClassWithPublicDefaultConstructorException;
 import net.sf.qualitytest.exception.IllegalMissingAnnotationOnMethodException;
 import net.sf.qualitytest.exception.IllegalNonFinalClassException;
@@ -162,12 +165,19 @@ public final class StaticCheck {
 	 *            A class that must have annotations on all public methods.
 	 * @param annotation
 	 *            An annotation that must be present on all public methods in a class
-	 * @return The checked class.
+	 * @return the checked class
+	 * 
+	 * @throws IllegalMissingAnnotationOnMethodException
+	 *             if the one or more public methods of a {@link Class} are not annotated with a specific
+	 *             {@link Annotation}
 	 */
+	@Throws({ IllegalNullArgumentException.class, IllegalMissingAnnotationOnMethodException.class })
 	public static Class<?> publicMethodsAnnotated(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
+		Check.notNull(clazz);
+		Check.notNull(annotation);
 		final Method[] methods = clazz.getDeclaredMethods();
 		for (final Method m : methods) {
-			if (!m.isAnnotationPresent(annotation)) {
+			if (Modifier.isPublic(m.getModifiers()) && !m.isAnnotationPresent(annotation)) {
 				throw new IllegalMissingAnnotationOnMethodException(clazz, annotation, m);
 			}
 		}
