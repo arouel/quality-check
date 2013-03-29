@@ -98,14 +98,14 @@ public final class SourceCodeFormatter {
 			return ret;
 		}
 
-		private final String _chars;
+		private final String chars;
 
 		private LineEnding(final String chars) {
-			_chars = chars;
+			this.chars = chars;
 		}
 
 		public String asString() {
-			return _chars;
+			return chars;
 		}
 
 		public String find(final String code) {

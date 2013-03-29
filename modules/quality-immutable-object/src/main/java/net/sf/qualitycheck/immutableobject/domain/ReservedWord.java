@@ -108,7 +108,7 @@ public enum ReservedWord {
 		Check.notNull(word, "word");
 		boolean ret = false;
 		for (final ReservedWord w : values()) {
-			if (w._word.equals(word)) {
+			if (w.word.equals(word)) {
 				ret = true;
 				break;
 			}
@@ -116,14 +116,14 @@ public enum ReservedWord {
 		return ret;
 	}
 
-	private final String _word;
+	private final String word;
 
 	ReservedWord(final String word) {
-		_word = word;
+		this.word = word;
 	}
 
 	public String getWord() {
-		return _word;
+		return word;
 	}
 
 }

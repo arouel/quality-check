@@ -177,22 +177,22 @@ public final class Type {
 	}
 
 	@Nullable
-	private final transient boolean _collectionVariant;
+	private final transient boolean collectionVariant;
 
 	@Nonnull
-	private final GenericDeclaration _genericDeclaration;
+	private final GenericDeclaration genericDeclaration;
 
 	@Nonnull
-	private final String _name;
+	private final String name;
 
 	@Nonnull
-	private final Package _package;
+	private final Package packageDeclaration;
 
 	public Type(@Nonnull final Package pkg, @Nonnull final String name, @Nonnull final GenericDeclaration genericDeclaration) {
-		_package = Check.notNull(pkg, "pkg");
-		_name = Check.notEmpty(name, "name");
-		_genericDeclaration = Check.notNull(genericDeclaration, "genericDeclaration");
-		_collectionVariant = CollectionVariant.evaluate(pkg, name) != null ? true : false;
+		packageDeclaration = Check.notNull(pkg, "pkg");
+		this.name = Check.notEmpty(name, "name");
+		this.genericDeclaration = Check.notNull(genericDeclaration, "genericDeclaration");
+		collectionVariant = CollectionVariant.evaluate(pkg, name) != null ? true : false;
 	}
 
 	public Type(@Nonnull final String qualifiedName) {
@@ -202,10 +202,10 @@ public final class Type {
 		// internal only reference needed to be detected as immutable
 		final Package pkg = m.group(7) != null ? createPackage(m.group(1) + m.group(4)) : createPackage(m.group(1));
 		final String name = m.group(7) != null ? m.group(7) : Check.notEmpty(m.group(4), "name");
-		_collectionVariant = CollectionVariant.evaluate(pkg, name) != null ? true : false;
-		_genericDeclaration = m.group(10) != null ? createGenericDeclaration(m.group(10)) : GenericDeclaration.UNDEFINED;
-		_package = pkg;
-		_name = name;
+		collectionVariant = CollectionVariant.evaluate(pkg, name) != null ? true : false;
+		genericDeclaration = m.group(10) != null ? createGenericDeclaration(m.group(10)) : GenericDeclaration.UNDEFINED;
+		packageDeclaration = pkg;
+		this.name = name;
 	}
 
 	public Type(@Nonnull final String packageName, @Nonnull final String typeName, @Nonnull final String genericDeclaration) {
@@ -225,13 +225,13 @@ public final class Type {
 			return false;
 		}
 		final Type other = (Type) obj;
-		if (!_genericDeclaration.equals(other._genericDeclaration)) {
+		if (!genericDeclaration.equals(other.genericDeclaration)) {
 			return false;
 		}
-		if (!_package.equals(other._package)) {
+		if (!packageDeclaration.equals(other.packageDeclaration)) {
 			return false;
 		}
-		if (!_name.equals(other._name)) {
+		if (!name.equals(other.name)) {
 			return false;
 		}
 		return true;
@@ -239,26 +239,26 @@ public final class Type {
 
 	@Nonnull
 	public GenericDeclaration getGenericDeclaration() {
-		return _genericDeclaration;
+		return genericDeclaration;
 	}
 
 	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	@Nonnull
 	public Package getPackage() {
-		return _package;
+		return packageDeclaration;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _genericDeclaration.hashCode();
-		result = prime * result + _package.hashCode();
-		result = prime * result + _name.hashCode();
+		result = prime * result + genericDeclaration.hashCode();
+		result = prime * result + packageDeclaration.hashCode();
+		result = prime * result + name.hashCode();
 		return result;
 	}
 
@@ -312,7 +312,7 @@ public final class Type {
 	}
 
 	public boolean isCollectionVariant() {
-		return _collectionVariant;
+		return collectionVariant;
 	}
 
 	public boolean isDouble() {
@@ -340,7 +340,7 @@ public final class Type {
 	}
 
 	public boolean isPrimitive() {
-		return Primitive.isPrimitive(_name);
+		return Primitive.isPrimitive(name);
 	}
 
 	public boolean isShort() {
@@ -354,14 +354,14 @@ public final class Type {
 	@Override
 	public String toString() {
 		final StringBuilder b = new StringBuilder();
-		if (!_package.getName().isEmpty()) {
-			b.append(_package.getName());
+		if (!packageDeclaration.getName().isEmpty()) {
+			b.append(packageDeclaration.getName());
 			b.append(Characters.DOT);
 		}
-		b.append(_name);
-		if (!_genericDeclaration.getDeclaration().isEmpty()) {
+		b.append(name);
+		if (!genericDeclaration.getDeclaration().isEmpty()) {
 			b.append('<');
-			b.append(_genericDeclaration.getDeclaration());
+			b.append(genericDeclaration.getDeclaration());
 			b.append('>');
 		}
 		return b.toString();

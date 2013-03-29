@@ -27,14 +27,14 @@ public final class ReturnType {
 	}
 
 	@Nonnull
-	private final Type _type;
+	private final Type type;
 
 	private ReturnType() {
-		_type = new Type("void");
+		type = new Type("void");
 	}
 
 	private ReturnType(@Nonnull final Type type) {
-		_type = Check.notNull(type, "type");
+		this.type = Check.notNull(type, "type");
 	}
 
 	@Override
@@ -49,27 +49,27 @@ public final class ReturnType {
 			return false;
 		}
 		final ReturnType other = (ReturnType) obj;
-		if (!_type.equals(other._type)) {
+		if (!type.equals(other.type)) {
 			return false;
 		}
 		return true;
 	}
 
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _type.hashCode();
+		result = prime * result + type.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return _type.toString();
+		return type.toString();
 	}
 
 }

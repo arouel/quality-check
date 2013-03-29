@@ -88,10 +88,10 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	@Nonnull
-	private final ImmutableSettings _settings;
+	private final ImmutableSettings settings;
 
 	public FieldRenderer(@Nonnull final ImmutableSettings settings) {
-		_settings = Check.notNull(settings, "settings");
+		this.settings = Check.notNull(settings, "settings");
 	}
 
 	@Nonnull
@@ -99,7 +99,7 @@ final class FieldRenderer implements AttributeRenderer {
 		String result = currentResult;
 		final CollectionVariant variant = CollectionVariant.evaluate(field.getType());
 		if (variant != null) {
-			if (_settings.hasGuava()) {
+			if (settings.hasGuava()) {
 				result = String.format(variant.getGuavaCopy(), result);
 			} else {
 				final String generic = determineGeneric(field.getType());
@@ -114,7 +114,7 @@ final class FieldRenderer implements AttributeRenderer {
 		String result = currentResult;
 		final CollectionVariant variant = CollectionVariant.evaluate(field.getType());
 		if (variant != null) {
-			if (_settings.hasGuava()) {
+			if (settings.hasGuava()) {
 				result = String.format(variant.getGuavaImmutable(), result);
 			} else {
 				final String generic = determineGeneric(field.getType());
@@ -125,7 +125,7 @@ final class FieldRenderer implements AttributeRenderer {
 	}
 
 	private String regardPrefix(final Field field, final Option option) {
-		return Static.STATIC != field.getStatic() && option != Option.ATTRIBUTE ? _settings.getFieldPrefix() + field.getName() : field
+		return Static.STATIC != field.getStatic() && option != Option.ATTRIBUTE ? settings.getFieldPrefix() + field.getName() : field
 				.getName();
 	}
 
@@ -137,13 +137,13 @@ final class FieldRenderer implements AttributeRenderer {
 		String result = convertIfReservedWord(regardPrefix(field, option));
 		if (option == Option.COPY || option == Option.COPY_FROM_INTERFACE || option == Option.IMMUTABLE) {
 			if (Option.COPY_FROM_INTERFACE == option) {
-				final String argumentName = BasicFormatRenderer.toLowerCamelCase(_settings.getMainInterface().getType().getName());
+				final String argumentName = BasicFormatRenderer.toLowerCamelCase(settings.getMainInterface().getType().getName());
 				result = argumentName + "." + field.getAccessorMethodName() + "()";
 			} else {
 				result = convertIfReservedWord(field.getName());
 			}
 
-			if (_settings.hasQualityCheck()) {
+			if (settings.hasQualityCheck()) {
 				result = surroundWithCheck(field, result);
 			}
 

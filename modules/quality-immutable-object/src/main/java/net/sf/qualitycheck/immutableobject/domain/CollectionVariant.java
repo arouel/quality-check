@@ -39,7 +39,7 @@ public enum CollectionVariant {
 		Check.notNull(typeName, "typeName");
 		CollectionVariant variant = null;
 		for (final CollectionVariant v : values()) {
-			if (v._type.getPackage().getName().equals(pkg.getName()) && v._type.getSimpleName().equals(typeName)) {
+			if (v.type.getPackage().getName().equals(pkg.getName()) && v.type.getSimpleName().equals(typeName)) {
 				variant = v;
 				break;
 			}
@@ -53,35 +53,35 @@ public enum CollectionVariant {
 		return evaluate(type.getPackage(), type.getName());
 	}
 
-	private final String _defaultCopy;
-	private final String _defaultImmutable;
-	private final String _guavaCopy;
-	private final String _guavaImmutable;
-	private final Class<?> _type;
+	private final String defaultCopy;
+	private final String defaultImmutable;
+	private final String guavaCopy;
+	private final String guavaImmutable;
+	private final Class<?> type;
 
 	CollectionVariant(@Nonnull final Class<?> type, @Nonnull final String defaultCopy, @Nonnull final String guavaCopy,
 			@Nonnull final String defaultImmutable, @Nonnull final String guavaImmutable) {
-		_type = Check.notNull(type, "type");
-		_defaultCopy = Check.notNull(defaultCopy, "defaultCopy");
-		_guavaCopy = Check.notNull(guavaCopy, "guavaCopy");
-		_defaultImmutable = Check.notNull(defaultImmutable, "defaultImmutable");
-		_guavaImmutable = Check.notNull(guavaImmutable, "guavaImmutable");
+		this.type = Check.notNull(type, "type");
+		this.defaultCopy = Check.notNull(defaultCopy, "defaultCopy");
+		this.guavaCopy = Check.notNull(guavaCopy, "guavaCopy");
+		this.defaultImmutable = Check.notNull(defaultImmutable, "defaultImmutable");
+		this.guavaImmutable = Check.notNull(guavaImmutable, "guavaImmutable");
 	}
 
 	public String getDefaultCopy() {
-		return _defaultCopy;
+		return defaultCopy;
 	}
 
 	public String getDefaultImmutable() {
-		return _defaultImmutable;
+		return defaultImmutable;
 	}
 
 	public String getGuavaCopy() {
-		return _guavaCopy;
+		return guavaCopy;
 	}
 
 	public String getGuavaImmutable() {
-		return _guavaImmutable;
+		return guavaImmutable;
 	}
 
 }
