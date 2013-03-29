@@ -22,7 +22,7 @@ public final class Interface {
 	}
 
 	@Nonnull
-	final Type _type;
+	private final Type _type;
 
 	public Interface() {
 		_type = new Type("void");

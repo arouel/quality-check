@@ -52,7 +52,7 @@ public final class Annotation {
 		return new Annotation(new Type(annotationType));
 	}
 
-	final Type _type;
+	private final Type _type;
 
 	public Annotation(final Type annotationType) {
 		_type = Check.notNull(annotationType, "annotationType");
