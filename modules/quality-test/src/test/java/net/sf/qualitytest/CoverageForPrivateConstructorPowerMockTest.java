@@ -74,8 +74,8 @@ public class CoverageForPrivateConstructorPowerMockTest {
 
 	private void testWithException(final Exception e) throws NoSuchMethodException, InstantiationException, IllegalAccessException,
 			InvocationTargetException {
-		PowerMock.mockStaticPartial(CoverageForPrivateConstructor.class, "giveMeCoverageInteral");
-		CoverageForPrivateConstructor.giveMeCoverageInteral(HasPrivateContructor.class);
+		PowerMock.mockStaticPartial(CoverageForPrivateConstructor.class, "giveMeCoverageInternal");
+		CoverageForPrivateConstructor.giveMeCoverageInternal(HasPrivateContructor.class);
 		PowerMock.expectLastCall().andThrow(e);
 		PowerMock.replay(CoverageForPrivateConstructor.class);
 

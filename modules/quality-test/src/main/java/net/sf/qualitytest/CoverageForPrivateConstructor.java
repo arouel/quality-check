@@ -42,7 +42,7 @@ public final class CoverageForPrivateConstructor {
 	public static void giveMeCoverage(@Nonnull final Class<?> clazz) {
 		// reduces only some noise in coverage report
 		try {
-			giveMeCoverageInteral(clazz);
+			giveMeCoverageInternal(clazz);
 		} catch (final SecurityException e) {
 			throw new CoverageForPrivateConstructorException(e);
 		} catch (final NoSuchMethodException e) {
@@ -67,7 +67,7 @@ public final class CoverageForPrivateConstructor {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	protected static void giveMeCoverageInteral(@Nonnull final Class<?> clazz) throws NoSuchMethodException, InstantiationException,
+	protected static void giveMeCoverageInternal(@Nonnull final Class<?> clazz) throws NoSuchMethodException, InstantiationException,
 			IllegalAccessException, InvocationTargetException {
 		final Constructor<?> constructor = clazz.getDeclaredConstructor();
 		constructor.setAccessible(true);
