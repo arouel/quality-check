@@ -9,7 +9,7 @@ import net.sf.qualitycheck.Check;
  * Represents a package
  */
 @Immutable
-public final class Package implements Characters {
+public final class Package {
 
 	/**
 	 * Represents a undefined package
@@ -29,12 +29,12 @@ public final class Package implements Characters {
 	/**
 	 * Filters a dot at the end of the passed package name if present.
 	 * 
-	 * @param packageName
+	 * @param pkgName
 	 *            a package name
 	 * @return a filtered package name
 	 */
-	private static String removeLastDot(final String packageName) {
-		return packageName.charAt(packageName.length() - 1) == DOT ? packageName.substring(0, packageName.length() - 1) : packageName;
+	private static String removeLastDot(final String pkgName) {
+		return pkgName.charAt(pkgName.length() - 1) == Characters.DOT ? pkgName.substring(0, pkgName.length() - 1) : pkgName;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public final class Package implements Characters {
 
 	@Override
 	public String toString() {
-		return PREFIX + SPACE + _name;
+		return PREFIX + Characters.SPACE + _name;
 	}
 
 }

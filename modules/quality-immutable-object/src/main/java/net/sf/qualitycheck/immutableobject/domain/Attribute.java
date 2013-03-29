@@ -7,23 +7,30 @@ import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
+
 @Immutable
-public final class Attribute implements Characters {
+public final class Attribute {
 
-	private final List<Annotation> _annotations;
+	@Nonnull
+	private final List<Annotation> annotations;
 
-	private final Final _final;
+	@Nonnull
+	private final Final finalModifier;
 
-	private final String _name;
+	@Nonnull
+	private final String name;
 
-	private final Type _type;
+	@Nonnull
+	private final Type type;
 
 	public Attribute(@Nonnull final String name, @Nonnull final Type type, @Nonnull final Final finalModifier,
 			@Nonnull final List<Annotation> annotations) {
-		_name = Check.notNull(name, "name");
-		_type = Check.notNull(type, "type");
-		_final = Check.notNull(finalModifier, "finalModifier");
-		_annotations = Check.notNull(annotations, "annotations");
+		this.name = Check.notNull(name, "name");
+		this.type = Check.notNull(type, "type");
+		this.finalModifier = Check.notNull(finalModifier, "finalModifier");
+		this.annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
 	}
 
 	@Override
@@ -38,75 +45,38 @@ public final class Attribute implements Characters {
 			return false;
 		}
 		final Attribute other = (Attribute) obj;
-		if (!_annotations.equals(other._annotations)) {
-			return false;
-		}
-		if (_final != other._final) {
-			return false;
-		}
-		if (!_name.equals(other._name)) {
-			return false;
-		}
-		if (!_type.equals(other._type)) {
-			return false;
-		}
-		return true;
+		return Objects.equal(annotations, other.annotations) && Objects.equal(finalModifier, other.finalModifier)
+				&& Objects.equal(name, other.name) && Objects.equal(type, other.type);
 	}
 
 	@Nonnull
 	public List<Annotation> getAnnotations() {
-		return _annotations;
+		return annotations;
 	}
 
 	@Nonnull
 	public Final getFinal() {
-		return _final;
+		return finalModifier;
 	}
 
 	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	@Nonnull
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + _annotations.hashCode();
-		result = prime * result + _final.hashCode();
-		result = prime * result + _name.hashCode();
-		result = prime * result + _type.hashCode();
-		return result;
+		return Objects.hashCode(annotations, finalModifier, name, type);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder b = new StringBuilder();
-		if (!_annotations.isEmpty()) {
-			for (final Annotation annotation : _annotations) {
-				b.append(AT_SIGN);
-				b.append(annotation.getType().getName());
-				b.append(SPACE);
-			}
-		}
-		if (_final != Final.UNDEFINED) {
-			b.append(_final.getName());
-			b.append(SPACE);
-		}
-		b.append(_type.getName());
-		if (_type.getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
-			b.append(BRACKET_OPEN);
-			b.append(_type.getGenericDeclaration());
-			b.append(BRACKET_CLOSE);
-		}
-		b.append(SPACE);
-		b.append(_name);
-		return b.toString();
+		return "Attribute [annotations=" + annotations + ", final1=" + finalModifier + ", name=" + name + ", type=" + type + "]";
 	}
 
 }

@@ -7,55 +7,46 @@ import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
 
-import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a method in a class
  */
 @Immutable
-public final class Method implements Characters {
-
-	/**
-	 * Represents the default content of an unimplemented method
-	 */
-	public static final String NOT_IMPLEMENTED = "throw new NotImplementedException();";
+public final class Method {
 
 	@Nonnull
-	private final List<Annotation> _annotations;
+	private final String name;
 
 	@Nonnull
-	private final List<Attribute> _attributes;
+	private final ReturnType returnType;
 
 	@Nonnull
-	private final String _content;
+	private final List<Attribute> attributes;
 
 	@Nonnull
-	private final Final _final;
+	private final Visibility visibility;
 
 	@Nonnull
-	private final String _name;
+	private final Final final1;
 
 	@Nonnull
-	private final ReturnType _returnType;
+	private final Static static1;
 
 	@Nonnull
-	private final Static _static;
+	private final List<Annotation> annotations;
 
-	@Nonnull
-	private final Visibility _visibility;
-
-	public Method(@Nonnull final String name, @Nonnull final ReturnType returnType, final String content,
-			@Nonnull final List<Attribute> attributes, @Nonnull final Visibility visibility, @Nonnull final Final finalModifier,
-			@Nonnull final Static staticModifier, @Nonnull final List<Annotation> annotations) {
-		_name = Check.notEmpty(name, "name");
-		_returnType = Check.notNull(returnType, "returnType");
-		_content = Check.notEmpty(content, "content");
-		_attributes = ImmutableList.copyOf(Check.notNull(attributes, "attributes"));
-		_visibility = Check.notNull(visibility, "visibility");
-		_final = Check.notNull(finalModifier, "finalModifier");
-		_static = Check.notNull(staticModifier, "staticModifier");
-		_annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
+	public Method(@Nonnull final String name, @Nonnull final ReturnType returnType, @Nonnull final List<Attribute> attributes,
+			@Nonnull final Visibility visibility, @Nonnull final Final final1, @Nonnull final Static static1,
+			@Nonnull final List<Annotation> annotations) {
+		this.name = Check.notEmpty(name, "name");
+		this.returnType = Check.notNull(returnType, "returnType");
+		this.attributes = ImmutableList.copyOf(Check.notNull(attributes, "attributes"));
+		this.visibility = Check.notNull(visibility, "visibility");
+		this.final1 = Check.notNull(final1, "final1");
+		this.static1 = Check.notNull(static1, "static1");
+		this.annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
 	}
 
 	@Override
@@ -70,127 +61,56 @@ public final class Method implements Characters {
 			return false;
 		}
 		final Method other = (Method) obj;
-		if (!_annotations.equals(other._annotations)) {
-			return false;
-		}
-		if (!_attributes.equals(other._attributes)) {
-			return false;
-		}
-		if (!_content.equals(other._content)) {
-			return false;
-		}
-		if (_final != other._final) {
-			return false;
-		}
-		if (!_name.equals(other._name)) {
-			return false;
-		}
-		if (!_returnType.equals(other._returnType)) {
-			return false;
-		}
-		if (_static != other._static) {
-			return false;
-		}
-		if (_visibility != other._visibility) {
-			return false;
-		}
-		return true;
+		return Objects.equal(name, other.name) && Objects.equal(returnType, other.returnType)
+				&& Objects.equal(attributes, other.attributes) && Objects.equal(visibility, other.visibility)
+				&& Objects.equal(final1, other.final1) && Objects.equal(static1, other.static1)
+				&& Objects.equal(annotations, other.annotations);
 	}
 
 	@Nonnull
 	public List<Annotation> getAnnotations() {
-		return _annotations;
+		return annotations;
 	}
 
+	@Nonnull
 	public List<Attribute> getAttributes() {
-		return _attributes;
-	}
-
-	public String getContent() {
-		return _content;
+		return attributes;
 	}
 
 	@Nonnull
 	public Final getFinal() {
-		return _final;
+		return final1;
 	}
 
 	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	@Nonnull
 	public ReturnType getReturnType() {
-		return _returnType;
+		return returnType;
 	}
 
+	@Nonnull
 	public Static getStatic() {
-		return _static;
+		return static1;
 	}
 
 	@Nonnull
 	public Visibility getVisibility() {
-		return _visibility;
+		return visibility;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + _annotations.hashCode();
-		result = prime * result + _attributes.hashCode();
-		result = prime * result + _content.hashCode();
-		result = prime * result + _final.hashCode();
-		result = prime * result + _name.hashCode();
-		result = prime * result + _returnType.hashCode();
-		result = prime * result + _static.hashCode();
-		result = prime * result + _visibility.hashCode();
-		return result;
+		return Objects.hashCode(name, returnType, attributes, visibility, final1, static1, annotations);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder b = new StringBuilder();
-		if (!_annotations.isEmpty()) {
-			for (final Annotation annotation : _annotations) {
-				b.append(AT_SIGN);
-				b.append(annotation.getType().getName());
-				b.append(NEWLINE);
-			}
-		}
-		if (_visibility != Visibility.UNDEFINED) {
-			b.append(_visibility.getName());
-			b.append(SPACE);
-		}
-		if (_static != Static.UNDEFINED) {
-			b.append(_static.getName());
-			b.append(SPACE);
-		}
-		if (_final != Final.UNDEFINED) {
-			b.append(_final.getName());
-			b.append(SPACE);
-		}
-		b.append(_returnType.getType().getName());
-		if (_returnType.getType().getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
-			b.append(BRACKET_OPEN);
-			b.append(_returnType.getType().getGenericDeclaration());
-			b.append(BRACKET_CLOSE);
-		}
-		b.append(SPACE);
-		b.append(_name);
-		b.append(PARENTHESES_OPEN);
-		if (!_attributes.isEmpty()) {
-			b.append(Joiner.on(COMMA_SPACE).join(_attributes));
-		}
-		b.append(PARENTHESES_CLOSE);
-		b.append(SPACE);
-		b.append(BRACE_OPEN);
-		b.append(NEWLINE);
-		b.append(_content);
-		b.append(NEWLINE);
-		b.append(BRACE_CLOSE);
-		return b.toString();
+		return "Method [name=" + name + ", returnType=" + returnType + ", attributes=" + attributes + ", visibility=" + visibility
+				+ ", final1=" + final1 + ", static1=" + static1 + ", annotations=" + annotations + "]";
 	}
 
 }

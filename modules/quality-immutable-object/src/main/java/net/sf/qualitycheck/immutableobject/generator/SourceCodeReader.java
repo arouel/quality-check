@@ -47,8 +47,8 @@ final class SourceCodeReader {
 		final List<Annotation> annotations = findAnnotations(methodDeclaration.getAnnotations(), imports);
 		final List<Attribute> attributes = findAttributes(methodDeclaration.getParameters(), imports);
 		final ReturnType returnType = ReturnType.of(findType(methodDeclaration.getType(), imports));
-		return new Method(methodDeclaration.getName(), returnType, Method.NOT_IMPLEMENTED, attributes, Visibility.PUBLIC, Final.UNDEFINED,
-				Static.UNDEFINED, annotations);
+		return new Method(methodDeclaration.getName(), returnType, attributes, Visibility.PUBLIC, Final.UNDEFINED, Static.UNDEFINED,
+				annotations);
 	}
 
 	@Nonnull

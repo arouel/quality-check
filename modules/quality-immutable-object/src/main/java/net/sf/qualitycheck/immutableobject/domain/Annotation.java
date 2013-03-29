@@ -9,7 +9,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import net.sf.qualitycheck.Check;
 
 @Immutable
-public final class Annotation implements Characters {
+public final class Annotation {
 
 	/**
 	 * Representation of annotation {@link Immutable}

@@ -9,7 +9,7 @@ import net.sf.qualitycheck.Check;
  * Represents an import statement of a class
  */
 @Immutable
-public final class Import implements Characters {
+public final class Import {
 
 	/**
 	 * Prefix when written in class file
@@ -93,7 +93,7 @@ public final class Import implements Characters {
 
 	@Override
 	public String toString() {
-		return PREFIX + SPACE + _type.toString() + SEMICOLON;
+		return PREFIX + Characters.SPACE + _type.toString() + Characters.SEMICOLON;
 	}
 
 }

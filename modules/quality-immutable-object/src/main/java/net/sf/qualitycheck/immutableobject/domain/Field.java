@@ -3,13 +3,16 @@ package net.sf.qualitycheck.immutableobject.domain;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.util.MethodUtil;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
-public final class Field implements Characters {
+@Immutable
+public final class Field {
 
 	/**
 	 * Represents an undefined default value of a field
@@ -17,48 +20,49 @@ public final class Field implements Characters {
 	public static final String WITHOUT_VALUE = "";
 
 	@Nonnull
-	private transient final String _accessorMethodName;
+	private transient final String accessorMethodName;
 
 	@Nonnull
-	private final AccessorPrefix _accessorPrefix;
+	private final AccessorPrefix accessorPrefix;
 
 	@Nonnull
-	private final List<Annotation> _annotations;
+	private final List<Annotation> annotations;
 
 	@Nonnull
-	private final Final _final;
+	private final Final finalModifier;
 
 	@Nonnull
-	private transient final String _mutatorMethodName;
+	private transient final String mutatorMethodName;
 
 	@Nonnull
-	private final String _name;
+	private final String name;
 
 	@Nonnull
-	private final Static _static;
+	private final Static staticModifier;
 
 	@Nonnull
-	private final Type _type;
+	private final Type type;
 
 	@Nonnull
-	private final String _value;
+	private final String value;
 
 	@Nonnull
-	private final Visibility _visibility;
+	private final Visibility visibility;
 
 	public Field(@Nonnull final String name, @Nonnull final Type type, @Nonnull final Visibility visibility,
-			@Nonnull final Final finalModifier, final Static staticModifier, @Nonnull final List<Annotation> annotations,
-			@Nonnull final String value, final AccessorPrefix accessorPrefix) {
-		_name = Check.notNull(name, "name");
-		_type = Check.notNull(type, "type");
-		_visibility = Check.notNull(visibility, "visibility");
-		_final = Check.notNull(finalModifier, "finalModifier");
-		_static = Check.notNull(staticModifier, "staticModifier");
-		_annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
-		_value = Check.notNull(value, "value");
-		_accessorPrefix = Check.notNull(accessorPrefix, "accessorPrefix");
-		_accessorMethodName = MethodUtil.determineAccessorName(accessorPrefix, name);
-		_mutatorMethodName = MethodUtil.determineMutatorName(name);
+			@Nonnull final Final finalModifier, @Nonnull final Static staticModifier, @Nonnull final List<Annotation> annotations,
+			@Nonnull final String value, @Nonnull final AccessorPrefix accessorPrefix) {
+		this.name = Check.notNull(name, "name");
+		this.type = Check.notNull(type, "type");
+		this.visibility = Check.notNull(visibility, "visibility");
+		this.finalModifier = Check.notNull(finalModifier, "finalModifier");
+		this.staticModifier = Check.notNull(staticModifier, "staticModifier");
+		this.annotations = ImmutableList.copyOf(Check.notNull(annotations, "annotations"));
+		this.value = Check.notNull(value, "value");
+		this.accessorPrefix = Check.notNull(accessorPrefix, "accessorPrefix");
+
+		accessorMethodName = MethodUtil.determineAccessorName(accessorPrefix, name);
+		mutatorMethodName = MethodUtil.determineMutatorName(name);
 	}
 
 	@Override
@@ -73,128 +77,81 @@ public final class Field implements Characters {
 			return false;
 		}
 		final Field other = (Field) obj;
-		if (!_annotations.equals(other._annotations)) {
-			return false;
-		}
-		if (_final != other._final) {
-			return false;
-		}
-		if (!_name.equals(other._name)) {
-			return false;
-		}
-		if (!_type.equals(other._type)) {
-			return false;
-		}
-		if (_visibility != other._visibility) {
-			return false;
-		}
-		return true;
+		return Objects.equal(accessorPrefix, other.accessorPrefix) && Objects.equal(annotations, other.annotations)
+				&& Objects.equal(finalModifier, other.finalModifier) && Objects.equal(name, other.name)
+				&& Objects.equal(staticModifier, other.staticModifier) && Objects.equal(type, other.type)
+				&& Objects.equal(value, other.value) && Objects.equal(visibility, other.visibility);
 	}
 
 	public String getAccessorMethodName() {
-		return _accessorMethodName;
+		return accessorMethodName;
 	}
 
+	@Nonnull
 	public AccessorPrefix getAccessorPrefix() {
-		return _accessorPrefix;
+		return accessorPrefix;
 	}
 
 	@Nonnull
 	public List<Annotation> getAnnotations() {
-		return _annotations;
+		return annotations;
 	}
 
 	@Nonnull
 	public Final getFinal() {
-		return _final;
+		return finalModifier;
 	}
 
 	public String getMutatorMethodName() {
-		return _mutatorMethodName;
+		return mutatorMethodName;
 	}
 
 	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
+	@Nonnull
 	public Static getStatic() {
-		return _static;
+		return staticModifier;
 	}
 
 	@Nonnull
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
+	@Nonnull
 	public String getValue() {
-		return _value;
+		return value;
 	}
 
 	@Nonnull
 	public Visibility getVisibility() {
-		return _visibility;
+		return visibility;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + _annotations.hashCode();
-		result = prime * result + _final.hashCode();
-		result = prime * result + _name.hashCode();
-		result = prime * result + _type.hashCode();
-		result = prime * result + _visibility.hashCode();
-		return result;
+		return Objects.hashCode(accessorPrefix, annotations, finalModifier, name, staticModifier, type, value, visibility);
 	}
 
 	public boolean isNonnegative() {
-		return _annotations.contains(Annotation.NONNEGATIVE);
+		return annotations.contains(Annotation.NONNEGATIVE);
 	}
 
 	public boolean isNonnull() {
-		return _annotations.contains(Annotation.NONNULL);
+		return annotations.contains(Annotation.NONNULL);
 	}
 
 	public boolean isNullable() {
-		return _annotations.contains(Annotation.NULLABLE) || !(isNonnull() || isNonnegative());
+		return annotations.contains(Annotation.NULLABLE) || !(isNonnull() || isNonnegative());
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder b = new StringBuilder();
-		if (!_annotations.isEmpty()) {
-			for (final Annotation annotation : _annotations) {
-				b.append(annotation.toString());
-				b.append(NEWLINE);
-			}
-		}
-		if (_visibility != Visibility.UNDEFINED) {
-			b.append(_visibility.getName());
-			b.append(SPACE);
-		}
-		if (_static != Static.UNDEFINED) {
-			b.append(_static.getName());
-			b.append(SPACE);
-		}
-		if (_final != Final.UNDEFINED) {
-			b.append(_final.getName());
-			b.append(SPACE);
-		}
-		b.append(_type.getName());
-		if (_type.getGenericDeclaration() != GenericDeclaration.UNDEFINED) {
-			b.append(BRACKET_OPEN);
-			b.append(_type.getGenericDeclaration());
-			b.append(BRACKET_CLOSE);
-		}
-		b.append(SPACE);
-		b.append(_name);
-		if (!_value.isEmpty()) {
-			b.append(EQUALS_SIGN);
-			b.append(_value);
-		}
-		b.append(SEMICOLON);
-		return b.toString();
+		return "Field [accessorPrefix=" + accessorPrefix + ", annotations=" + annotations + ", final1=" + finalModifier + ", name=" + name
+				+ ", static1=" + staticModifier + ", type=" + type + ", value=" + value + ", visibility=" + visibility + "]";
 	}
 
 }

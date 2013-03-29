@@ -110,8 +110,7 @@ public final class ImmutableInterfaceAnalysisTest {
 	public void equals_different_METHODS() {
 		final List<Annotation> annotations = Lists.newArrayList();
 		final List<Attribute> attributes = Lists.newArrayList();
-		final Method m = new Method("testMethod", ReturnType.INT, Method.NOT_IMPLEMENTED, attributes, Visibility.PUBLIC, Final.FINAL,
-				Static.STATIC, annotations);
+		final Method m = new Method("testMethod", ReturnType.INT, attributes, Visibility.PUBLIC, Final.FINAL, Static.STATIC, annotations);
 		final ImmutableInterfaceAnalysis a = new Blueprint().methods(Lists.newArrayList(m)).build();
 		final ImmutableInterfaceAnalysis b = new Blueprint().methods(new ArrayList<Method>(0)).build();
 		assertFalse(a.equals(b));

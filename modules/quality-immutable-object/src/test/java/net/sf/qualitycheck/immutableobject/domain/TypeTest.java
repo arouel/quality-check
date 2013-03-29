@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstancesOf;
 import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
@@ -68,6 +69,41 @@ public class TypeTest {
 	@Test
 	public void construct_typeWithPackage() {
 		new Type("com.github.before.Immutable");
+	}
+
+	@Test
+	public void createTypeWithGenericDeclaration() {
+		new Type("java.util", "List", "");
+		new Type("java.util", "List", "String");
+		new Type("java.util", "List", "? extends Set");
+	}
+
+	@Test
+	public void equals_identical() {
+		final Type a = new Type(String.class.getName());
+		final Type b = new Type(String.class.getName());
+		assertEquals(a, b);
+		assertTrue(a.hashCode() == b.hashCode());
+	}
+
+	@Test
+	public void equals_null() {
+		final Type a = new Type(String.class.getName());
+		assertFalse(a.equals(null));
+	}
+
+	@Test
+	public void equals_otherClass() {
+		final Type a = new Type(String.class.getName());
+		assertFalse(a.equals(""));
+	}
+
+	@Test
+	public void equals_same() {
+		final Type a = new Type(String.class.getName());
+		assertEquals(a, a);
+		assertSame(a, a);
+		assertTrue(a.hashCode() == a.hashCode());
 	}
 
 	@Test
@@ -256,11 +292,50 @@ public class TypeTest {
 	}
 
 	@Test
+	public void isJavaLangType() {
+		assertTrue(new Type("java.lang.Boolean").isJavaLangType());
+		assertTrue(Type.of(Boolean.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Byte").isJavaLangType());
+		assertTrue(Type.of(Byte.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Character").isJavaLangType());
+		assertTrue(Type.of(Character.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Double").isJavaLangType());
+		assertTrue(Type.of(Double.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Float").isJavaLangType());
+		assertTrue(Type.of(Float.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Integer").isJavaLangType());
+		assertTrue(Type.of(Integer.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Long").isJavaLangType());
+		assertTrue(Type.of(Long.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Short").isJavaLangType());
+		assertTrue(Type.of(Short.class).isJavaLangType());
+		assertTrue(new Type("java.lang.Number").isJavaLangType());
+		assertTrue(Type.of(Number.class).isJavaLangType());
+		assertTrue(new Type("java.lang.String").isJavaLangType());
+		assertTrue(Type.of(String.class).isJavaLangType());
+
+		assertFalse(new Type("Boolean").isJavaLangType());
+		assertFalse(new Type("Byte").isJavaLangType());
+		assertFalse(new Type("Character").isJavaLangType());
+		assertFalse(new Type("Double").isJavaLangType());
+		assertFalse(new Type("Float").isJavaLangType());
+		assertFalse(new Type("Integer").isJavaLangType());
+		assertFalse(new Type("Long").isJavaLangType());
+		assertFalse(new Type("Short").isJavaLangType());
+	}
+
+	@Test
 	public void isLong() {
 		assertTrue(new Type("long").isLong());
 		assertFalse(new Type("Long").isLong());
 		assertFalse(new Type("int").isLong());
 		assertFalse(new Type("double").isLong());
+	}
+
+	@Test
+	public void isNumber() {
+		assertTrue(Type.of(Number.class).isNumber());
+		assertFalse(Type.of(Long.class).isNumber());
 	}
 
 	@Test

@@ -7,73 +7,69 @@ import javax.annotation.concurrent.Immutable;
 
 import net.sf.qualitycheck.Check;
 
-import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
 @Immutable
-public final class Clazz implements Characters {
-
-	/**
-	 * Prefix when written in class file
-	 */
-	private static final String PREFIX = "class";
+public final class Clazz {
 
 	@Nonnull
-	private final List<Annotation> _annotations;
+	private final Abstract abstractModifier;
 
 	@Nonnull
-	private final Abstract _abstract;
+	private final List<Annotation> annotations;
 
 	@Nonnull
-	private final List<Interface> _interfaces;
+	private final List<Constructor> constructors;
 
 	@Nonnull
-	private final List<Constructor> _constructors;
+	private final List<Field> fields;
 
 	@Nonnull
-	private final List<Field> _fields;
+	private final Final finalModifier;
 
 	@Nonnull
-	private final Final _final;
+	private final List<Import> imports;
 
 	@Nonnull
-	private final List<Method> _methods;
+	private final List<Interface> interfaces;
 
 	@Nonnull
-	private final String _name;
+	private final List<Method> methods;
 
 	@Nonnull
-	private final Package _package;
+	private final String name;
 
 	@Nonnull
-	private final List<Import> _imports;
+	private final Package package1;
 
 	@Nonnull
-	private final Visibility _visibility;
+	private final Visibility visibility;
 
-	public Clazz(final String name, final Package pkg, final List<Field> fields, final List<Constructor> constructors,
-			final List<Method> methods, final Visibility visibility, final Final finalModifier, final Abstract abstractModifier,
-			final List<Interface> interfaces, final List<Import> imports, @Nonnull final List<Annotation> annotations) {
-		_name = Check.notEmpty(name, "name");
-		_package = Check.notNull(pkg, "pkg");
-		_abstract = Check.notNull(abstractModifier, "abstractModifier");
-		_fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
-		_constructors = ImmutableList.copyOf(Check.notNull(constructors, "constructors"));
-		_methods = ImmutableList.copyOf(Check.notNull(methods, "methods"));
-		_visibility = Check.notNull(visibility, "visibility");
-		_final = Check.notNull(finalModifier, "finalModifier");
-		_interfaces = ImmutableList.copyOf(Check.notNull(interfaces, "interfaces"));
-		_imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
+	public Clazz(@Nonnull final String name, @Nonnull final Package package1, @Nonnull final List<Field> fields,
+			@Nonnull final List<Constructor> constructors, @Nonnull final List<Method> methods, @Nonnull final Visibility visibility,
+			@Nonnull final Final final1, @Nonnull final Abstract abstract1, @Nonnull final List<Interface> interfaces,
+			@Nonnull final List<Import> imports, @Nonnull final List<Annotation> annotations) {
+		this.name = Check.notEmpty(name, "name");
+		this.package1 = Check.notNull(package1, "package1");
+		this.fields = ImmutableList.copyOf(Check.notNull(fields, "fields"));
+		this.constructors = ImmutableList.copyOf(Check.notNull(constructors, "constructors"));
+		this.methods = ImmutableList.copyOf(Check.notNull(methods, "methods"));
+		this.visibility = Check.notNull(visibility, "visibility");
+		finalModifier = Check.notNull(final1, "final1");
+		abstractModifier = Check.notNull(abstract1, "abstract1");
+		this.interfaces = ImmutableList.copyOf(Check.notNull(interfaces, "interfaces"));
+		this.imports = ImmutableList.copyOf(Check.notNull(imports, "imports"));
 
 		// TODO find a nice solution
 		Check.notNull(annotations, "annotations");
-		_annotations = ImmutableList.copyOf(Annotations.of(annotations).removeUnqualified(_imports).getAnnotations());
+		this.annotations = ImmutableList.copyOf(Annotations.of(annotations).removeUnqualified(imports).getAnnotations());
 
 		Check.stateIsTrue(!abstractAndFinal(), "A class can be either abstract or final, not both.");
 	}
 
 	private boolean abstractAndFinal() {
-		return _abstract == Abstract.ABSTRACT && _final == Final.FINAL ? true : false;
+		return abstractModifier == Abstract.ABSTRACT && finalModifier == Final.FINAL ? true : false;
 	}
 
 	@Override
@@ -88,167 +84,79 @@ public final class Clazz implements Characters {
 			return false;
 		}
 		final Clazz other = (Clazz) obj;
-		if (_abstract != other._abstract) {
-			return false;
-		}
-		if (!_annotations.equals(other._annotations)) {
-			return false;
-		}
-		if (!_constructors.equals(other._constructors)) {
-			return false;
-		}
-		if (!_fields.equals(other._fields)) {
-			return false;
-		}
-		if (_final != other._final) {
-			return false;
-		}
-		if (!_interfaces.equals(other._interfaces)) {
-			return false;
-		}
-		if (!_methods.equals(other._methods)) {
-			return false;
-		}
-		if (!_name.equals(other._name)) {
-			return false;
-		}
-		if (!_package.equals(other._package)) {
-			return false;
-		}
-		if (_visibility != other._visibility) {
-			return false;
-		}
-		return true;
+		return Objects.equal(name, other.name) && Objects.equal(package1, other.package1) && Objects.equal(fields, other.fields)
+				&& Objects.equal(constructors, other.constructors) && Objects.equal(methods, other.methods)
+				&& Objects.equal(visibility, other.visibility) && Objects.equal(finalModifier, other.finalModifier)
+				&& Objects.equal(abstractModifier, other.abstractModifier) && Objects.equal(interfaces, other.interfaces)
+				&& Objects.equal(imports, other.imports) && Objects.equal(annotations, other.annotations);
 	}
 
+	@Nonnull
 	public Abstract getAbstract() {
-		return _abstract;
+		return abstractModifier;
 	}
 
+	@Nonnull
 	public List<Annotation> getAnnotations() {
-		return _annotations;
+		return annotations;
 	}
 
+	@Nonnull
 	public List<Constructor> getConstructors() {
-		return _constructors;
+		return constructors;
 	}
 
+	@Nonnull
 	public List<Field> getFields() {
-		return _fields;
+		return fields;
 	}
 
+	@Nonnull
 	public Final getFinal() {
-		return _final;
+		return finalModifier;
 	}
 
+	@Nonnull
 	public List<Import> getImports() {
-		return Imports.copyOf(_imports).copyAndAdd(Imports.allOf(this)).filter().sortByName().asList();
+		return Imports.copyOf(imports).copyAndAdd(Imports.allOf(this)).filter().sortByName().asList();
 	}
 
+	@Nonnull
 	public List<Interface> getInterfaces() {
-		return _interfaces;
+		return interfaces;
 	}
 
+	@Nonnull
 	public List<Method> getMethods() {
-		return _methods;
+		return methods;
 	}
 
+	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
+	@Nonnull
 	public Package getPackage() {
-		return _package;
+		return package1;
 	}
 
+	@Nonnull
 	public Visibility getVisibility() {
-		return _visibility;
+		return visibility;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + _abstract.hashCode();
-		result = prime * result + _annotations.hashCode();
-		result = prime * result + _constructors.hashCode();
-		result = prime * result + _fields.hashCode();
-		result = prime * result + _final.hashCode();
-		result = prime * result + _interfaces.hashCode();
-		result = prime * result + _methods.hashCode();
-		result = prime * result + _name.hashCode();
-		result = prime * result + _package.hashCode();
-		result = prime * result + _visibility.hashCode();
-		return result;
+		return Objects.hashCode(name, package1, fields, constructors, methods, visibility, finalModifier, abstractModifier, interfaces,
+				imports, annotations);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder b = new StringBuilder();
-		if (!Package.UNDEFINED.equals(_package)) {
-			b.append(_package.toString());
-			b.append(SEMICOLON);
-			b.append(NEWLINE);
-		}
-		b.append(NEWLINE);
-		final List<Import> imports = getImports();
-		for (final Import imp : imports) {
-			b.append(imp.toString());
-			b.append(NEWLINE);
-		}
-		b.append(NEWLINE);
-		if (!_annotations.isEmpty()) {
-			for (final Annotation annotation : _annotations) {
-				b.append(AT_SIGN);
-				b.append(annotation.getType().getName());
-				b.append(NEWLINE);
-			}
-		}
-		if (_visibility != Visibility.UNDEFINED) {
-			b.append(_visibility.getName());
-			b.append(SPACE);
-		}
-		if (_final != Final.UNDEFINED) {
-			b.append(_final.getName());
-			b.append(SPACE);
-		}
-		b.append(PREFIX);
-		b.append(SPACE);
-		b.append(_name);
-		b.append(SPACE);
-		if (!_interfaces.isEmpty()) {
-			b.append("implements");
-			b.append(SPACE);
-			b.append(Joiner.on(COMMA_SPACE).join(_interfaces));
-			b.append(SPACE);
-		}
-		b.append(BRACE_OPEN);
-		b.append(NEWLINE);
-		b.append(NEWLINE);
-		if (!_fields.isEmpty()) {
-			for (final Field field : _fields) {
-				b.append(field.toString());
-				b.append(NEWLINE);
-				b.append(NEWLINE);
-			}
-		}
-		if (!_constructors.isEmpty()) {
-			for (final Constructor constructor : _constructors) {
-				b.append(constructor.toString());
-				b.append(NEWLINE);
-				b.append(NEWLINE);
-			}
-		}
-		if (!_methods.isEmpty()) {
-			for (final Method method : _methods) {
-				b.append(method.toString());
-				b.append(NEWLINE);
-				b.append(NEWLINE);
-			}
-		}
-		b.append(BRACE_CLOSE);
-		b.append(NEWLINE);
-		return b.toString();
+		return "Clazz [name=" + name + ", package1=" + package1 + ", fields=" + fields + ", constructors=" + constructors + ", methods="
+				+ methods + ", visibility=" + visibility + ", final1=" + finalModifier + ", abstract1=" + abstractModifier
+				+ ", interfaces=" + interfaces + ", imports=" + imports + ", annotations=" + annotations + "]";
 	}
 
 }
