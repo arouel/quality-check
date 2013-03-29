@@ -22,10 +22,10 @@ import javax.annotation.Nullable;
  * Thrown to indicate that a class has a public default constructor which should be private.
  * 
  * @author Dominik Seichter
- *
+ * 
  */
 public class IllegalClassWithPublicDefaultConstructorException extends RuntimeException {
-	
+
 	private static final long serialVersionUID = -210874646549124053L;
 
 	/**
@@ -74,8 +74,8 @@ public class IllegalClassWithPublicDefaultConstructorException extends RuntimeEx
 
 	/**
 	 * Constructs an {@code IllegalClassWithPublicDefaultConstructorException} with the message
-	 * {@link IllegalClassWithPublicDefaultConstructorException#MESSAGE_WITH_NAME} including the given name of the class as string
-	 * representation.
+	 * {@link IllegalClassWithPublicDefaultConstructorException#MESSAGE_WITH_NAME} including the given name of the class
+	 * as string representation.
 	 * 
 	 * @param name
 	 *            the name of the class
@@ -85,8 +85,9 @@ public class IllegalClassWithPublicDefaultConstructorException extends RuntimeEx
 	}
 
 	/**
-	 * Constructs a new exception with the message {@link IllegalClassWithPublicDefaultConstructorException#MESSAGE_WITH_NAME} including the
-	 * given name as string representation and cause.
+	 * Constructs a new exception with the message
+	 * {@link IllegalClassWithPublicDefaultConstructorException#MESSAGE_WITH_NAME} including the given name as string
+	 * representation and cause.
 	 * 
 	 * @param name
 	 *            the name of the class
@@ -99,7 +100,8 @@ public class IllegalClassWithPublicDefaultConstructorException extends RuntimeEx
 	}
 
 	/**
-	 * Constructs a new exception with the default message {@link IllegalClassWithPublicDefaultConstructorException#DEFAULT_MESSAGE}.
+	 * Constructs a new exception with the default message
+	 * {@link IllegalClassWithPublicDefaultConstructorException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
@@ -108,7 +110,5 @@ public class IllegalClassWithPublicDefaultConstructorException extends RuntimeEx
 	public IllegalClassWithPublicDefaultConstructorException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
-
-
 
 }

@@ -23,8 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Thrown to indicate that an annotation is missing on a public method of a
- * class.
+ * Thrown to indicate that an annotation is missing on a public method of a class.
  * 
  * @author Dominik Seichter
  * 
@@ -33,16 +32,35 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 
 	private static final long serialVersionUID = 2122431252273528917L;
 	/**
-	 * Default message to indicate that the a given class must have an
-	 * annotation.
+	 * Default message to indicate that the a given class must have an annotation.
 	 */
 	protected static final String DEFAULT_MESSAGE = "Annotation is required on all public methods of the passed class.";
 
 	/**
-	 * Message to indicate that the the given class with <em>name</em> must be
-	 * annotated with annotation '%s' on method <name>method</name>.
+	 * Message to indicate that the the given class with <em>name</em> must be annotated with annotation '%s' on method
+	 * <name>method</name>.
 	 */
 	protected static final String MESSAGE_WITH_METHOD_ANNOTATION_AND_CLASS = "Class '%s' must have annotation '%s' on method '%s'.";
+
+	/**
+	 * Returns the formatted string {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION} with the
+	 * given {@code annotation}.
+	 * 
+	 * @param clazz
+	 *            the name of the class causing the error
+	 * @param annotation
+	 *            the name of the required annotation
+	 * @param method
+	 *            the method causing the exception
+	 * @return a formatted string of message with the given argument name
+	 */
+	private static String format(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation,
+			@Nonnull final Method method) {
+		if (annotation == null || method == null || clazz == null) {
+			throw new IllegalArgumentException("annotation");
+		}
+		return String.format(MESSAGE_WITH_METHOD_ANNOTATION_AND_CLASS, clazz.getName(), annotation.getName(), method.getName());
+	}
 
 	/**
 	 * Annotation to search on a class
@@ -63,45 +81,20 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	private final Method method;
 
 	/**
-	 * Returns the formatted string
-	 * {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION}
-	 * with the given {@code annotation}.
-	 * 
-	 * @param clazz
-	 *            the name of the class causing the error
-	 * @param annotation
-	 *            the name of the required annotation
-	 * @param method
-	 *            the method causing the exception
-	 * @return a formatted string of message with the given argument name
-	 */
-	private static String format(@Nonnull final Class<?> clazz,
-			@Nonnull final Class<? extends Annotation> annotation,
-			@Nonnull final Method method) {
-		if (annotation == null || method == null || clazz == null) {
-			throw new IllegalArgumentException("annotation");
-		}
-		return String.format(MESSAGE_WITH_METHOD_ANNOTATION_AND_CLASS,
-				clazz.getName(), annotation.getName(), method.getName());
-	}
-
-	/**
-	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the
-	 * default message
+	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the default message
 	 * {@link IllegalMissingAnnotationOnMethodException#DEFAULT_MESSAGE}.
 	 */
 	public IllegalMissingAnnotationOnMethodException() {
 		super(DEFAULT_MESSAGE);
-		this.annotation = null;
-		this.clazz = null;
-		this.method = null;
+		annotation = null;
+		clazz = null;
+		method = null;
 	}
 
 	/**
-	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the
-	 * message
-	 * {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION}
-	 * including the name of the missing annotation.
+	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the message
+	 * {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION} including the name of the missing
+	 * annotation.
 	 * 
 	 * @param clazz
 	 *            the name of the class causing the error
@@ -110,8 +103,8 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	 * @param method
 	 *            the method causing the exception
 	 */
-	public IllegalMissingAnnotationOnMethodException(
-			@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation, @Nonnull final Method method) {
+	public IllegalMissingAnnotationOnMethodException(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation,
+			@Nonnull final Method method) {
 		super(format(clazz, annotation, method));
 		this.annotation = annotation;
 		this.clazz = clazz;
@@ -119,10 +112,9 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	}
 
 	/**
-	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the
-	 * message
-	 * {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION}
-	 * including the name of the missing annotation.
+	 * Constructs an {@code IllegalMissingAnnotationOnMethodException} with the message
+	 * {@link IllegalMissingAnnotationOnMethodException#MESSAGE_WITH_ANNOTATION} including the name of the missing
+	 * annotation.
 	 * 
 	 * @param clazz
 	 *            the name of the class causing the error
@@ -131,13 +123,11 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	 * @param method
 	 *            the method causing the exception
 	 * @param cause
-	 *            the cause (which is saved for later retrieval by the
-	 *            {@link Throwable#getCause()} method). (A {@code null} value is
-	 *            permitted, and indicates that the cause is nonexistent or
-	 *            unknown.)
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalMissingAnnotationOnMethodException(
-			@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation, @Nonnull final Method method, @Nullable final Throwable cause) {
+	public IllegalMissingAnnotationOnMethodException(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation,
+			@Nonnull final Method method, @Nullable final Throwable cause) {
 		super(format(clazz, annotation, method), cause);
 		this.annotation = annotation;
 		this.clazz = clazz;
@@ -149,36 +139,23 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	 * {@link IllegalMissingAnnotationOnMethodException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param cause
-	 *            the cause (which is saved for later retrieval by the
-	 *            {@link Throwable#getCause()} method). (A {@code null} value is
-	 *            permitted, and indicates that the cause is nonexistent or
-	 *            unknown.)
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalMissingAnnotationOnMethodException(
-			@Nullable final Throwable cause) {
+	public IllegalMissingAnnotationOnMethodException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
-		this.annotation = null;
-		this.clazz = null;
-		this.method = null;
-	}
-
-	/**
-	 * Gives access to the required annotation.
-	 * 
-	 * @return the annotation which was expected on a class and was not found
-	 */
-	public Class<? extends Annotation> getMissingAnnotation() {
-		return annotation;
+		annotation = null;
+		clazz = null;
+		method = null;
 	}
 
 	/**
 	 * Gives access to the class which does not have a required annotation.
 	 * 
-	 * @return the class which caused the exception by not having a required
-	 *         annotation
+	 * @return the class which caused the exception by not having a required annotation
 	 */
 	public Class<?> getClassWithoutAnnotation() {
-		return this.clazz;
+		return clazz;
 	}
 
 	/**
@@ -188,5 +165,14 @@ public class IllegalMissingAnnotationOnMethodException extends RuntimeException 
 	 */
 	public Method getMethodWithoutAnnotation() {
 		return method;
+	}
+
+	/**
+	 * Gives access to the required annotation.
+	 * 
+	 * @return the annotation which was expected on a class and was not found
+	 */
+	public Class<? extends Annotation> getMissingAnnotation() {
+		return annotation;
 	}
 }

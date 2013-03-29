@@ -23,95 +23,96 @@ import org.junit.Test;
 
 public class StaticCheckTest_noNonStaticFinal {
 
+	public static class ClassWithInheritedStaticVariable extends ClassWithStaticVariable {
+		public double pi = 3.14;
+
+		public ClassWithInheritedStaticVariable(final int a, final String c) {
+			super(a, c);
+		}
+	}
+
 	public static class ClassWithNoStaticVariable {
-		private int a;
-		private String c;
-		
-		public ClassWithNoStaticVariable(int a, String c) {
+		private final int a;
+		private final String c;
+
+		public ClassWithNoStaticVariable(final int a, final String c) {
 			this.a = a;
 			this.c = c;
 		}
-		
+
 		public int getA() {
 			return a;
 		}
-		
+
 		public String getC() {
 			return c;
 		}
 	}
-	
-	public static class ClassWithStaticVariable extends ClassWithNoStaticVariable {
-		public static int STATIC = 4; 
 
-		public ClassWithStaticVariable(int a, String c) {
-			super(a, c);
-		}
-	}
-	
 	public static class ClassWithStaticFinalVariable extends ClassWithNoStaticVariable {
-		public static final int STATIC = 4; 
+		public static final int STATIC = 4;
 
-		public ClassWithStaticFinalVariable(int a, String c) {
-			super(a, c);
-		}
-	}
-	
-	public static class ClassWithInheritedStaticVariable extends ClassWithStaticVariable {
-		public double pi = 3.14;
-
-		public ClassWithInheritedStaticVariable(int a, String c) {
+		public ClassWithStaticFinalVariable(final int a, final String c) {
 			super(a, c);
 		}
 	}
 
+	public static class ClassWithStaticVariable extends ClassWithNoStaticVariable {
+		public static int STATIC = 4;
+
+		public ClassWithStaticVariable(final int a, final String c) {
+			super(a, c);
+		}
+	}
 
 	private class ClassWithSyntethicField {
 	}
-	
-	@Test
-	public void testClassWithNoStaticVariable() {
-		StaticCheck.noNonFinalStatic(ClassWithNoStaticVariable.class);
-	}
-	
-	@Test
-	public void testClassWithNoStaticButSyntethicField() {
-		StaticCheck.noNonFinalStatic(ClassWithSyntethicField.class);
-	}
-	
-	@Test(expected=IllegalNonFinalStaticException.class)
-	public void testClassWithStaticVariable() {
-		StaticCheck.noNonFinalStatic(ClassWithStaticVariable.class);
-	}
-	
-	@Test
-	public void testClassWithStaticVariableFieldNameInException() {
-		try {
-			StaticCheck.noNonFinalStatic(ClassWithStaticVariable.class);
-			Assert.assertFalse(true);
-		} catch( final IllegalNonFinalStaticException e ) {
-			Assert.assertEquals("The given class 'net.sf.qualitytest.StaticCheckTest_noNonStaticFinal$ClassWithStaticVariable' contains a non-final static variable 'STATIC'.", e.getMessage());
-		}
-	}
-	
-	@Test
-	public void testClassWithStaticFinalVariable() {
-		StaticCheck.noNonFinalStatic(ClassWithStaticFinalVariable.class);
-	}
-	
+
 	@Test
 	public void testClassWithInheritedStaticVariable() {
 		StaticCheck.noNonFinalStatic(ClassWithInheritedStaticVariable.class);
 	}
-	
-	@Test(expected=IllegalNonFinalStaticException.class)
+
+	@Test(expected = IllegalNonFinalStaticException.class)
 	public void testClassWithInheritedStaticVariableInHierarchy() {
 		StaticCheck.noNonFinalStaticInHierarchy(ClassWithInheritedStaticVariable.class);
 	}
 
 	@Test
+	public void testClassWithNoStaticButSyntethicField() {
+		StaticCheck.noNonFinalStatic(ClassWithSyntethicField.class);
+	}
+
+	@Test
+	public void testClassWithNoStaticVariable() {
+		StaticCheck.noNonFinalStatic(ClassWithNoStaticVariable.class);
+	}
+
+	@Test
 	public void testClassWithoutInheritedStaticVariableInHierarchy() {
 		StaticCheck.noNonFinalStaticInHierarchy(ClassWithNoStaticVariable.class);
+	}
+
+	@Test
+	public void testClassWithStaticFinalVariable() {
+		StaticCheck.noNonFinalStatic(ClassWithStaticFinalVariable.class);
+	}
+
+	@Test(expected = IllegalNonFinalStaticException.class)
+	public void testClassWithStaticVariable() {
+		StaticCheck.noNonFinalStatic(ClassWithStaticVariable.class);
+	}
+
+	@Test
+	public void testClassWithStaticVariableFieldNameInException() {
+		try {
+			StaticCheck.noNonFinalStatic(ClassWithStaticVariable.class);
+			Assert.assertFalse(true);
+		} catch (final IllegalNonFinalStaticException e) {
+			Assert.assertEquals(
+					"The given class 'net.sf.qualitytest.StaticCheckTest_noNonStaticFinal$ClassWithStaticVariable' contains a non-final static variable 'STATIC'.",
+					e.getMessage());
+		}
 	}
 
 }

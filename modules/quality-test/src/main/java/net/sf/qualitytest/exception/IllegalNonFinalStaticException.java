@@ -49,7 +49,7 @@ public class IllegalNonFinalStaticException extends RuntimeException {
 	 * @return a formatted string of message with the given argument name
 	 */
 	private static String format(@Nullable final String className, @Nullable final String fieldName) {
-		if( className != null && fieldName != null ) {
+		if (className != null && fieldName != null) {
 			return String.format(MESSAGE_WITH_NAME, className, fieldName);
 		} else {
 			return DEFAULT_MESSAGE;
@@ -79,8 +79,8 @@ public class IllegalNonFinalStaticException extends RuntimeException {
 	}
 
 	/**
-	 * Constructs a new exception with the message {@link IllegalNonFinalStaticException#MESSAGE_WITH_NAME} including the
-	 * given name as string representation and cause.
+	 * Constructs a new exception with the message {@link IllegalNonFinalStaticException#MESSAGE_WITH_NAME} including
+	 * the given name as string representation and cause.
 	 * 
 	 * @param className
 	 *            the name of the passed class
@@ -90,7 +90,8 @@ public class IllegalNonFinalStaticException extends RuntimeException {
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNonFinalStaticException(@Nullable final String className, @Nullable final String fieldName, @Nullable final Throwable cause) {
+	public IllegalNonFinalStaticException(@Nullable final String className, @Nullable final String fieldName,
+			@Nullable final Throwable cause) {
 		super(format(className, fieldName), cause);
 	}
 

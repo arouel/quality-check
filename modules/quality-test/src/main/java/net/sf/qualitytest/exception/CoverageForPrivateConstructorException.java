@@ -19,14 +19,13 @@ package net.sf.qualitytest.exception;
 import javax.annotation.Nullable;
 
 /**
- * Thrown to indicate that an error occured while giving coverage
- * to a private constructor.
+ * Thrown to indicate that an error occured while giving coverage to a private constructor.
  * 
  * @author Dominik Seichter
- *
+ * 
  */
 public class CoverageForPrivateConstructorException extends RuntimeException {
-	
+
 	private static final long serialVersionUID = -210874646549124053L;
 
 	/**
@@ -43,7 +42,8 @@ public class CoverageForPrivateConstructorException extends RuntimeException {
 	}
 
 	/**
-	 * Constructs a new exception with the default message {@link CoverageForPrivateConstructorException#DEFAULT_MESSAGE}.
+	 * Constructs a new exception with the default message
+	 * {@link CoverageForPrivateConstructorException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A

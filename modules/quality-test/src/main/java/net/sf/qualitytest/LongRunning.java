@@ -22,8 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The <code>LongRunning</code> annotation marks a test case
- * as long running. 
+ * The <code>LongRunning</code> annotation marks a test case as long running.
  * 
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -31,5 +30,3 @@ import java.lang.annotation.Target;
 public @interface LongRunning {
 
 }
-
-

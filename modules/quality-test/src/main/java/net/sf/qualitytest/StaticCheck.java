@@ -29,13 +29,11 @@ import net.sf.qualitytest.exception.IllegalNonFinalClassException;
 import net.sf.qualitytest.exception.IllegalNonFinalStaticException;
 
 /**
- * This class offers simple static methods to test static properties of your
- * classes.
+ * This class offers simple static methods to test static properties of your classes.
  * 
- * These checks are typically only called from within unit tests, because they
- * are costly. Static tests in unit tests ensure that certain intended
- * properties of a class (e.g. immutability, thread-safeness, no non static
- * finals, etc.) are still true after future changes.
+ * These checks are typically only called from within unit tests, because they are costly. Static tests in unit tests
+ * ensure that certain intended properties of a class (e.g. immutability, thread-safeness, no non static finals, etc.)
+ * are still true after future changes.
  * 
  * @author Dominik Seichter
  */
@@ -52,8 +50,7 @@ public final class StaticCheck {
 	 *             If the passed class is not final.
 	 */
 	public static Class<?> classIsFinal(@Nonnull final Class<?> clazz) {
-		final boolean isFinal = isModifierBitSet(clazz.getModifiers(),
-				Modifier.FINAL);
+		final boolean isFinal = isModifierBitSet(clazz.getModifiers(), Modifier.FINAL);
 		if (!isFinal) {
 			throw new IllegalNonFinalClassException(clazz.getName());
 		}
@@ -62,33 +59,35 @@ public final class StaticCheck {
 	}
 
 	/**
-	 * Check that all declared public methods of a class are annotated using a certain
-	 * annotation.
+	 * Tests if a certain modifier is set into a bitmask.
 	 * 
-	 * @param clazz
-	 *            A class that must have annotations on all public methods.
-	 * @param annotation
-	 *            An annotation that must be present on all public methods in a
-	 *            class
-	 * @return The checked class.
+	 * @param modifiers
+	 *            bitmask of modifiers
+	 * @param modifier
+	 *            bit of the modifier to be queried
+	 * @return true if the bit is set
 	 */
-	public static Class<?> publicMethodsAnnotated(
-			@Nonnull final Class<?> clazz,
-			@Nonnull final Class<? extends Annotation> annotation) {
-		final Method[] methods = clazz.getDeclaredMethods();
-		for (final Method m : methods) {
-			if (!m.isAnnotationPresent(annotation)) {
-				throw new IllegalMissingAnnotationOnMethodException(clazz, annotation,
-						m);
-			}
-		}
-		return clazz;
+	private static boolean isModifierBitSet(final int modifiers, final int modifier) {
+		return (modifiers & modifier) == modifier;
 	}
 
 	/**
-	 * Check if a class contains a non-final static variable. Non-final static
-	 * fields are dangerous in multi-threaded environments and should therefore
-	 * not be used.
+	 * Checks if a field is static and not final according to its modifiers. *
+	 * 
+	 * @param f
+	 *            a java Field
+	 * @return true if the field is static but is not final
+	 */
+	private static boolean isStaticAndNotFinal(final Field f) {
+		final int modifiers = f.getModifiers();
+		final boolean isStatic = isModifierBitSet(modifiers, Modifier.STATIC);
+		final boolean isFinal = isModifierBitSet(modifiers, Modifier.FINAL);
+		return isStatic && !isFinal;
+	}
+
+	/**
+	 * Check if a class contains a non-final static variable. Non-final static fields are dangerous in multi-threaded
+	 * environments and should therefore not be used.
 	 * 
 	 * This method only checks the passed class and not any super-classes.
 	 * 
@@ -101,10 +100,9 @@ public final class StaticCheck {
 	 */
 	public static Class<?> noNonFinalStatic(@Nonnull final Class<?> clazz) {
 		final Field[] fields = clazz.getDeclaredFields();
-		for (Field f : fields) {
+		for (final Field f : fields) {
 			if (!f.isSynthetic() && isStaticAndNotFinal(f)) {
-				throw new IllegalNonFinalStaticException(clazz.getName(),
-						f.getName());
+				throw new IllegalNonFinalStaticException(clazz.getName(), f.getName());
 			}
 		}
 
@@ -112,9 +110,8 @@ public final class StaticCheck {
 	}
 
 	/**
-	 * Check if a class or super-class contains a non-final static variable.
-	 * Non-final static fields are dangerous in multi-threaded environments and
-	 * should therefore not be used.
+	 * Check if a class or super-class contains a non-final static variable. Non-final static fields are dangerous in
+	 * multi-threaded environments and should therefore not be used.
 	 * 
 	 * @param clazz
 	 *            A class which is checked for non-final statics.
@@ -123,8 +120,7 @@ public final class StaticCheck {
 	 * @throws IllegalNonFinalStaticException
 	 *             If the passed class contains and non-final static field.
 	 */
-	public static Class<?> noNonFinalStaticInHierarchy(
-			@Nonnull final Class<?> clazz) {
+	public static Class<?> noNonFinalStaticInHierarchy(@Nonnull final Class<?> clazz) {
 		Class<?> obj = clazz;
 		do {
 			StaticCheck.noNonFinalStatic(obj);
@@ -135,66 +131,51 @@ public final class StaticCheck {
 	}
 
 	/**
-	 * Check that a class contains no public default constructor. It is
-	 * recommended to hide the public default constructor of utility classes by
-	 * providing a private default construct.
+	 * Check that a class contains no public default constructor. It is recommended to hide the public default
+	 * constructor of utility classes by providing a private default construct.
 	 * 
 	 * This method assures that the given class cannot be intantiated
 	 * 
 	 * @param clazz
-	 *            A class which is checked for not having a public default
-	 *            constructor
+	 *            A class which is checked for not having a public default constructor
 	 * @return clazz The class that was passed to this method.
 	 * 
 	 * @throws IllegalClassWithPublicDefaultConstructorException
 	 *             If the passed class contains a public default constructor.
 	 */
-	public static Class<?> noPublicDefaultConstructor(
-			@Nonnull final Class<?> clazz) {
+	public static Class<?> noPublicDefaultConstructor(@Nonnull final Class<?> clazz) {
 		try {
 			clazz.newInstance();
-			throw new IllegalClassWithPublicDefaultConstructorException(
-					clazz.getName());
+			throw new IllegalClassWithPublicDefaultConstructorException(clazz.getName());
 		} catch (final InstantiationException e) {
-			throw new IllegalClassWithPublicDefaultConstructorException(
-					clazz.getName(), e);
-		} catch (IllegalAccessException e) {
+			throw new IllegalClassWithPublicDefaultConstructorException(clazz.getName(), e);
+		} catch (final IllegalAccessException e) {
 			// This the exception we want.
 			return clazz;
 		}
 	}
 
 	/**
-	 * Checks if a field is static and not final according to its modifiers. *
+	 * Check that all declared public methods of a class are annotated using a certain annotation.
 	 * 
-	 * @param f
-	 *            a java Field
-	 * @return true if the field is static but is not final
+	 * @param clazz
+	 *            A class that must have annotations on all public methods.
+	 * @param annotation
+	 *            An annotation that must be present on all public methods in a class
+	 * @return The checked class.
 	 */
-	private static boolean isStaticAndNotFinal(Field f) {
-		final int modifiers = f.getModifiers();
-		final boolean isStatic = isModifierBitSet(modifiers, Modifier.STATIC);
-		final boolean isFinal = isModifierBitSet(modifiers, Modifier.FINAL);
-		return isStatic && !isFinal;
+	public static Class<?> publicMethodsAnnotated(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
+		final Method[] methods = clazz.getDeclaredMethods();
+		for (final Method m : methods) {
+			if (!m.isAnnotationPresent(annotation)) {
+				throw new IllegalMissingAnnotationOnMethodException(clazz, annotation, m);
+			}
+		}
+		return clazz;
 	}
 
 	/**
-	 * Tests if a certain modifier is set into a bitmask.
-	 * 
-	 * @param modifiers
-	 *            bitmask of modifiers
-	 * @param modifier
-	 *            bit of the modifier to be queried
-	 * @return true if the bit is set
-	 */
-	private static boolean isModifierBitSet(final int modifiers,
-			final int modifier) {
-		return (modifiers & modifier) == modifier;
-	}
-
-	/**
-	 * <strong>Attention:</strong> This class is not intended to create objects
-	 * from it.
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
 	private StaticCheck() {
 		// This class is not intended to create objects from it.

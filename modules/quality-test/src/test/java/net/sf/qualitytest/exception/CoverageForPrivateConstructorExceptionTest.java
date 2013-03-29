@@ -27,10 +27,10 @@ public class CoverageForPrivateConstructorExceptionTest {
 	public void construct_withNullThrowable() {
 		new CoverageForPrivateConstructorException(null);
 	}
+
 	@Test
 	public void construct_withThrowable() {
 		new CoverageForPrivateConstructorException(new NullPointerException());
 	}
-
 
 }

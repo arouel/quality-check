@@ -38,7 +38,8 @@ public class IllegalClassWithPublicDefaultConstructorExceptionTest {
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		final IllegalClassWithPublicDefaultConstructorException e = new IllegalClassWithPublicDefaultConstructorException("argName", new NumberFormatException());
+		final IllegalClassWithPublicDefaultConstructorException e = new IllegalClassWithPublicDefaultConstructorException("argName",
+				new NumberFormatException());
 		Assert.assertEquals("The passed class 'argName' must not have a public default constructor.", e.getMessage());
 	}
 
@@ -60,7 +61,8 @@ public class IllegalClassWithPublicDefaultConstructorExceptionTest {
 
 	@Test
 	public void construct_withNullArgNameAndNullCause() {
-		final IllegalClassWithPublicDefaultConstructorException e = new IllegalClassWithPublicDefaultConstructorException((String) null, null);
+		final IllegalClassWithPublicDefaultConstructorException e = new IllegalClassWithPublicDefaultConstructorException((String) null,
+				null);
 		Assert.assertEquals("The passed class must not have a public default constructor.", e.getMessage());
 	}
 

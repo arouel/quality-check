@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2013 André Rouél
  * Copyright 2013 Dominik Seichter
@@ -17,58 +16,56 @@
  ******************************************************************************/
 package net.sf.qualitytest;
 
-import org.junit.Assert;
 import net.sf.qualitytest.exception.IllegalClassWithPublicDefaultConstructorException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StaticCheckTest {
 
 	private abstract class Useless {
-		
+
 	}
-	
+
+	public static class WithPublicConstructor {
+		public WithPublicConstructor() {
+		}
+	}
+
 	@Test
 	public void giveMeCoverageForMyPrivateConstructor() throws Exception {
 		CoverageForPrivateConstructor.giveMeCoverage(StaticCheck.class);
+	}
+
+	@Test(expected = IllegalClassWithPublicDefaultConstructorException.class)
+	public void testInstantiationException() {
+		StaticCheck.noPublicDefaultConstructor(Useless.class);
+	}
+
+	@Test(expected = IllegalClassWithPublicDefaultConstructorException.class)
+	public void testInstantiationException2() {
+		StaticCheck.noPublicDefaultConstructor(WithPublicConstructor.class);
 	}
 
 	@Test
 	public void testValidatesThatClassCheckIsNotInstantiable() {
 		// You cannot use StaticCheck to check itself, because it is able to call
 		// its own private constructor.
-		//StaticCheck.noPublicDefaultConstructor(StaticCheck.class);
-		Class<?> clazz = StaticCheck.class;
+		// StaticCheck.noPublicDefaultConstructor(StaticCheck.class);
+		final Class<?> clazz = StaticCheck.class;
 		try {
 			clazz.newInstance();
-			throw new IllegalClassWithPublicDefaultConstructorException(
-					clazz.getName());
+			throw new IllegalClassWithPublicDefaultConstructorException(clazz.getName());
 		} catch (final InstantiationException e) {
-			throw new IllegalClassWithPublicDefaultConstructorException(
-					clazz.getName(), e);
-		} catch (IllegalAccessException e) {
+			throw new IllegalClassWithPublicDefaultConstructorException(clazz.getName(), e);
+		} catch (final IllegalAccessException e) {
 			// This the exception we want.
 			Assert.assertTrue(true);
-		}		
-	}
-	
+		}
+	};
+
 	@Test
 	public void testValidatesThatClassIsFinal() {
 		StaticCheck.classIsFinal(StaticCheck.class);
-	}
-	
-	@Test(expected=IllegalClassWithPublicDefaultConstructorException.class)
-	public void testInstantiationException() {
-		StaticCheck.noPublicDefaultConstructor(Useless.class);
-	}
-	
-	public static class WithPublicConstructor {
-			public WithPublicConstructor() {
-			}
-	};
-	
-	@Test(expected=IllegalClassWithPublicDefaultConstructorException.class)
-	public void testInstantiationException2() {
-		StaticCheck.noPublicDefaultConstructor(WithPublicConstructor.class);
 	}
 }

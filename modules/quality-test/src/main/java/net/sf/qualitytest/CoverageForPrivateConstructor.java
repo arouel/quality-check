@@ -24,41 +24,38 @@ import javax.annotation.Nonnull;
 import net.sf.qualitytest.exception.CoverageForPrivateConstructorException;
 
 /**
- * Code coverage often report missing line coverage if your utility classes
- * contain private constructors. Still, it is good practice to assure
- * that utility classes cannot be constructed. This utility class
- * will execute a private default constructor in a class and therefore
- * remove this noise from your code coverage reports.
- *  
+ * Code coverage often report missing line coverage if your utility classes contain private constructors. Still, it is
+ * good practice to assure that utility classes cannot be constructed. This utility class will execute a private default
+ * constructor in a class and therefore remove this noise from your code coverage reports.
+ * 
  * @author Dominik Seichter
- *
+ * 
  */
 public final class CoverageForPrivateConstructor {
 
 	/**
-	 * Reduce noise in code coverage reports by
-	 * executing the private default constructor of 
-	 * a utility class.
+	 * Reduce noise in code coverage reports by executing the private default constructor of a utility class.
 	 * 
-	 * @param clazz The private default constructor of this class is executed.
+	 * @param clazz
+	 *            The private default constructor of this class is executed.
 	 */
 	public static void giveMeCoverage(@Nonnull final Class<?> clazz) {
 		// reduces only some noise in coverage report
 		try {
 			giveMeCoverageInteral(clazz);
-		} catch (SecurityException e) {
+		} catch (final SecurityException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		} catch (NoSuchMethodException e) {
+		} catch (final NoSuchMethodException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new CoverageForPrivateConstructorException(e);
-		}		
+		}
 	}
 
 	/**
@@ -70,17 +67,14 @@ public final class CoverageForPrivateConstructor {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	protected static void giveMeCoverageInteral(@Nonnull final Class<?> clazz)
-			throws NoSuchMethodException, InstantiationException,
+	protected static void giveMeCoverageInteral(@Nonnull final Class<?> clazz) throws NoSuchMethodException, InstantiationException,
 			IllegalAccessException, InvocationTargetException {
 		final Constructor<?> constructor = clazz.getDeclaredConstructor();
 		constructor.setAccessible(true);
 		constructor.newInstance();
 		constructor.setAccessible(false);
 	}
-	
-	
-	
+
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */

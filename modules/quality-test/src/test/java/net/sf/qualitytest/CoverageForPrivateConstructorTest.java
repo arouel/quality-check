@@ -29,10 +29,10 @@ public class CoverageForPrivateConstructorTest {
 	public void testValidatesThatClassCheckIsNotInstantiable() {
 		StaticCheck.noPublicDefaultConstructor(CoverageForPrivateConstructor.class);
 	}
-	
+
 	@Test
 	public void testValidatesThatClassIsFinal() {
 		StaticCheck.classIsFinal(CoverageForPrivateConstructor.class);
 	}
-	
+
 }

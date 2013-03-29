@@ -21,39 +21,39 @@ import net.sf.qualitytest.exception.IllegalNonFinalClassException;
 import org.junit.Test;
 
 public class StaticCheckTest_classIsFinal {
-	
-	public static class NonFinalClass {
-		private int a;
-		
-		public NonFinalClass(int a) {
-			this.a = a;
-		}
-		
-		public int getA() {
-			return a;
-		}
-	}
-	
+
 	public static final class FinalClass {
-		private int a;
-		
-		public FinalClass(int a) {
+		private final int a;
+
+		public FinalClass(final int a) {
 			this.a = a;
 		}
-		
+
 		public int getA() {
 			return a;
 		}
 	}
-	
+
+	public static class NonFinalClass {
+		private final int a;
+
+		public NonFinalClass(final int a) {
+			this.a = a;
+		}
+
+		public int getA() {
+			return a;
+		}
+	}
+
 	@Test
 	public void testDetectFinalClass() {
 		StaticCheck.classIsFinal(FinalClass.class);
 	}
-	
-	@Test(expected=IllegalNonFinalClassException.class)
+
+	@Test(expected = IllegalNonFinalClassException.class)
 	public void testDetectNonFinalClass() {
 		StaticCheck.classIsFinal(NonFinalClass.class);
 	}
-	
+
 }

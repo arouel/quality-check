@@ -26,12 +26,6 @@ public class IllegalNonFinalStaticExceptionTest {
 	}
 
 	@Test
-	public void construct_withNamesAndNullCause() {
-		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException("className", "fieldName", null);
-		Assert.assertEquals("The given class 'className' contains a non-final static variable 'fieldName'.", e.getMessage());
-	}
-
-	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
 		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException("className", "fieldName", new NumberFormatException());
 		Assert.assertEquals("The given class 'className' contains a non-final static variable 'fieldName'.", e.getMessage());
@@ -49,9 +43,20 @@ public class IllegalNonFinalStaticExceptionTest {
 	}
 
 	@Test
+	public void construct_withNamesAndNullCause() {
+		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException("className", "fieldName", null);
+		Assert.assertEquals("The given class 'className' contains a non-final static variable 'fieldName'.", e.getMessage());
+	}
+
+	@Test
 	public void construct_withNullArgNameAndNullCause() {
 		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException((String) null, null);
 		Assert.assertEquals("The given class contains a non-final static variable.", e.getMessage());
+	}
+
+	@Test
+	public void construct_withNullCause() {
+		new IllegalNonFinalStaticException((Throwable) null);
 	}
 
 	@Test
@@ -59,15 +64,11 @@ public class IllegalNonFinalStaticExceptionTest {
 		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException((String) null, "field");
 		Assert.assertEquals("The given class contains a non-final static variable.", e.getMessage());
 	}
-	
+
 	@Test
 	public void construct_withNullFieldNameAndNullCause() {
 		final IllegalNonFinalStaticException e = new IllegalNonFinalStaticException("class", null);
 		Assert.assertEquals("The given class contains a non-final static variable.", e.getMessage());
-	}	
-	@Test
-	public void construct_withNullCause() {
-		new IllegalNonFinalStaticException((Throwable) null);
 	}
 
 	@Test
