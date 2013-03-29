@@ -42,6 +42,13 @@ or make sure that no class in the package *.controller.* contains any non-final 
 
 	<dependencies>
 
+		<!-- internal module -->
+		<dependency>
+			<groupId>net.sf.qualitycheck</groupId>
+			<artifactId>quality-check</artifactId>
+			<version>1.2-SNAPSHOT</version>
+		</dependency>
+
 		<!-- JSR-305 annotations -->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
