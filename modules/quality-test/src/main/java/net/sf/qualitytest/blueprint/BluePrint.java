@@ -347,7 +347,7 @@ public final class BluePrint {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
-		final ValueCreationStrategy creator = config.findCreationStrategyForType(clazz);
+		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
 
 		if (creator != null) {
 			return (T) creator.createValue();
