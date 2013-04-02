@@ -53,25 +53,12 @@ public final class StaticCheck {
 	 *             If the passed class is not final.
 	 */
 	public static Class<?> classIsFinal(@Nonnull final Class<?> clazz) {
-		final boolean isFinal = isModifierBitSet(clazz.getModifiers(), Modifier.FINAL);
+		final boolean isFinal = ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.FINAL);
 		if (!isFinal) {
 			throw new IllegalNonFinalClassException(clazz.getName());
 		}
 
 		return clazz;
-	}
-
-	/**
-	 * Tests if a certain modifier is set into a bitmask.
-	 * 
-	 * @param modifiers
-	 *            bitmask of modifiers
-	 * @param modifier
-	 *            bit of the modifier to be queried
-	 * @return true if the bit is set
-	 */
-	private static boolean isModifierBitSet(final int modifiers, final int modifier) {
-		return (modifiers & modifier) == modifier;
 	}
 
 	/**
@@ -83,8 +70,8 @@ public final class StaticCheck {
 	 */
 	private static boolean isStaticAndNotFinal(final Field f) {
 		final int modifiers = f.getModifiers();
-		final boolean isStatic = isModifierBitSet(modifiers, Modifier.STATIC);
-		final boolean isFinal = isModifierBitSet(modifiers, Modifier.FINAL);
+		final boolean isStatic = ModifierBits.isModifierBitSet(modifiers, Modifier.STATIC);
+		final boolean isFinal = ModifierBits.isModifierBitSet(modifiers, Modifier.FINAL);
 		return isStatic && !isFinal;
 	}
 
@@ -171,7 +158,7 @@ public final class StaticCheck {
 	 *             if the one or more public methods of a {@link Class} are not annotated with a specific
 	 *             {@link Annotation}
 	 */
-	@Throws({ IllegalNullArgumentException.class, IllegalMissingAnnotationOnMethodException.class })
+	@Throws( { IllegalNullArgumentException.class, IllegalMissingAnnotationOnMethodException.class })
 	public static Class<?> publicMethodsAnnotated(@Nonnull final Class<?> clazz, @Nonnull final Class<? extends Annotation> annotation) {
 		Check.notNull(clazz);
 		Check.notNull(annotation);
