@@ -27,6 +27,7 @@ import net.sf.qualitytest.blueprint.configuration.RandomBluePrintConfiguration;
 import net.sf.qualitytest.exception.BluePrintException;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class BluePrintTest {
@@ -397,6 +398,7 @@ public class BluePrintTest {
 		Assert.assertNotNull(immutable.getList());
 	}
 
+	@Ignore
 	@Test
 	public void testInterfaceAndLastStrategyWins() {
 		// TODO: Make sure last strategy wins
