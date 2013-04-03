@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.configuration;
+package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -23,9 +23,6 @@ import java.util.Map;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
-import net.sf.qualitytest.blueprint.Blueprint;
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;

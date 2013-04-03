@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.configuration;
+package net.sf.qualitytest.blueprint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
