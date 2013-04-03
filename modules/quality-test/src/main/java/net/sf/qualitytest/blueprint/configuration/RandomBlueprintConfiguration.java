@@ -18,7 +18,6 @@ package net.sf.qualitytest.blueprint.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;

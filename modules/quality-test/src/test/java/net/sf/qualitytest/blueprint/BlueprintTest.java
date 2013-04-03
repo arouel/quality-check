@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 
 import net.sf.qualitytest.CoverageForPrivateConstructor;
 import net.sf.qualitytest.StaticCheck;
+import net.sf.qualitytest.blueprint.configuration.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;

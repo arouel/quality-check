@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitytest.blueprint.configuration.BlueprintConfiguration;
 
 /**
  * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
