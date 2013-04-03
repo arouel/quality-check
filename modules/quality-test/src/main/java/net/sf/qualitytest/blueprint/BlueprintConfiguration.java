@@ -35,7 +35,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class BlueprintConfiguration implements Cloneable {
+public class BlueprintConfiguration {
 
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 
@@ -43,16 +43,14 @@ public class BlueprintConfiguration implements Cloneable {
 		// Empty default constructor
 	}
 
+	private BlueprintConfiguration(final BlueprintConfiguration configuration) {
+		Check.notNull(configuration, "configuration");
+		attributeMapping.putAll(configuration.attributeMapping);
+	}
+
 	protected BlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
 		this.attributeMapping.putAll(attributeMapping);
-	}
-
-	@Override
-	public Object clone() { // NOSONAR
-		final BlueprintConfiguration c = new BlueprintConfiguration();
-		c.attributeMapping.putAll(attributeMapping);
-		return c;
 	}
 
 	/**
@@ -145,7 +143,7 @@ public class BlueprintConfiguration implements Cloneable {
 	 * @return the changed blueprint configuration.
 	 */
 	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
-		final BlueprintConfiguration config = (BlueprintConfiguration) clone();
+		final BlueprintConfiguration config = new BlueprintConfiguration(this);
 		config.attributeMapping.put(Check.notNull(matcher, "matcher"), Check.notNull(creator, "creator"));
 		return config;
 	}
