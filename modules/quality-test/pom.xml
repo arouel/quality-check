@@ -55,6 +55,12 @@ or make sure that no class in the package *.controller.* contains any non-final 
 			<artifactId>jsr305</artifactId>
 		</dependency>
 
+		<!-- Utilities -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+
 		<!-- Unit testing -->
 		<dependency>
 			<groupId>commons-logging</groupId>
