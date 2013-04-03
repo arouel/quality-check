@@ -75,7 +75,7 @@ public final class BluePrint {
 
 	private static final int MAX_ARRAY_SIZE = 7;
 
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	private static final String SETTER_PREFIX = "set";
 
 	/**
@@ -112,7 +112,7 @@ public final class BluePrint {
 		Check.notNull(array, "array");
 		Check.notNull(config, "config");
 
-		final int arraySize = random.nextInt(MAX_ARRAY_SIZE) + 1;
+		final int arraySize = RANDOM.nextInt(MAX_ARRAY_SIZE) + 1;
 		final Object value = Array.newInstance(array.getComponentType(), arraySize);
 		if (!array.getComponentType().isPrimitive()) {
 			initializeArray(array, arraySize, value, config);
