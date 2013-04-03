@@ -744,6 +744,7 @@ public final class Check {
 	 *            class that the given object is a member of
 	 * @param obj
 	 *            the object reference that should be a member of a specific {@code type}
+	 * @return the given object cast to type
 	 * 
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
@@ -764,6 +765,7 @@ public final class Check {
 	 *            the object reference that should be a member of a specific {@code type}
 	 * @param name
 	 *            name of object reference (in source code)
+	 * @return the given object cast to type
 	 * 
 	 * @throws IllegalInstanceOfArgumentException
 	 *             if the given argument {@code obj} is not a member of {@code type}
