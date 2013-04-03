@@ -49,7 +49,7 @@ public class BlueprintConfiguration implements Cloneable {
 	}
 
 	@Override
-	public Object clone() {
+	public Object clone() { // NOSONAR
 		final BlueprintConfiguration c = new BlueprintConfiguration();
 		c.attributeMapping.putAll(attributeMapping);
 		return c;
@@ -149,4 +149,5 @@ public class BlueprintConfiguration implements Cloneable {
 		config.attributeMapping.put(Check.notNull(matcher, "matcher"), Check.notNull(creator, "creator"));
 		return config;
 	}
+
 }
