@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright 2013 André Rouél
  * Copyright 2013 Dominik Seichter
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +16,27 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
-import java.util.UUID;
+import net.sf.qualitytest.blueprint.BlueprintTest;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
+import org.junit.Assert;
+import org.junit.Test;
 
-/**
- * Strategy which creates random strings using {@code Blueprint.string()}.
- * 
- * @author Dominik Seichter
- */
-public class BlueprintStringCreationStrategy implements ValueCreationStrategy<String> {
+public class BlueprintStringCreationStrategyTest {
 
-	@Override
-	public String createValue() {
-		return UUID.randomUUID().toString();
+	@Test
+	public void testIsNull() {
+		Assert.assertNull(new NullValueCreationStrategy<String>().createValue());
+	}
+
+	@Test
+	public void testStringIsUuid() {
+		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(new BlueprintStringCreationStrategy().createValue()).matches());
+	}
+
+	@Test
+	public void testStringNotEmpty() {
+		Assert.assertNotNull(new BlueprintStringCreationStrategy().createValue());
+		Assert.assertNotEquals(0, new BlueprintStringCreationStrategy().createValue());
 	}
 
 }

@@ -453,17 +453,6 @@ public class BlueprintTest {
 	}
 
 	@Test
-	public void testStringIsUuid() {
-		Assert.assertTrue(UUID_PATTERN.matcher(Blueprint.string()).matches());
-	}
-
-	@Test
-	public void testStringNotEmpty() {
-		Assert.assertNotNull(Blueprint.string());
-		Assert.assertNotEquals(0, Blueprint.string());
-	}
-
-	@Test
 	public void testWithConfig() {
 		final BlueprintConfiguration config = new DefaultBlueprintConfiguration().with("number", 42l);
 		final TestBean bean = Blueprint.object(TestBean.class, config);

@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.util.Random;
-import java.util.UUID;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
@@ -461,15 +460,6 @@ public final class Blueprint {
 		} catch (final InvocationTargetException e) {
 			throw new BlueprintException(e);
 		}
-	}
-
-	/**
-	 * Create a new random string.
-	 * 
-	 * @return a new randomly created string.
-	 */
-	public static String string() {
-		return UUID.randomUUID().toString();
 	}
 
 	/**
