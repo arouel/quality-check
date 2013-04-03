@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random integer value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomIntValueCreationStrategy implements ValueCreationStrategy<Integer> {
 

@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random char value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomCharValueCreationStrategy implements ValueCreationStrategy<Character> {
 

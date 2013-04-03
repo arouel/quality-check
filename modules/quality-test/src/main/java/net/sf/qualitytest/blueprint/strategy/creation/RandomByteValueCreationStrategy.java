@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random byte value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomByteValueCreationStrategy implements ValueCreationStrategy<Byte> {
 

@@ -67,7 +67,6 @@ import net.sf.qualitytest.exception.BlueprintException;
  * @see RandomBlueprintConfiguration
  * 
  * @author Dominik Seichter
- * 
  */
 public final class Blueprint {
 

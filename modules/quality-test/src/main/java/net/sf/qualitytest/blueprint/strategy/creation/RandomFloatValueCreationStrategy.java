@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random float value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomFloatValueCreationStrategy implements ValueCreationStrategy<Float> {
 

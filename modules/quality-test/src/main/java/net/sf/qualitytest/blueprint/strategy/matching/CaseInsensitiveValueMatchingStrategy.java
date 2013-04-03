@@ -20,12 +20,11 @@ import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 
 /**
  * This value matching strategy matches string names case insensitively on the method name. This works only for
- * setter-based blueprinting. In other cases you should use type based blueprinting as in {@code
- * TypeValueMatchingStrategy}.
+ * setter-based blueprinting. In other cases you should use type based blueprinting as in
+ * {@code TypeValueMatchingStrategy}.
  * 
  * 
  * @author Dominik Seichter
- * 
  */
 public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrategy {
 

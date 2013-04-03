@@ -20,9 +20,10 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 /**
  * A strategy which always returns {@code null}.
  * 
- * @author Dominik Seichter
- * 
  * @param <T>
+ *            a specific type
+ * 
+ * @author Dominik Seichter
  */
 public class NullValueCreationStrategy<T> implements ValueCreationStrategy<T> {
 

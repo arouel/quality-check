@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random double value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomDoubleValueCreationStrategy implements ValueCreationStrategy<Double> {
 

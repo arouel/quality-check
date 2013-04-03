@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random long value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomLongValueCreationStrategy implements ValueCreationStrategy<Long> {
 

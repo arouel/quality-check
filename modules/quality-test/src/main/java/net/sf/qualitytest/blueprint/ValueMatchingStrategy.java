@@ -20,10 +20,9 @@ package net.sf.qualitytest.blueprint;
  * 
  * An attribute can be matched by name or type.
  * 
- * @author Dominik Seichter
- * 
  * @see ValueCreationStrategy
  * 
+ * @author Dominik Seichter
  */
 public interface ValueMatchingStrategy {
 

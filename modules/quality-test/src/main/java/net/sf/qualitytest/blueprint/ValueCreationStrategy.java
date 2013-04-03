@@ -19,7 +19,6 @@ package net.sf.qualitytest.blueprint;
  * Definition of an interface to create values for attribute assignments.
  * 
  * @author Dominik Seichter
- * 
  */
 public interface ValueCreationStrategy<T> {
 

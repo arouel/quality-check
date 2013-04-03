@@ -20,8 +20,10 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 /**
  * Always use the same value. This strategy simply returns the same instance of the same object every time it is called.
  * 
- * @author Dominik Seichter
+ * @param <T>
+ *            a specific type
  * 
+ * @author Dominik Seichter
  */
 public class SingleValueCreationStrategy<T> implements ValueCreationStrategy<T> {
 

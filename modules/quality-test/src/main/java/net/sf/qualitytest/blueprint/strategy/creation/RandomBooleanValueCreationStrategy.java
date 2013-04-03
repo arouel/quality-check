@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random boolean value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomBooleanValueCreationStrategy implements ValueCreationStrategy<Boolean> {
 

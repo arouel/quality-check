@@ -23,7 +23,6 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * Strategy to create a random short value.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomShortValueCreationStrategy implements ValueCreationStrategy<Short> {
 

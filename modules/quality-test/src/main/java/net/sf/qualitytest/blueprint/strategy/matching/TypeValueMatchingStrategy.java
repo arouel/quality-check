@@ -22,7 +22,6 @@ import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
  * Match a value based on its type.
  * 
  * @author Dominik Seichter
- * 
  */
 public class TypeValueMatchingStrategy implements ValueMatchingStrategy {
 
