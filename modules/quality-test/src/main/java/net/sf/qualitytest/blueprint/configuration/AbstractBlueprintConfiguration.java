@@ -30,7 +30,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrateg
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
-import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
@@ -48,12 +48,12 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping;
 
 	public AbstractBlueprintConfiguration() {
-		mapping = ImmutableBiMap.of();
+		mapping = ImmutableMap.of();
 	}
 
 	protected AbstractBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
-		mapping = ImmutableBiMap.copyOf(attributeMapping);
+		mapping = ImmutableMap.copyOf(attributeMapping);
 	}
 
 	@Override
