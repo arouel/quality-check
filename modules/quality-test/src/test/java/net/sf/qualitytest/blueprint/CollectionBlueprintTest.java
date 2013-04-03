@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sf.qualitytest.CoverageForPrivateConstructor;
 import net.sf.qualitytest.StaticCheck;
-import net.sf.qualitytest.blueprint.BlueprintTest.Immutable;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,10 +18,10 @@ public class CollectionBlueprintTest {
 
 	@Test
 	public void testAddMany() {
-		final List<Immutable> list = new ArrayList<Immutable>();
-		CollectionBlueprint.addMany(list, Immutable.class, 9);
+		final List<ImmutableObject> list = new ArrayList<ImmutableObject>();
+		CollectionBlueprint.addMany(list, ImmutableObject.class, 9);
 		Assert.assertEquals(9, list.size());
-		for (final Immutable immutable : list) {
+		for (final ImmutableObject immutable : list) {
 			Assert.assertNotNull(immutable.getDate());
 		}
 	}

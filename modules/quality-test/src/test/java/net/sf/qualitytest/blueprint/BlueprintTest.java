@@ -15,8 +15,6 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -31,43 +29,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class BlueprintTest {
-
-	public static final class Immutable {
-
-		private final int value;
-		private final String name;
-		private final Date date;
-		private final List<String> list;
-
-		public Immutable(final int value, final String name, final Date date, final List<String> list) {
-			this.value = value;
-			this.name = name;
-			this.date = date;
-			this.list = list;
-		}
-
-		public Date getDate() {
-			return date;
-		}
-
-		public List<String> getList() {
-			return list;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public int getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return "Immutable [date=" + date + ", list=" + list + ", name=" + name + ", value=" + value + "]";
-		}
-
-	}
 
 	public static abstract class MyAbstract {
 		public abstract String getValue();
@@ -96,7 +57,7 @@ public class BlueprintTest {
 		private Double doubleObjNumber;
 		private Boolean booleanObj;
 
-		private Immutable immutable;
+		private ImmutableObject immutable;
 
 		private int[] basicArray;
 
@@ -163,7 +124,7 @@ public class BlueprintTest {
 			return floatValue;
 		}
 
-		public Immutable getImmutable() {
+		public ImmutableObject getImmutableObject() {
 			return immutable;
 		}
 
@@ -255,7 +216,7 @@ public class BlueprintTest {
 			this.floatValue = floatValue;
 		}
 
-		public void setImmutable(final Immutable immutable) {
+		public void setImmutableObject(final ImmutableObject immutable) {
 			this.immutable = immutable;
 		}
 
@@ -360,10 +321,10 @@ public class BlueprintTest {
 		Assert.assertNotNull(bean.getInnerBean());
 		Assert.assertNotNull(bean.getInnerBean().getName());
 		Assert.assertEquals("", bean.getInnerBean().getName());
-		Assert.assertNotNull(bean.getImmutable());
-		Assert.assertNotNull(bean.getImmutable().getName());
-		Assert.assertNotNull(bean.getImmutable().getDate());
-		Assert.assertNotNull(bean.getImmutable().getList());
+		Assert.assertNotNull(bean.getImmutableObject());
+		Assert.assertNotNull(bean.getImmutableObject().getName());
+		Assert.assertNotNull(bean.getImmutableObject().getDate());
+		Assert.assertNotNull(bean.getImmutableObject().getList());
 	}
 
 	public void testBlueprintObject_String() {
@@ -388,8 +349,8 @@ public class BlueprintTest {
 	}
 
 	@Test
-	public void testImmutable() {
-		final Immutable immutable = Blueprint.object(Immutable.class);
+	public void testImmutableObject() {
+		final ImmutableObject immutable = Blueprint.object(ImmutableObject.class);
 		Assert.assertNotNull(immutable);
 		Assert.assertNotNull(immutable.getName());
 		Assert.assertEquals("", immutable.getName());
@@ -416,11 +377,11 @@ public class BlueprintTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMap() {
-		final Map<String, Immutable> map = (Map<String, Immutable>) Blueprint.object(Map.class);
+		final Map<String, ImmutableObject> map = (Map<String, ImmutableObject>) Blueprint.object(Map.class);
 		Assert.assertNotNull(map);
-		map.put("any", Blueprint.object(Immutable.class, new RandomBlueprintConfiguration()));
+		map.put("any", Blueprint.object(ImmutableObject.class, new RandomBlueprintConfiguration()));
 
-		final Immutable immutable = map.get("any");
+		final ImmutableObject immutable = map.get("any");
 		Assert.assertNotNull(immutable);
 		Assert.assertNotNull(immutable.getDate());
 		Assert.assertTrue(UUID_PATTERN.matcher(immutable.getName()).matches());
@@ -430,9 +391,9 @@ public class BlueprintTest {
 	public void testRandom() {
 		final BlueprintConfiguration config = new RandomBlueprintConfiguration();
 		final int COUNT = 5;
-		final Immutable[] immutables = new Immutable[COUNT];
+		final ImmutableObject[] immutables = new ImmutableObject[COUNT];
 		for (int i = 0; i < COUNT; i++) {
-			immutables[i] = Blueprint.object(Immutable.class, config);
+			immutables[i] = Blueprint.object(ImmutableObject.class, config);
 
 			if (i > 0) {
 				Assert.assertNotEquals(immutables[i].getName(), immutables[i - 1].getName());
