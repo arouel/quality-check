@@ -39,7 +39,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class AbstractBlueprintConfiguration implements BlueprintConfiguration {
+class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 
