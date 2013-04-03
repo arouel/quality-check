@@ -20,7 +20,6 @@ import java.util.Collection;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
-import net.sf.qualitytest.blueprint.configuration.BlueprintConfiguration;
 
 /**
  * This class contains utilities for blueprinting collections.

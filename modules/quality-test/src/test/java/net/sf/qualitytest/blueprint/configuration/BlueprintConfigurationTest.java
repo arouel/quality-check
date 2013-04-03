@@ -1,7 +1,7 @@
 package net.sf.qualitytest.blueprint.configuration;
 
-
 import net.sf.qualitytest.blueprint.Blueprint;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintTest;
 
 import org.junit.Assert;

@@ -28,7 +28,6 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.ModifierBits;
-import net.sf.qualitytest.blueprint.configuration.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;

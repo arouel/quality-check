@@ -24,6 +24,7 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.blueprint.Blueprint;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
@@ -38,29 +39,25 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class BlueprintConfiguration {
+public class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 
-	public BlueprintConfiguration() {
+	public AbstractBlueprintConfiguration() {
 		// Empty default constructor
 	}
 
-	private BlueprintConfiguration(final BlueprintConfiguration configuration) {
+	private AbstractBlueprintConfiguration(final AbstractBlueprintConfiguration configuration) {
 		Check.notNull(configuration, "configuration");
 		attributeMapping.putAll(configuration.attributeMapping);
 	}
 
-	protected BlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
+	protected AbstractBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
 		this.attributeMapping.putAll(attributeMapping);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#findCreationStrategyForMethod(java.lang.reflect.Method)
-	 */
+	@Override
 	public ValueCreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
@@ -73,11 +70,7 @@ public class BlueprintConfiguration {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#findCreationStrategyForType(java.lang.Class)
-	 */
+	@Override
 	public ValueCreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
@@ -90,51 +83,30 @@ public class BlueprintConfiguration {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#getAttributeMappings()
-	 */
+	@Override
 	public Map<ValueMatchingStrategy, ValueCreationStrategy<?>> getAttributeMappings() {
 		return Collections.unmodifiableMap(attributeMapping);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#object(java.lang.Class)
-	 */
+	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> T object(final Class<T> clazz) {
 		return Blueprint.object(clazz, this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#with(java.lang.Class, T)
-	 */
-	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
+	@Override
+	public <T> AbstractBlueprintConfiguration with(final Class<T> type, final T value) {
 		return this.with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#with(java.lang.String, T)
-	 */
-	public <T> BlueprintConfiguration with(final String name, final T value) {
+	@Override
+	public <T> AbstractBlueprintConfiguration with(final String name, final T value) {
 		return this.with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.qualitytest.blueprint.configuration.udih#with(net.sf.qualitytest.blueprint.ValueMatchingStrategy,
-	 * net.sf.qualitytest.blueprint.ValueCreationStrategy)
-	 */
-	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
-		final BlueprintConfiguration config = new BlueprintConfiguration(this);
+	@Override
+	public AbstractBlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
+		final AbstractBlueprintConfiguration config = new AbstractBlueprintConfiguration(this);
 		config.attributeMapping.put(Check.notNull(matcher, "matcher"), Check.notNull(creator, "creator"));
 		return config;
 	}
