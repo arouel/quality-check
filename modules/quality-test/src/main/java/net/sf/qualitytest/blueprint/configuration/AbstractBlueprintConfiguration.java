@@ -58,6 +58,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public ValueCreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
@@ -71,6 +72,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public ValueCreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
@@ -95,16 +97,19 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
-		return this.with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
+		return with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final String name, final T value) {
-		return this.with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
+		return with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
 		Check.notNull(matcher, "matcher");
 		Check.notNull(creator, "creator");
