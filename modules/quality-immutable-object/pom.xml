@@ -71,7 +71,6 @@ based on an Java interface (only with accessor methods).
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>14.0-rc2</version>
 		</dependency>
 
 		<!-- code formatting -->
