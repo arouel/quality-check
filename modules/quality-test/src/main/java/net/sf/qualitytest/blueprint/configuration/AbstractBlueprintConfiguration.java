@@ -16,7 +16,6 @@
 package net.sf.qualitytest.blueprint.configuration;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrateg
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
-import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
 
 /**
  * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
@@ -49,12 +48,12 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping;
 
 	public AbstractBlueprintConfiguration() {
-		mapping = HashBiMap.create();
+		mapping = ImmutableBiMap.of();
 	}
 
 	protected AbstractBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
-		mapping = HashBiMap.create(attributeMapping);
+		mapping = ImmutableBiMap.copyOf(attributeMapping);
 	}
 
 	@Override
@@ -87,7 +86,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	public Map<ValueMatchingStrategy, ValueCreationStrategy<?>> getAttributeMappings() {
-		return Collections.unmodifiableMap(mapping);
+		return mapping;
 	}
 
 	@Override
