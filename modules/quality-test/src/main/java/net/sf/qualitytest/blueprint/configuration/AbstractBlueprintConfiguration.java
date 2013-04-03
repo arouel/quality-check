@@ -31,6 +31,8 @@ import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrateg
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
+import com.google.common.collect.HashBiMap;
+
 /**
  * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
  * generated.
@@ -41,27 +43,25 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  */
 class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
-	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
+	/**
+	 * Mapping of class members
+	 */
+	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping;
 
 	public AbstractBlueprintConfiguration() {
-		// Empty default constructor
-	}
-
-	private AbstractBlueprintConfiguration(final AbstractBlueprintConfiguration configuration) {
-		Check.notNull(configuration, "configuration");
-		attributeMapping.putAll(configuration.attributeMapping);
+		mapping = HashBiMap.create();
 	}
 
 	protected AbstractBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
-		this.attributeMapping.putAll(attributeMapping);
+		mapping = HashBiMap.create(attributeMapping);
 	}
 
 	@Override
 	public ValueCreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
-		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : attributeMapping.entrySet()) {
+		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping.entrySet()) {
 			if (entry.getKey().matches(method.getName())) {
 				return entry.getValue();
 			}
@@ -74,7 +74,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	public ValueCreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
-		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : attributeMapping.entrySet()) {
+		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping.entrySet()) {
 			if (entry.getKey().matches(clazz)) {
 				return entry.getValue();
 			}
@@ -85,7 +85,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	public Map<ValueMatchingStrategy, ValueCreationStrategy<?>> getAttributeMappings() {
-		return Collections.unmodifiableMap(attributeMapping);
+		return Collections.unmodifiableMap(mapping);
 	}
 
 	@Override
@@ -95,20 +95,24 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
-	public <T> AbstractBlueprintConfiguration with(final Class<T> type, final T value) {
+	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
 		return this.with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
-	public <T> AbstractBlueprintConfiguration with(final String name, final T value) {
+	public <T> BlueprintConfiguration with(final String name, final T value) {
 		return this.with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
-	public AbstractBlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
-		final AbstractBlueprintConfiguration config = new AbstractBlueprintConfiguration(this);
-		config.attributeMapping.put(Check.notNull(matcher, "matcher"), Check.notNull(creator, "creator"));
-		return config;
+	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
+		Check.notNull(matcher, "matcher");
+		Check.notNull(creator, "creator");
+
+		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
+		mapping.putAll(this.mapping);
+		mapping.put(matcher, creator);
+		return new AbstractBlueprintConfiguration(mapping);
 	}
 
 }
