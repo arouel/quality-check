@@ -25,16 +25,15 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
  * This class contains utilities for blueprinting collections.
  * 
  * @author Dominik Seichter
- * 
  */
-public final class CollectionBluePrint {
+public final class CollectionBlueprint {
 
 	/**
 	 * A small utility to fill a collection automatically with blueprinted objects.
 	 * 
 	 * The default configuration is used.
 	 * 
-	 * @see BluePrint.def
+	 * @see Blueprint.def
 	 * 
 	 * @param <T>
 	 *            type of the objects to blueprint and add
@@ -47,7 +46,7 @@ public final class CollectionBluePrint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> void addMany(final Collection<T> collection, final Class<T> clazz, final int numberOfItems) {
-		CollectionBluePrint.addMany(collection, clazz, numberOfItems, BluePrint.def());
+		CollectionBlueprint.addMany(collection, clazz, numberOfItems, Blueprint.def());
 	}
 
 	/**
@@ -66,14 +65,14 @@ public final class CollectionBluePrint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> void addMany(final Collection<T> collection, final Class<T> clazz, final int numberOfItems,
-			final BluePrintConfiguration config) {
+			final BlueprintConfiguration config) {
 		Check.notNull(collection, "collection");
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
 		int cnt = numberOfItems;
 		while (cnt > 0) {
-			collection.add(BluePrint.object(clazz, config));
+			collection.add(Blueprint.object(clazz, config));
 			cnt--;
 		}
 	}
@@ -81,7 +80,8 @@ public final class CollectionBluePrint {
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
-	private CollectionBluePrint() {
+	private CollectionBlueprint() {
 		// This class is not intended to create objects from it.
 	}
+
 }

@@ -18,10 +18,10 @@ package net.sf.qualitytest.blueprint.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.qualitytest.blueprint.BluePrintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.creation.BluePrintStringCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomCharValueCreationStrategy;
@@ -33,7 +33,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationSt
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
 /**
- * {@code BluePrintConfiguration} which assigns all primitive types and their corresponding object types with a random
+ * {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types with a random
  * value.
  * 
  * Additionally, support for the interfaces {@code java.util.List}, {@code java.util.Set} and {@code java.util.Map} is
@@ -42,7 +42,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * @author Dominik Seichter
  * 
  */
-public class RandomBluePrintConfiguration extends BluePrintConfiguration {
+public class RandomBlueprintConfiguration extends BlueprintConfiguration {
 
 	private static final ValueCreationStrategy<Long> LONG_DEFAULT = new RandomLongValueCreationStrategy();
 	private static final ValueCreationStrategy<Integer> INTEGER_DEFAULT = new RandomIntValueCreationStrategy();
@@ -55,7 +55,7 @@ public class RandomBluePrintConfiguration extends BluePrintConfiguration {
 
 	private static Map<ValueMatchingStrategy, ValueCreationStrategy<?>> createDefaultAttributeMapping() {
 		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
-		map.put(new TypeValueMatchingStrategy(String.class), new BluePrintStringCreationStrategy());
+		map.put(new TypeValueMatchingStrategy(String.class), new BlueprintStringCreationStrategy());
 		map.put(new TypeValueMatchingStrategy(Long.class), LONG_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(long.class), LONG_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(Integer.class), INTEGER_DEFAULT);
@@ -73,12 +73,13 @@ public class RandomBluePrintConfiguration extends BluePrintConfiguration {
 		map.put(new TypeValueMatchingStrategy(Double.class), DOUBLE_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(double.class), DOUBLE_DEFAULT);
 
-		DefaultBluePrintConfiguration.addDefaultCollections(map);
+		DefaultBlueprintConfiguration.addDefaultCollections(map);
 
 		return map;
 	}
 
-	public RandomBluePrintConfiguration() {
+	public RandomBlueprintConfiguration() {
 		super(createDefaultAttributeMapping());
 	}
+
 }

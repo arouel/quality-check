@@ -22,15 +22,15 @@ import java.util.regex.Pattern;
 
 import net.sf.qualitytest.CoverageForPrivateConstructor;
 import net.sf.qualitytest.StaticCheck;
-import net.sf.qualitytest.blueprint.configuration.DefaultBluePrintConfiguration;
-import net.sf.qualitytest.blueprint.configuration.RandomBluePrintConfiguration;
-import net.sf.qualitytest.exception.BluePrintException;
+import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
+import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
+import net.sf.qualitytest.exception.BlueprintException;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class BluePrintTest {
+public class BlueprintTest {
 
 	public static final class Immutable {
 
@@ -314,17 +314,17 @@ public class BluePrintTest {
 
 	@Test
 	public void coverPrivateConstructor() {
-		CoverageForPrivateConstructor.giveMeCoverage(BluePrint.class);
+		CoverageForPrivateConstructor.giveMeCoverage(Blueprint.class);
 	}
 
-	@Test(expected = BluePrintException.class)
+	@Test(expected = BlueprintException.class)
 	public void testAbstract() {
-		BluePrint.object(MyAbstract.class);
+		Blueprint.object(MyAbstract.class);
 	}
 
 	@Test
 	public void testArray() {
-		final int[] array = (int[]) BluePrint.array(int[].class);
+		final int[] array = (int[]) Blueprint.array(int[].class);
 		Assert.assertTrue(array.length > 0);
 		for (final int i : array) {
 			Assert.assertEquals(0, i);
@@ -332,8 +332,8 @@ public class BluePrintTest {
 	}
 
 	@Test
-	public void testBluePrintBean() {
-		final TestBean bean = BluePrint.object(TestBean.class, new DefaultBluePrintConfiguration());
+	public void testBlueprintBean() {
+		final TestBean bean = Blueprint.object(TestBean.class, new DefaultBlueprintConfiguration());
 		Assert.assertNotNull(bean);
 		Assert.assertNotNull(bean.getStr());
 		Assert.assertNotNull(bean.getNumber());
@@ -366,30 +366,30 @@ public class BluePrintTest {
 		Assert.assertNotNull(bean.getImmutable().getList());
 	}
 
-	public void testBluePrintObject_String() {
-		final Object o = BluePrint.object(String.class);
+	public void testBlueprintObject_String() {
+		final Object o = Blueprint.object(String.class);
 		Assert.assertNotNull(o);
 		Assert.assertTrue(o instanceof String);
 	}
 
 	@Test
 	public void testClassIsFinal() {
-		StaticCheck.classIsFinal(BluePrint.class);
+		StaticCheck.classIsFinal(Blueprint.class);
 	}
 
 	@Test
 	public void testEnumeration() {
-		Assert.assertEquals(TestBean.SomeEnum.A, BluePrint.enumeration(TestBean.SomeEnum.class));
+		Assert.assertEquals(TestBean.SomeEnum.A, Blueprint.enumeration(TestBean.SomeEnum.class));
 	}
 
 	@Test
 	public void testGiveMeCoverageForMyPrivateConstructor() {
-		CoverageForPrivateConstructor.giveMeCoverage(BluePrint.class);
+		CoverageForPrivateConstructor.giveMeCoverage(Blueprint.class);
 	}
 
 	@Test
 	public void testImmutable() {
-		final Immutable immutable = BluePrint.object(Immutable.class);
+		final Immutable immutable = Blueprint.object(Immutable.class);
 		Assert.assertNotNull(immutable);
 		Assert.assertNotNull(immutable.getName());
 		Assert.assertEquals("", immutable.getName());
@@ -402,23 +402,23 @@ public class BluePrintTest {
 	@Test
 	public void testInterfaceAndLastStrategyWins() {
 		// TODO: Make sure last strategy wins
-		final MyInterface iface = BluePrint.random().with(int.class, 12).with(int.class, 0).object(MyInterface.class);
+		final MyInterface iface = Blueprint.random().with(int.class, 12).with(int.class, 0).object(MyInterface.class);
 		Assert.assertEquals(0, iface.getInt());
 		Assert.assertTrue(UUID_PATTERN.matcher(iface.getString()).matches());
 	}
 
 	@Test
 	public void testMakeSureClassIsFinalAndNotAccessible() {
-		StaticCheck.classIsFinal(BluePrint.class);
-		StaticCheck.noPublicDefaultConstructor(BluePrint.class);
+		StaticCheck.classIsFinal(Blueprint.class);
+		StaticCheck.noPublicDefaultConstructor(Blueprint.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMap() {
-		final Map<String, Immutable> map = (Map<String, Immutable>) BluePrint.object(Map.class);
+		final Map<String, Immutable> map = (Map<String, Immutable>) Blueprint.object(Map.class);
 		Assert.assertNotNull(map);
-		map.put("any", BluePrint.object(Immutable.class, new RandomBluePrintConfiguration()));
+		map.put("any", Blueprint.object(Immutable.class, new RandomBlueprintConfiguration()));
 
 		final Immutable immutable = map.get("any");
 		Assert.assertNotNull(immutable);
@@ -428,11 +428,11 @@ public class BluePrintTest {
 
 	@Test
 	public void testRandom() {
-		final BluePrintConfiguration config = new RandomBluePrintConfiguration();
+		final BlueprintConfiguration config = new RandomBlueprintConfiguration();
 		final int COUNT = 5;
 		final Immutable[] immutables = new Immutable[COUNT];
 		for (int i = 0; i < COUNT; i++) {
-			immutables[i] = BluePrint.object(Immutable.class, config);
+			immutables[i] = Blueprint.object(Immutable.class, config);
 
 			if (i > 0) {
 				Assert.assertNotEquals(immutables[i].getName(), immutables[i - 1].getName());
@@ -445,7 +445,7 @@ public class BluePrintTest {
 
 	@Test
 	public void testStringArray() {
-		final String[] array = (String[]) BluePrint.array(String[].class, new RandomBluePrintConfiguration());
+		final String[] array = (String[]) Blueprint.array(String[].class, new RandomBlueprintConfiguration());
 		Assert.assertTrue(array.length > 0);
 		for (final String i : array) {
 			Assert.assertTrue(UUID_PATTERN.matcher(i).matches());
@@ -454,19 +454,19 @@ public class BluePrintTest {
 
 	@Test
 	public void testStringIsUuid() {
-		Assert.assertTrue(UUID_PATTERN.matcher(BluePrint.string()).matches());
+		Assert.assertTrue(UUID_PATTERN.matcher(Blueprint.string()).matches());
 	}
 
 	@Test
 	public void testStringNotEmpty() {
-		Assert.assertNotNull(BluePrint.string());
-		Assert.assertNotEquals(0, BluePrint.string());
+		Assert.assertNotNull(Blueprint.string());
+		Assert.assertNotEquals(0, Blueprint.string());
 	}
 
 	@Test
 	public void testWithConfig() {
-		final BluePrintConfiguration config = new DefaultBluePrintConfiguration().with("number", 42l);
-		final TestBean bean = BluePrint.object(TestBean.class, config);
+		final BlueprintConfiguration config = new DefaultBlueprintConfiguration().with("number", 42l);
+		final TestBean bean = Blueprint.object(TestBean.class, config);
 		Assert.assertEquals(bean.getNumber(), Long.valueOf(42l));
 	}
 

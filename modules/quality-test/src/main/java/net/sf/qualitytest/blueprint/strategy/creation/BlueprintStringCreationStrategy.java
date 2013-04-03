@@ -15,20 +15,19 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
-import net.sf.qualitytest.blueprint.BluePrint;
+import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 /**
- * Strategy which creates random strings using {@code BluePrint.string()}.
+ * Strategy which creates random strings using {@code Blueprint.string()}.
  * 
  * @author Dominik Seichter
- * 
  */
-public class BluePrintStringCreationStrategy implements ValueCreationStrategy<String> {
+public class BlueprintStringCreationStrategy implements ValueCreationStrategy<String> {
 
 	@Override
 	public String createValue() {
-		return BluePrint.string();
+		return Blueprint.string();
 	}
 
 }

@@ -28,50 +28,50 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.ModifierBits;
-import net.sf.qualitytest.blueprint.configuration.DefaultBluePrintConfiguration;
-import net.sf.qualitytest.blueprint.configuration.RandomBluePrintConfiguration;
-import net.sf.qualitytest.exception.BluePrintException;
+import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
+import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
+import net.sf.qualitytest.exception.BlueprintException;
 
 /**
  * Blueprinting is a technique that makes writing test easier. For unit-testing you often need data-objects, where the
- * actual content of the objects does not matter. {@code BluePrint} creates data-objects filled with random or defined
+ * actual content of the objects does not matter. {@code Blueprint} creates data-objects filled with random or defined
  * data automatically based on the "Blue-Print" which is the Class itself.
  * 
  * Blueprinting makes tests more maintainable as they depend less on test-data. Imagine, you add a new required
  * attribute to a class. Usually, you have to add this to all tests using this class. With blueprinting you just have to
  * add it to certain tests where the contents of the logic does actually matter. Most of the time the randomly generated
- * value by {@code BluePrint} is just fine.
+ * value by {@code Blueprint} is just fine.
  * 
- * {@code BluePrint} is similar to C#'s AutoFixture (https://github.com/AutoFixture/AutoFixture#readme).
+ * {@code Blueprint} is similar to C#'s AutoFixture (https://github.com/AutoFixture/AutoFixture#readme).
  * 
  * A simple example:
  * 
  * <code>
- * 	final BluePrintConfiguration config = new RandomBluePrintConfiguration().with("email", "mail@example.com");
- *  final User user = BluePrint.object(User.class, config);
+ * 	final BlueprintConfiguration config = new RandomBlueprintConfiguration().with("email", "mail@example.com");
+ *  final User user = Blueprint.object(User.class, config);
  * </code>
  * 
  * or simpler
  * 
  * <code>
- *  final User user = BluePrint.random().with("email", "mail@example.com").object(User.class);
+ *  final User user = Blueprint.random().with("email", "mail@example.com").object(User.class);
  * </code>
  * 
- * {@code BluePrint} offers to custome configurations. A {@code DefaultBluePrintConfiguration} which fills any object
- * using default, empty or 0 values. The second configuration, {@code RandomBluePrintConfiguration} will always generate
+ * {@code Blueprint} offers to custome configurations. A {@code DefaultBlueprintConfiguration} which fills any object
+ * using default, empty or 0 values. The second configuration, {@code RandomBlueprintConfiguration} will always generate
  * a random value. Both fill child objects using a deep-tree-search.
  * 
- * Utilities for collections can be found in {@code CollectionBluePrint}.
+ * Utilities for collections can be found in {@code CollectionBlueprint}.
  * 
- * @see DefaultBluePrintConfiguration
- * @see RandomBluePrintConfiguration
+ * @see DefaultBlueprintConfiguration
+ * @see RandomBlueprintConfiguration
  * 
  * @author Dominik Seichter
  * 
  */
-public final class BluePrint {
+public final class Blueprint {
 
-	private static final BluePrintConfiguration DEFAULT_CONFIG = new DefaultBluePrintConfiguration();
+	private static final BlueprintConfiguration DEFAULT_CONFIG = new DefaultBlueprintConfiguration();
 
 	private static final int MAX_ARRAY_SIZE = 7;
 
@@ -79,9 +79,9 @@ public final class BluePrint {
 	private static final String SETTER_PREFIX = "set";
 
 	/**
-	 * Blueprint an array value using a {@code DefaultBluePrintConfiguration}.
+	 * Blueprint an array value using a {@code DefaultBlueprintConfiguration}.
 	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code BluePrint.MAX_ARRAY_SIZE
+	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
 	 * + 1},
 	 * 
 	 * @param <T>
@@ -91,24 +91,24 @@ public final class BluePrint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> Object array(final Class<T> array) {
-		return BluePrint.array(array, DEFAULT_CONFIG);
+		return Blueprint.array(array, DEFAULT_CONFIG);
 	}
 
 	/**
 	 * Blueprint an array value.
 	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code BluePrint.MAX_ARRAY_SIZE
+	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
 	 * + 1},
 	 * 
 	 * @param <T>
 	 * @param array
 	 *            the class of an array.
 	 * @param config
-	 *            a {@code BluePrintConfiguration}
+	 *            a {@code BlueprintConfiguration}
 	 * @return a valid array.
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> Object array(final Class<T> array, final BluePrintConfiguration config) {
+	public static <T> Object array(final Class<T> array, final BlueprintConfiguration config) {
 		Check.notNull(array, "array");
 		Check.notNull(config, "config");
 
@@ -129,11 +129,11 @@ public final class BluePrint {
 	 * @param clazz
 	 *            a class, which must have a default constructor.
 	 * @param config
-	 *            a BluePrintConfiguration
+	 *            a BlueprintConfiguration
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	private static <T> T bean(final Class<T> clazz, final BluePrintConfiguration config) {
+	private static <T> T bean(final Class<T> clazz, final BlueprintConfiguration config) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
@@ -152,7 +152,7 @@ public final class BluePrint {
 	 * @param config
 	 *            configuration to use.
 	 */
-	private static void bluePrintMethod(final Object that, final Method m, final BluePrintConfiguration config) {
+	private static void bluePrintMethod(final Object that, final Method m, final BlueprintConfiguration config) {
 		final ValueCreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
 		final Class<?>[] parameterTypes = m.getParameterTypes();
 		final Object[] values = new Object[parameterTypes.length];
@@ -180,7 +180,7 @@ public final class BluePrint {
 	 * @param config
 	 *            Configuration to apply
 	 */
-	private static <T> void bluePrintSetters(final T obj, final Class<T> clazz, final BluePrintConfiguration config) {
+	private static <T> void bluePrintSetters(final T obj, final Class<T> clazz, final BlueprintConfiguration config) {
 		for (final Method m : clazz.getMethods()) {
 			if (isSetter(m)) {
 				bluePrintMethod(obj, m, config);
@@ -191,10 +191,10 @@ public final class BluePrint {
 	/**
 	 * Return a new configuration for default blueprinting with zero or empty default values.
 	 * 
-	 * @return a new {@code DefaultBluePrintConfiguration}
+	 * @return a new {@code DefaultBlueprintConfiguration}
 	 */
-	public static BluePrintConfiguration def() {
-		return new DefaultBluePrintConfiguration();
+	public static BlueprintConfiguration def() {
+		return new DefaultBlueprintConfiguration();
 	}
 
 	/**
@@ -262,7 +262,7 @@ public final class BluePrint {
 	 *            the configuration
 	 * @return a new blueprint of the class with all constructor parameters to filled.
 	 */
-	private static <T> T immutable(final Class<T> clazz, final BluePrintConfiguration config) {
+	private static <T> T immutable(final Class<T> clazz, final BlueprintConfiguration config) {
 		final Constructor<?> constructor = findFirstPublicConstructor(clazz);
 		final Class<?>[] parameterTypes = constructor.getParameterTypes();
 		final Object[] parameters = new Object[parameterTypes.length];
@@ -289,7 +289,7 @@ public final class BluePrint {
 	 *            object where the array is stored
 	 */
 	private static <T> void initializeArray(final Class<T> array, final int arraySize, final Object value,
-			final BluePrintConfiguration config) {
+			final BlueprintConfiguration config) {
 		for (int i = 0; i < arraySize; i++) {
 			final Object bluePrint = object(array.getComponentType(), config);
 			Array.set(value, i, bluePrint);
@@ -311,7 +311,7 @@ public final class BluePrint {
 	}
 
 	/**
-	 * Blueprint a Java-Object using a {@code DefaultBluePrintConfiguration}.
+	 * Blueprint a Java-Object using a {@code DefaultBlueprintConfiguration}.
 	 * 
 	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
 	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
@@ -324,7 +324,7 @@ public final class BluePrint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T object(final Class<T> clazz) {
-		return BluePrint.object(clazz, DEFAULT_CONFIG);
+		return Blueprint.object(clazz, DEFAULT_CONFIG);
 	}
 
 	/**
@@ -338,12 +338,12 @@ public final class BluePrint {
 	 * @param clazz
 	 *            a class
 	 * @param config
-	 *            a {@code BluePrintConfiguration}
+	 *            a {@code BlueprintConfiguration}
 	 * @return a blue printed instance of {@code T}
 	 */
 	@SuppressWarnings("unchecked")
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T object(final Class<T> clazz, final BluePrintConfiguration config) {
+	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
@@ -358,7 +358,7 @@ public final class BluePrint {
 		} else if (clazz.isInterface()) {
 			return (T) proxy(clazz, config);
 		} else if (ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT)) {
-			throw new BluePrintException("Abstract classes are currently not supported.");
+			throw new BlueprintException("Abstract classes are currently not supported.");
 		} else if (hasPublicDefaultConstructor(clazz)) {
 			return bean(clazz, config);
 		} else {
@@ -374,21 +374,21 @@ public final class BluePrint {
 	 * @param iface
 	 *            an interace
 	 * @param config
-	 *            {@code BluePrintConfiguration}
+	 *            {@code BlueprintConfiguration}
 	 * @return a new dynamic proxy
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T proxy(final Class<T> iface, final BluePrintConfiguration config) {
-		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class[] { iface }, new BluePrintInvocationHandler(config));
+	private static <T> T proxy(final Class<T> iface, final BlueprintConfiguration config) {
+		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class[] { iface }, new BlueprintInvocationHandler(config));
 	}
 
 	/**
 	 * Return a new configuration for random blueprinting.
 	 * 
-	 * @return a new {@code RandomBluePrintConfiguration}
+	 * @return a new {@code RandomBlueprintConfiguration}
 	 */
-	public static BluePrintConfiguration random() {
-		return new RandomBluePrintConfiguration();
+	public static BlueprintConfiguration random() {
+		return new RandomBlueprintConfiguration();
 	}
 
 	/**
@@ -401,18 +401,18 @@ public final class BluePrint {
 	 * @param values
 	 *            paramters
 	 * 
-	 * @throws BluePrintException
+	 * @throws BlueprintException
 	 *             in case of any error
 	 */
 	private static void safeInvoke(final Object that, final Method m, final Object[] values) {
 		try {
 			m.invoke(that, values);
 		} catch (final IllegalArgumentException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final IllegalAccessException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final InvocationTargetException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		}
 	}
 
@@ -426,16 +426,16 @@ public final class BluePrint {
 	 *            class-object
 	 * @return a new instance of the class
 	 * 
-	 * @throws BluePrintException
+	 * @throws BlueprintException
 	 *             in case of any error
 	 */
 	private static <T> T safeNewInstance(final Class<T> clazz) {
 		try {
 			return (T) clazz.newInstance();
 		} catch (final InstantiationException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final IllegalAccessException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		}
 	}
 
@@ -446,7 +446,7 @@ public final class BluePrint {
 	 *            constructor to call
 	 * @param parameters
 	 *            constructor arguments
-	 * @throws BluePrintException
+	 * @throws BlueprintException
 	 *             in case of any error
 	 */
 	@SuppressWarnings("unchecked")
@@ -454,13 +454,13 @@ public final class BluePrint {
 		try {
 			return (T) constructor.newInstance(parameters);
 		} catch (final IllegalArgumentException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final InstantiationException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final IllegalAccessException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		} catch (final InvocationTargetException e) {
-			throw new BluePrintException(e);
+			throw new BlueprintException(e);
 		}
 	}
 
@@ -476,7 +476,7 @@ public final class BluePrint {
 	/**
 	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
-	private BluePrint() {
+	private Blueprint() {
 		// This class is not intended to create objects from it.
 	}
 }

@@ -28,30 +28,29 @@ import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchi
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
 /**
- * Configure how blueprinting is done. A BluePrintConfiguration defines how the values for certain attributes are
+ * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
  * generated.
  * 
  * This class is immutable all modifier methods have to return a new instance of this class.
  * 
  * @author Dominik Seichter
- * 
  */
-public class BluePrintConfiguration implements Cloneable {
+public class BlueprintConfiguration implements Cloneable {
 
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 
-	public BluePrintConfiguration() {
+	public BlueprintConfiguration() {
 		// Empty default constructor
 	}
 
-	protected BluePrintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
+	protected BlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
 		this.attributeMapping.putAll(attributeMapping);
 	}
 
 	@Override
 	public Object clone() {
-		final BluePrintConfiguration c = new BluePrintConfiguration();
+		final BlueprintConfiguration c = new BlueprintConfiguration();
 		c.attributeMapping.putAll(attributeMapping);
 		return c;
 	}
@@ -95,7 +94,7 @@ public class BluePrintConfiguration implements Cloneable {
 	/**
 	 * Blueprint a Java-Object using this configuration.
 	 * 
-	 * @see BluePrint
+	 * @see Blueprint
 	 * 
 	 * @param <T>
 	 * @param clazz
@@ -104,7 +103,7 @@ public class BluePrintConfiguration implements Cloneable {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public <T> T object(final Class<T> clazz) {
-		return BluePrint.object(clazz, this);
+		return Blueprint.object(clazz, this);
 	}
 
 	/**
@@ -117,7 +116,7 @@ public class BluePrintConfiguration implements Cloneable {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	public <T> BluePrintConfiguration with(final Class<T> type, final T value) {
+	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
 		return this.with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
@@ -131,7 +130,7 @@ public class BluePrintConfiguration implements Cloneable {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	public <T> BluePrintConfiguration with(final String name, final T value) {
+	public <T> BlueprintConfiguration with(final String name, final T value) {
 		return this.with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
@@ -145,8 +144,8 @@ public class BluePrintConfiguration implements Cloneable {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	public BluePrintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
-		final BluePrintConfiguration config = (BluePrintConfiguration) clone();
+	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
+		final BlueprintConfiguration config = (BlueprintConfiguration) clone();
 		config.attributeMapping.put(Check.notNull(matcher, "matcher"), Check.notNull(creator, "creator"));
 		return config;
 	}

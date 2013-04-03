@@ -23,14 +23,14 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.BluePrintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
 /**
- * Default {@code BluePrintConfiguration} which assigns all primitive types and their corresponding object types which a
+ * Default {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types which a
  * default value, which is usually {@code 0}.
  * 
  * Additionally, support for the interfaces {@code java.util.List}, {@code java.util.Set} and {@code java.util.Map} is
@@ -39,7 +39,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * @author Dominik Seichter
  * 
  */
-public class DefaultBluePrintConfiguration extends BluePrintConfiguration {
+public class DefaultBlueprintConfiguration extends BlueprintConfiguration {
 
 	private static final String STRING_DEFAULT = "";
 	private static final Long LONG_DEFAULT = Long.valueOf(0l);
@@ -90,7 +90,7 @@ public class DefaultBluePrintConfiguration extends BluePrintConfiguration {
 		return map;
 	}
 
-	public DefaultBluePrintConfiguration() {
+	public DefaultBlueprintConfiguration() {
 		super(createDefaultAttributeMapping());
 	}
 }

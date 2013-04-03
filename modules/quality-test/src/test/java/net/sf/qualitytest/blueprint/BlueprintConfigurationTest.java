@@ -1,11 +1,11 @@
 package net.sf.qualitytest.blueprint;
 
-import net.sf.qualitytest.blueprint.configuration.DefaultBluePrintConfiguration;
+import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BluePrintConfigurationTest {
+public class BlueprintConfigurationTest {
 
 	public static final class User {
 		private int age;
@@ -48,8 +48,8 @@ public class BluePrintConfigurationTest {
 	}
 
 	@Test
-	public void testBluePrintWith() {
-		final User user = BluePrint.random()
+	public void testBlueprintWith() {
+		final User user = Blueprint.random()
 
 		.with("email", "mail@example.com")
 
@@ -59,14 +59,14 @@ public class BluePrintConfigurationTest {
 
 		Assert.assertEquals(18, user.getAge());
 		Assert.assertEquals("mail@example.com", user.getEmail());
-		Assert.assertTrue(BluePrintTest.UUID_PATTERN.matcher(user.getName()).matches());
+		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(user.getName()).matches());
 	}
 
 	@Test
 	public void testWithIsImmutable() {
-		final BluePrintConfiguration config = new DefaultBluePrintConfiguration();
+		final BlueprintConfiguration config = new DefaultBlueprintConfiguration();
 		final int initialSize = config.getAttributeMappings().size();
-		final BluePrintConfiguration newConfig = config.with("a", null);
+		final BlueprintConfiguration newConfig = config.with("a", null);
 		Assert.assertEquals(initialSize, config.getAttributeMappings().size());
 		Assert.assertEquals(initialSize + 1, newConfig.getAttributeMappings().size());
 	}

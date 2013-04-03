@@ -18,54 +18,54 @@ package net.sf.qualitytest.exception;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BluePrintExceptionTest {
+public class BlueprintExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new BluePrintException("Message");
+		new BlueprintException("Message");
 	}
 
-	@Test(expected = BluePrintException.class)
+	@Test(expected = BlueprintException.class)
 	public void construct_withEmptyArgName_successful() {
-		throw new BluePrintException("");
+		throw new BlueprintException("");
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final BluePrintException e = new BluePrintException("msg", null);
+		final BlueprintException e = new BlueprintException("msg", null);
 		Assert.assertEquals("msg", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new BluePrintException(new NumberFormatException());
+		new BlueprintException(new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withMessageAndFilledCause() {
-		final BluePrintException e = new BluePrintException("Cannot access field.", new NumberFormatException());
+		final BlueprintException e = new BlueprintException("Cannot access field.", new NumberFormatException());
 		Assert.assertEquals("Cannot access field.", e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new BluePrintException((Throwable) null);
+		new BlueprintException((Throwable) null);
 	}
 
 	@Test
 	public void construct_withNullCauseAndCheckMessage() {
-		final BluePrintException e = new BluePrintException((Throwable) null);
+		final BlueprintException e = new BlueprintException((Throwable) null);
 		Assert.assertEquals("Error during blueprinting.", e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullMessage() {
-		new BluePrintException((String) null);
+		new BlueprintException((String) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		final BluePrintException e = new BluePrintException();
+		final BlueprintException e = new BlueprintException();
 		Assert.assertEquals("Error during blueprinting.", e.getMessage());
 	}
 

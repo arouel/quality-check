@@ -18,53 +18,51 @@ package net.sf.qualitytest.exception;
 import javax.annotation.Nullable;
 
 /**
- * 
  * @author Dominik Seichter
- * 
  */
-public class BluePrintException extends RuntimeException {
+public class BlueprintException extends RuntimeException {
 
 	private static final long serialVersionUID = -7011658424196608479L;
 	private static final String DEFAULT_MESSAGE = "Error during blueprinting.";
 
 	/**
-	 * Constructs a {@code BluePrintException} with the default message {@link BluePrintException#DEFAULT_MESSAGE}.
+	 * Constructs a {@code BlueprintException} with the default message {@link BlueprintException#DEFAULT_MESSAGE}.
 	 */
-	public BluePrintException() {
+	public BlueprintException() {
 		super(DEFAULT_MESSAGE);
 	}
 
 	/**
-	 * Constructs a {@code BluePrintException} with a message.
+	 * Constructs a {@code BlueprintException} with a message.
 	 * 
 	 * @param msg
 	 *            A message describing the error.
 	 */
-	public BluePrintException(final String msg) {
+	public BlueprintException(final String msg) {
 		super(msg);
 	}
 
 	/**
-	 * Constructs a {@code BluePrintException} with a message.
+	 * Constructs a {@code BlueprintException} with a message.
 	 * 
 	 * @param msg
 	 *            A message describing the error.
 	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A {@code
-	 *            null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public BluePrintException(final String msg, final Throwable cause) {
+	public BlueprintException(final String msg, final Throwable cause) {
 		super(msg, cause);
 	}
 
 	/**
-	 * Constructs a new exception with the default message {@link BluePrintException#DEFAULT_MESSAGE}.
+	 * Constructs a new exception with the default message {@link BlueprintException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A {@code
-	 *            null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public BluePrintException(@Nullable final Throwable cause) {
+	public BlueprintException(@Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 	}
 
