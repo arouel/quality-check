@@ -39,7 +39,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * @author Dominik Seichter
  * 
  */
-public class DefaultBlueprintConfiguration extends BlueprintConfiguration {
+public final class DefaultBlueprintConfiguration extends BlueprintConfiguration {
 
 	private static final String STRING_DEFAULT = "";
 	private static final Long LONG_DEFAULT = Long.valueOf(0l);
