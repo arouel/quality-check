@@ -341,7 +341,7 @@ public final class Blueprint {
 	 *            a {@code BlueprintConfiguration}
 	 * @return a blue printed instance of {@code T}
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config) {
 		Check.notNull(clazz, "clazz");
