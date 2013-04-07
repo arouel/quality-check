@@ -24,6 +24,7 @@ import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintSession;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
@@ -33,10 +34,11 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 import com.google.common.collect.ImmutableMap;
 
 /**
- * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
- * generated.
+ * Configure how blueprinting is done. A BlueprintConfiguration defines how the
+ * values for certain attributes are generated.
  * 
- * This class is immutable all modifier methods have to return a new instance of this class.
+ * This class is immutable all modifier methods have to return a new instance of
+ * this class.
  * 
  * @author Dominik Seichter
  */
@@ -51,17 +53,20 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 		mapping = ImmutableMap.of();
 	}
 
-	protected AbstractBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
+	protected AbstractBlueprintConfiguration(
+			final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
 		mapping = ImmutableMap.copyOf(attributeMapping);
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public ValueCreationStrategy<?> findCreationStrategyForMethod(final Method method) {
+	public ValueCreationStrategy<?> findCreationStrategyForMethod(
+			final Method method) {
 		Check.notNull(method, "method");
 
-		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping
+				.entrySet()) {
 			if (entry.getKey().matches(method.getName())) {
 				return entry.getValue();
 			}
@@ -72,10 +77,12 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public ValueCreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
+	public ValueCreationStrategy<?> findCreationStrategyForType(
+			final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
-		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final Map.Entry<ValueMatchingStrategy, ValueCreationStrategy<?>> entry : mapping
+				.entrySet()) {
 			if (entry.getKey().matches(clazz)) {
 				return entry.getValue();
 			}
@@ -92,24 +99,27 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> T object(final Class<T> clazz) {
-		return Blueprint.object(clazz, this);
+		return Blueprint.object(clazz, this, new BlueprintSession());
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
-		return with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
+		return with(new TypeValueMatchingStrategy(type),
+				new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final String name, final T value) {
-		return with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
+		return with(new CaseInsensitiveValueMatchingStrategy(name),
+				new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator) {
+	public BlueprintConfiguration with(final ValueMatchingStrategy matcher,
+			final ValueCreationStrategy<?> creator) {
 		Check.notNull(matcher, "matcher");
 		Check.notNull(creator, "creator");
 

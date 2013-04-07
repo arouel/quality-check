@@ -32,16 +32,20 @@ import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
 
 /**
- * Blueprinting is a technique that makes writing test easier. For unit-testing you often need data-objects, where the
- * actual content of the objects does not matter. {@code Blueprint} creates data-objects filled with random or defined
+ * Blueprinting is a technique that makes writing test easier. For unit-testing
+ * you often need data-objects, where the actual content of the objects does not
+ * matter. {@code Blueprint} creates data-objects filled with random or defined
  * data automatically based on the "Blue-Print" which is the Class itself.
  * 
- * Blueprinting makes tests more maintainable as they depend less on test-data. Imagine, you add a new required
- * attribute to a class. Usually, you have to add this to all tests using this class. With blueprinting you just have to
- * add it to certain tests where the contents of the logic does actually matter. Most of the time the randomly generated
- * value by {@code Blueprint} is just fine.
+ * Blueprinting makes tests more maintainable as they depend less on test-data.
+ * Imagine, you add a new required attribute to a class. Usually, you have to
+ * add this to all tests using this class. With blueprinting you just have to
+ * add it to certain tests where the contents of the logic does actually matter.
+ * Most of the time the randomly generated value by {@code Blueprint} is just
+ * fine.
  * 
- * {@code Blueprint} is similar to C#'s AutoFixture (https://github.com/AutoFixture/AutoFixture#readme).
+ * {@code Blueprint} is similar to C#'s AutoFixture
+ * (https://github.com/AutoFixture/AutoFixture#readme).
  * 
  * A simple example:
  * 
@@ -56,9 +60,11 @@ import net.sf.qualitytest.exception.BlueprintException;
  *  final User user = Blueprint.random().with("email", "mail@example.com").object(User.class);
  * </code>
  * 
- * {@code Blueprint} offers to custome configurations. A {@code DefaultBlueprintConfiguration} which fills any object
- * using default, empty or 0 values. The second configuration, {@code RandomBlueprintConfiguration} will always generate
- * a random value. Both fill child objects using a deep-tree-search.
+ * {@code Blueprint} offers to custome configurations. A
+ * {@code DefaultBlueprintConfiguration} which fills any object using default,
+ * empty or 0 values. The second configuration,
+ * {@code RandomBlueprintConfiguration} will always generate a random value.
+ * Both fill child objects using a deep-tree-search.
  * 
  * Utilities for collections can be found in {@code CollectionBlueprint}.
  * 
@@ -79,7 +85,8 @@ public final class Blueprint {
 	/**
 	 * Blueprint an array value using a {@code DefaultBlueprintConfiguration}.
 	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
+	 * This method will return an array with a random generated dimension
+	 * between 1 and {@code Blueprint.MAX_ARRAY_SIZE
 	 * + 1},
 	 * 
 	 * @param <T>
@@ -89,13 +96,14 @@ public final class Blueprint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> Object array(final Class<T> array) {
-		return Blueprint.array(array, DEFAULT_CONFIG);
+		return Blueprint.array(array, DEFAULT_CONFIG, new BlueprintSession());
 	}
 
 	/**
 	 * Blueprint an array value.
 	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
+	 * This method will return an array with a random generated dimension
+	 * between 1 and {@code Blueprint.MAX_ARRAY_SIZE
 	 * + 1},
 	 * 
 	 * @param <T>
@@ -103,17 +111,21 @@ public final class Blueprint {
 	 *            the class of an array.
 	 * @param config
 	 *            a {@code BlueprintConfiguration}
+	 * @param session
+	 *            A {@code BlueprintSession}
 	 * @return a valid array.
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> Object array(final Class<T> array, final BlueprintConfiguration config) {
+	public static <T> Object array(final Class<T> array,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		Check.notNull(array, "array");
 		Check.notNull(config, "config");
 
 		final int arraySize = RANDOM.nextInt(MAX_ARRAY_SIZE) + 1;
-		final Object value = Array.newInstance(array.getComponentType(), arraySize);
+		final Object value = Array.newInstance(array.getComponentType(),
+				arraySize);
 		if (!array.getComponentType().isPrimitive()) {
-			initializeArray(array, arraySize, value, config);
+			initializeArray(array, arraySize, value, config, session);
 		}
 		return value;
 	}
@@ -121,22 +133,27 @@ public final class Blueprint {
 	/**
 	 * Blueprint a Java-Bean.
 	 * 
-	 * This method will call the default constructor and fill all setters using blueprints.
+	 * This method will call the default constructor and fill all setters using
+	 * blueprints.
 	 * 
 	 * @param <T>
 	 * @param clazz
 	 *            a class, which must have a default constructor.
 	 * @param config
 	 *            a BlueprintConfiguration
+	 * @param session
+	 *            A {@code BlueprintSession}
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	private static <T> T bean(final Class<T> clazz, final BlueprintConfiguration config) {
+	private static <T> T bean(final Class<T> clazz,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
+		Check.notNull(session, "sesion");
 
 		final T obj = safeNewInstance(clazz);
-		bluePrintSetters(obj, clazz, config);
+		bluePrintSetters(obj, clazz, config, session);
 		return obj;
 	}
 
@@ -149,9 +166,13 @@ public final class Blueprint {
 	 *            Setter-Method
 	 * @param config
 	 *            configuration to use.
+	 * @param session
+	 *            A {@code BlueprintSession}
 	 */
-	private static void bluePrintMethod(final Object that, final Method m, final BlueprintConfiguration config) {
-		final ValueCreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
+	private static void bluePrintMethod(final Object that, final Method m,
+			final BlueprintConfiguration config, final BlueprintSession session) {
+		final ValueCreationStrategy<?> creator = config
+				.findCreationStrategyForMethod(m);
 		final Class<?>[] parameterTypes = m.getParameterTypes();
 		final Object[] values = new Object[parameterTypes.length];
 
@@ -160,10 +181,34 @@ public final class Blueprint {
 		} else {
 			for (int i = 0; i < parameterTypes.length; i++) {
 				final Class<?> parameter = parameterTypes[i];
-				values[i] = object(parameter, config);
+				values[i] = object(parameter, config, session);
 			}
 		}
 		safeInvoke(that, m, values);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static <T> T blueprintObject(final Class<T> clazz,
+			final BlueprintConfiguration config,
+			final ValueCreationStrategy<?> creator,
+			final BlueprintSession session) {
+		if (creator != null) {
+			return (T) creator.createValue();
+		} else if (clazz.isEnum()) {
+			return (T) enumeration((Class<Enum>) clazz);
+		} else if (clazz.isArray()) {
+			return (T) array(clazz, config, session);
+		} else if (clazz.isInterface()) {
+			return (T) proxy(clazz, config, session);
+		} else if (ModifierBits.isModifierBitSet(clazz.getModifiers(),
+				Modifier.ABSTRACT)) {
+			throw new BlueprintException(
+					"Abstract classes are currently not supported.");
+		} else if (hasPublicDefaultConstructor(clazz)) {
+			return bean(clazz, config, session);
+		} else {
+			return immutable(clazz, config, session);
+		}
 	}
 
 	/**
@@ -177,17 +222,21 @@ public final class Blueprint {
 	 *            Class of the object
 	 * @param config
 	 *            Configuration to apply
+	 * @param session
+	 *            A {@code BlueprintSession}
 	 */
-	private static <T> void bluePrintSetters(final T obj, final Class<T> clazz, final BlueprintConfiguration config) {
+	private static <T> void bluePrintSetters(final T obj, final Class<T> clazz,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		for (final Method m : clazz.getMethods()) {
 			if (isSetter(m)) {
-				bluePrintMethod(obj, m, config);
+				bluePrintMethod(obj, m, config, session);
 			}
 		}
 	}
 
 	/**
-	 * Return a new configuration for default blueprinting with zero or empty default values.
+	 * Return a new configuration for default blueprinting with zero or empty
+	 * default values.
 	 * 
 	 * @return a new {@code DefaultBlueprintConfiguration}
 	 */
@@ -218,10 +267,12 @@ public final class Blueprint {
 	 * @param clazz
 	 *            the class object
 	 */
-	private static <T> Constructor<?> findFirstPublicConstructor(final Class<T> clazz) {
+	private static <T> Constructor<?> findFirstPublicConstructor(
+			final Class<T> clazz) {
 		final Constructor<?>[] constructors = clazz.getConstructors();
 		for (final Constructor<?> c : constructors) {
-			final boolean isPublic = ModifierBits.isModifierBitSet(c.getModifiers(), Modifier.PUBLIC);
+			final boolean isPublic = ModifierBits.isModifierBitSet(
+					c.getModifiers(), Modifier.PUBLIC);
 			if (isPublic) {
 				return c;
 			}
@@ -231,7 +282,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Test if a class has a public default constructor (i.e. a public constructor without constructor arguments).
+	 * Test if a class has a public default constructor (i.e. a public
+	 * constructor without constructor arguments).
 	 * 
 	 * @param clazz
 	 *            the class object.
@@ -240,7 +292,8 @@ public final class Blueprint {
 	private static boolean hasPublicDefaultConstructor(final Class<?> clazz) {
 		final Constructor<?>[] constructors = clazz.getConstructors();
 		for (final Constructor<?> c : constructors) {
-			final boolean isPublic = ModifierBits.isModifierBitSet(c.getModifiers(), Modifier.PUBLIC);
+			final boolean isPublic = ModifierBits.isModifierBitSet(
+					c.getModifiers(), Modifier.PUBLIC);
 			if (isPublic && c.getParameterTypes().length == 0) {
 				return true;
 			}
@@ -250,7 +303,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Blueprint an immutable class based on the constructor parameters of the first public constructor.
+	 * Blueprint an immutable class based on the constructor parameters of the
+	 * first public constructor.
 	 * 
 	 * @param <T>
 	 *            type parameter of the blueprinted class
@@ -258,18 +312,26 @@ public final class Blueprint {
 	 *            the class object
 	 * @param config
 	 *            the configuration
-	 * @return a new blueprint of the class with all constructor parameters to filled.
+	 * @param session
+	 *            A {@code BlueprintSession}
+	 * @return a new blueprint of the class with all constructor parameters to
+	 *         filled.
 	 */
-	private static <T> T immutable(final Class<T> clazz, final BlueprintConfiguration config) {
+	private static <T> T immutable(final Class<T> clazz,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		final Constructor<?> constructor = findFirstPublicConstructor(clazz);
+		if (constructor == null) {
+			throw new BlueprintException("No public constructor found.");
+		}
+
 		final Class<?>[] parameterTypes = constructor.getParameterTypes();
 		final Object[] parameters = new Object[parameterTypes.length];
 		for (int i = 0; i < parameterTypes.length; i++) {
-			parameters[i] = object(parameterTypes[i], config);
+			parameters[i] = object(parameterTypes[i], config, session);
 		}
 
 		final T obj = safeNewInstance(constructor, parameters);
-		bluePrintSetters(obj, clazz, config);
+		bluePrintSetters(obj, clazz, config, session);
 
 		return obj;
 	}
@@ -285,11 +347,17 @@ public final class Blueprint {
 	 *            size of the array
 	 * @param value
 	 *            object where the array is stored
+	 * @param config
+	 *            A {@code BlueprintConfiguration}
+	 * @param session
+	 *            A {@code BlueprintSession}
 	 */
-	private static <T> void initializeArray(final Class<T> array, final int arraySize, final Object value,
-			final BlueprintConfiguration config) {
+	private static <T> void initializeArray(final Class<T> array,
+			final int arraySize, final Object value,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		for (int i = 0; i < arraySize; i++) {
-			final Object bluePrint = object(array.getComponentType(), config);
+			final Object bluePrint = object(array.getComponentType(), config,
+					session);
 			Array.set(value, i, bluePrint);
 		}
 	}
@@ -302,8 +370,10 @@ public final class Blueprint {
 	 * @return true if this is a setter method
 	 */
 	protected static boolean isSetter(final Method m) {
-		final boolean isNotStatic = !ModifierBits.isModifierBitSet(m.getModifiers(), Modifier.STATIC);
-		final boolean isPublic = ModifierBits.isModifierBitSet(m.getModifiers(), Modifier.PUBLIC);
+		final boolean isNotStatic = !ModifierBits.isModifierBitSet(
+				m.getModifiers(), Modifier.STATIC);
+		final boolean isPublic = ModifierBits.isModifierBitSet(
+				m.getModifiers(), Modifier.PUBLIC);
 		final boolean isSetterName = m.getName().startsWith(SETTER_PREFIX);
 		return isNotStatic && isPublic && isSetterName;
 	}
@@ -311,9 +381,10 @@ public final class Blueprint {
 	/**
 	 * Blueprint a Java-Object using a {@code DefaultBlueprintConfiguration}.
 	 * 
-	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
-	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
-	 * will be called.
+	 * If the object has a default constructor, it will be called and all
+	 * setters will be called. If the object does not have a default constructor
+	 * the first constructor is called and filled with all parameters.
+	 * Afterwards all setters will be called.
 	 * 
 	 * @param <T>
 	 * @param clazz
@@ -322,46 +393,39 @@ public final class Blueprint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T object(final Class<T> clazz) {
-		return Blueprint.object(clazz, DEFAULT_CONFIG);
+		return Blueprint.object(clazz, DEFAULT_CONFIG, new BlueprintSession());
 	}
 
 	/**
 	 * Blueprint a Java-Object.
 	 * 
-	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
-	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
-	 * will be called.
+	 * If the object has a default constructor, it will be called and all
+	 * setters will be called. If the object does not have a default constructor
+	 * the first constructor is called and filled with all parameters.
+	 * Afterwards all setters will be called.
 	 * 
 	 * @param <T>
 	 * @param clazz
 	 *            a class
 	 * @param config
 	 *            a {@code BlueprintConfiguration}
+	 * @param session
+	 *            a {@code BlueprintSession}
 	 * @return a blue printed instance of {@code T}
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config) {
+	public static <T> T object(final Class<T> clazz,
+			final BlueprintConfiguration config, final BlueprintSession session) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
-		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
+		final ValueCreationStrategy<?> creator = config
+				.findCreationStrategyForType(clazz);
 
-		if (creator != null) {
-			return (T) creator.createValue();
-		} else if (clazz.isEnum()) {
-			return (T) enumeration((Class<Enum>) clazz);
-		} else if (clazz.isArray()) {
-			return (T) array(clazz, config);
-		} else if (clazz.isInterface()) {
-			return (T) proxy(clazz, config);
-		} else if (ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT)) {
-			throw new BlueprintException("Abstract classes are currently not supported.");
-		} else if (hasPublicDefaultConstructor(clazz)) {
-			return bean(clazz, config);
-		} else {
-			return immutable(clazz, config);
-		}
+		session.push(clazz);
+		final T ret = blueprintObject(clazz, config, creator, session);
+		session.pop();
+		return ret;
 	}
 
 	/**
@@ -373,11 +437,16 @@ public final class Blueprint {
 	 *            an interace
 	 * @param config
 	 *            {@code BlueprintConfiguration}
+	 * @param session
+	 *            {@code BlueprintSession}
 	 * @return a new dynamic proxy
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T proxy(final Class<T> iface, final BlueprintConfiguration config) {
-		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class[] { iface }, new BlueprintInvocationHandler(config));
+	private static <T> T proxy(final Class<T> iface,
+			final BlueprintConfiguration config, final BlueprintSession session) {
+		return (T) Proxy.newProxyInstance(iface.getClassLoader(),
+				new Class[] { iface }, new BlueprintInvocationHandler(config,
+						session));
 	}
 
 	/**
@@ -390,7 +459,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Safely invoke a method on an object withot having to care about checked exceptions.
+	 * Safely invoke a method on an object withot having to care about checked
+	 * exceptions.
 	 * 
 	 * @param that
 	 *            object
@@ -402,7 +472,8 @@ public final class Blueprint {
 	 * @throws BlueprintException
 	 *             in case of any error
 	 */
-	private static void safeInvoke(final Object that, final Method m, final Object[] values) {
+	private static void safeInvoke(final Object that, final Method m,
+			final Object[] values) {
 		try {
 			m.invoke(that, values);
 		} catch (final IllegalArgumentException e) {
@@ -415,8 +486,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Create a new instance of a class without having to care about the checked exceptions. The class must have an
-	 * accessible default constructor.
+	 * Create a new instance of a class without having to care about the checked
+	 * exceptions. The class must have an accessible default constructor.
 	 * 
 	 * @param <T>
 	 *            type parameter of the class to create
@@ -438,7 +509,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Create a new instance of a class without having to care about the checked exceptions using a given constructor.
+	 * Create a new instance of a class without having to care about the checked
+	 * exceptions using a given constructor.
 	 * 
 	 * @param constructor
 	 *            constructor to call
@@ -448,7 +520,8 @@ public final class Blueprint {
 	 *             in case of any error
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T safeNewInstance(final Constructor<?> constructor, final Object[] parameters) {
+	private static <T> T safeNewInstance(final Constructor<?> constructor,
+			final Object[] parameters) {
 		try {
 			return (T) constructor.newInstance(parameters);
 		} catch (final IllegalArgumentException e) {
@@ -463,7 +536,8 @@ public final class Blueprint {
 	}
 
 	/**
-	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 * <strong>Attention:</strong> This class is not intended to create objects
+	 * from it.
 	 */
 	private Blueprint() {
 		// This class is not intended to create objects from it.

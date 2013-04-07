@@ -21,22 +21,34 @@ import java.lang.reflect.Method;
 import net.sf.qualitycheck.Check;
 
 /**
- * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
- * blueprinting.
+ * Invocation handler which is used to blueprint objects returned from dynamic
+ * interface proxies created during blueprinting.
  * 
  * @author Dominik Seichter
  */
 class BlueprintInvocationHandler implements InvocationHandler {
 
 	private final BlueprintConfiguration config;
+	private final BlueprintSession session;
 
-	public BlueprintInvocationHandler(final BlueprintConfiguration config) {
+	/**
+	 * Create a new {@link BlueprintInvocationHandler}
+	 * 
+	 * @param config
+	 *            A {@link BlueprintConfiguration}
+	 * @param session
+	 *            A {@link BlueprintSession}
+	 */
+	public BlueprintInvocationHandler(final BlueprintConfiguration config,
+			final BlueprintSession session) {
 		this.config = Check.notNull(config, "config");
+		this.session = Check.notNull(session, "session");
 	}
 
 	@Override
-	public Object invoke(final Object instance, final Method method, final Object[] parameters) throws Throwable { // NOSONAR
-		return Blueprint.object(method.getReturnType(), config);
+	public Object invoke(final Object instance, final Method method,
+			final Object[] parameters) throws Throwable { // NOSONAR
+		return Blueprint.object(method.getReturnType(), config, session);
 	}
 
 }

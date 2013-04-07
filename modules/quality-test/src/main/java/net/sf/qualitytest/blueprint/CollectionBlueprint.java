@@ -29,7 +29,8 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 public final class CollectionBlueprint {
 
 	/**
-	 * A small utility to fill a collection automatically with blueprinted objects.
+	 * A small utility to fill a collection automatically with blueprinted
+	 * objects.
 	 * 
 	 * The default configuration is used.
 	 * 
@@ -45,12 +46,15 @@ public final class CollectionBlueprint {
 	 *            the number of items that should be added.
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> void addMany(final Collection<T> collection, final Class<T> clazz, final int numberOfItems) {
-		CollectionBlueprint.addMany(collection, clazz, numberOfItems, Blueprint.def());
+	public static <T> void addMany(final Collection<T> collection,
+			final Class<T> clazz, final int numberOfItems) {
+		CollectionBlueprint.addMany(collection, clazz, numberOfItems,
+				Blueprint.def());
 	}
 
 	/**
-	 * A small utility to fill a collection automatically with blueprinted objects.
+	 * A small utility to fill a collection automatically with blueprinted
+	 * objects.
 	 * 
 	 * @param <T>
 	 *            type of the objects to blueprint and add
@@ -64,7 +68,8 @@ public final class CollectionBlueprint {
 	 *            The configuration to use
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> void addMany(final Collection<T> collection, final Class<T> clazz, final int numberOfItems,
+	public static <T> void addMany(final Collection<T> collection,
+			final Class<T> clazz, final int numberOfItems,
 			final BlueprintConfiguration config) {
 		Check.notNull(collection, "collection");
 		Check.notNull(clazz, "clazz");
@@ -72,13 +77,15 @@ public final class CollectionBlueprint {
 
 		int cnt = numberOfItems;
 		while (cnt > 0) {
-			collection.add(Blueprint.object(clazz, config));
+			collection.add(Blueprint.object(clazz, config,
+					new BlueprintSession()));
 			cnt--;
 		}
 	}
 
 	/**
-	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 * <strong>Attention:</strong> This class is not intended to create objects
+	 * from it.
 	 */
 	private CollectionBlueprint() {
 		// This class is not intended to create objects from it.
