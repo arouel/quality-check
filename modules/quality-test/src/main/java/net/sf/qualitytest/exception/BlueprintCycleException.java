@@ -37,7 +37,8 @@ public class BlueprintCycleException extends RuntimeException {
 	 *            The class causing the cycle.
 	 */
 	public BlueprintCycleException(final Class<?> clazz) {
-		super(String.format(DEFAULT_MESSAGE, Check.notNull(clazz, "clazz")));
+		super(String.format(DEFAULT_MESSAGE, Check.notNull(clazz, "clazz")
+				.getName()));
 	}
 
 	/**
@@ -52,8 +53,8 @@ public class BlueprintCycleException extends RuntimeException {
 	 *            unknown.)
 	 */
 	public BlueprintCycleException(final Class<?> clazz, final Throwable cause) {
-		super(String.format(DEFAULT_MESSAGE, Check.notNull(clazz, "clazz")),
-				cause);
+		super(String.format(DEFAULT_MESSAGE, Check.notNull(clazz, "clazz")
+				.getName()), cause);
 	}
 
 }
