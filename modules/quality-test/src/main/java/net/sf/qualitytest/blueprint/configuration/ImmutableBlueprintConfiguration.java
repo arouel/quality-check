@@ -42,18 +42,18 @@ import com.google.common.collect.ImmutableMap;
  * 
  * @author Dominik Seichter
  */
-class AbstractBlueprintConfiguration implements BlueprintConfiguration {
+class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	/**
 	 * Mapping of class members
 	 */
 	private final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping;
 
-	public AbstractBlueprintConfiguration() {
+	public ImmutableBlueprintConfiguration() {
 		mapping = ImmutableMap.of();
 	}
 
-	protected AbstractBlueprintConfiguration(
+	protected ImmutableBlueprintConfiguration(
 			final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping) {
 		Check.notNull(attributeMapping, "attributeMapping");
 		mapping = ImmutableMap.copyOf(attributeMapping);
@@ -126,7 +126,7 @@ class AbstractBlueprintConfiguration implements BlueprintConfiguration {
 		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> mapping = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 		mapping.putAll(this.mapping);
 		mapping.put(matcher, creator);
-		return new AbstractBlueprintConfiguration(mapping);
+		return new ImmutableBlueprintConfiguration(mapping);
 	}
 
 }

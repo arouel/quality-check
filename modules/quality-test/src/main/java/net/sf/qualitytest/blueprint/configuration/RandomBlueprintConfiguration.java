@@ -41,7 +41,7 @@ import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
  * @author Dominik Seichter
  * 
  */
-public final class RandomBlueprintConfiguration extends AbstractBlueprintConfiguration {
+public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfiguration {
 
 	private static final ValueCreationStrategy<Long> LONG_DEFAULT = new RandomLongValueCreationStrategy();
 	private static final ValueCreationStrategy<Integer> INTEGER_DEFAULT = new RandomIntValueCreationStrategy();
