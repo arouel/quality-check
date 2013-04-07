@@ -16,9 +16,14 @@
 package net.sf.qualitytest.blueprint;
 
 /**
- * Strategy to determine if an attribute matches and should be replaced with a certain value.
+ * Strategy to determine if an attribute matches and should be replaced with a
+ * certain value.
  * 
  * An attribute can be matched by name or type.
+ * 
+ * A {@link ValueMatchingStrategy} should implement hashCode so that matching
+ * strategies for the same object/type can be detected and the last one added
+ * can be used.
  * 
  * @see ValueCreationStrategy
  * 
@@ -32,7 +37,8 @@ public interface ValueMatchingStrategy {
 	 * @param clazz
 	 *            a clazz type
 	 * 
-	 * @return true if the strategy matches and the {@code ValueCreationStrategy} should be applied
+	 * @return true if the strategy matches and the
+	 *         {@code ValueCreationStrategy} should be applied
 	 */
 	boolean matches(final Class<?> clazz);
 
@@ -42,7 +48,8 @@ public interface ValueMatchingStrategy {
 	 * @param methodName
 	 *            Name of a setter method
 	 * 
-	 * @return true if the strategy matches and the {@code ValueCreationStrategy} should be applied
+	 * @return true if the strategy matches and the
+	 *         {@code ValueCreationStrategy} should be applied
 	 */
 	boolean matches(final String method);
 }

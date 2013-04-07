@@ -19,14 +19,16 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 
 /**
- * This value matching strategy matches string names case insensitively on the method name. This works only for
- * setter-based blueprinting. In other cases you should use type based blueprinting as in
+ * This value matching strategy matches string names case insensitively on the
+ * method name. This works only for setter-based blueprinting. In other cases
+ * you should use type based blueprinting as in
  * {@code TypeValueMatchingStrategy}.
  * 
  * 
  * @author Dominik Seichter
  */
-public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrategy {
+public class CaseInsensitiveValueMatchingStrategy implements
+		ValueMatchingStrategy {
 
 	private static final String SETTER_PREFIX = "set";
 
@@ -34,6 +36,36 @@ public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrate
 
 	public CaseInsensitiveValueMatchingStrategy(final String name) {
 		this.name = Check.notNull(name);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final CaseInsensitiveValueMatchingStrategy other = (CaseInsensitiveValueMatchingStrategy) obj;
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
 	/**
@@ -50,7 +82,8 @@ public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrate
 	public boolean matches(final String methodName) {
 		Check.notNull(methodName, "methodName");
 		final String setterName = SETTER_PREFIX + name;
-		return name.equalsIgnoreCase(methodName) || setterName.equalsIgnoreCase(methodName);
+		return name.equalsIgnoreCase(methodName)
+				|| setterName.equalsIgnoreCase(methodName);
 	}
 
 }

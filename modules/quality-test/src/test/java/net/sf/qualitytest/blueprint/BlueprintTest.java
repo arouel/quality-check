@@ -25,7 +25,6 @@ import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class BlueprintTest {
@@ -363,7 +362,6 @@ public class BlueprintTest {
 		Assert.assertNotNull(immutable.getList());
 	}
 
-	@Ignore
 	@Test
 	public void testInterfaceAndLastStrategyWins() {
 		final MyInterface iface = Blueprint.random().with(int.class, 12)
