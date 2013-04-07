@@ -19,16 +19,14 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 
 /**
- * This value matching strategy matches string names case insensitively on the
- * method name. This works only for setter-based blueprinting. In other cases
- * you should use type based blueprinting as in
+ * This value matching strategy matches string names case insensitively on the method name. This works only for
+ * setter-based blueprinting. In other cases you should use type based blueprinting as in
  * {@code TypeValueMatchingStrategy}.
  * 
  * 
  * @author Dominik Seichter
  */
-public class CaseInsensitiveValueMatchingStrategy implements
-		ValueMatchingStrategy {
+public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrategy {
 
 	private static final String SETTER_PREFIX = "set";
 
@@ -54,7 +52,7 @@ public class CaseInsensitiveValueMatchingStrategy implements
 			if (other.name != null) {
 				return false;
 			}
-		} else if (!name.equals(other.name)) {
+		} else if (!name.equalsIgnoreCase(other.name)) {
 			return false;
 		}
 		return true;
@@ -64,7 +62,7 @@ public class CaseInsensitiveValueMatchingStrategy implements
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.toLowerCase().hashCode());
 		return result;
 	}
 
@@ -82,8 +80,7 @@ public class CaseInsensitiveValueMatchingStrategy implements
 	public boolean matches(final String methodName) {
 		Check.notNull(methodName, "methodName");
 		final String setterName = SETTER_PREFIX + name;
-		return name.equalsIgnoreCase(methodName)
-				|| setterName.equalsIgnoreCase(methodName);
+		return name.equalsIgnoreCase(methodName) || setterName.equalsIgnoreCase(methodName);
 	}
 
 }
