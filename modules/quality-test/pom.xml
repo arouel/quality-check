@@ -175,9 +175,9 @@ or make sure that no class in the package *.controller.* contains any non-final 
 								<classRatio>95</classRatio>
 								<instructionRatio>90</instructionRatio>
 								<methodRatio>95</methodRatio>
-								<branchRatio>90</branchRatio>
+								<branchRatio>75</branchRatio>
 								<complexityRatio>85</complexityRatio>
-								<lineRatio>89</lineRatio>
+								<lineRatio>85</lineRatio>
 							</check>
 						</configuration>
 					</execution>
