@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintCycleException;
 
 import org.junit.Assert;
@@ -42,6 +43,16 @@ public class BlueprintSessionTest {
 			this.value = value;
 		}
 
+	}
+
+	@Test
+	public void testCountAndClasses() {
+		final BlueprintSession session = new BlueprintSession();
+		final String s = Blueprint.object(String.class, new DefaultBlueprintConfiguration(), session);
+		Assert.assertEquals("", s);
+		Assert.assertEquals(1, session.getBlueprintCount());
+		Assert.assertEquals(1, session.getBlueprintClasses().size());
+		Assert.assertTrue(session.getBlueprintClasses().contains(String.class));
 	}
 
 	@Test(expected = BlueprintCycleException.class)
