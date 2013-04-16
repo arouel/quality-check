@@ -90,6 +90,6 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	}
 
 	public DefaultBlueprintConfiguration() {
-		super(createDefaultAttributeMapping());
+		super(createDefaultAttributeMapping(), false);
 	}
 }

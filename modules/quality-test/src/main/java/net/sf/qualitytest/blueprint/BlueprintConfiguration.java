@@ -44,6 +44,13 @@ public interface BlueprintConfiguration {
 	Map<ValueMatchingStrategy, ValueCreationStrategy<?>> getAttributeMappings();
 
 	/**
+	 * Retrieve if public attributes are filled during blueprinting.
+	 * 
+	 * @return {@code true} if public attributes are filled during blueprinting
+	 */
+	boolean isWithPublicAttributes();
+
+	/**
 	 * Blueprint a Java-Object using this configuration.
 	 * 
 	 * @see Blueprint
@@ -92,4 +99,13 @@ public interface BlueprintConfiguration {
 	 */
 	BlueprintConfiguration with(final ValueMatchingStrategy matcher, final ValueCreationStrategy<?> creator);
 
+	/**
+	 * Configure whether public attributes should be filled with values during blueprinting.
+	 * 
+	 * @param withPublicAttributes
+	 *            If {@code true} public attributes are filled during blueprinting. otherwise they are ignored
+	 * 
+	 * @return the changed blueprint configuration.
+	 */
+	BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes);
 }

@@ -78,7 +78,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	}
 
 	public RandomBlueprintConfiguration() {
-		super(createDefaultAttributeMapping());
+		super(createDefaultAttributeMapping(), false);
 	}
 
 }
