@@ -27,6 +27,7 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.ModifierBits;
+import net.sf.qualitytest.blueprint.SafeInvoke.ExceptionRunnable;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
@@ -162,13 +163,13 @@ public final class Blueprint {
 		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
 		final Object value = blueprintObject(f.getType(), config, creator, session);
 
-		safeInvoke(new ExceptionRunnable<Object>() {
+		SafeInvoke.invoke(new ExceptionRunnable<Object>() {
 			@Override
 			public Object run() throws Exception {
 				f.set(that, value);
 				return null;
 			}
-		});
+		}, BlueprintException.class);
 
 	}
 
@@ -199,14 +200,14 @@ public final class Blueprint {
 			}
 		}
 
-		safeInvoke(new ExceptionRunnable<Object>() {
+		SafeInvoke.invoke(new ExceptionRunnable<Object>() {
 
 			@Override
 			public Object run() throws Exception {
 				m.invoke(that, values);
 				return null;
 			}
-		});
+		}, BlueprintException.class);
 
 	}
 
@@ -494,24 +495,6 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Safely invoke a method on an object without having to care about checked exceptions. The runnable is executed and
-	 * every exception is converted into a {@code BlueprintException}.
-	 * 
-	 * @param runnable
-	 *            An {@code ExceptionRunnable}
-	 * 
-	 * @throws BlueprintException
-	 *             in case of any error
-	 */
-	private static <T> T safeInvoke(final ExceptionRunnable<T> runnable) {
-		try {
-			return runnable.run();
-		} catch (final Exception e) {
-			throw new BlueprintException(e);
-		}
-	}
-
-	/**
 	 * Create a new instance of a class without having to care about the checked exceptions. The class must have an
 	 * accessible default constructor.
 	 * 
@@ -525,13 +508,13 @@ public final class Blueprint {
 	 *             in case of any error
 	 */
 	private static <T> T safeNewInstance(final Class<T> clazz) {
-		return safeInvoke(new ExceptionRunnable<T>() {
+		return SafeInvoke.invoke(new ExceptionRunnable<T>() {
 
 			@Override
 			public T run() throws Exception {
 				return (T) clazz.newInstance();
 			}
-		});
+		}, BlueprintException.class);
 	}
 
 	/**
@@ -546,13 +529,13 @@ public final class Blueprint {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T safeNewInstance(final Constructor<?> constructor, final Object[] parameters) {
-		return safeInvoke(new ExceptionRunnable<T>() {
+		return SafeInvoke.invoke(new ExceptionRunnable<T>() {
 
 			@Override
 			public T run() throws Exception {
 				return (T) constructor.newInstance(parameters);
 			}
-		});
+		}, BlueprintException.class);
 	}
 
 	/**
