@@ -16,8 +16,8 @@
 package net.sf.qualitytest.blueprint.configuration;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
@@ -31,7 +31,8 @@ import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrateg
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 /**
  * Configure how blueprinting is done. A BlueprintConfiguration defines how the values for certain attributes are
@@ -46,22 +47,21 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	/**
 	 * Mapping of class members
 	 */
-	private final Map<MatchingStrategy, CreationStrategy<?>> mapping;
+	private final List<StrategyPair> mapping;
 	private final boolean withPublicAttributes;
 
 	/**
 	 * Create an empty {@code BlueprintConfiguration}
 	 */
 	public ImmutableBlueprintConfiguration() {
-		mapping = ImmutableMap.of();
+		mapping = ImmutableList.of();
 		withPublicAttributes = false;
 	}
 
-	protected ImmutableBlueprintConfiguration(final Map<MatchingStrategy, CreationStrategy<?>> attributeMapping,
-			final boolean withPublicAttributes) {
+	protected ImmutableBlueprintConfiguration(final List<StrategyPair> attributeMapping, final boolean withPublicAttributes) {
 		Check.notNull(attributeMapping, "attributeMapping");
 
-		mapping = ImmutableMap.copyOf(attributeMapping);
+		mapping = ImmutableList.copyOf(attributeMapping);
 		this.withPublicAttributes = withPublicAttributes;
 	}
 
@@ -70,7 +70,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	public CreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
-		for (final Map.Entry<MatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final StrategyPair entry : Lists.reverse(mapping)) {
 			if (entry.getKey().matches(method.getName())) {
 				return entry.getValue();
 			}
@@ -84,18 +84,13 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	public CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
-		for (final Map.Entry<MatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final StrategyPair entry : Lists.reverse(mapping)) {
 			if (entry.getKey().matches(clazz)) {
 				return entry.getValue();
 			}
 		}
 
 		return null;
-	}
-
-	@Override
-	public Map<MatchingStrategy, CreationStrategy<?>> getAttributeMappings() {
-		return mapping;
 	}
 
 	@Override
@@ -117,20 +112,20 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> BlueprintConfiguration with(final String name, final T value) {
-		return with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
-	}
-
-	@Override
-	@Throws(IllegalNullArgumentException.class)
 	public BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator) {
 		Check.notNull(matcher, "matcher");
 		Check.notNull(creator, "creator");
 
-		final Map<MatchingStrategy, CreationStrategy<?>> mapping = new HashMap<MatchingStrategy, CreationStrategy<?>>();
-		mapping.putAll(this.mapping);
-		mapping.put(matcher, creator);
+		final List<StrategyPair> mapping = new ArrayList<StrategyPair>();
+		mapping.addAll(this.mapping);
+		mapping.add(new StrategyPair(matcher, creator));
 		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);
+	}
+
+	@Override
+	@Throws(IllegalNullArgumentException.class)
+	public <T> BlueprintConfiguration with(final String name, final T value) {
+		return with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override

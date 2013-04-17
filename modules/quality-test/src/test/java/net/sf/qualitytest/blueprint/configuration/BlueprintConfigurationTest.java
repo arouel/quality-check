@@ -1,7 +1,6 @@
 package net.sf.qualitytest.blueprint.configuration;
 
 import net.sf.qualitytest.blueprint.Blueprint;
-import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintTest;
 
 import org.junit.Assert;
@@ -64,12 +63,4 @@ public class BlueprintConfigurationTest {
 		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(user.getName()).matches());
 	}
 
-	@Test
-	public void testWithIsImmutable() {
-		final BlueprintConfiguration config = new DefaultBlueprintConfiguration();
-		final int initialSize = config.getAttributeMappings().size();
-		final BlueprintConfiguration newConfig = config.with("a", null);
-		Assert.assertEquals(initialSize, config.getAttributeMappings().size());
-		Assert.assertEquals(initialSize + 1, newConfig.getAttributeMappings().size());
-	}
 }

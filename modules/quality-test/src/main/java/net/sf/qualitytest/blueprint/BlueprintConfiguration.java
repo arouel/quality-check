@@ -17,7 +17,6 @@
 package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
@@ -40,8 +39,6 @@ public interface BlueprintConfiguration {
 	CreationStrategy<?> findCreationStrategyForMethod(final Method method);
 
 	CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz);
-
-	Map<MatchingStrategy, CreationStrategy<?>> getAttributeMappings();
 
 	/**
 	 * Retrieve if public attributes are filled during blueprinting.
@@ -76,18 +73,6 @@ public interface BlueprintConfiguration {
 	<T> BlueprintConfiguration with(final Class<T> type, final T value);
 
 	/**
-	 * Replace every attribute with the name {@code name} with a given value.
-	 * 
-	 * @param name
-	 *            case insensitive name of an attribute.
-	 * @param value
-	 *            value which should be assigned to the attribute
-	 * 
-	 * @return the changed blueprint configuration.
-	 */
-	<T> BlueprintConfiguration with(final String name, final T value);
-
-	/**
 	 * Replace every attribute which matches a given strategy with a given value.
 	 * 
 	 * @param matcher
@@ -98,6 +83,18 @@ public interface BlueprintConfiguration {
 	 * @return the changed blueprint configuration.
 	 */
 	BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator);
+
+	/**
+	 * Replace every attribute with the name {@code name} with a given value.
+	 * 
+	 * @param name
+	 *            case insensitive name of an attribute.
+	 * @param value
+	 *            value which should be assigned to the attribute
+	 * 
+	 * @return the changed blueprint configuration.
+	 */
+	<T> BlueprintConfiguration with(final String name, final T value);
 
 	/**
 	 * Configure whether public attributes should be filled with values during blueprinting.

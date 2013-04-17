@@ -60,7 +60,7 @@ or make sure that no class in the package *.controller.* contains any non-final 
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
-
+		
 		<!-- Unit testing -->
 		<dependency>
 			<groupId>commons-logging</groupId>
