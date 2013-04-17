@@ -21,6 +21,17 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayTypeMatchingStrategyTest {
+
+	@Test
+	public void testEquals() {
+		Assert.assertEquals(new ArrayTypeMatchingStrategy(), new ArrayTypeMatchingStrategy());
+	}
+
+	@Test
+	public void testEqualsHashCode() {
+		Assert.assertEquals(new ArrayTypeMatchingStrategy().hashCode(), new ArrayTypeMatchingStrategy().hashCode());
+	}
+
 	@Test
 	public void testExactMatch() {
 		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(String[].class));
@@ -29,6 +40,17 @@ public class ArrayTypeMatchingStrategyTest {
 	@Test
 	public void testNoMatch() {
 		Assert.assertFalse(new ArrayTypeMatchingStrategy().matches(long.class));
+	}
+
+	@Test
+	public void testNotEquals() {
+		Assert.assertNotEquals(new ArrayTypeMatchingStrategy(), new InterfaceOfTypeValueMatchingStrategy(String.class));
+	}
+
+	@Test
+	public void testNotEqualsHashCode() {
+		Assert.assertNotEquals(new ArrayTypeMatchingStrategy().hashCode(),
+				new InterfaceOfTypeValueMatchingStrategy(String.class).hashCode());
 	}
 
 	@Test

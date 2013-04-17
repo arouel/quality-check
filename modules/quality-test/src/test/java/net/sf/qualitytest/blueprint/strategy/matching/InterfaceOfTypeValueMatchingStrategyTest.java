@@ -8,6 +8,17 @@ import org.junit.Test;
 public class InterfaceOfTypeValueMatchingStrategyTest {
 
 	@Test
+	public void testEquals() {
+		Assert.assertEquals(new InterfaceOfTypeValueMatchingStrategy(Number.class), new InterfaceOfTypeValueMatchingStrategy(Number.class));
+	}
+
+	@Test
+	public void testEqualsHashCode() {
+		Assert.assertEquals(new InterfaceOfTypeValueMatchingStrategy(Number.class).hashCode(), new InterfaceOfTypeValueMatchingStrategy(
+				Number.class).hashCode());
+	}
+
+	@Test
 	public void testExactMatch() {
 		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(String.class).matches(String.class));
 	}
@@ -20,6 +31,18 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 	@Test
 	public void testNoMatch() {
 		Assert.assertFalse(new InterfaceOfTypeValueMatchingStrategy(String.class).matches(Long.class));
+	}
+
+	@Test
+	public void testNotEquals() {
+		Assert.assertNotEquals(new InterfaceOfTypeValueMatchingStrategy(String.class), new InterfaceOfTypeValueMatchingStrategy(
+				Number.class));
+	}
+
+	@Test
+	public void testNotEqualsHashCode() {
+		Assert.assertNotEquals(new InterfaceOfTypeValueMatchingStrategy(String.class).hashCode(), new InterfaceOfTypeValueMatchingStrategy(
+				Number.class).hashCode());
 	}
 
 	@Test
