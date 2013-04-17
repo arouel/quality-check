@@ -24,7 +24,7 @@ import java.util.Set;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.CreationStrategy;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultArrayCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
@@ -59,7 +59,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	 * 
 	 * @param map
 	 */
-	public static void addDefaultArrayStrategy(final Map<ValueMatchingStrategy, CreationStrategy<?>> map) {
+	public static void addDefaultArrayStrategy(final Map<MatchingStrategy, CreationStrategy<?>> map) {
 		map.put(new ArrayTypeMatchingStrategy(), new DefaultArrayCreationStrategy(DefaultArrayCreationStrategy.DEFAULT_LENGTH));
 	}
 
@@ -68,7 +68,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	 * 
 	 * @param map
 	 */
-	public static void addDefaultCollections(final Map<ValueMatchingStrategy, CreationStrategy<?>> map) {
+	public static void addDefaultCollections(final Map<MatchingStrategy, CreationStrategy<?>> map) {
 		Check.notNull(map, "map");
 
 		map.put(new TypeValueMatchingStrategy(Map.class), new SingleValueCreationStrategy<Map<Object, Object>>(
@@ -82,12 +82,12 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	 * 
 	 * @param map
 	 */
-	public static void addDefaultEnumStrategy(final Map<ValueMatchingStrategy, CreationStrategy<?>> map) {
+	public static void addDefaultEnumStrategy(final Map<MatchingStrategy, CreationStrategy<?>> map) {
 		map.put(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy());
 	}
 
-	private static Map<ValueMatchingStrategy, CreationStrategy<?>> createDefaultAttributeMapping() {
-		final Map<ValueMatchingStrategy, CreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, CreationStrategy<?>>();
+	private static Map<MatchingStrategy, CreationStrategy<?>> createDefaultAttributeMapping() {
+		final Map<MatchingStrategy, CreationStrategy<?>> map = new HashMap<MatchingStrategy, CreationStrategy<?>>();
 		map.put(new TypeValueMatchingStrategy(String.class), new SingleValueCreationStrategy<String>(STRING_DEFAULT));
 		map.put(new TypeValueMatchingStrategy(Long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT));
 		map.put(new TypeValueMatchingStrategy(long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT));

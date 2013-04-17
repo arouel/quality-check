@@ -41,7 +41,7 @@ public interface BlueprintConfiguration {
 
 	CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz);
 
-	Map<ValueMatchingStrategy, CreationStrategy<?>> getAttributeMappings();
+	Map<MatchingStrategy, CreationStrategy<?>> getAttributeMappings();
 
 	/**
 	 * Retrieve if public attributes are filled during blueprinting.
@@ -97,7 +97,7 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	BlueprintConfiguration with(final ValueMatchingStrategy matcher, final CreationStrategy<?> creator);
+	BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator);
 
 	/**
 	 * Configure whether public attributes should be filled with values during blueprinting.

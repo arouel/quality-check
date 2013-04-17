@@ -16,14 +16,14 @@
 package net.sf.qualitytest.blueprint.strategy.matching;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
  * Match all class types that are arrays.
  * 
  * @author Dominik Seichter
  */
-public class ArrayTypeMatchingStrategy implements ValueMatchingStrategy {
+public class ArrayTypeMatchingStrategy implements MatchingStrategy {
 
 	@Override
 	public boolean equals(final Object obj) {

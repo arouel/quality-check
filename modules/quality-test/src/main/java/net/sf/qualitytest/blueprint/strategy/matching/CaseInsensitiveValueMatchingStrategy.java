@@ -16,7 +16,7 @@
 package net.sf.qualitytest.blueprint.strategy.matching;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
  * This value matching strategy matches string names case insensitively on the method name. This works only for
@@ -26,7 +26,7 @@ import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class CaseInsensitiveValueMatchingStrategy implements ValueMatchingStrategy {
+public class CaseInsensitiveValueMatchingStrategy implements MatchingStrategy {
 
 	private static final String SETTER_PREFIX = "set";
 

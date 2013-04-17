@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.qualitytest.blueprint.CreationStrategy;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
@@ -60,12 +60,12 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	 * 
 	 * @param map
 	 */
-	public static void addRandomEnumStrategy(final Map<ValueMatchingStrategy, CreationStrategy<?>> map) {
+	public static void addRandomEnumStrategy(final Map<MatchingStrategy, CreationStrategy<?>> map) {
 		map.put(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new RandomEnumCreationStrategy());
 	}
 
-	private static Map<ValueMatchingStrategy, CreationStrategy<?>> createDefaultAttributeMapping() {
-		final Map<ValueMatchingStrategy, CreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, CreationStrategy<?>>();
+	private static Map<MatchingStrategy, CreationStrategy<?>> createDefaultAttributeMapping() {
+		final Map<MatchingStrategy, CreationStrategy<?>> map = new HashMap<MatchingStrategy, CreationStrategy<?>>();
 		map.put(new TypeValueMatchingStrategy(String.class), new BlueprintStringCreationStrategy());
 		map.put(new TypeValueMatchingStrategy(Long.class), LONG_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(long.class), LONG_DEFAULT);

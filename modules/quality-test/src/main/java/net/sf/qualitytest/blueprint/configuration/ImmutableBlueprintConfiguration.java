@@ -26,7 +26,7 @@ import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintSession;
 import net.sf.qualitytest.blueprint.CreationStrategy;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
@@ -46,7 +46,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	/**
 	 * Mapping of class members
 	 */
-	private final Map<ValueMatchingStrategy, CreationStrategy<?>> mapping;
+	private final Map<MatchingStrategy, CreationStrategy<?>> mapping;
 	private final boolean withPublicAttributes;
 
 	/**
@@ -57,7 +57,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		withPublicAttributes = false;
 	}
 
-	protected ImmutableBlueprintConfiguration(final Map<ValueMatchingStrategy, CreationStrategy<?>> attributeMapping,
+	protected ImmutableBlueprintConfiguration(final Map<MatchingStrategy, CreationStrategy<?>> attributeMapping,
 			final boolean withPublicAttributes) {
 		Check.notNull(attributeMapping, "attributeMapping");
 
@@ -70,7 +70,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	public CreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
-		for (final Map.Entry<ValueMatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final Map.Entry<MatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
 			if (entry.getKey().matches(method.getName())) {
 				return entry.getValue();
 			}
@@ -84,7 +84,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	public CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
-		for (final Map.Entry<ValueMatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
+		for (final Map.Entry<MatchingStrategy, CreationStrategy<?>> entry : mapping.entrySet()) {
 			if (entry.getKey().matches(clazz)) {
 				return entry.getValue();
 			}
@@ -94,7 +94,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
-	public Map<ValueMatchingStrategy, CreationStrategy<?>> getAttributeMappings() {
+	public Map<MatchingStrategy, CreationStrategy<?>> getAttributeMappings() {
 		return mapping;
 	}
 
@@ -123,11 +123,11 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public BlueprintConfiguration with(final ValueMatchingStrategy matcher, final CreationStrategy<?> creator) {
+	public BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator) {
 		Check.notNull(matcher, "matcher");
 		Check.notNull(creator, "creator");
 
-		final Map<ValueMatchingStrategy, CreationStrategy<?>> mapping = new HashMap<ValueMatchingStrategy, CreationStrategy<?>>();
+		final Map<MatchingStrategy, CreationStrategy<?>> mapping = new HashMap<MatchingStrategy, CreationStrategy<?>>();
 		mapping.putAll(this.mapping);
 		mapping.put(matcher, creator);
 		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);

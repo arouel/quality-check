@@ -16,14 +16,14 @@
 package net.sf.qualitytest.blueprint.strategy.matching;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
  * Match a value based on its exact type.
  * 
  * @author Dominik Seichter
  */
-public class TypeValueMatchingStrategy implements ValueMatchingStrategy {
+public class TypeValueMatchingStrategy implements MatchingStrategy {
 
 	private final Class<?> clazz;
 

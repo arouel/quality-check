@@ -23,7 +23,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
  * 
  * An attribute can be matched by name or type.
  * 
- * A {@link ValueMatchingStrategy} should implement hashCode so that matching
+ * A {@link MatchingStrategy} should implement hashCode so that matching
  * strategies for the same object/type can be detected and the last one added
  * can be used.
  * 
@@ -31,7 +31,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public interface ValueMatchingStrategy {
+public interface MatchingStrategy {
 
 	/**
 	 * Test if a type matches this strategy.
