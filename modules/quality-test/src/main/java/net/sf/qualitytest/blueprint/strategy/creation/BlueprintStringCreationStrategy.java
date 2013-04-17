@@ -27,7 +27,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 public class BlueprintStringCreationStrategy implements ValueCreationStrategy<String> {
 
 	@Override
-	public String createValue() {
+	public String createValue(final Class<?> expectedClass) {
 		return UUID.randomUUID().toString();
 	}
 

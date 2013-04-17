@@ -21,12 +21,13 @@ package net.sf.qualitytest.blueprint;
  * @author Dominik Seichter
  * 
  */
-public interface ExceptionRunnable {
+public interface ExceptionRunnable<T> {
 
 	/**
 	 * Run the {@code Runnable}.
 	 * 
+	 * @return T a return value
 	 * @throws Exception
 	 */
-	void run() throws Exception;
+	T run() throws Exception;
 }

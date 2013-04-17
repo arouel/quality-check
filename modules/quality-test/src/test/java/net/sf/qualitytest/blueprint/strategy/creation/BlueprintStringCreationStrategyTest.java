@@ -25,18 +25,18 @@ public class BlueprintStringCreationStrategyTest {
 
 	@Test
 	public void testIsNull() {
-		Assert.assertNull(new NullValueCreationStrategy<String>().createValue());
+		Assert.assertNull(new NullValueCreationStrategy<String>().createValue(String.class));
 	}
 
 	@Test
 	public void testStringIsUuid() {
-		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(new BlueprintStringCreationStrategy().createValue()).matches());
+		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(new BlueprintStringCreationStrategy().createValue(String.class)).matches());
 	}
 
 	@Test
 	public void testStringNotEmpty() {
-		Assert.assertNotNull(new BlueprintStringCreationStrategy().createValue());
-		Assert.assertNotEquals(0, new BlueprintStringCreationStrategy().createValue());
+		Assert.assertNotNull(new BlueprintStringCreationStrategy().createValue(String.class));
+		Assert.assertNotEquals(0, new BlueprintStringCreationStrategy().createValue(String.class));
 	}
 
 }

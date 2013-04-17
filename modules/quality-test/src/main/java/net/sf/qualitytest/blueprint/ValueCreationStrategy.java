@@ -25,8 +25,12 @@ public interface ValueCreationStrategy<T> {
 	/**
 	 * Create a new value which can be assigned to an attribute.
 	 * 
+	 * @param <T>
+	 *            Type parameter of the return type
+	 * @param expectedClazz
+	 *            which is requested.
 	 * @return a new value
 	 */
-	T createValue();
+	T createValue(final Class<?> parameterTypes);
 
 }

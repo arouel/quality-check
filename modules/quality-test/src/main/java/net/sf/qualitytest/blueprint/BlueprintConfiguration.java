@@ -108,4 +108,5 @@ public interface BlueprintConfiguration {
 	 * @return the changed blueprint configuration.
 	 */
 	BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes);
+
 }

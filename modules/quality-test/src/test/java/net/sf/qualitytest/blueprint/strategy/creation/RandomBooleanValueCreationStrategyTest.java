@@ -22,6 +22,6 @@ public class RandomBooleanValueCreationStrategyTest {
 
 	@Test
 	public void testCreationStrategy() {
-		Assert.assertNotNull(new RandomBooleanValueCreationStrategy().createValue());
+		Assert.assertNotNull(new RandomBooleanValueCreationStrategy().createValue(Boolean.class));
 	}
 }

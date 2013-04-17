@@ -29,7 +29,7 @@ public class RandomByteValueCreationStrategy implements ValueCreationStrategy<By
 	private final Random random = new Random();
 
 	@Override
-	public Byte createValue() {
+	public Byte createValue(final Class<?> expectedClass) {
 		return Byte.valueOf((byte) random.nextInt(Byte.MAX_VALUE));
 	}
 }

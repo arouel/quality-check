@@ -18,7 +18,6 @@ package net.sf.qualitytest.blueprint;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
@@ -163,10 +162,11 @@ public final class Blueprint {
 		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
 		final Object value = blueprintObject(f.getType(), config, creator, session);
 
-		safeInvoke(new ExceptionRunnable() {
+		safeInvoke(new ExceptionRunnable<Object>() {
 			@Override
-			public void run() throws Exception {
+			public Object run() throws Exception {
 				f.set(that, value);
+				return null;
 			}
 		});
 
@@ -191,7 +191,7 @@ public final class Blueprint {
 		final Object[] values = new Object[parameterTypes.length];
 
 		if (creator != null && parameterTypes.length == 1) {
-			values[0] = creator.createValue();
+			values[0] = creator.createValue(parameterTypes[0]);
 		} else {
 			for (int i = 0; i < parameterTypes.length; i++) {
 				final Class<?> parameter = parameterTypes[i];
@@ -199,24 +199,22 @@ public final class Blueprint {
 			}
 		}
 
-		safeInvoke(new ExceptionRunnable() {
+		safeInvoke(new ExceptionRunnable<Object>() {
 
 			@Override
-			public void run() throws Exception {
+			public Object run() throws Exception {
 				m.invoke(that, values);
-
+				return null;
 			}
 		});
 
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	private static <T> T blueprintObject(final Class<T> clazz, final BlueprintConfiguration config, final ValueCreationStrategy<?> creator,
 			final BlueprintSession session) {
 		if (creator != null) {
-			return (T) creator.createValue();
-		} else if (clazz.isEnum()) {
-			return (T) enumeration((Class<Enum>) clazz);
+			return (T) creator.createValue(clazz);
 		} else if (clazz.isArray()) {
 			return (T) array(clazz, config, session);
 		} else if (clazz.isInterface()) {
@@ -287,21 +285,6 @@ public final class Blueprint {
 	 */
 	public static BlueprintConfiguration def() {
 		return new DefaultBlueprintConfiguration();
-	}
-
-	/**
-	 * Blueprint an enum value.
-	 * 
-	 * This method will return the first enum constant in the enumeration.
-	 * 
-	 * @param <T>
-	 * @param enumClazz
-	 *            the class of an enumeration.
-	 * @return a valid enum value.
-	 */
-	public static <T extends Enum<T>> T enumeration(final Class<T> enumClazz) {
-		final T[] enumConstants = enumClazz.getEnumConstants();
-		return enumConstants.length > 0 ? enumConstants[0] : null;
 	}
 
 	/**
@@ -427,7 +410,31 @@ public final class Blueprint {
 	 */
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T object(final Class<T> clazz) {
+		Check.notNull(clazz, "clazz");
+
 		return Blueprint.object(clazz, DEFAULT_CONFIG, new BlueprintSession());
+	}
+
+	/**
+	 * Blueprint a Java-Object.
+	 * 
+	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
+	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
+	 * will be called.
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 *            a class
+	 * @param config
+	 *            a {@code BlueprintConfiguration}
+	 * @return a blue printed instance of {@code T}
+	 */
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config) {
+		Check.notNull(clazz, "clazz");
+		Check.notNull(config, "config");
+
+		return Blueprint.object(clazz, config, new BlueprintSession());
 	}
 
 	/**
@@ -496,9 +503,9 @@ public final class Blueprint {
 	 * @throws BlueprintException
 	 *             in case of any error
 	 */
-	private static void safeInvoke(final ExceptionRunnable runnable) {
+	private static <T> T safeInvoke(final ExceptionRunnable<T> runnable) {
 		try {
-			runnable.run();
+			return runnable.run();
 		} catch (final Exception e) {
 			throw new BlueprintException(e);
 		}
@@ -518,13 +525,13 @@ public final class Blueprint {
 	 *             in case of any error
 	 */
 	private static <T> T safeNewInstance(final Class<T> clazz) {
-		try {
-			return (T) clazz.newInstance();
-		} catch (final InstantiationException e) {
-			throw new BlueprintException(e);
-		} catch (final IllegalAccessException e) {
-			throw new BlueprintException(e);
-		}
+		return safeInvoke(new ExceptionRunnable<T>() {
+
+			@Override
+			public T run() throws Exception {
+				return (T) clazz.newInstance();
+			}
+		});
 	}
 
 	/**
@@ -539,17 +546,13 @@ public final class Blueprint {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T safeNewInstance(final Constructor<?> constructor, final Object[] parameters) {
-		try {
-			return (T) constructor.newInstance(parameters);
-		} catch (final IllegalArgumentException e) {
-			throw new BlueprintException(e);
-		} catch (final InstantiationException e) {
-			throw new BlueprintException(e);
-		} catch (final IllegalAccessException e) {
-			throw new BlueprintException(e);
-		} catch (final InvocationTargetException e) {
-			throw new BlueprintException(e);
-		}
+		return safeInvoke(new ExceptionRunnable<T>() {
+
+			@Override
+			public T run() throws Exception {
+				return (T) constructor.newInstance(parameters);
+			}
+		});
 	}
 
 	/**

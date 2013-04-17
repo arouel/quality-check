@@ -29,7 +29,7 @@ public class RandomIntValueCreationStrategy implements ValueCreationStrategy<Int
 	private final Random random = new Random();
 
 	@Override
-	public Integer createValue() {
+	public Integer createValue(final Class<?> expectedClass) {
 		return Integer.valueOf(random.nextInt());
 	}
 

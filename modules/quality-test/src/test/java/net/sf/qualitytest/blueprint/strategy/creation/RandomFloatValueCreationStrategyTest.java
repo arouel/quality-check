@@ -22,6 +22,6 @@ public class RandomFloatValueCreationStrategyTest {
 
 	@Test
 	public void testCreationStrategy() {
-		Assert.assertNotNull(new RandomFloatValueCreationStrategy().createValue());
+		Assert.assertNotNull(new RandomFloatValueCreationStrategy().createValue(Float.class));
 	}
 }

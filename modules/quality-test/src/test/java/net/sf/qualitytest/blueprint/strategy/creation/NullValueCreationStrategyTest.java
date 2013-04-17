@@ -22,6 +22,6 @@ public class NullValueCreationStrategyTest {
 
 	@Test
 	public void testIsNull() {
-		Assert.assertNull(new NullValueCreationStrategy<String>().createValue());
+		Assert.assertNull(new NullValueCreationStrategy<String>().createValue(String.class));
 	}
 }

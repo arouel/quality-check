@@ -29,7 +29,7 @@ public class RandomBooleanValueCreationStrategy implements ValueCreationStrategy
 	private final Random random = new Random();
 
 	@Override
-	public Boolean createValue() {
+	public Boolean createValue(final Class<?> expectedClass) {
 		return Boolean.valueOf(random.nextBoolean());
 	}
 }

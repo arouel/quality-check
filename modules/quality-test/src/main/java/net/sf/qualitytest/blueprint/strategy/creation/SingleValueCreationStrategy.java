@@ -34,7 +34,7 @@ public class SingleValueCreationStrategy<T> implements ValueCreationStrategy<T> 
 	}
 
 	@Override
-	public T createValue() {
+	public T createValue(final Class<?> expectedClass) {
 		return obj;
 	}
 

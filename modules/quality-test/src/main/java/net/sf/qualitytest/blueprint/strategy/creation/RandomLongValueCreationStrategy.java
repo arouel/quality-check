@@ -29,7 +29,7 @@ public class RandomLongValueCreationStrategy implements ValueCreationStrategy<Lo
 	private final Random random = new Random();
 
 	@Override
-	public Long createValue() {
+	public Long createValue(final Class<?> expectedClass) {
 		return Long.valueOf(random.nextLong());
 	}
 

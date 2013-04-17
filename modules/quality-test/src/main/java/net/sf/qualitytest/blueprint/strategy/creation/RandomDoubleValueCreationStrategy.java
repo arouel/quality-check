@@ -29,7 +29,7 @@ public class RandomDoubleValueCreationStrategy implements ValueCreationStrategy<
 	private final Random random = new Random();
 
 	@Override
-	public Double createValue() {
+	public Double createValue(final Class<?> expectedClass) {
 		return Double.valueOf(random.nextDouble());
 	}
 

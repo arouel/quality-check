@@ -29,7 +29,7 @@ public class RandomCharValueCreationStrategy implements ValueCreationStrategy<Ch
 	private final Random random = new Random();
 
 	@Override
-	public Character createValue() {
+	public Character createValue(final Class<?> expectedClass) {
 		return Character.valueOf((char) random.nextInt(Character.MAX_VALUE));
 	}
 }

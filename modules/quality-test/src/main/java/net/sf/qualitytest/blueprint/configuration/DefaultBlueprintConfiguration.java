@@ -25,7 +25,9 @@ import java.util.Set;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
 /**
@@ -64,6 +66,15 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		map.put(new TypeValueMatchingStrategy(List.class), new SingleValueCreationStrategy<List<Object>>(new ArrayList<Object>()));
 	}
 
+	/**
+	 * Add the default enum handling to a map.
+	 * 
+	 * @param map
+	 */
+	public static void addDefaultEnumStrategy(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map) {
+		map.put(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy());
+	}
+
 	private static Map<ValueMatchingStrategy, ValueCreationStrategy<?>> createDefaultAttributeMapping() {
 		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 		map.put(new TypeValueMatchingStrategy(String.class), new SingleValueCreationStrategy<String>(STRING_DEFAULT));
@@ -83,6 +94,8 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		map.put(new TypeValueMatchingStrategy(float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT));
 		map.put(new TypeValueMatchingStrategy(Double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT));
 		map.put(new TypeValueMatchingStrategy(double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT));
+
+		addDefaultEnumStrategy(map);
 
 		addDefaultCollections(map);
 

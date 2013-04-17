@@ -29,7 +29,7 @@ public class RandomFloatValueCreationStrategy implements ValueCreationStrategy<F
 	private final Random random = new Random();
 
 	@Override
-	public Float createValue() {
+	public Float createValue(final Class<?> expectedClass) {
 		return Float.valueOf(random.nextFloat());
 	}
 

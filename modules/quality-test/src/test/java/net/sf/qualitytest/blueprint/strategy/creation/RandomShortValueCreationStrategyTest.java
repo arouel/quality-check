@@ -22,6 +22,6 @@ public class RandomShortValueCreationStrategyTest {
 
 	@Test
 	public void testCreationStrategy() {
-		Assert.assertNotNull(new RandomShortValueCreationStrategy().createValue());
+		Assert.assertNotNull(new RandomShortValueCreationStrategy().createValue(Short.class));
 	}
 }

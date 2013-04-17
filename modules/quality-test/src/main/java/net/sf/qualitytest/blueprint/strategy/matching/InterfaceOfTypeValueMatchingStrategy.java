@@ -19,15 +19,15 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 
 /**
- * Match a value based on its exact type.
+ * Match a value based on its type or supertype.
  * 
  * @author Dominik Seichter
  */
-public class TypeValueMatchingStrategy implements ValueMatchingStrategy {
+public class InterfaceOfTypeValueMatchingStrategy implements ValueMatchingStrategy {
 
 	private final Class<?> clazz;
 
-	public TypeValueMatchingStrategy(final Class<?> clazz) {
+	public InterfaceOfTypeValueMatchingStrategy(final Class<?> clazz) {
 		this.clazz = Check.notNull(clazz);
 	}
 
@@ -42,7 +42,7 @@ public class TypeValueMatchingStrategy implements ValueMatchingStrategy {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TypeValueMatchingStrategy other = (TypeValueMatchingStrategy) obj;
+		final InterfaceOfTypeValueMatchingStrategy other = (InterfaceOfTypeValueMatchingStrategy) obj;
 		if (clazz == null) {
 			if (other.clazz != null) {
 				return false;
@@ -64,7 +64,7 @@ public class TypeValueMatchingStrategy implements ValueMatchingStrategy {
 	@Override
 	public boolean matches(final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
-		return this.clazz.equals(clazz);
+		return this.clazz.isAssignableFrom(clazz);
 	}
 
 	@Override

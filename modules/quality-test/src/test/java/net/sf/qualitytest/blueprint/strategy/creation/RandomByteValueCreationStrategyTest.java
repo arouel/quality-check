@@ -22,6 +22,6 @@ public class RandomByteValueCreationStrategyTest {
 
 	@Test
 	public void testCreationStrategy() {
-		Assert.assertNotNull(new RandomByteValueCreationStrategy().createValue());
+		Assert.assertNotNull(new RandomByteValueCreationStrategy().createValue(Byte.class));
 	}
 }

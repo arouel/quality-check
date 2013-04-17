@@ -29,7 +29,7 @@ public class RandomShortValueCreationStrategy implements ValueCreationStrategy<S
 	private final Random random = new Random();
 
 	@Override
-	public Short createValue() {
+	public Short createValue(final Class<?> expectedClass) {
 		return Short.valueOf((short) random.nextInt((int) Short.MAX_VALUE));
 	}
 

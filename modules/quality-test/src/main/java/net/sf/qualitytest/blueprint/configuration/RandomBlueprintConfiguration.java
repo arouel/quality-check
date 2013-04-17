@@ -25,10 +25,12 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreation
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomCharValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomDoubleValueCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.RandomEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomFloatValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomIntValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 
 /**
@@ -52,6 +54,15 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	private static final ValueCreationStrategy<Float> FLOAT_DEFAULT = new RandomFloatValueCreationStrategy();
 	private static final ValueCreationStrategy<Double> DOUBLE_DEFAULT = new RandomDoubleValueCreationStrategy();
 
+	/**
+	 * Add the default enum handling to a map.
+	 * 
+	 * @param map
+	 */
+	public static void addRandomEnumStrategy(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map) {
+		map.put(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new RandomEnumCreationStrategy());
+	}
+
 	private static Map<ValueMatchingStrategy, ValueCreationStrategy<?>> createDefaultAttributeMapping() {
 		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
 		map.put(new TypeValueMatchingStrategy(String.class), new BlueprintStringCreationStrategy());
@@ -71,6 +82,8 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 		map.put(new TypeValueMatchingStrategy(float.class), FLOAT_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(Double.class), DOUBLE_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(double.class), DOUBLE_DEFAULT);
+
+		addRandomEnumStrategy(map);
 
 		DefaultBlueprintConfiguration.addDefaultCollections(map);
 

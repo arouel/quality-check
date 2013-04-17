@@ -60,6 +60,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	protected ImmutableBlueprintConfiguration(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> attributeMapping,
 			final boolean withPublicAttributes) {
 		Check.notNull(attributeMapping, "attributeMapping");
+
 		mapping = ImmutableMap.copyOf(attributeMapping);
 		this.withPublicAttributes = withPublicAttributes;
 	}
