@@ -301,7 +301,8 @@ public final class Blueprint {
 			parameters[i] = object(parameterTypes[i], config, session);
 		}
 
-		final T obj = safeNewInstance(constructor, parameters);
+		@SuppressWarnings("unchecked")
+		final T obj = (T) safeNewInstance(constructor, parameters);
 		bluePrintSetters(obj, clazz, config, session);
 		bluePrintPublicAttributes(obj, clazz, config, session);
 
