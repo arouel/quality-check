@@ -15,7 +15,6 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 /**
  * A strategy which always returns {@code null}.

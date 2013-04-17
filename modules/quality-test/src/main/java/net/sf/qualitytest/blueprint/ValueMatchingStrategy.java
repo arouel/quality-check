@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
+
 /**
  * Strategy to determine if an attribute matches and should be replaced with a
  * certain value.

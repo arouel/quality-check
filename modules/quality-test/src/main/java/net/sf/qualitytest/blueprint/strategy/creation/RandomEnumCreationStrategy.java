@@ -3,7 +3,6 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 import java.util.Random;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 public class RandomEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 

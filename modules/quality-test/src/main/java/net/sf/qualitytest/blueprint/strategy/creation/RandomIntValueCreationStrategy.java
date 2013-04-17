@@ -17,7 +17,6 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 
 import java.util.Random;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 /**
  * Strategy to create a random integer value.

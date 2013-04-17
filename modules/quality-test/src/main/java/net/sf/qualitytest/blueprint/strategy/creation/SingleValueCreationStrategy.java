@@ -15,7 +15,6 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 /**
  * Always use the same value. This strategy simply returns the same instance of the same object every time it is called.

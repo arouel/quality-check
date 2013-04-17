@@ -17,7 +17,6 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 
 import java.util.UUID;
 
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 /**
  * Strategy which creates random strings using {@code Blueprint.string()}.

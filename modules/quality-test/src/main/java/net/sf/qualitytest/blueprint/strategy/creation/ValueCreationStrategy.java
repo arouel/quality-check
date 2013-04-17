@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint;
+package net.sf.qualitytest.blueprint.strategy.creation;
+
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintSession;
+import net.sf.qualitytest.blueprint.CreationStrategy;
 
 /**
  * Definition of an interface to create values for attribute assignments.

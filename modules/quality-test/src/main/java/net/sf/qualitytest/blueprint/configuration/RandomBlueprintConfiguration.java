@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.qualitytest.blueprint.CreationStrategy;
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
@@ -31,6 +30,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomFloatValueCreationSt
 import net.sf.qualitytest.blueprint.strategy.creation.RandomIntValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
 

@@ -1,7 +1,6 @@
 package net.sf.qualitytest.blueprint.strategy.creation;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
 public class DefaultEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 
