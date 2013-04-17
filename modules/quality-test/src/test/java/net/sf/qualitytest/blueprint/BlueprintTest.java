@@ -284,7 +284,7 @@ public class BlueprintTest {
 
 	@Test
 	public void testArray() {
-		final int[] array = (int[]) Blueprint.array(int[].class);
+		final int[] array = (int[]) Blueprint.object(int[].class);
 		Assert.assertTrue(array.length > 0);
 		for (final int i : array) {
 			Assert.assertEquals(0, i);
@@ -403,7 +403,7 @@ public class BlueprintTest {
 
 	@Test
 	public void testStringArray() {
-		final String[] array = (String[]) Blueprint.array(String[].class, new RandomBlueprintConfiguration(), new BlueprintSession());
+		final String[] array = (String[]) Blueprint.object(String[].class, new RandomBlueprintConfiguration(), new BlueprintSession());
 		Assert.assertTrue(array.length > 0);
 		for (final String i : array) {
 			Assert.assertTrue(UUID_PATTERN.matcher(i).matches());

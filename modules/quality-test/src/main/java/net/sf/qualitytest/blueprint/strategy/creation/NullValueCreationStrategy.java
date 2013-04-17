@@ -25,7 +25,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public class NullValueCreationStrategy<T> implements ValueCreationStrategy<T> {
+public class NullValueCreationStrategy<T> extends ValueCreationStrategy<T> {
 
 	@Override
 	public T createValue(final Class<?> expectedClass) {

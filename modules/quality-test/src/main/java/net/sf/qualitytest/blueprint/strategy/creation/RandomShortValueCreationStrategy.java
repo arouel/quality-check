@@ -24,7 +24,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public class RandomShortValueCreationStrategy implements ValueCreationStrategy<Short> {
+public class RandomShortValueCreationStrategy extends ValueCreationStrategy<Short> {
 
 	private final Random random = new Random();
 

@@ -5,7 +5,7 @@ import java.util.Random;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
-public class RandomEnumCreationStrategy implements ValueCreationStrategy<Enum<?>> {
+public class RandomEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 
 	private final Random random = new Random();
 

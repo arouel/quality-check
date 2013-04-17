@@ -25,7 +25,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public class SingleValueCreationStrategy<T> implements ValueCreationStrategy<T> {
+public class SingleValueCreationStrategy<T> extends ValueCreationStrategy<T> {
 
 	private final T obj;
 

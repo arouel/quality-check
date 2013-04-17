@@ -3,7 +3,7 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 
-public class DefaultEnumCreationStrategy implements ValueCreationStrategy<Enum<?>> {
+public class DefaultEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 
 	/**
 	 * Blueprint an enum value using the default configuration.

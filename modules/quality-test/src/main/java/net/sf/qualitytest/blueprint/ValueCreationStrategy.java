@@ -20,8 +20,7 @@ package net.sf.qualitytest.blueprint;
  * 
  * @author Dominik Seichter
  */
-public interface ValueCreationStrategy<T> {
-
+public abstract class ValueCreationStrategy<T> implements CreationStrategy<T> {
 	/**
 	 * Create a new value which can be assigned to an attribute.
 	 * 
@@ -31,6 +30,22 @@ public interface ValueCreationStrategy<T> {
 	 *            which is requested.
 	 * @return a new value
 	 */
-	T createValue(final Class<?> parameterTypes);
+	public abstract T createValue(final Class<?> expectedClazz);
 
+	/**
+	 * Create a new value which can be assigned to an attribute.
+	 * 
+	 * @param <T>
+	 *            Type parameter of the return type
+	 * @param expectedClazz
+	 *            which is requested.
+	 * @param config
+	 *            a {@code BlueprintConfiguration}
+	 * @param session
+	 *            A {@code BlueprintSession} * @return a new value
+	 */
+	@Override
+	public T createValue(final Class<?> expectedClazz, final BlueprintConfiguration config, final BlueprintSession session) {
+		return createValue(expectedClazz);
+	}
 }

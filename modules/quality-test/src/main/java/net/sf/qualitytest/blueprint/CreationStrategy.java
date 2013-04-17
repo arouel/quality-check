@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.strategy.creation;
-
-import java.util.Random;
-
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
+package net.sf.qualitytest.blueprint;
 
 /**
- * Strategy to create a random char value.
+ * Definition of an interface to create values for attribute assignments.
  * 
  * @author Dominik Seichter
  */
-public class RandomCharValueCreationStrategy extends ValueCreationStrategy<Character> {
+public interface CreationStrategy<T> {
 
-	private final Random random = new Random();
+	/**
+	 * Create a new value which can be assigned to an attribute.
+	 * 
+	 * @param <T>
+	 *            Type parameter of the return type
+	 * @param expectedClazz
+	 *            which is requested.
+	 * @param config
+	 *            a {@code BlueprintConfiguration}
+	 * @param session
+	 *            A {@code BlueprintSession} * @return a new value
+	 */
+	T createValue(final Class<?> expectedClazz, final BlueprintConfiguration config, final BlueprintSession session);
 
-	@Override
-	public Character createValue(final Class<?> expectedClass) {
-		return Character.valueOf((char) random.nextInt(Character.MAX_VALUE));
-	}
 }

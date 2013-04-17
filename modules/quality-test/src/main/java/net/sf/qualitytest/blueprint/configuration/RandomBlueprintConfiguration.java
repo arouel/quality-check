@@ -18,6 +18,7 @@ package net.sf.qualitytest.blueprint.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.qualitytest.blueprint.CreationStrategy;
 import net.sf.qualitytest.blueprint.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
@@ -59,12 +60,12 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	 * 
 	 * @param map
 	 */
-	public static void addRandomEnumStrategy(final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map) {
+	public static void addRandomEnumStrategy(final Map<ValueMatchingStrategy, CreationStrategy<?>> map) {
 		map.put(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new RandomEnumCreationStrategy());
 	}
 
-	private static Map<ValueMatchingStrategy, ValueCreationStrategy<?>> createDefaultAttributeMapping() {
-		final Map<ValueMatchingStrategy, ValueCreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, ValueCreationStrategy<?>>();
+	private static Map<ValueMatchingStrategy, CreationStrategy<?>> createDefaultAttributeMapping() {
+		final Map<ValueMatchingStrategy, CreationStrategy<?>> map = new HashMap<ValueMatchingStrategy, CreationStrategy<?>>();
 		map.put(new TypeValueMatchingStrategy(String.class), new BlueprintStringCreationStrategy());
 		map.put(new TypeValueMatchingStrategy(Long.class), LONG_DEFAULT);
 		map.put(new TypeValueMatchingStrategy(long.class), LONG_DEFAULT);
@@ -84,7 +85,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 		map.put(new TypeValueMatchingStrategy(double.class), DOUBLE_DEFAULT);
 
 		addRandomEnumStrategy(map);
-
+		DefaultBlueprintConfiguration.addDefaultArrayStrategy(map);
 		DefaultBlueprintConfiguration.addDefaultCollections(map);
 
 		return map;

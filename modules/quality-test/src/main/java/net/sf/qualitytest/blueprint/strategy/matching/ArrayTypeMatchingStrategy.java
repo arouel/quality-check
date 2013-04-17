@@ -13,23 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.strategy.creation;
+package net.sf.qualitytest.blueprint.strategy.matching;
 
-import java.util.Random;
-
-import net.sf.qualitytest.blueprint.ValueCreationStrategy;
+import net.sf.qualitycheck.Check;
+import net.sf.qualitytest.blueprint.ValueMatchingStrategy;
 
 /**
- * Strategy to create a random char value.
+ * Match all class types that are arrays.
  * 
  * @author Dominik Seichter
  */
-public class RandomCharValueCreationStrategy extends ValueCreationStrategy<Character> {
-
-	private final Random random = new Random();
+public class ArrayTypeMatchingStrategy implements ValueMatchingStrategy {
 
 	@Override
-	public Character createValue(final Class<?> expectedClass) {
-		return Character.valueOf((char) random.nextInt(Character.MAX_VALUE));
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+
+		return true;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		return prime;
+	}
+
+	@Override
+	public boolean matches(final Class<?> clazz) {
+		Check.notNull(clazz, "clazz");
+		return clazz.isArray();
+	}
+
+	@Override
+	public boolean matches(final String method) {
+		return false;
+	}
+
 }

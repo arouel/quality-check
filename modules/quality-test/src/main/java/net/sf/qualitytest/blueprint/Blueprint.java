@@ -15,13 +15,11 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
-import java.util.Random;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
@@ -72,54 +70,7 @@ public final class Blueprint {
 
 	private static final BlueprintConfiguration DEFAULT_CONFIG = new DefaultBlueprintConfiguration();
 
-	private static final int MAX_ARRAY_SIZE = 7;
-
-	private static final Random RANDOM = new Random();
 	private static final String SETTER_PREFIX = "set";
-
-	/**
-	 * Blueprint an array value using a {@code DefaultBlueprintConfiguration}.
-	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
-	 * + 1},
-	 * 
-	 * @param <T>
-	 * @param array
-	 *            the class of an array.
-	 * @return a valid array.
-	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> Object array(final Class<T> array) {
-		return Blueprint.array(array, DEFAULT_CONFIG, new BlueprintSession());
-	}
-
-	/**
-	 * Blueprint an array value.
-	 * 
-	 * This method will return an array with a random generated dimension between 1 and {@code Blueprint.MAX_ARRAY_SIZE
-	 * + 1},
-	 * 
-	 * @param <T>
-	 * @param array
-	 *            the class of an array.
-	 * @param config
-	 *            a {@code BlueprintConfiguration}
-	 * @param session
-	 *            A {@code BlueprintSession}
-	 * @return a valid array.
-	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> Object array(final Class<T> array, final BlueprintConfiguration config, final BlueprintSession session) {
-		Check.notNull(array, "array");
-		Check.notNull(config, "config");
-
-		final int arraySize = RANDOM.nextInt(MAX_ARRAY_SIZE) + 1;
-		final Object value = Array.newInstance(array.getComponentType(), arraySize);
-		if (!array.getComponentType().isPrimitive()) {
-			initializeArray(array, arraySize, value, config, session);
-		}
-		return value;
-	}
 
 	/**
 	 * Blueprint a Java-Bean.
@@ -160,7 +111,7 @@ public final class Blueprint {
 	 *            A {@code BlueprintSession}
 	 */
 	private static void bluePrintField(final Object that, final Field f, final BlueprintConfiguration config, final BlueprintSession session) {
-		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
+		final CreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
 		final Object value = blueprintObject(f.getType(), config, creator, session);
 
 		SafeInvoke.invoke(new ExceptionRunnable<Object>() {
@@ -187,12 +138,12 @@ public final class Blueprint {
 	 */
 	private static void bluePrintMethod(final Object that, final Method m, final BlueprintConfiguration config,
 			final BlueprintSession session) {
-		final ValueCreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
+		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
 		final Class<?>[] parameterTypes = m.getParameterTypes();
 		final Object[] values = new Object[parameterTypes.length];
 
 		if (creator != null && parameterTypes.length == 1) {
-			values[0] = creator.createValue(parameterTypes[0]);
+			values[0] = creator.createValue(parameterTypes[0], config, session);
 		} else {
 			for (int i = 0; i < parameterTypes.length; i++) {
 				final Class<?> parameter = parameterTypes[i];
@@ -212,12 +163,10 @@ public final class Blueprint {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private static <T> T blueprintObject(final Class<T> clazz, final BlueprintConfiguration config, final ValueCreationStrategy<?> creator,
+	private static <T> T blueprintObject(final Class<T> clazz, final BlueprintConfiguration config, final CreationStrategy<?> creator,
 			final BlueprintSession session) {
 		if (creator != null) {
-			return (T) creator.createValue(clazz);
-		} else if (clazz.isArray()) {
-			return (T) array(clazz, config, session);
+			return (T) creator.createValue(clazz, config, session);
 		} else if (clazz.isInterface()) {
 			return (T) proxy(clazz, config, session);
 		} else if (ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT)) {
@@ -360,30 +309,6 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Initalize an array using blueprinted objects.
-	 * 
-	 * @param <T>
-	 *            Type parameter of the array.
-	 * @param array
-	 *            class of the array
-	 * @param arraySize
-	 *            size of the array
-	 * @param value
-	 *            object where the array is stored
-	 * @param config
-	 *            A {@code BlueprintConfiguration}
-	 * @param session
-	 *            A {@code BlueprintSession}
-	 */
-	private static <T> void initializeArray(final Class<T> array, final int arraySize, final Object value,
-			final BlueprintConfiguration config, final BlueprintSession session) {
-		for (int i = 0; i < arraySize; i++) {
-			final Object bluePrint = object(array.getComponentType(), config, session);
-			Array.set(value, i, bluePrint);
-		}
-	}
-
-	/**
 	 * Check if a method is setter according to the java
 	 * 
 	 * @param m
@@ -459,7 +384,7 @@ public final class Blueprint {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
-		final ValueCreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
+		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
 
 		session.push(clazz);
 		final T ret = blueprintObject(clazz, config, creator, session);

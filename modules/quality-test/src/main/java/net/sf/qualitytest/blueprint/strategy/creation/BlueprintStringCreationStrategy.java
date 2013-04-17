@@ -24,7 +24,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public class BlueprintStringCreationStrategy implements ValueCreationStrategy<String> {
+public class BlueprintStringCreationStrategy extends ValueCreationStrategy<String> {
 
 	@Override
 	public String createValue(final Class<?> expectedClass) {

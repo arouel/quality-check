@@ -24,7 +24,7 @@ import net.sf.qualitytest.blueprint.ValueCreationStrategy;
  * 
  * @author Dominik Seichter
  */
-public class RandomDoubleValueCreationStrategy implements ValueCreationStrategy<Double> {
+public class RandomDoubleValueCreationStrategy extends ValueCreationStrategy<Double> {
 
 	private final Random random = new Random();
 
