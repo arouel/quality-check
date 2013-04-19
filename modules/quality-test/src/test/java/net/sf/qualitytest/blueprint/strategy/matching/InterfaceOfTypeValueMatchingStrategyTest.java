@@ -9,46 +9,46 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 
 	@Test
 	public void testEquals() {
-		Assert.assertEquals(new InterfaceOfTypeValueMatchingStrategy(Number.class), new InterfaceOfTypeValueMatchingStrategy(Number.class));
+		Assert.assertEquals(new InterfaceOfTypeMatchingStrategy(Number.class), new InterfaceOfTypeMatchingStrategy(Number.class));
 	}
 
 	@Test
 	public void testEqualsHashCode() {
-		Assert.assertEquals(new InterfaceOfTypeValueMatchingStrategy(Number.class).hashCode(), new InterfaceOfTypeValueMatchingStrategy(
+		Assert.assertEquals(new InterfaceOfTypeMatchingStrategy(Number.class).hashCode(), new InterfaceOfTypeMatchingStrategy(
 				Number.class).hashCode());
 	}
 
 	@Test
 	public void testExactMatch() {
-		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(String.class).matches(String.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(String.class).matches(String.class));
 	}
 
 	@Test
 	public void testInheritedMatch() {
-		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(Number.class).matches(Long.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Number.class).matches(Long.class));
 	}
 
 	@Test
 	public void testNoMatch() {
-		Assert.assertFalse(new InterfaceOfTypeValueMatchingStrategy(String.class).matches(Long.class));
+		Assert.assertFalse(new InterfaceOfTypeMatchingStrategy(String.class).matches(Long.class));
 	}
 
 	@Test
 	public void testNotEquals() {
-		Assert.assertNotEquals(new InterfaceOfTypeValueMatchingStrategy(String.class), new InterfaceOfTypeValueMatchingStrategy(
+		Assert.assertNotEquals(new InterfaceOfTypeMatchingStrategy(String.class), new InterfaceOfTypeMatchingStrategy(
 				Number.class));
 	}
 
 	@Test
 	public void testNotEqualsHashCode() {
-		Assert.assertNotEquals(new InterfaceOfTypeValueMatchingStrategy(String.class).hashCode(), new InterfaceOfTypeValueMatchingStrategy(
+		Assert.assertNotEquals(new InterfaceOfTypeMatchingStrategy(String.class).hashCode(), new InterfaceOfTypeMatchingStrategy(
 				Number.class).hashCode());
 	}
 
 	@Test
 	public void testObjectdMatch() {
-		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(Object.class).matches(Long.class));
-		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(Object.class).matches(String.class));
-		Assert.assertTrue(new InterfaceOfTypeValueMatchingStrategy(Object.class).matches(Map.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(Long.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(String.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(Map.class));
 	}
 }

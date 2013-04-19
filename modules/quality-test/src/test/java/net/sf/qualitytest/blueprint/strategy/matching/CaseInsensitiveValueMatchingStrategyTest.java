@@ -25,84 +25,84 @@ public class CaseInsensitiveValueMatchingStrategyTest {
 
 	@Test
 	public void testCaseInsensitiveEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("email");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("email");
 
 		Assert.assertEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testCaseInsensitiveHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("email");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("email");
 
 		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
 	public void testConstructWithNullThrows() {
-		new CaseInsensitiveValueMatchingStrategy(null);
+		new CaseInsensitiveMatchingStrategy(null);
 	}
 
 	@Test
 	public void testEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail");
 
 		Assert.assertEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail");
 
 		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test
 	public void testMatchesCaseInsensitveOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
 		Assert.assertTrue(strategy.matches("email"));
 	}
 
 	@Test
 	public void testMatchesOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
 		Assert.assertTrue(strategy.matches("EMail"));
 	}
 
 	@Test
 	public void testMatchesSetterOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
 		Assert.assertTrue(strategy.matches("setEmail"));
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
 	public void testMatchesWithNullThrows() {
-		final MatchingStrategy strategy = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
 		strategy.matches((String) null);
 	}
 
 	@Test
 	public void testNotEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("EMail12");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail12");
 
 		Assert.assertNotEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testNotHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveValueMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveValueMatchingStrategy("EMail12");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail12");
 
 		Assert.assertNotEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test
 	public void testNotMatchesType() {
-		final MatchingStrategy strategy = new CaseInsensitiveValueMatchingStrategy("EMail");
+		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
 		Assert.assertFalse(strategy.matches(String.class));
 	}
 

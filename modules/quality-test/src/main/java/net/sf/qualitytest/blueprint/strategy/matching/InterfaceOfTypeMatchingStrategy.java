@@ -23,11 +23,11 @@ import net.sf.qualitytest.blueprint.MatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class InterfaceOfTypeValueMatchingStrategy implements MatchingStrategy {
+public class InterfaceOfTypeMatchingStrategy implements MatchingStrategy {
 
 	private final Class<?> clazz;
 
-	public InterfaceOfTypeValueMatchingStrategy(final Class<?> clazz) {
+	public InterfaceOfTypeMatchingStrategy(final Class<?> clazz) {
 		this.clazz = Check.notNull(clazz);
 	}
 
@@ -42,7 +42,7 @@ public class InterfaceOfTypeValueMatchingStrategy implements MatchingStrategy {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final InterfaceOfTypeValueMatchingStrategy other = (InterfaceOfTypeValueMatchingStrategy) obj;
+		final InterfaceOfTypeMatchingStrategy other = (InterfaceOfTypeMatchingStrategy) obj;
 		if (clazz == null) {
 			if (other.clazz != null) {
 				return false;

@@ -44,13 +44,13 @@ public class ArrayTypeMatchingStrategyTest {
 
 	@Test
 	public void testNotEquals() {
-		Assert.assertNotEquals(new ArrayTypeMatchingStrategy(), new InterfaceOfTypeValueMatchingStrategy(String.class));
+		Assert.assertNotEquals(new ArrayTypeMatchingStrategy(), new InterfaceOfTypeMatchingStrategy(String.class));
 	}
 
 	@Test
 	public void testNotEqualsHashCode() {
 		Assert.assertNotEquals(new ArrayTypeMatchingStrategy().hashCode(),
-				new InterfaceOfTypeValueMatchingStrategy(String.class).hashCode());
+				new InterfaceOfTypeMatchingStrategy(String.class).hashCode());
 	}
 
 	@Test

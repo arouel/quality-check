@@ -28,8 +28,8 @@ import net.sf.qualitytest.blueprint.BlueprintSession;
 import net.sf.qualitytest.blueprint.CreationStrategy;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveValueMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -107,7 +107,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
-		return with(new TypeValueMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
+		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
@@ -125,7 +125,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final String name, final T value) {
-		return with(new CaseInsensitiveValueMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
+		return with(new CaseInsensitiveMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override

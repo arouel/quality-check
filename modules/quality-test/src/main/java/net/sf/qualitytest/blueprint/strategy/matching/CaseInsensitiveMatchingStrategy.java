@@ -19,16 +19,21 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
- * Match a value based on its exact type.
+ * This value matching strategy matches string names case insensitively on the method name. This works only for
+ * setter-based blueprinting. In other cases you should use type based blueprinting as in
+ * {@code TypeValueMatchingStrategy}.
+ * 
  * 
  * @author Dominik Seichter
  */
-public class TypeValueMatchingStrategy implements MatchingStrategy {
+public class CaseInsensitiveMatchingStrategy implements MatchingStrategy {
 
-	private final Class<?> clazz;
+	private static final String SETTER_PREFIX = "set";
 
-	public TypeValueMatchingStrategy(final Class<?> clazz) {
-		this.clazz = Check.notNull(clazz);
+	private final String name;
+
+	public CaseInsensitiveMatchingStrategy(final String name) {
+		this.name = Check.notNull(name);
 	}
 
 	@Override
@@ -42,12 +47,12 @@ public class TypeValueMatchingStrategy implements MatchingStrategy {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TypeValueMatchingStrategy other = (TypeValueMatchingStrategy) obj;
-		if (clazz == null) {
-			if (other.clazz != null) {
+		final CaseInsensitiveMatchingStrategy other = (CaseInsensitiveMatchingStrategy) obj;
+		if (name == null) {
+			if (other.name != null) {
 				return false;
 			}
-		} else if (!clazz.equals(other.clazz)) {
+		} else if (!name.equalsIgnoreCase(other.name)) {
 			return false;
 		}
 		return true;
@@ -57,19 +62,25 @@ public class TypeValueMatchingStrategy implements MatchingStrategy {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((clazz == null) ? 0 : clazz.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.toLowerCase().hashCode());
 		return result;
 	}
 
+	/**
+	 * This strategy does never match a type!
+	 * 
+	 * @return false
+	 */
 	@Override
 	public boolean matches(final Class<?> clazz) {
-		Check.notNull(clazz, "clazz");
-		return this.clazz.equals(clazz);
+		return false;
 	}
 
 	@Override
-	public boolean matches(final String method) {
-		return false;
+	public boolean matches(final String methodName) {
+		Check.notNull(methodName, "methodName");
+		final String setterName = SETTER_PREFIX + name;
+		return name.equalsIgnoreCase(methodName) || setterName.equalsIgnoreCase(methodName);
 	}
 
 }

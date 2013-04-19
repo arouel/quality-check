@@ -29,8 +29,8 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomIntValueCreationStra
 import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeValueMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 /**
  * {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types with a random
@@ -59,28 +59,28 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	 * @param map
 	 */
 	public static void addRandomEnumStrategy(final List<StrategyPair> list) {
-		list.add(new StrategyPair(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new RandomEnumCreationStrategy()));
+		list.add(new StrategyPair(new InterfaceOfTypeMatchingStrategy(Enum.class), new RandomEnumCreationStrategy()));
 	}
 
 	private static List<StrategyPair> createDefaultAttributeMapping() {
 		final List<StrategyPair> list = new ArrayList<StrategyPair>();
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(String.class), new BlueprintStringCreationStrategy()));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Long.class), LONG_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(long.class), LONG_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Integer.class), INTEGER_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(int.class), INTEGER_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Boolean.class), BOOLEAN_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(boolean.class), BOOLEAN_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Character.class), CHARACTER_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(char.class), CHARACTER_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Short.class), SHORT_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(short.class), SHORT_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Byte.class), BYTE_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(byte.class), BYTE_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Float.class), FLOAT_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(float.class), FLOAT_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Double.class), DOUBLE_DEFAULT));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(double.class), DOUBLE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(String.class), new BlueprintStringCreationStrategy()));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Long.class), LONG_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(long.class), LONG_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Integer.class), INTEGER_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(int.class), INTEGER_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Boolean.class), BOOLEAN_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(boolean.class), BOOLEAN_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Character.class), CHARACTER_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(char.class), CHARACTER_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Short.class), SHORT_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(short.class), SHORT_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Byte.class), BYTE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(byte.class), BYTE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Float.class), FLOAT_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(float.class), FLOAT_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Double.class), DOUBLE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(double.class), DOUBLE_DEFAULT));
 
 		addRandomEnumStrategy(list);
 		DefaultBlueprintConfiguration.addDefaultArrayStrategy(list);

@@ -27,8 +27,8 @@ import net.sf.qualitytest.blueprint.strategy.creation.DefaultArrayCreationStrate
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.ArrayTypeMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeValueMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.TypeValueMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 /**
  * Default {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types which a
@@ -70,11 +70,11 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	public static void addDefaultCollections(final List<StrategyPair> list) {
 		Check.notNull(list, "list");
 
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Map.class), new SingleValueCreationStrategy<Map<Object, Object>>(
+		list.add(new StrategyPair(new TypeMatchingStrategy(Map.class), new SingleValueCreationStrategy<Map<Object, Object>>(
 				new HashMap<Object, Object>())));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Set.class), new SingleValueCreationStrategy<Set<Object>>(
+		list.add(new StrategyPair(new TypeMatchingStrategy(Set.class), new SingleValueCreationStrategy<Set<Object>>(
 				new HashSet<Object>())));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(List.class), new SingleValueCreationStrategy<List<Object>>(
+		list.add(new StrategyPair(new TypeMatchingStrategy(List.class), new SingleValueCreationStrategy<List<Object>>(
 				new ArrayList<Object>())));
 	}
 
@@ -84,29 +84,29 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	 * @param list
 	 */
 	public static void addDefaultEnumStrategy(final List<StrategyPair> list) {
-		list.add(new StrategyPair(new InterfaceOfTypeValueMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy()));
+		list.add(new StrategyPair(new InterfaceOfTypeMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy()));
 	}
 
 	private static List<StrategyPair> createDefaultAttributeMapping() {
 		final List<StrategyPair> list = new ArrayList<StrategyPair>();
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(String.class), new SingleValueCreationStrategy<String>(STRING_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Integer.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(int.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Character.class), new SingleValueCreationStrategy<Character>(
+		list.add(new StrategyPair(new TypeMatchingStrategy(String.class), new SingleValueCreationStrategy<String>(STRING_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Integer.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(int.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Character.class), new SingleValueCreationStrategy<Character>(
 				CHARACTER_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(char.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(Double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
-		list.add(new StrategyPair(new TypeValueMatchingStrategy(double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(char.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
 
 		addDefaultEnumStrategy(list);
 		addDefaultArrayStrategy(list);

@@ -169,8 +169,6 @@ public final class Blueprint {
 			return (T) creator.createValue(clazz, config, session);
 		} else if (clazz.isInterface()) {
 			return (T) proxy(clazz, config, session);
-		} else if (ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT)) {
-			throw new BlueprintException("Abstract classes are currently not supported.");
 		} else if (hasPublicDefaultConstructor(clazz)) {
 			return bean(clazz, config, session);
 		} else {
