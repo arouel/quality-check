@@ -118,6 +118,7 @@ at FindBugs™ JSR-305 support.
 		<slf4j.version>1.7.4</slf4j.version>
 		<easymock.version>3.1</easymock.version>
 		<powermock.version>1.5</powermock.version>
+		<cglib.version>3.0</cglib.version>
 
 		<!-- Sonar -->
 		<sonar.pitest.mode>active</sonar.pitest.mode>
@@ -189,6 +190,12 @@ at FindBugs™ JSR-305 support.
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
 				<version>${easymock.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>${cglib.version}</version>
 				<scope>test</scope>
 			</dependency>
 
