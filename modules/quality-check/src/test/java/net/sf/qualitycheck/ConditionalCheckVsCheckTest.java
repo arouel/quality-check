@@ -33,7 +33,7 @@ import org.junit.Test;
  * @author dominik.seichter
  * 
  */
-public class ConitionalCheckVsCheckTest {
+public class ConditionalCheckVsCheckTest {
 
 	/**
 	 * Tests if a certain modifier is set into a bitmask.
