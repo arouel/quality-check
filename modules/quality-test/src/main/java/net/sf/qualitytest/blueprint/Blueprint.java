@@ -46,13 +46,13 @@ import net.sf.qualitytest.exception.BlueprintException;
  * 
  * <code>
  * 	final BlueprintConfiguration config = new RandomBlueprintConfiguration().with("email", "mail@example.com");
- *  final User user = Blueprint.object(User.class, config);
+ *  final User user = Blueprint.construct(User.class, config);
  * </code>
  * 
  * or simpler
  * 
  * <code>
- *  final User user = Blueprint.random().with("email", "mail@example.com").object(User.class);
+ *  final User user = Blueprint.random().with("email", "mail@example.com").construct(User.class);
  * </code>
  * 
  * {@code Blueprint} offers to custome configurations. A {@code DefaultBlueprintConfiguration} which fills any object
@@ -147,7 +147,7 @@ public final class Blueprint {
 		} else {
 			for (int i = 0; i < parameterTypes.length; i++) {
 				final Class<?> parameter = parameterTypes[i];
-				values[i] = object(parameter, config, session);
+				values[i] = construct(parameter, config, session);
 			}
 		}
 
@@ -229,6 +229,76 @@ public final class Blueprint {
 	}
 
 	/**
+	 * Construct a Java-Object using a class as a blueprint.
+	 * 
+	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
+	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
+	 * will be called.
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 *            a class
+	 * @return a blue printed instance of {@code T}
+	 */
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T construct(final Class<T> clazz) {
+		Check.notNull(clazz, "clazz");
+
+		return Blueprint.construct(clazz, DEFAULT_CONFIG, new BlueprintSession());
+	}
+
+	/**
+	 * Construct a Java-Object using a class as a blueprint.
+	 * 
+	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
+	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
+	 * will be called.
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 *            a class
+	 * @param config
+	 *            a {@code BlueprintConfiguration}
+	 * @return a blue printed instance of {@code T}
+	 */
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T construct(final Class<T> clazz, final BlueprintConfiguration config) {
+		Check.notNull(clazz, "clazz");
+		Check.notNull(config, "config");
+
+		return Blueprint.construct(clazz, config, new BlueprintSession());
+	}
+
+	/**
+	 * Construct a Java-Object using a class as a blueprint.
+	 * 
+	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
+	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
+	 * will be called.
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 *            a class
+	 * @param config
+	 *            a {@code BlueprintConfiguration}
+	 * @param session
+	 *            a {@code BlueprintSession}
+	 * @return a blue printed instance of {@code T}
+	 */
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T construct(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
+		Check.notNull(clazz, "clazz");
+		Check.notNull(config, "config");
+
+		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
+
+		session.push(clazz);
+		final T ret = blueprintObject(clazz, config, creator, session);
+		session.pop();
+		return ret;
+	}
+
+	/**
 	 * Return a new configuration for default blueprinting with zero or empty default values.
 	 * 
 	 * @return a new {@code DefaultBlueprintConfiguration}
@@ -298,7 +368,7 @@ public final class Blueprint {
 		final Class<?>[] parameterTypes = constructor.getParameterTypes();
 		final Object[] parameters = new Object[parameterTypes.length];
 		for (int i = 0; i < parameterTypes.length; i++) {
-			parameters[i] = object(parameterTypes[i], config, session);
+			parameters[i] = construct(parameterTypes[i], config, session);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -321,76 +391,6 @@ public final class Blueprint {
 		final boolean isPublic = ModifierBits.isModifierBitSet(m.getModifiers(), Modifier.PUBLIC);
 		final boolean isSetterName = m.getName().startsWith(SETTER_PREFIX);
 		return isNotStatic && isPublic && isSetterName;
-	}
-
-	/**
-	 * Blueprint a Java-Object using a {@code DefaultBlueprintConfiguration}.
-	 * 
-	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
-	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
-	 * will be called.
-	 * 
-	 * @param <T>
-	 * @param clazz
-	 *            a class
-	 * @return a blue printed instance of {@code T}
-	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> T object(final Class<T> clazz) {
-		Check.notNull(clazz, "clazz");
-
-		return Blueprint.object(clazz, DEFAULT_CONFIG, new BlueprintSession());
-	}
-
-	/**
-	 * Blueprint a Java-Object.
-	 * 
-	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
-	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
-	 * will be called.
-	 * 
-	 * @param <T>
-	 * @param clazz
-	 *            a class
-	 * @param config
-	 *            a {@code BlueprintConfiguration}
-	 * @return a blue printed instance of {@code T}
-	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config) {
-		Check.notNull(clazz, "clazz");
-		Check.notNull(config, "config");
-
-		return Blueprint.object(clazz, config, new BlueprintSession());
-	}
-
-	/**
-	 * Blueprint a Java-Object.
-	 * 
-	 * If the object has a default constructor, it will be called and all setters will be called. If the object does not
-	 * have a default constructor the first constructor is called and filled with all parameters. Afterwards all setters
-	 * will be called.
-	 * 
-	 * @param <T>
-	 * @param clazz
-	 *            a class
-	 * @param config
-	 *            a {@code BlueprintConfiguration}
-	 * @param session
-	 *            a {@code BlueprintSession}
-	 * @return a blue printed instance of {@code T}
-	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> T object(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
-		Check.notNull(clazz, "clazz");
-		Check.notNull(config, "config");
-
-		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
-
-		session.push(clazz);
-		final T ret = blueprintObject(clazz, config, creator, session);
-		session.pop();
-		return ret;
 	}
 
 	/**

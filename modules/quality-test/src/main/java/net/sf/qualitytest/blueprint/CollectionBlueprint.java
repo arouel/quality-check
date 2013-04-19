@@ -77,7 +77,7 @@ public final class CollectionBlueprint {
 
 		int cnt = numberOfItems;
 		while (cnt > 0) {
-			collection.add(Blueprint.object(clazz, config,
+			collection.add(Blueprint.construct(clazz, config,
 					new BlueprintSession()));
 			cnt--;
 		}

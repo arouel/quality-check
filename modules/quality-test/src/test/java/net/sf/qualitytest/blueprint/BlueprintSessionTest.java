@@ -48,7 +48,7 @@ public class BlueprintSessionTest {
 	@Test
 	public void testCountAndClasses() {
 		final BlueprintSession session = new BlueprintSession();
-		final String s = Blueprint.object(String.class, new DefaultBlueprintConfiguration(), session);
+		final String s = Blueprint.construct(String.class, new DefaultBlueprintConfiguration(), session);
 		Assert.assertEquals("", s);
 		Assert.assertEquals(1, session.getBlueprintCount());
 		Assert.assertEquals(1, session.getBlueprintClasses().size());
@@ -57,7 +57,7 @@ public class BlueprintSessionTest {
 
 	@Test(expected = BlueprintCycleException.class)
 	public void testCycle() {
-		final CyclicObject o = Blueprint.object(CyclicObject.class);
+		final CyclicObject o = Blueprint.construct(CyclicObject.class);
 		Assert.assertEquals("", o.getValue());
 		Assert.assertNotNull(o.getNext());
 	}

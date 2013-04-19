@@ -56,7 +56,7 @@ public class BlueprintConfigurationTest {
 
 		.with("age", 18)
 
-		.object(User.class);
+		.construct(User.class);
 
 		Assert.assertEquals(18, user.getAge());
 		Assert.assertEquals("mail@example.com", user.getEmail());

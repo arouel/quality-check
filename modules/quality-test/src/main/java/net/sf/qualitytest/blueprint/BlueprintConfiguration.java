@@ -48,7 +48,7 @@ public interface BlueprintConfiguration {
 	boolean isWithPublicAttributes();
 
 	/**
-	 * Blueprint a Java-Object using this configuration.
+	 * Construct a Java-Object using a class as a blueprint.
 	 * 
 	 * @see Blueprint
 	 * 
@@ -58,7 +58,7 @@ public interface BlueprintConfiguration {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	<T> T object(final Class<T> clazz);
+	<T> T construct(final Class<T> clazz);
 
 	/**
 	 * Replace every attribute with the typee {@code type} with a given value.

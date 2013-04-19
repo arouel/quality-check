@@ -100,8 +100,8 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> T object(final Class<T> clazz) {
-		return Blueprint.object(clazz, this, new BlueprintSession());
+	public <T> T construct(final Class<T> clazz) {
+		return Blueprint.construct(clazz, this, new BlueprintSession());
 	}
 
 	@Override

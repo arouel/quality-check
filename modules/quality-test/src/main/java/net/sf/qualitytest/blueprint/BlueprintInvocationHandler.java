@@ -48,7 +48,7 @@ class BlueprintInvocationHandler implements InvocationHandler {
 	@Override
 	public Object invoke(final Object instance, final Method method,
 			final Object[] parameters) throws Throwable { // NOSONAR
-		return Blueprint.object(method.getReturnType(), config, session);
+		return Blueprint.construct(method.getReturnType(), config, session);
 	}
 
 }

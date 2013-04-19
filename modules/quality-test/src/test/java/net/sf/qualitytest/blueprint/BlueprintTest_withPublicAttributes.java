@@ -58,7 +58,7 @@ public class BlueprintTest_withPublicAttributes {
 	@Test
 	public void testBlueprintImmutableWithAttributes() {
 		final StupidImmutableWithPublicAttribut stupid = Blueprint.def().withPublicAttributes(true)
-				.object(StupidImmutableWithPublicAttribut.class);
+				.construct(StupidImmutableWithPublicAttribut.class);
 		Assert.assertEquals("", stupid.getStr());
 		Assert.assertNotEquals(0l, stupid.date.getTime());
 	}
@@ -66,7 +66,7 @@ public class BlueprintTest_withPublicAttributes {
 	@Test
 	public void testBlueprintImmutableWithoutAttributes() {
 		final StupidImmutableWithPublicAttribut stupid = Blueprint.def().withPublicAttributes(false)
-				.object(StupidImmutableWithPublicAttribut.class);
+				.construct(StupidImmutableWithPublicAttribut.class);
 		Assert.assertEquals("", stupid.getStr());
 		Assert.assertNull(stupid.date);
 	}
@@ -74,7 +74,7 @@ public class BlueprintTest_withPublicAttributes {
 	@Test
 	public void testBlueprintWithAttributes() throws MalformedURLException {
 		final URL url = new URL("http://example.com/a");
-		final WithPublicAttributes wpa = Blueprint.def().withPublicAttributes(true).with(URL.class, url).object(WithPublicAttributes.class);
+		final WithPublicAttributes wpa = Blueprint.def().withPublicAttributes(true).with(URL.class, url).construct(WithPublicAttributes.class);
 		Assert.assertEquals(0, wpa.a);
 		Assert.assertEquals("", wpa.str);
 		Assert.assertEquals("/a", wpa.url.getPath());
@@ -83,7 +83,7 @@ public class BlueprintTest_withPublicAttributes {
 
 	@Test
 	public void testBlueprintWithoutAttributes() {
-		final WithPublicAttributes wpa = Blueprint.object(WithPublicAttributes.class);
+		final WithPublicAttributes wpa = Blueprint.construct(WithPublicAttributes.class);
 		Assert.assertEquals(0, wpa.a);
 		Assert.assertNull(wpa.str);
 		Assert.assertNull(wpa.url);

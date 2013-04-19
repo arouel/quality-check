@@ -33,25 +33,25 @@ public class BlueprintTest_enumeration {
 
 	@Test
 	public void testEnumeration() {
-		final SimpleEnum simple = Blueprint.object(SimpleEnum.class);
+		final SimpleEnum simple = Blueprint.construct(SimpleEnum.class);
 		Assert.assertEquals(SimpleEnum.A, simple);
 	}
 
 	@Test
 	public void testEnumerationDefault() {
-		final SimpleEnum simple = Blueprint.object(SimpleEnum.class, new DefaultBlueprintConfiguration());
+		final SimpleEnum simple = Blueprint.construct(SimpleEnum.class, new DefaultBlueprintConfiguration());
 		Assert.assertEquals(SimpleEnum.A, simple);
 	}
 
 	@Test
 	public void testEnumerationEmpty() {
-		final EmptyEnum simple = Blueprint.object(EmptyEnum.class);
+		final EmptyEnum simple = Blueprint.construct(EmptyEnum.class);
 		Assert.assertNull(simple);
 	}
 
 	@Test
 	public void testEnumerationOverride() {
-		final SimpleEnum simple = Blueprint.def().with(SimpleEnum.class, SimpleEnum.D).object(SimpleEnum.class);
+		final SimpleEnum simple = Blueprint.def().with(SimpleEnum.class, SimpleEnum.D).construct(SimpleEnum.class);
 		Assert.assertEquals(SimpleEnum.D, simple);
 	}
 
@@ -59,9 +59,9 @@ public class BlueprintTest_enumeration {
 	public void testEnumerationRandom() {
 		final BlueprintSession session = new BlueprintSession();
 		final BlueprintConfiguration rand = new RandomBlueprintConfiguration();
-		final SimpleEnum simple = Blueprint.object(SimpleEnum.class, rand, session);
-		final SimpleEnum simple1 = Blueprint.object(SimpleEnum.class, rand, session);
-		final SimpleEnum simple2 = Blueprint.object(SimpleEnum.class, rand, session);
+		final SimpleEnum simple = Blueprint.construct(SimpleEnum.class, rand, session);
+		final SimpleEnum simple1 = Blueprint.construct(SimpleEnum.class, rand, session);
+		final SimpleEnum simple2 = Blueprint.construct(SimpleEnum.class, rand, session);
 		final boolean a = simple != simple1;
 		final boolean b = simple != simple2;
 		final boolean c = simple2 != simple1;
