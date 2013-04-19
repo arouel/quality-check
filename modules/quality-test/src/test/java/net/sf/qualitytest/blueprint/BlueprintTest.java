@@ -22,6 +22,7 @@ import net.sf.qualitytest.CoverageForPrivateConstructor;
 import net.sf.qualitytest.StaticCheck;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
+import net.sf.qualitytest.exception.BlueprintException;
 
 import org.junit.Assert;
 import org.junit.Test;

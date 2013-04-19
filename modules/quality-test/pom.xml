@@ -90,6 +90,10 @@ or make sure that no class in the package *.controller.* contains any non-final 
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>		
 
 	</dependencies>
 
