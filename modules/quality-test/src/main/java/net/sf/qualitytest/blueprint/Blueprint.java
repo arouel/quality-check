@@ -183,6 +183,8 @@ public final class Blueprint {
 	 * 
 	 * Does nothing if {@code config.isWithPublicAttributes} is false.
 	 * 
+	 * Static fields are ignored.
+	 * 
 	 * @param <T>
 	 *            type of object
 	 * @param obj
@@ -201,7 +203,9 @@ public final class Blueprint {
 		}
 
 		for (final Field f : clazz.getFields()) {
-			bluePrintField(obj, f, config, session);
+			if (!ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.STATIC)) {
+				bluePrintField(obj, f, config, session);
+			}
 		}
 	}
 

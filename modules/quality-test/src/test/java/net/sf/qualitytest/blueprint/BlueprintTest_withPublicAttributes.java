@@ -24,6 +24,11 @@ import org.junit.Test;
 
 public class BlueprintTest_withPublicAttributes {
 
+	public static class InheritedFields extends WithPublicAttributes {
+		public String abc;
+
+	}
+
 	public static class StupidImmutableWithPublicAttribut {
 		private final String str;
 		public Date date;
@@ -42,6 +47,8 @@ public class BlueprintTest_withPublicAttributes {
 		public int a;
 		public String str;
 		public URL url;
+
+		public static String staticString = null;
 
 		private Long l;
 
@@ -74,11 +81,25 @@ public class BlueprintTest_withPublicAttributes {
 	@Test
 	public void testBlueprintWithAttributes() throws MalformedURLException {
 		final URL url = new URL("http://example.com/a");
-		final WithPublicAttributes wpa = Blueprint.def().withPublicAttributes(true).with(URL.class, url).construct(WithPublicAttributes.class);
+		final WithPublicAttributes wpa = Blueprint.def().withPublicAttributes(true).with(URL.class, url)
+				.construct(WithPublicAttributes.class);
 		Assert.assertEquals(0, wpa.a);
 		Assert.assertEquals("", wpa.str);
 		Assert.assertEquals("/a", wpa.url.getPath());
 		Assert.assertEquals(Long.valueOf(0), wpa.getL());
+		Assert.assertNull(WithPublicAttributes.staticString);
+	}
+
+	@Test
+	public void testBlueprintWithInheritedAttributes() throws MalformedURLException {
+		final URL url = new URL("http://example.com/a");
+		final InheritedFields wpa = Blueprint.def().withPublicAttributes(true).with(URL.class, url).construct(InheritedFields.class);
+		Assert.assertEquals(0, wpa.a);
+		Assert.assertEquals("", wpa.str);
+		Assert.assertEquals("/a", wpa.url.getPath());
+		Assert.assertEquals(Long.valueOf(0), wpa.getL());
+		Assert.assertNull(WithPublicAttributes.staticString);
+		Assert.assertEquals("", wpa.abc);
 	}
 
 	@Test
@@ -88,5 +109,7 @@ public class BlueprintTest_withPublicAttributes {
 		Assert.assertNull(wpa.str);
 		Assert.assertNull(wpa.url);
 		Assert.assertEquals(Long.valueOf(0), wpa.getL());
+		Assert.assertNull(WithPublicAttributes.staticString);
 	}
+
 }
