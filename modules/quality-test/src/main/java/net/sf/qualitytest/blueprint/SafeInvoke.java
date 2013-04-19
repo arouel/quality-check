@@ -58,12 +58,15 @@ final class SafeInvoke {
 	private static RuntimeException createExceptionInternal(final Throwable e, final Class<? extends RuntimeException> exceptionClass)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException,
 			NoSuchMethodException {
-		final Constructor<? extends RuntimeException> constructor = exceptionClass.getConstructor(Throwable.class);
-		if (constructor != null) {
-			return constructor.newInstance(e);
-		} else {
-			return exceptionClass.newInstance();
+		final Constructor<?>[] constructors = exceptionClass.getDeclaredConstructors();
+		for (final Constructor<?> c : constructors) {
+			final Class<?>[] parameterTypes = c.getParameterTypes();
+			if (parameterTypes.length == 1 && parameterTypes[0].isInstance(Throwable.class)) {
+				return (RuntimeException) constructors[0].newInstance(e);
+			}
 		}
+
+		return exceptionClass.newInstance();
 	}
 
 	/**

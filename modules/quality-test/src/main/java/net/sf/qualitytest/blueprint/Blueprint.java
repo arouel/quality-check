@@ -203,7 +203,9 @@ public final class Blueprint {
 		}
 
 		for (final Field f : clazz.getFields()) {
-			if (!ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.STATIC)) {
+			final boolean isStatic = ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.STATIC);
+			final boolean isFinal = ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.FINAL);
+			if (!isStatic && !isFinal) {
 				bluePrintField(obj, f, config, session);
 			}
 		}

@@ -47,6 +47,8 @@ public class BlueprintTest_withPublicAttributes {
 		public int a;
 		public String str;
 		public URL url;
+		public final int doNotChange = -4;
+		public static final int staticDoNotChange = -4;
 
 		public static String staticString = null;
 
@@ -88,6 +90,8 @@ public class BlueprintTest_withPublicAttributes {
 		Assert.assertEquals("/a", wpa.url.getPath());
 		Assert.assertEquals(Long.valueOf(0), wpa.getL());
 		Assert.assertNull(WithPublicAttributes.staticString);
+		Assert.assertEquals(-4, wpa.doNotChange);
+		Assert.assertEquals(-4, WithPublicAttributes.staticDoNotChange);
 	}
 
 	@Test
@@ -100,6 +104,8 @@ public class BlueprintTest_withPublicAttributes {
 		Assert.assertEquals(Long.valueOf(0), wpa.getL());
 		Assert.assertNull(WithPublicAttributes.staticString);
 		Assert.assertEquals("", wpa.abc);
+		Assert.assertEquals(-4, wpa.doNotChange);
+		Assert.assertEquals(-4, WithPublicAttributes.staticDoNotChange);
 	}
 
 	@Test
@@ -110,6 +116,8 @@ public class BlueprintTest_withPublicAttributes {
 		Assert.assertNull(wpa.url);
 		Assert.assertEquals(Long.valueOf(0), wpa.getL());
 		Assert.assertNull(WithPublicAttributes.staticString);
+		Assert.assertEquals(-4, wpa.doNotChange);
+		Assert.assertEquals(-4, WithPublicAttributes.staticDoNotChange);
 	}
 
 }
