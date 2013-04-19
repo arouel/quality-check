@@ -18,6 +18,7 @@ package net.sf.qualitycheck;
 
 import java.lang.reflect.Constructor;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -36,18 +37,30 @@ public class CheckTest {
 		constructor.newInstance();
 	}
 
+	@Test
+	public void giveMeCoverageForMyPrivateConstructor_NumericRegularExpressionHolder() throws Exception {
+		// reduces only some noise in coverage report
+		final Constructor<Check.NumericRegularExpressionHolder> constructor = Check.NumericRegularExpressionHolder.class
+				.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		constructor.newInstance();
+	}
+
+	@Test
+	public void testCheckNothing() {
+		Assert.assertEquals(Integer.valueOf(42), Check.nothing(Integer.valueOf(42)));
+		Assert.assertEquals("qc", Check.nothing("qc"));
+	}
+
+	@Test
+	public void testCheckNothingNull() {
+		Assert.assertNull(Check.nothing(null));
+	}
+
 	@Test(expected = java.lang.IllegalAccessException.class)
 	public void testValidatesThatClassCheckIsNotInstantiable() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		final Class<?> cls = Class.forName("net.sf.qualitycheck.Check");
 		cls.newInstance(); // exception here
-	}
-
-	@Test
-	public void giveMeCoverageForMyPrivateConstructor_NumericRegularExpressionHolder() throws Exception {
-		// reduces only some noise in coverage report
-		final Constructor<Check.NumericRegularExpressionHolder> constructor = Check.NumericRegularExpressionHolder.class.getDeclaredConstructor();
-		constructor.setAccessible(true);
-		constructor.newInstance();
 	}
 }

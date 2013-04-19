@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 /**
@@ -70,11 +69,16 @@ public class ConitionalCheckVsCheckTest {
 	}
 
 	private final List<Method> retrievePublicStaticMethods(final Class<?> clazz) {
+		final List<String> ignoreList = new ArrayList<String>();
+		ignoreList.add("nothing");
+
 		final List<Method> publicMethods = new ArrayList<Method>();
 		final Method[] methods = clazz.getMethods();
 		for (final Method m : methods) {
 			if (isModifierBitSet(m.getModifiers(), Modifier.STATIC) && isModifierBitSet(m.getModifiers(), Modifier.PUBLIC)) {
-				publicMethods.add(m);
+				if (!ignoreList.contains(m.getName())) {
+					publicMethods.add(m);
+				}
 			}
 		}
 

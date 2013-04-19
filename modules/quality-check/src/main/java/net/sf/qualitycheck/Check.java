@@ -1456,6 +1456,20 @@ public final class Check {
 	}
 
 	/**
+	 * Do not perform any check and just return {@code t}.
+	 * 
+	 * This is useful if you have several checks on some arguments, but do not check other arguments on purpose. This
+	 * checks helps to document that a check was omitted on purpose instead of forgotten.
+	 * 
+	 * @param t
+	 *            any object
+	 * @return t
+	 */
+	public static <T> T nothing(final T t) {
+		return t;
+	}
+
+	/**
 	 * Ensures that a double argument is not NaN (not a number).
 	 * 
 	 * <p>
