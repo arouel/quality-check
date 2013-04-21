@@ -13,33 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.strategy.matching;
+package net.sf.qualitytest.blueprint;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.ModifierBits;
-import net.sf.qualitytest.blueprint.MatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.BuilerMethodMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 
 /**
- * Match a classes which are abstract.
- * 
- * This {@code MatchingStrategy} does never match by method.
+ * A utility interface to have a more readable API. This class holds possible method matching strategies.
  * 
  * @author Dominik Seichter
+ * 
  */
-public class AbstractTypeMatchingStrategy implements MatchingStrategy {
+public interface Match {
 
-	@Override
-	public boolean matchesByMethod(final Method method) {
-		return false;
-	}
-
-	@Override
-	public boolean matchesByType(final Class<?> clazz) {
-		Check.notNull(clazz, "clazz");
-		return ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT);
-	}
+	MatchingStrategy BUILDER_METHODS = new BuilerMethodMatchingStrategy();
+	MatchingStrategy SETTER_METHODS = new SetterMethodMatchingStrategy();
+	// MatchingStrategy ALL_PUBLIC_METHODS = new PublicMethodMatchingStrategy();
 
 }

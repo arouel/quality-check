@@ -20,17 +20,17 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 
 	@Test
 	public void testExactMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(String.class).matches(String.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(String.class).matchesByType(String.class));
 	}
 
 	@Test
 	public void testInheritedMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Number.class).matches(Long.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Number.class).matchesByType(Long.class));
 	}
 
 	@Test
 	public void testNoMatch() {
-		Assert.assertFalse(new InterfaceOfTypeMatchingStrategy(String.class).matches(Long.class));
+		Assert.assertFalse(new InterfaceOfTypeMatchingStrategy(String.class).matchesByType(Long.class));
 	}
 
 	@Test
@@ -47,8 +47,8 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 
 	@Test
 	public void testObjectdMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(Long.class));
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(String.class));
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matches(Map.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(Long.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(String.class));
+		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(Map.class));
 	}
 }

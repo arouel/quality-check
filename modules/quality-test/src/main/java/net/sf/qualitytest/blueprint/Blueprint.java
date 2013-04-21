@@ -70,8 +70,6 @@ public final class Blueprint {
 
 	private static final BlueprintConfiguration DEFAULT_CONFIG = new DefaultBlueprintConfiguration();
 
-	private static final String SETTER_PREFIX = "set";
-
 	/**
 	 * Blueprint a Java-Bean.
 	 * 
@@ -93,7 +91,7 @@ public final class Blueprint {
 		Check.notNull(session, "sesion");
 
 		final T obj = safeNewInstance(clazz);
-		bluePrintSetters(obj, clazz, config, session);
+		bluePrintPublicMethods(obj, clazz, config, session);
 		bluePrintPublicAttributes(obj, clazz, config, session);
 		return obj;
 	}
@@ -139,27 +137,22 @@ public final class Blueprint {
 	private static void bluePrintMethod(final Object that, final Method m, final BlueprintConfiguration config,
 			final BlueprintSession session) {
 		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
-		final Class<?>[] parameterTypes = m.getParameterTypes();
-		final Object[] values = new Object[parameterTypes.length];
-
-		if (creator != null && parameterTypes.length == 1) {
-			values[0] = creator.createValue(parameterTypes[0], config, session);
-		} else {
+		if (creator != null) {
+			final Class<?>[] parameterTypes = m.getParameterTypes();
+			final Object[] values = new Object[parameterTypes.length];
 			for (int i = 0; i < parameterTypes.length; i++) {
-				final Class<?> parameter = parameterTypes[i];
-				values[i] = construct(parameter, config, session);
+				values[i] = creator.createValue(parameterTypes[i], config, session);
 			}
+
+			SafeInvoke.invoke(new ExceptionRunnable<Object>() {
+
+				@Override
+				public Object run() throws Exception {
+					m.invoke(that, values);
+					return null;
+				}
+			}, BlueprintException.class);
 		}
-
-		SafeInvoke.invoke(new ExceptionRunnable<Object>() {
-
-			@Override
-			public Object run() throws Exception {
-				m.invoke(that, values);
-				return null;
-			}
-		}, BlueprintException.class);
-
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -210,7 +203,7 @@ public final class Blueprint {
 	}
 
 	/**
-	 * Blueprint all setters in an object.
+	 * Blueprint all non static public method in an object.
 	 * 
 	 * @param <T>
 	 *            type of object
@@ -223,10 +216,10 @@ public final class Blueprint {
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static <T> void bluePrintSetters(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
+	private static <T> void bluePrintPublicMethods(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
 			final BlueprintSession session) {
 		for (final Method m : clazz.getMethods()) {
-			if (isSetter(m)) {
+			if (isRelevant(m)) {
 				bluePrintMethod(obj, m, config, session);
 			}
 		}
@@ -377,7 +370,7 @@ public final class Blueprint {
 
 		@SuppressWarnings("unchecked")
 		final T obj = (T) safeNewInstance(constructor, parameters);
-		bluePrintSetters(obj, clazz, config, session);
+		bluePrintPublicMethods(obj, clazz, config, session);
 		bluePrintPublicAttributes(obj, clazz, config, session);
 
 		return obj;
@@ -390,11 +383,10 @@ public final class Blueprint {
 	 *            a method
 	 * @return true if this is a setter method
 	 */
-	protected static boolean isSetter(final Method m) {
+	protected static boolean isRelevant(final Method m) {
 		final boolean isNotStatic = !ModifierBits.isModifierBitSet(m.getModifiers(), Modifier.STATIC);
 		final boolean isPublic = ModifierBits.isModifierBitSet(m.getModifiers(), Modifier.PUBLIC);
-		final boolean isSetterName = m.getName().startsWith(SETTER_PREFIX);
-		return isNotStatic && isPublic && isSetterName;
+		return isNotStatic && isPublic;
 	}
 
 	/**

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomCharValueCreationStrategy;
@@ -30,6 +31,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStr
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 /**
@@ -85,6 +87,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 		addRandomEnumStrategy(list);
 		DefaultBlueprintConfiguration.addDefaultArrayStrategy(list);
 		DefaultBlueprintConfiguration.addDefaultCollections(list);
+		list.add(new StrategyPair(new SetterMethodMatchingStrategy(), new BlueprintCreationStrategy()));
 
 		return list;
 	}

@@ -34,12 +34,12 @@ public class ArrayTypeMatchingStrategyTest {
 
 	@Test
 	public void testExactMatch() {
-		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(String[].class));
+		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(String[].class));
 	}
 
 	@Test
 	public void testNoMatch() {
-		Assert.assertFalse(new ArrayTypeMatchingStrategy().matches(long.class));
+		Assert.assertFalse(new ArrayTypeMatchingStrategy().matchesByType(long.class));
 	}
 
 	@Test
@@ -55,13 +55,13 @@ public class ArrayTypeMatchingStrategyTest {
 
 	@Test
 	public void testObjectMatch() {
-		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(Object[].class));
-		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(byte[].class));
-		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(Map[].class));
+		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(Object[].class));
+		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(byte[].class));
+		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(Map[].class));
 	}
 
 	@Test
 	public void testPrimitiveMatch() {
-		Assert.assertTrue(new ArrayTypeMatchingStrategy().matches(int[].class));
+		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(int[].class));
 	}
 }

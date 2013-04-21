@@ -27,8 +27,9 @@ import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintSession;
 import net.sf.qualitytest.blueprint.CreationStrategy;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveMethodNameMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 import com.google.common.collect.ImmutableList;
@@ -67,11 +68,17 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
+	public <T> T construct(final Class<T> clazz) {
+		return Blueprint.construct(clazz, this, new BlueprintSession());
+	}
+
+	@Override
+	@Throws(IllegalNullArgumentException.class)
 	public CreationStrategy<?> findCreationStrategyForMethod(final Method method) {
 		Check.notNull(method, "method");
 
 		for (final StrategyPair entry : Lists.reverse(mapping)) {
-			if (entry.getKey().matches(method.getName())) {
+			if (entry.getKey().matchesByMethod(method)) {
 				return entry.getValue();
 			}
 		}
@@ -85,7 +92,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		Check.notNull(clazz, "clazz");
 
 		for (final StrategyPair entry : Lists.reverse(mapping)) {
-			if (entry.getKey().matches(clazz)) {
+			if (entry.getKey().matchesByType(clazz)) {
 				return entry.getValue();
 			}
 		}
@@ -100,14 +107,14 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> T construct(final Class<T> clazz) {
-		return Blueprint.construct(clazz, this, new BlueprintSession());
+	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
+		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
-		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
+	public <T> BlueprintConfiguration with(final MatchingStrategy matchingStrategy) {
+		return with(matchingStrategy, new BlueprintCreationStrategy());
 	}
 
 	@Override
@@ -125,7 +132,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(final String name, final T value) {
-		return with(new CaseInsensitiveMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
+		return with(new CaseInsensitiveMethodNameMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override

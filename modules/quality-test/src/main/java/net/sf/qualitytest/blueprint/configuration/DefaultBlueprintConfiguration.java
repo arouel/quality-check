@@ -23,11 +23,13 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultArrayCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.ArrayTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 /**
@@ -72,8 +74,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 
 		list.add(new StrategyPair(new TypeMatchingStrategy(Map.class), new SingleValueCreationStrategy<Map<Object, Object>>(
 				new HashMap<Object, Object>())));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Set.class), new SingleValueCreationStrategy<Set<Object>>(
-				new HashSet<Object>())));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Set.class), new SingleValueCreationStrategy<Set<Object>>(new HashSet<Object>())));
 		list.add(new StrategyPair(new TypeMatchingStrategy(List.class), new SingleValueCreationStrategy<List<Object>>(
 				new ArrayList<Object>())));
 	}
@@ -96,8 +97,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		list.add(new StrategyPair(new TypeMatchingStrategy(int.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
 		list.add(new StrategyPair(new TypeMatchingStrategy(Boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
 		list.add(new StrategyPair(new TypeMatchingStrategy(boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Character.class), new SingleValueCreationStrategy<Character>(
-				CHARACTER_DEFAULT)));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Character.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
 		list.add(new StrategyPair(new TypeMatchingStrategy(char.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
 		list.add(new StrategyPair(new TypeMatchingStrategy(Short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
 		list.add(new StrategyPair(new TypeMatchingStrategy(short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
@@ -111,6 +111,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		addDefaultEnumStrategy(list);
 		addDefaultArrayStrategy(list);
 		addDefaultCollections(list);
+		list.add(new StrategyPair(new SetterMethodMatchingStrategy(), new BlueprintCreationStrategy()));
 
 		return list;
 	}

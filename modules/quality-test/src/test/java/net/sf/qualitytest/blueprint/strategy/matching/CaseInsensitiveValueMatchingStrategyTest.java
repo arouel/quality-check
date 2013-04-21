@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Method;
+
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
@@ -23,87 +25,100 @@ import org.junit.Test;
 
 public class CaseInsensitiveValueMatchingStrategyTest {
 
+	public static class MyClass {
+		private String email;
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(final String email) {
+			this.email = email;
+		}
+
+	}
+
 	@Test
 	public void testCaseInsensitiveEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("email");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("email");
 
 		Assert.assertEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testCaseInsensitiveHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("email");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("email");
 
 		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
 	public void testConstructWithNullThrows() {
-		new CaseInsensitiveMatchingStrategy(null);
+		new CaseInsensitiveMethodNameMatchingStrategy(null);
 	}
 
 	@Test
 	public void testEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
 
 		Assert.assertEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
 
 		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test
-	public void testMatchesCaseInsensitveOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
-		Assert.assertTrue(strategy.matches("email"));
+	public void testMatchesCaseInsensitveOk() throws SecurityException, NoSuchMethodException {
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("getEMail");
+		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("getEmail")));
 	}
 
 	@Test
-	public void testMatchesOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
-		Assert.assertTrue(strategy.matches("EMail"));
+	public void testMatchesOk() throws SecurityException, NoSuchMethodException {
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("setEmail", String.class)));
 	}
 
 	@Test
-	public void testMatchesSetterOk() {
-		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
-		Assert.assertTrue(strategy.matches("setEmail"));
+	public void testMatchesSetterOk() throws SecurityException, NoSuchMethodException {
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("email");
+		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("setEmail", String.class)));
 	}
 
 	@Test(expected = IllegalNullArgumentException.class)
 	public void testMatchesWithNullThrows() {
-		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
-		strategy.matches((String) null);
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		strategy.matchesByMethod((Method) null);
 	}
 
 	@Test
 	public void testNotEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail12");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail12");
 
 		Assert.assertNotEquals(strategy1, strategy2);
 	}
 
 	@Test
 	public void testNotHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMatchingStrategy("EMail12");
+		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail12");
 
 		Assert.assertNotEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test
 	public void testNotMatchesType() {
-		final MatchingStrategy strategy = new CaseInsensitiveMatchingStrategy("EMail");
-		Assert.assertFalse(strategy.matches(String.class));
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
+		Assert.assertFalse(strategy.matchesByType(String.class));
 	}
 
 }

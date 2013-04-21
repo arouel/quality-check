@@ -13,33 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.strategy.matching;
+package net.sf.qualitytest.blueprint.strategy.creation;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.ModifierBits;
-import net.sf.qualitytest.blueprint.MatchingStrategy;
+import net.sf.qualitytest.blueprint.Blueprint;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintSession;
+import net.sf.qualitytest.blueprint.CreationStrategy;
 
 /**
- * Match a classes which are abstract.
- * 
- * This {@code MatchingStrategy} does never match by method.
+ * This {@code CreationStrategy} constructs the requested object using {@code Blueprint} itself.
  * 
  * @author Dominik Seichter
+ * 
  */
-public class AbstractTypeMatchingStrategy implements MatchingStrategy {
+public class BlueprintCreationStrategy implements CreationStrategy<Object> {
 
 	@Override
-	public boolean matchesByMethod(final Method method) {
-		return false;
-	}
-
-	@Override
-	public boolean matchesByType(final Class<?> clazz) {
-		Check.notNull(clazz, "clazz");
-		return ModifierBits.isModifierBitSet(clazz.getModifiers(), Modifier.ABSTRACT);
+	public Object createValue(final Class<?> expectedClazz, final BlueprintConfiguration config, final BlueprintSession session) {
+		return Blueprint.construct(expectedClazz, config, session);
 	}
 
 }

@@ -15,11 +15,15 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Method;
+
 import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
  * Match a value based on its exact type.
+ * 
+ * This {@code MatchingStrategy} does never match by method.
  * 
  * @author Dominik Seichter
  */
@@ -62,14 +66,14 @@ public class TypeMatchingStrategy implements MatchingStrategy {
 	}
 
 	@Override
-	public boolean matches(final Class<?> clazz) {
-		Check.notNull(clazz, "clazz");
-		return this.clazz.equals(clazz);
+	public boolean matchesByMethod(final Method method) {
+		return false;
 	}
 
 	@Override
-	public boolean matches(final String method) {
-		return false;
+	public boolean matchesByType(final Class<?> clazz) {
+		Check.notNull(clazz, "clazz");
+		return this.clazz.equals(clazz);
 	}
 
 }

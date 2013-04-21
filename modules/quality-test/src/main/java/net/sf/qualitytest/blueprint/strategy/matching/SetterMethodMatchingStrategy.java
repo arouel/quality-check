@@ -21,44 +21,26 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
- * Match all class types that are arrays.
+ * This value matching strategy matches all methods that are setters, i.e. start with the prefix 'set'.
  * 
- * This {@code MatchingStrategy} does never match by method.
+ * This matching strategy does never match by type.
  * 
  * @author Dominik Seichter
  */
-public class ArrayTypeMatchingStrategy implements MatchingStrategy {
+public class SetterMethodMatchingStrategy implements MatchingStrategy {
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		return prime;
-	}
+	private static final String SETTER_PREFIX = "set";
 
 	@Override
 	public boolean matchesByMethod(final Method method) {
-		return false;
+		Check.notNull(method, "method");
+
+		return method.getName().startsWith(SETTER_PREFIX);
 	}
 
 	@Override
 	public boolean matchesByType(final Class<?> clazz) {
-		Check.notNull(clazz, "clazz");
-		return clazz.isArray();
+		return false;
 	}
 
 }

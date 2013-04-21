@@ -15,8 +15,6 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
-import net.sf.qualitytest.blueprint.Blueprint;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,16 +26,16 @@ public class AbstractTypeMatchingStrategyTest {
 
 	@Test
 	public void testMatchAbstract() {
-		Assert.assertEquals(true, new AbstractTypeMatchingStrategy().matches(MyAbstract.class));
+		Assert.assertEquals(true, new AbstractTypeMatchingStrategy().matchesByType(MyAbstract.class));
 	}
 
 	@Test
-	public void testMatchNoString() {
-		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matches(Blueprint.random().construct(String.class)));
+	public void testMatchNoString() throws SecurityException, NoSuchMethodException {
+		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matchesByMethod(String.class.getDeclaredMethod("toString")));
 	}
 
 	@Test
 	public void testMatchNotAbstract() {
-		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matches(AbstractTypeMatchingStrategyTest.class));
+		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matchesByType(AbstractTypeMatchingStrategyTest.class));
 	}
 }

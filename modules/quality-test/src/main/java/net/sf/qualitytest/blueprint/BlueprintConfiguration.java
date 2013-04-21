@@ -29,25 +29,6 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 public interface BlueprintConfiguration {
 
 	/**
-	 * Find a creation strategy that matches on the given method.
-	 * 
-	 * @param method
-	 *            A setter method
-	 * 
-	 * @return a {@code ValueCreationStrategy} or {@code null}
-	 */
-	CreationStrategy<?> findCreationStrategyForMethod(final Method method);
-
-	CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz);
-
-	/**
-	 * Retrieve if public attributes are filled during blueprinting.
-	 * 
-	 * @return {@code true} if public attributes are filled during blueprinting
-	 */
-	boolean isWithPublicAttributes();
-
-	/**
 	 * Construct a Java-Object using a class as a blueprint.
 	 * 
 	 * @see Blueprint
@@ -61,6 +42,32 @@ public interface BlueprintConfiguration {
 	<T> T construct(final Class<T> clazz);
 
 	/**
+	 * Find a creation strategy that matches on the given method.
+	 * 
+	 * @param method
+	 *            A setter method
+	 * 
+	 * @return a {@code ValueCreationStrategy} or {@code null}
+	 */
+	CreationStrategy<?> findCreationStrategyForMethod(final Method method);
+
+	/**
+	 * Find a creation strategy that matches on a given type.
+	 * 
+	 * @param class A class
+	 * 
+	 * @return a {@code ValueCreationStrategy} or {@code null}
+	 */
+	CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz);
+
+	/**
+	 * Retrieve if public attributes are filled during blueprinting.
+	 * 
+	 * @return {@code true} if public attributes are filled during blueprinting
+	 */
+	boolean isWithPublicAttributes();
+
+	/**
 	 * Replace every attribute with the typee {@code type} with a given value.
 	 * 
 	 * @param type
@@ -71,6 +78,15 @@ public interface BlueprintConfiguration {
 	 * @return the changed blueprint configuration.
 	 */
 	<T> BlueprintConfiguration with(final Class<T> type, final T value);
+
+	/**
+	 * Blueprint everything matching a given {@code MatchingStrategy} using this configuration.
+	 * 
+	 * @param matchingStrategy
+	 *            Matching strategy to define if a given type or method should be constructed using blueprint.
+	 * @return the changed blueprint configuration
+	 */
+	<T> BlueprintConfiguration with(final MatchingStrategy matchingStrategy);
 
 	/**
 	 * Replace every attribute which matches a given strategy with a given value.
