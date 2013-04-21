@@ -30,27 +30,6 @@ import net.sf.qualitytest.blueprint.MatchingStrategy;
 public class ArrayTypeMatchingStrategy implements MatchingStrategy {
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		return prime;
-	}
-
-	@Override
 	public boolean matchesByMethod(final Method method) {
 		return false;
 	}

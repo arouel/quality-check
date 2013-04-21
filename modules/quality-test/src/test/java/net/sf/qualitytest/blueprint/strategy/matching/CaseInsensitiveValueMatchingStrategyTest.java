@@ -38,41 +38,9 @@ public class CaseInsensitiveValueMatchingStrategyTest {
 
 	}
 
-	@Test
-	public void testCaseInsensitiveEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("email");
-
-		Assert.assertEquals(strategy1, strategy2);
-	}
-
-	@Test
-	public void testCaseInsensitiveHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("email");
-
-		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
-	}
-
 	@Test(expected = IllegalNullArgumentException.class)
 	public void testConstructWithNullThrows() {
 		new CaseInsensitiveMethodNameMatchingStrategy(null);
-	}
-
-	@Test
-	public void testEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-
-		Assert.assertEquals(strategy1, strategy2);
-	}
-
-	@Test
-	public void testHashCodeEquals() {
-		final MatchingStrategy strategy1 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-		final MatchingStrategy strategy2 = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
-
-		Assert.assertEquals(strategy1.hashCode(), strategy2.hashCode());
 	}
 
 	@Test
