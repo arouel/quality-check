@@ -1594,6 +1594,46 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that an long reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNegative(int, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNegativeArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static long notNegative(@Nonnull final long value) {
+		if (value < 0L) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an long reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static long notNegative(@Nonnull final long value, @Nullable final String name) {
+		if (value < 0L) {
+			throw new IllegalNegativeArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
 	 * Ensures that an object reference passed as a parameter to the calling method is not {@code null}.
 	 * 
 	 * <p>
