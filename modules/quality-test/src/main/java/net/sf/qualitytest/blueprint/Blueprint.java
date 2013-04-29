@@ -55,7 +55,7 @@ import net.sf.qualitytest.exception.BlueprintException;
  *  final User user = Blueprint.random().with("email", "mail@example.com").construct(User.class);
  * </code>
  * 
- * {@code Blueprint} offers to custome configurations. A {@code DefaultBlueprintConfiguration} which fills any object
+ * {@code Blueprint} offers two custom configurations. A {@code DefaultBlueprintConfiguration} which fills any object
  * using default, empty or 0 values. The second configuration, {@code RandomBlueprintConfiguration} will always generate
  * a random value. Both fill child objects using a deep-tree-search.
  * 

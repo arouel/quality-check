@@ -26,8 +26,14 @@ import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrate
  */
 public interface Match {
 
+	/**
+	 * Match all public methods of classes with a name ending in "Builder".
+	 */
 	MatchingStrategy BUILDER_METHODS = new BuilerMethodMatchingStrategy();
+
+	/**
+	 * Match all methods which are setter-methods.
+	 */
 	MatchingStrategy SETTER_METHODS = new SetterMethodMatchingStrategy();
-	// MatchingStrategy ALL_PUBLIC_METHODS = new PublicMethodMatchingStrategy();
 
 }
