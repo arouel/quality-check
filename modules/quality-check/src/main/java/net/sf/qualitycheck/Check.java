@@ -1554,6 +1554,86 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that an double reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNegative(double, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNegativeArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static double notNegative(@Nonnull final double value) {
+		if (value < 0.0) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an double reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static double notNegative(@Nonnull final double value, @Nullable final String name) {
+		if (value < 0.0) {
+			throw new IllegalNegativeArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an float reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNegative(float, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNegativeArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static float notNegative(@Nonnull final float value) {
+		if (value < 0.0f) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an float reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static float notNegative(@Nonnull final float value, @Nullable final String name) {
+		if (value < 0.0f) {
+			throw new IllegalNegativeArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
 	 * Ensures that an integer reference passed as a parameter to the calling method is not smaller than {@code 0}.
 	 * 
 	 * <p>
@@ -1628,6 +1708,46 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static long notNegative(@Nonnull final long value, @Nullable final String name) {
 		if (value < 0L) {
+			throw new IllegalNegativeArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an short reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notNegative(short, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNegativeArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static short notNegative(@Nonnull final short value) {
+		if (value < (short) 0) {
+			throw new IllegalNegativeArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an short reference passed as a parameter to the calling method is not smaller than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalNegativeArgumentException.class)
+	public static short notNegative(@Nonnull final short value, @Nullable final String name) {
+		if (value < (short) 0) {
 			throw new IllegalNegativeArgumentException(name);
 		}
 		return value;
