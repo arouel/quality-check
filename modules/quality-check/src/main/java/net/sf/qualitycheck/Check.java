@@ -43,6 +43,7 @@ import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
+import net.sf.qualitycheck.exception.IllegalPositiveArgumentException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 import net.sf.qualitycheck.exception.RuntimeInstantiationException;
@@ -1791,6 +1792,206 @@ public final class Check {
 			throw new IllegalNullArgumentException(name);
 		}
 		return reference;
+	}
+
+	/**
+	 * Ensures that an double reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(double, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static double notPositive(@Nonnull final double value) {
+		if (value > 0.0) {
+			throw new IllegalPositiveArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an double reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static double notPositive(@Nonnull final double value, @Nullable final String name) {
+		if (value > 0.0) {
+			throw new IllegalPositiveArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an float reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(float, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static float notPositive(@Nonnull final float value) {
+		if (value > 0.0f) {
+			throw new IllegalPositiveArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an float reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static float notPositive(@Nonnull final float value, @Nullable final String name) {
+		if (value > 0.0f) {
+			throw new IllegalPositiveArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(int, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static int notPositive(@Nonnull final int value) {
+		if (value > 0) {
+			throw new IllegalPositiveArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static int notPositive(@Nonnull final int value, @Nullable final String name) {
+		if (value > 0) {
+			throw new IllegalPositiveArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an long reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(long, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static long notPositive(@Nonnull final long value) {
+		if (value > 0L) {
+			throw new IllegalPositiveArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an long reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static long notPositive(@Nonnull final long value, @Nullable final String name) {
+		if (value > 0L) {
+			throw new IllegalPositiveArgumentException(name);
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an short reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(short, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param value
+	 *            a number
+	 * @return the non-null reference that was validated
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static short notPositive(@Nonnull final short value) {
+		if (value > (short) 0) {
+			throw new IllegalPositiveArgumentException();
+		}
+		return value;
+	}
+
+	/**
+	 * Ensures that an short reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * @return the non-null reference that was validated
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static short notPositive(@Nonnull final short value, @Nullable final String name) {
+		if (value > (short) 0) {
+			throw new IllegalPositiveArgumentException(name);
+		}
+		return value;
 	}
 
 	/**
