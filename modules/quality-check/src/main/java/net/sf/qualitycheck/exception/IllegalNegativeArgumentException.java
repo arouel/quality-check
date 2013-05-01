@@ -18,8 +18,8 @@ package net.sf.qualitycheck.exception;
 import javax.annotation.Nullable;
 
 /**
- * Thrown to indicate that a specific argument of a method has been passed with an negative integer reference that does
- * not accept it as valid. For example, if a method needs an ID equal or greater than <code>0</code> and is passed with
+ * Thrown to indicate that a specific argument of a method has been passed with a negative integer reference that it
+ * does not accept as valid. For example, if a method needs an ID smaller than <code>0</code> and is passed with
  * <code>-1</code> then this exception should be thrown.
  * 
  * @author André Rouél
