@@ -1597,7 +1597,7 @@ public final class Check {
 	 * Ensures that an long reference passed as a parameter to the calling method is not smaller than {@code 0}.
 	 * 
 	 * <p>
-	 * We recommend to use the overloaded method {@link Check#notNegative(int, String)} and pass as second argument the
+	 * We recommend to use the overloaded method {@link Check#notNegative(long, String)} and pass as second argument the
 	 * name of the parameter to enhance the exception message.
 	 * 
 	 * @param value
