@@ -41,6 +41,7 @@ import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
+import net.sf.qualitycheck.exception.IllegalPositiveArgumentException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 import net.sf.qualitycheck.exception.RuntimeInstantiationException;
@@ -1549,6 +1550,48 @@ public final class ConditionalCheck {
 	public static <T> void notNull(final boolean condition, @Nonnull final T reference, @Nullable final String name) {
 		if (condition) {
 			Check.notNull(reference, name);
+		}
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notPositive(int, String)} and pass as second argument the
+	 * name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param value
+	 *            a number
+	 * 
+	 * @throws IllegalPositiveArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static void notPositive(final boolean condition, @Nonnull final int value) {
+		if (condition) {
+			Check.notPositive(value);
+		}
+	}
+
+	/**
+	 * Ensures that an integer reference passed as a parameter to the calling method is not greater than {@code 0}.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param value
+	 *            a number
+	 * @param name
+	 *            name of the number reference (in source code)
+	 * 
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code reference} is smaller than {@code 0}
+	 */
+	@Throws(IllegalPositiveArgumentException.class)
+	public static void notPositive(final boolean condition, @Nonnull final int value, @Nullable final String name) {
+		if (condition) {
+			Check.notPositive(value, name);
 		}
 	}
 

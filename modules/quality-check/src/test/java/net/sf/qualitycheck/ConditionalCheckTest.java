@@ -43,6 +43,7 @@ import net.sf.qualitycheck.exception.IllegalNumberArgumentException;
 import net.sf.qualitycheck.exception.IllegalNumericArgumentException;
 import net.sf.qualitycheck.exception.IllegalPatternArgumentException;
 import net.sf.qualitycheck.exception.IllegalPositionIndexException;
+import net.sf.qualitycheck.exception.IllegalPositiveArgumentException;
 import net.sf.qualitycheck.exception.IllegalRangeException;
 import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 
@@ -1011,6 +1012,36 @@ public class ConditionalCheckTest {
 	@Test
 	public void testNotNullArgName_Positive_NoFailure() {
 		ConditionalCheck.notNull(true, "Non Null Object", "arg");
+	}
+
+	@Test
+	public void testNotPositive_Positive() {
+		ConditionalCheck.notPositive(false, 42);
+	}
+
+	@Test(expected = IllegalPositiveArgumentException.class)
+	public void testNotPositive_Positive_Failure() {
+		ConditionalCheck.notPositive(true, 42);
+	}
+
+	@Test
+	public void testNotPositive_Positive_NoFailure() {
+		ConditionalCheck.notPositive(true, -42);
+	}
+
+	@Test
+	public void testNotPositiveArgName_Positive() {
+		ConditionalCheck.notPositive(false, 42, "arg");
+	}
+
+	@Test(expected = IllegalPositiveArgumentException.class)
+	public void testNotPositiveArgName_Positive_Failure() {
+		ConditionalCheck.notPositive(true, 42, "arg");
+	}
+
+	@Test
+	public void testNotPositiveArgName_Positive_NoFailure() {
+		ConditionalCheck.notPositive(true, -42, "arg");
 	}
 
 	@Test
