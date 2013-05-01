@@ -32,12 +32,12 @@ public class IllegalNegativeArgumentException extends RuntimeException {
 	/**
 	 * Default message to indicate that the a given argument must not be empty.
 	 */
-	protected static final String DEFAULT_MESSAGE = "The passed argument must be equal ot greater than 0.";
+	protected static final String DEFAULT_MESSAGE = "The passed argument must be greater than 0.";
 
 	/**
 	 * Message to indicate that the the given argument with <em>name</em> must not be empty.
 	 */
-	protected static final String MESSAGE_WITH_NAME = "The passed argument '%s' must be equal ot greater than 0.";
+	protected static final String MESSAGE_WITH_NAME = "The passed argument '%s' must be greater than 0.";
 
 	/**
 	 * Determines the message to be used, depending on the passed argument name. If if the given argument name is

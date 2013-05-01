@@ -43,7 +43,7 @@ public class IllegalNegativeArgumentExceptionTest {
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
 		final IllegalNegativeArgumentException e = new IllegalNegativeArgumentException("argName", null);
-		Assert.assertEquals("The passed argument 'argName' must be equal ot greater than 0.", e.getMessage());
+		Assert.assertEquals("The passed argument 'argName' must be greater than 0.", e.getMessage());
 	}
 
 	@Test
