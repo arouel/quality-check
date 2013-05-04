@@ -17,6 +17,8 @@ package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Method;
 
+import javax.annotation.Nonnull;
+
 import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
 
 /**
@@ -41,7 +43,7 @@ public interface MatchingStrategy {
 	 * 
 	 * @return true if the strategy matches and the {@code ValueCreationStrategy} should be applied
 	 */
-	boolean matchesByMethod(final Method method);
+	boolean matchesByMethod(@Nonnull final Method method);
 
 	/**
 	 * Test if a type matches this strategy.
@@ -51,5 +53,5 @@ public interface MatchingStrategy {
 	 * 
 	 * @return true if the strategy matches and the {@code ValueCreationStrategy} should be applied
 	 */
-	boolean matchesByType(final Class<?> clazz);
+	boolean matchesByType(@Nonnull final Class<?> clazz);
 }

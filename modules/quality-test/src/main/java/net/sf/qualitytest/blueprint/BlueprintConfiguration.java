@@ -18,6 +18,9 @@ package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Method;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 
@@ -39,7 +42,8 @@ public interface BlueprintConfiguration {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	<T> T construct(final Class<T> clazz);
+	@Nullable
+	<T> T construct(@Nonnull final Class<T> clazz);
 
 	/**
 	 * Find a creation strategy that matches on the given method.
@@ -49,7 +53,8 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return a {@code ValueCreationStrategy} or {@code null}
 	 */
-	CreationStrategy<?> findCreationStrategyForMethod(final Method method);
+	@Nullable
+	CreationStrategy<?> findCreationStrategyForMethod(@Nonnull final Method method);
 
 	/**
 	 * Find a creation strategy that matches on a given type.
@@ -58,7 +63,8 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return a {@code ValueCreationStrategy} or {@code null}
 	 */
-	CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz);
+	@Nullable
+	CreationStrategy<?> findCreationStrategyForType(@Nonnull final Class<?> clazz);
 
 	/**
 	 * Retrieve if public attributes are filled during blueprinting.
@@ -77,7 +83,8 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	<T> BlueprintConfiguration with(final Class<T> type, final T value);
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final T value);
 
 	/**
 	 * Blueprint everything matching a given {@code MatchingStrategy} using this configuration.
@@ -86,7 +93,8 @@ public interface BlueprintConfiguration {
 	 *            Matching strategy to define if a given type or method should be constructed using blueprint.
 	 * @return the changed blueprint configuration
 	 */
-	<T> BlueprintConfiguration with(final MatchingStrategy matchingStrategy);
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final MatchingStrategy matchingStrategy);
 
 	/**
 	 * Replace every attribute which matches a given strategy with a given value.
@@ -110,7 +118,8 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
-	<T> BlueprintConfiguration with(final String name, final T value);
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final String name, @Nullable final T value);
 
 	/**
 	 * Configure whether public attributes should be filled with values during blueprinting.
@@ -120,6 +129,7 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
+	@Nonnull
 	BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes);
 
 }

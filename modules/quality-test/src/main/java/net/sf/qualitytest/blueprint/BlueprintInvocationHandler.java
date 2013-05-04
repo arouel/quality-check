@@ -18,11 +18,13 @@ package net.sf.qualitytest.blueprint;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import javax.annotation.Nonnull;
+
 import net.sf.qualitycheck.Check;
 
 /**
- * Invocation handler which is used to blueprint objects returned from dynamic
- * interface proxies created during blueprinting.
+ * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
+ * blueprinting.
  * 
  * @author Dominik Seichter
  */
@@ -39,15 +41,13 @@ class BlueprintInvocationHandler implements InvocationHandler {
 	 * @param session
 	 *            A {@link BlueprintSession}
 	 */
-	public BlueprintInvocationHandler(final BlueprintConfiguration config,
-			final BlueprintSession session) {
+	public BlueprintInvocationHandler(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session) {
 		this.config = Check.notNull(config, "config");
 		this.session = Check.notNull(session, "session");
 	}
 
 	@Override
-	public Object invoke(final Object instance, final Method method,
-			final Object[] parameters) throws Throwable { // NOSONAR
+	public Object invoke(final Object instance, final Method method, final Object[] parameters) throws Throwable { // NOSONAR
 		return Blueprint.construct(method.getReturnType(), config, session);
 	}
 

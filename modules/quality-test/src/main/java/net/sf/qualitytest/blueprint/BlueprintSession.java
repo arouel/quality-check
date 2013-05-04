@@ -21,6 +21,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import javax.annotation.Nonnull;
+
+import net.sf.qualitycheck.ArgumentsChecked;
+import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.exception.BlueprintCycleException;
 
 /**
@@ -44,7 +50,7 @@ public final class BlueprintSession {
 	 *            a class
 	 * @throws {@code BlueprintCycleException} if a cycle has been detected
 	 */
-	private void detectCycles(final Class<?> clazz) {
+	private void detectCycles(@Nonnull final Class<?> clazz) {
 		if (stack.contains(clazz)) {
 			throw new BlueprintCycleException(clazz);
 		}
@@ -87,7 +93,11 @@ public final class BlueprintSession {
 	 * @throws {@code BlueprintCycleException} if a cycle has been detected
 	 * 
 	 */
-	public void push(final Class<?> clazz) {
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public void push(@Nonnull final Class<?> clazz) {
+		Check.notNull(clazz, "clazz");
+
 		detectCycles(clazz);
 
 		stack.push(clazz);

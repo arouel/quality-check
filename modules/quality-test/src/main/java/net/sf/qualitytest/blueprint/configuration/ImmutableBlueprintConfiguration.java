@@ -19,8 +19,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
@@ -59,7 +63,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		withPublicAttributes = false;
 	}
 
-	protected ImmutableBlueprintConfiguration(final List<StrategyPair> attributeMapping, final boolean withPublicAttributes) {
+	protected ImmutableBlueprintConfiguration(@Nonnull final List<StrategyPair> attributeMapping, final boolean withPublicAttributes) {
 		Check.notNull(attributeMapping, "attributeMapping");
 
 		mapping = ImmutableList.copyOf(attributeMapping);
@@ -68,13 +72,13 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> T construct(final Class<T> clazz) {
+	public <T> T construct(@Nonnull final Class<T> clazz) {
 		return Blueprint.construct(clazz, this, new BlueprintSession());
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public CreationStrategy<?> findCreationStrategyForMethod(final Method method) {
+	public CreationStrategy<?> findCreationStrategyForMethod(@Nonnull final Method method) {
 		Check.notNull(method, "method");
 
 		for (final StrategyPair entry : Lists.reverse(mapping)) {
@@ -88,7 +92,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public CreationStrategy<?> findCreationStrategyForType(final Class<?> clazz) {
+	public CreationStrategy<?> findCreationStrategyForType(@Nonnull final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
 		for (final StrategyPair entry : Lists.reverse(mapping)) {
@@ -107,19 +111,19 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> BlueprintConfiguration with(final Class<T> type, final T value) {
+	public <T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final T value) {
 		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public <T> BlueprintConfiguration with(final MatchingStrategy matchingStrategy) {
+	public <T> BlueprintConfiguration with(@Nonnull final MatchingStrategy matchingStrategy) {
 		return with(matchingStrategy, new BlueprintCreationStrategy());
 	}
 
 	@Override
 	@Throws(IllegalNullArgumentException.class)
-	public BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator) {
+	public BlueprintConfiguration with(@Nonnull final MatchingStrategy matcher, @Nonnull final CreationStrategy<?> creator) {
 		Check.notNull(matcher, "matcher");
 		Check.notNull(creator, "creator");
 
@@ -130,8 +134,9 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	}
 
 	@Override
-	@Throws(IllegalNullArgumentException.class)
-	public <T> BlueprintConfiguration with(final String name, final T value) {
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public <T> BlueprintConfiguration with(@Nonnull final String name, @Nullable final T value) {
+		Check.notEmpty(name, "name");
 		return with(new CaseInsensitiveMethodNameMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 

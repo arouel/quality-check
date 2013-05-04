@@ -18,7 +18,12 @@ package net.sf.qualitytest.blueprint;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.annotation.Nonnull;
+
+import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.exception.BlueprintException;
 
 /**
@@ -80,7 +85,9 @@ final class SafeInvoke {
 	 * @throws BlueprintException
 	 *             in case of any error
 	 */
-	public static <T> T invoke(final ExceptionRunnable<T> runnable, final Class<? extends RuntimeException> exceptionClass) {
+	@ArgumentsChecked
+	@Throws(IllegalNullArgumentException.class)
+	public static <T> T invoke(@Nonnull final ExceptionRunnable<T> runnable, @Nonnull final Class<? extends RuntimeException> exceptionClass) {
 		Check.notNull(runnable, "runnable");
 		Check.notNull(exceptionClass, "exceptionClass");
 

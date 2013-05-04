@@ -21,6 +21,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
@@ -85,7 +88,8 @@ public final class Blueprint {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	private static <T> T bean(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
+	private static <T> T bean(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
+			@Nonnull final BlueprintSession session) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 		Check.notNull(session, "sesion");
@@ -156,8 +160,8 @@ public final class Blueprint {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private static <T> T blueprintObject(final Class<T> clazz, final BlueprintConfiguration config, final CreationStrategy<?> creator,
-			final BlueprintSession session) {
+	private static <T> T blueprintObject(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
+			@Nullable final CreationStrategy<?> creator, @Nonnull final BlueprintSession session) {
 		if (creator != null) {
 			return (T) creator.createValue(clazz, config, session);
 		} else if (clazz.isInterface()) {
@@ -238,7 +242,7 @@ public final class Blueprint {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T construct(final Class<T> clazz) {
+	public static <T> T construct(@Nonnull final Class<T> clazz) {
 		Check.notNull(clazz, "clazz");
 
 		return Blueprint.construct(clazz, DEFAULT_CONFIG, new BlueprintSession());
@@ -259,7 +263,7 @@ public final class Blueprint {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T construct(final Class<T> clazz, final BlueprintConfiguration config) {
+	public static <T> T construct(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
 
@@ -283,9 +287,11 @@ public final class Blueprint {
 	 * @return a blue printed instance of {@code T}
 	 */
 	@Throws(IllegalNullArgumentException.class)
-	public static <T> T construct(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
+	public static <T> T construct(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
+			@Nonnull final BlueprintSession session) {
 		Check.notNull(clazz, "clazz");
 		Check.notNull(config, "config");
+		Check.notNull(session, "session");
 
 		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
 

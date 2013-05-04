@@ -15,6 +15,9 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Definition of an interface to create values for attribute assignments.
  * 
@@ -34,6 +37,8 @@ public interface CreationStrategy<T> {
 	 * @param session
 	 *            A {@code BlueprintSession} * @return a new value
 	 */
-	T createValue(final Class<?> expectedClazz, final BlueprintConfiguration config, final BlueprintSession session);
+	@Nullable
+	T createValue(@Nonnull final Class<?> expectedClazz, @Nonnull final BlueprintConfiguration config,
+			@Nonnull final BlueprintSession session);
 
 }

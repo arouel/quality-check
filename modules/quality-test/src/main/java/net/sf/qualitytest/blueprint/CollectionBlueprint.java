@@ -17,8 +17,13 @@ package net.sf.qualitytest.blueprint;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 
 /**
@@ -29,8 +34,7 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 public final class CollectionBlueprint {
 
 	/**
-	 * A small utility to fill a collection automatically with blueprinted
-	 * objects.
+	 * A small utility to fill a collection automatically with blueprinted objects.
 	 * 
 	 * The default configuration is used.
 	 * 
@@ -45,16 +49,15 @@ public final class CollectionBlueprint {
 	 * @param numberOfItems
 	 *            the number of items that should be added.
 	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> void addMany(final Collection<T> collection,
-			final Class<T> clazz, final int numberOfItems) {
-		CollectionBlueprint.addMany(collection, clazz, numberOfItems,
-				Blueprint.def());
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNegativeArgumentException.class })
+	public static <T> void addMany(@Nonnull final Collection<T> collection, @Nonnull final Class<T> clazz,
+			@Nonnegative final int numberOfItems) {
+		CollectionBlueprint.addMany(collection, clazz, numberOfItems, Blueprint.def());
 	}
 
 	/**
-	 * A small utility to fill a collection automatically with blueprinted
-	 * objects.
+	 * A small utility to fill a collection automatically with blueprinted objects.
 	 * 
 	 * @param <T>
 	 *            type of the objects to blueprint and add
@@ -67,25 +70,24 @@ public final class CollectionBlueprint {
 	 * @param config
 	 *            The configuration to use
 	 */
-	@Throws(IllegalNullArgumentException.class)
-	public static <T> void addMany(final Collection<T> collection,
-			final Class<T> clazz, final int numberOfItems,
-			final BlueprintConfiguration config) {
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNegativeArgumentException.class })
+	public static <T> void addMany(@Nonnull final Collection<T> collection, @Nonnull final Class<T> clazz,
+			@Nonnegative final int numberOfItems, @Nonnull final BlueprintConfiguration config) {
 		Check.notNull(collection, "collection");
 		Check.notNull(clazz, "clazz");
+		Check.notNegative(numberOfItems, "numberOfItems");
 		Check.notNull(config, "config");
 
 		int cnt = numberOfItems;
 		while (cnt > 0) {
-			collection.add(Blueprint.construct(clazz, config,
-					new BlueprintSession()));
+			collection.add(Blueprint.construct(clazz, config, new BlueprintSession()));
 			cnt--;
 		}
 	}
 
 	/**
-	 * <strong>Attention:</strong> This class is not intended to create objects
-	 * from it.
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
 	 */
 	private CollectionBlueprint() {
 		// This class is not intended to create objects from it.

@@ -15,6 +15,9 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.configuration;
 
+import javax.annotation.Nonnull;
+
+import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.CreationStrategy;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
@@ -29,16 +32,18 @@ final class StrategyPair {
 	private final MatchingStrategy matching;
 	private final CreationStrategy<?> creation;
 
-	public StrategyPair(final MatchingStrategy matching, final CreationStrategy<?> creation) {
-		this.matching = matching;
-		this.creation = creation;
+	public StrategyPair(@Nonnull final MatchingStrategy matching, @Nonnull final CreationStrategy<?> creation) {
+		this.matching = Check.notNull(matching, "matching");
+		this.creation = Check.notNull(creation, "creation");
 	}
 
-	public MatchingStrategy getKey() {
+	public @Nonnull
+	MatchingStrategy getKey() {
 		return matching;
 	}
 
-	public CreationStrategy<?> getValue() {
+	public @Nonnull
+	CreationStrategy<?> getValue() {
 		return creation;
 	}
 
