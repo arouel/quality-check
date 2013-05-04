@@ -38,4 +38,12 @@ public class CheckTest_greaterThan {
 
 		Check.greaterThan(expected, check, "Must be greater than 'check'.");
 	}
+
+	@Test(expected = IllegalNotGreaterThanException.class)
+	public void testGreaterThanMessageFailure_Equals() {
+		final int a = 1;
+		final int b = 1;
+
+		Check.greaterThan(a, b, "Must be greater than 'check'.");
+	}
 }
