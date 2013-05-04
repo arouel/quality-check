@@ -32,6 +32,7 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterOrEqualThanException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
 import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
@@ -544,6 +545,69 @@ public final class ConditionalCheck {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		if (condition) {
 			Check.equals(expect, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater than or equal to {@code Comparable}. The comparison is made
+	 * using {@code expected.compareTo(check) > 0}.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true} so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * 
+	 * @throws IllegalNotGreaterOrEqualThanException
+	 *             if the argument value {@code check} is not greater or equal than value {@code expected} when using
+	 *             method {@code compareTo}
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
+	public static <T extends Comparable<T>> void greaterOrEqualThan(final boolean condition, @Nonnull final T expected,
+			@Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.greaterOrEqualThan(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater than or equal to another {@code Comparable}. The comparison
+	 * is made using {@code expected.compareTo(check) > 0}.
+	 * 
+	 * <p>
+	 * The condition must evaluate to {@code true} so that the check is executed.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true} so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than or equal a value (will be passed
+	 *            to {@code IllegalNotGreaterOrEqualThanException})
+	 * 
+	 * @throws IllegalNotGreaterOrEqualThanException
+	 *             if the argument value {@code check} is not greater than or equal to value {@code expected} when using
+	 *             method {@code compareTo}
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
+	public static <T extends Comparable<T>> void greaterOrEqualThan(final boolean condition, @Nonnull final T expected,
+			@Nonnull final T check, final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.greaterOrEqualThan(expected, check, message);
 		}
 	}
 

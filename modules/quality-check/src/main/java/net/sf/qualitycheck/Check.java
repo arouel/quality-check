@@ -34,6 +34,7 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterOrEqualThanException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
 import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
@@ -652,6 +653,63 @@ public final class Check {
 
 		if (!expected.equals(check)) {
 			throw new IllegalNotEqualException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater or equal compared to another {@code Comparable}. The
+	 * comparison is made using {@code expected.compareTo(check) > 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterOrEqualThanException
+	 *             if the argument value {@code check} is not greater or equal than the value {@code expected} when
+	 *             using method {@code compareTo}
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
+	public static <T extends Comparable<T>> T greaterOrEqualThan(@Nonnull final T expected, @Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) > 0) {
+			throw new IllegalNotGreaterOrEqualThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is greater or equal compared to another {@code Comparable}. The
+	 * comparison is made using {@code expected.compareTo(check) > 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterOrEqualThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterOrEqualThanException
+	 *             if the argument value {@code check} is not greater or equal than the value {@code expected} when
+	 *             using method {@code compareTo}
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
+	public static <T extends Comparable<T>> T greaterOrEqualThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) > 0) {
+			throw new IllegalNotGreaterOrEqualThanException(message);
 		}
 
 		return check;

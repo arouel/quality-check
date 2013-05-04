@@ -34,6 +34,7 @@ import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
+import net.sf.qualitycheck.exception.IllegalNotGreaterOrEqualThanException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
 import net.sf.qualitycheck.exception.IllegalNotLesserThanException;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
@@ -307,6 +308,54 @@ public class ConditionalCheckTest {
 	@Test
 	public void testEqualsMsg_Positive_NoFailure_short() {
 		ConditionalCheck.equals(true, (short) 3, (short) 3, "msg");
+	}
+
+	@Test
+	public void testGreaterOrEqualThan_Negative() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(false, expected, check);
+	}
+
+	@Test
+	public void testGreaterOrEqualThan_Positive() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(true, expected, check);
+	}
+
+	@Test(expected = IllegalNotGreaterOrEqualThanException.class)
+	public void testGreaterOrEqualThan_Positive_Failure() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(true, expected, check);
+	}
+
+	@Test
+	public void testGreaterOrEqualThanMessage_Negative() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(false, expected, check, "Must be greater than 0.");
+	}
+
+	@Test
+	public void testGreaterOrEqualThanMessage_Positive() {
+		final Long check = Long.valueOf(100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(true, expected, check, "Must be greater than 0.");
+	}
+
+	@Test(expected = IllegalNotGreaterOrEqualThanException.class)
+	public void testGreaterOrEqualThanMessage_Positive_Failure() {
+		final Long check = Long.valueOf(-100l);
+		final Long expected = Long.valueOf(0l);
+
+		ConditionalCheck.greaterOrEqualThan(true, expected, check, "Must be greater than 0.");
 	}
 
 	@Test
