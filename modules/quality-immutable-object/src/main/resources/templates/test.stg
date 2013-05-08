@@ -67,6 +67,7 @@ defaultValue(field) ::= <<
 
 
 copyOfTests(settings) ::= <<
+<if(settings.copyMethods)>
 <annotateTestWithExpected("IllegalNullArgumentException")>
 public void copyOf_argIsNull() {
 	<settings.immutableName>.copyOf(null);
@@ -76,6 +77,7 @@ public void copyOf_argIsNull() {
 public void copyOf_successful() {
 	assertNotNull(<settings.immutableName>.copyOf(new Blueprint().build()));
 }
+<endif>
 >>
 
 
