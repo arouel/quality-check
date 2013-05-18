@@ -20,7 +20,7 @@ public final class Field {
 	public static final String WITHOUT_VALUE = "";
 
 	@Nonnull
-	private transient final String accessorMethodName;
+	private final transient String accessorMethodName;
 
 	@Nonnull
 	private final AccessorPrefix accessorPrefix;
@@ -32,7 +32,7 @@ public final class Field {
 	private final Final finalModifier;
 
 	@Nonnull
-	private transient final String mutatorMethodName;
+	private final transient String mutatorMethodName;
 
 	@Nonnull
 	private final String name;
