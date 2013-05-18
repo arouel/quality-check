@@ -27,7 +27,7 @@ public final class <settings.immutableName><if(settings.interfaces)> implements 
 
 	<settings.fields:asFinalField(); separator = "\n">
 
-	<if(settings.hashCodePrecomputation)>private final int hash;<endif>
+	<if(settings.hashCodePrecomputation)>private final int <settings.fieldPrefix>hash;<endif>
 
 	<immutableConstructor(settings.immutableName, settings.fields, settings)>
 
@@ -95,7 +95,7 @@ constant(field) ::= <<
 immutableConstructor(name, fields, settings) ::= <<
 public <name>(<fields:attribute(); separator = ",">) {
 <setupFieldsImmutable(fields, settings)>
-<if(settings.hashCodePrecomputation)>hash = buildHashCode(<fields:accessToMemberField(); separator = ",">);<endif>
+<if(settings.hashCodePrecomputation)><settings.fieldPrefix>hash = buildHashCode(<fields:accessToMemberField(); separator = ",">);<endif>
 }
 >>
 
@@ -172,7 +172,7 @@ hashCodeMethod(fields, settings) ::= <<
 @Override
 public int hashCode() {
 <if(settings.hashCodePrecomputation)>
-return hash;
+return <settings.fieldPrefix>hash;
 <else>
 <hashCodeMethodBody(fields, settings)><endif>
 }

@@ -109,6 +109,22 @@ public class ImmutableObjectGeneratorTest {
 	}
 
 	@Test
+	public void renderingOf_fieldPrefix_withHashCodePrecomputation() {
+		final StringBuilder b = new StringBuilder();
+		b.append("package net.sf.qualitycheck.test;\n");
+		b.append("interface TestObject {\n");
+		b.append("String getName();\n");
+		b.append("}");
+		final ImmutableSettings settings = settingsBuilder.fieldPrefix("_").hashCodePrecomputation(true).hashCodeAndEquals(true).build();
+		final String generatedCode = ImmutableObjectGenerator.generate(b.toString(), settings).getImplCode();
+		System.out.println(generatedCode);
+		assertTrue(generatedCode.contains("private final String _name;"));
+		assertTrue(generatedCode.contains("private final int _hash;"));
+		assertTrue(generatedCode.contains("_hash = buildHashCode(_name);"));
+		assertTrue(generatedCode.contains("return _hash;"));
+	}
+
+	@Test
 	public void renderingOf_guava() {
 		final StringBuilder b = new StringBuilder();
 		b.append("package net.sf.qualitycheck.test;\n");
