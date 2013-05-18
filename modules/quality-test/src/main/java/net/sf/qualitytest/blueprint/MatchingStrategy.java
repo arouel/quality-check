@@ -19,8 +19,6 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
 
-import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
-
 /**
  * Strategy to determine if an attribute matches and should be replaced with a certain value.
  * 
@@ -29,7 +27,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
  * A {@link MatchingStrategy} should implement hashCode so that matching strategies for the same object/type can be
  * detected and the last one added can be used.
  * 
- * @see ValueCreationStrategy
+ * @see net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy
  * 
  * @author Dominik Seichter
  */

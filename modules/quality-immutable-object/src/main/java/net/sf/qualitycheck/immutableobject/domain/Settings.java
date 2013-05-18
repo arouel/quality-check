@@ -1,8 +1,6 @@
 package net.sf.qualitycheck.immutableobject.domain;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -135,7 +133,7 @@ public interface Settings {
 	 * Generate code to precompute the {@code hashCode} during construction time.
 	 * <p>
 	 * Consider to choose this option when and only when you'll get better performance in your application (because you
-	 * want to use objects of the class in {@link Set}s and {@link Map}s) and you take care that the class to be
+	 * want to use objects of the class in {@code Set}s and {@code Map}s) and you take care that the class to be
 	 * generated is guaranteed to be immutable. This means all fields of this class can never change his state, like
 	 * {@link String} does.
 	 * 
