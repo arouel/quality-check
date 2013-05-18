@@ -1,6 +1,7 @@
 package net.sf.qualitycheck.immutableobject;
 
 import java.io.File;
+import java.io.IOException;
 
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.immutableobject.domain.ImmutableSettings;
@@ -37,7 +38,7 @@ public class Main {
 		return settings.build();
 	}
 
-	public static void main(final String[] args) throws Exception {
+	public static void main(final String[] args) throws IOException {
 		Check.notNull(args, "args");
 		LOG.info("This tool generates an immutable class from an interface.");
 		LOG.info("--");
