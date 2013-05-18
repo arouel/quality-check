@@ -92,9 +92,10 @@ final class SafeInvoke {
 
 		try {
 			return runnable.run();
-		} catch (final Throwable t) {
+		} catch (final Exception t) {
 			final RuntimeException e = createException(t, exceptionClass);
 			throw e;
 		}
 	}
+
 }
