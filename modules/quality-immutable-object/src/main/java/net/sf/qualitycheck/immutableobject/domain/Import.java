@@ -55,10 +55,10 @@ public final class Import {
 	}
 
 	@Nonnull
-	private final Type _type;
+	private final Type type;
 
 	private Import(@Nonnull final Type type) {
-		_type = filterGenericDeclaration(Check.notNull(type, "type"));
+		this.type = filterGenericDeclaration(Check.notNull(type, "type"));
 	}
 
 	@Override
@@ -73,27 +73,27 @@ public final class Import {
 			return false;
 		}
 		final Import other = (Import) obj;
-		if (!_type.equals(other._type)) {
+		if (!type.equals(other.type)) {
 			return false;
 		}
 		return true;
 	}
 
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _type.hashCode();
+		result = prime * result + type.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return PREFIX + Characters.SPACE + _type.toString() + Characters.SEMICOLON;
+		return PREFIX + Characters.SPACE + type.toString() + Characters.SEMICOLON;
 	}
 
 }

@@ -22,14 +22,14 @@ public final class Interface {
 	}
 
 	@Nonnull
-	private final Type _type;
+	private final Type type;
 
 	public Interface() {
-		_type = new Type("void");
+		type = new Type("void");
 	}
 
 	public Interface(final Type interfaceType) {
-		_type = Check.notNull(interfaceType, "interfaceType");
+		type = Check.notNull(interfaceType, "interfaceType");
 	}
 
 	@Override
@@ -44,27 +44,27 @@ public final class Interface {
 			return false;
 		}
 		final Interface other = (Interface) obj;
-		if (!_type.equals(other._type)) {
+		if (!type.equals(other.type)) {
 			return false;
 		}
 		return true;
 	}
 
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _type.hashCode();
+		result = prime * result + type.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return _type.toString();
+		return type.toString();
 	}
 
 }

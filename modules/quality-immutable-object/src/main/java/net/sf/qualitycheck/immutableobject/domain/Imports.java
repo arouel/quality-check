@@ -143,11 +143,11 @@ public final class Imports {
 	}
 
 	@Nonnull
-	private final List<Import> _imports;
+	private final List<Import> imports;
 
 	private Imports(final Iterable<Import> imports) {
 		Check.notNull(imports, "imports");
-		_imports = ImmutableList.copyOf(imports);
+		this.imports = ImmutableList.copyOf(imports);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public final class Imports {
 	 */
 	@Nonnull
 	public List<Import> asList() {
-		return _imports;
+		return imports;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public final class Imports {
 	@Nonnull
 	public Imports copyAndAdd(final Collection<Import> imports) {
 		Check.notNull(imports, "imports");
-		final List<Import> internal = Lists.newArrayList(_imports);
+		final List<Import> internal = Lists.newArrayList(imports);
 		internal.addAll(imports);
 		return new Imports(internal);
 	}
@@ -196,7 +196,7 @@ public final class Imports {
 	 */
 	@Nonnull
 	public Imports filter() {
-		return new Imports(Sets.newHashSet(Collections2.filter(_imports, Predicates.and(IGNORE_JAVA_LANG, IGNORE_UNDEFINED))));
+		return new Imports(Sets.newHashSet(Collections2.filter(imports, Predicates.and(IGNORE_JAVA_LANG, IGNORE_UNDEFINED))));
 	}
 
 	/**
@@ -211,7 +211,7 @@ public final class Imports {
 		Check.notEmpty(typeName, "typeName");
 		Import ret = null;
 		final Type type = new Type(typeName);
-		for (final Import imp : _imports) {
+		for (final Import imp : imports) {
 			if (imp.getType().getName().equals(type.getName())) {
 				ret = imp;
 				break;
@@ -233,7 +233,7 @@ public final class Imports {
 	 */
 	@Nonnull
 	public Imports sortByName() {
-		final List<Import> imports = Lists.newArrayList(_imports);
+		final List<Import> imports = Lists.newArrayList(this.imports);
 		Collections.sort(imports, ORDER.nullsLast());
 		return new Imports(imports);
 	}
