@@ -18,15 +18,15 @@ public final class AccessorPrefix {
 	public static final AccessorPrefix IS = new AccessorPrefix(METHOD_IS_PREFIX);
 
 	@Nonnull
-	private final String _prefix;
+	private final String prefix;
 
 	private AccessorPrefix() {
-		_prefix = "";
+		prefix = "";
 	}
 
 	public AccessorPrefix(@Nonnull final String prefix) {
 		Check.notNull(prefix, "prefix");
-		_prefix = Check.notEmpty(prefix.trim(), "prefix");
+		this.prefix = Check.notEmpty(prefix.trim(), "prefix");
 	}
 
 	@Override
@@ -41,21 +41,21 @@ public final class AccessorPrefix {
 			return false;
 		}
 		final AccessorPrefix other = (AccessorPrefix) obj;
-		if (!_prefix.equals(other._prefix)) {
+		if (!prefix.equals(other.prefix)) {
 			return false;
 		}
 		return true;
 	}
 
 	public String getPrefix() {
-		return _prefix;
+		return prefix;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _prefix.hashCode();
+		result = prime * result + prefix.hashCode();
 		return result;
 	}
 

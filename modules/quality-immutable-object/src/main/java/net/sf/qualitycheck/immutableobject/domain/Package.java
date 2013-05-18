@@ -41,13 +41,13 @@ public final class Package {
 	 * Name of the package
 	 */
 	@Nonnull
-	private final String _name;
+	private final String name;
 
 	/**
 	 * Creates an undefined representation of {@code Package} and is intended only for internal usage.
 	 */
 	private Package() {
-		_name = "";
+		name = "";
 	}
 
 	/**
@@ -58,7 +58,7 @@ public final class Package {
 	 */
 	public Package(@Nonnull final String packageName) {
 		Check.notEmpty(packageName, "packageName");
-		_name = Check.notEmpty(removeLastDot(packageName.trim()), "packageName");
+		name = Check.notEmpty(removeLastDot(packageName.trim()), "packageName");
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public final class Package {
 			return false;
 		}
 		final Package other = (Package) obj;
-		if (!_name.equals(other._name)) {
+		if (!name.equals(other.name)) {
 			return false;
 		}
 		return true;
@@ -86,14 +86,14 @@ public final class Package {
 	 */
 	@Nonnull
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _name.hashCode();
+		result = prime * result + name.hashCode();
 		return result;
 	}
 
@@ -103,7 +103,7 @@ public final class Package {
 
 	@Override
 	public String toString() {
-		return PREFIX + Characters.SPACE + _name;
+		return PREFIX + Characters.SPACE + name;
 	}
 
 }

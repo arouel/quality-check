@@ -52,10 +52,10 @@ public final class Annotation {
 		return new Annotation(new Type(annotationType));
 	}
 
-	private final Type _type;
+	private final Type type;
 
 	public Annotation(final Type annotationType) {
-		_type = Check.notNull(annotationType, "annotationType");
+		type = Check.notNull(annotationType, "annotationType");
 	}
 
 	@Override
@@ -70,21 +70,21 @@ public final class Annotation {
 			return false;
 		}
 		final Annotation other = (Annotation) obj;
-		if (!_type.equals(other._type)) {
+		if (!type.equals(other.type)) {
 			return false;
 		}
 		return true;
 	}
 
 	public Type getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _type.hashCode();
+		result = prime * result + type.hashCode();
 		return result;
 	}
 
@@ -110,7 +110,7 @@ public final class Annotation {
 
 	@Override
 	public String toString() {
-		return Characters.AT_SIGN + _type.getName();
+		return Characters.AT_SIGN + type.getName();
 	}
 
 }

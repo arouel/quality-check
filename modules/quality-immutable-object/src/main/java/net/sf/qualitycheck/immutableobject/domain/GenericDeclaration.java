@@ -30,17 +30,17 @@ public final class GenericDeclaration {
 	}
 
 	@Nonnull
-	private final String _declaration;
+	private final String declaration;
 
 	/**
 	 * Creates an undefined representation of {@code GenericDeclaration} and is intended only for internal usage.
 	 */
 	private GenericDeclaration() {
-		_declaration = "";
+		declaration = "";
 	}
 
 	private GenericDeclaration(@Nonnull final String declaration) {
-		_declaration = Check.notEmpty(declaration, "declaration");
+		this.declaration = Check.notEmpty(declaration, "declaration");
 	}
 
 	@Override
@@ -55,21 +55,21 @@ public final class GenericDeclaration {
 			return false;
 		}
 		final GenericDeclaration other = (GenericDeclaration) obj;
-		if (!_declaration.equals(other._declaration)) {
+		if (!declaration.equals(other.declaration)) {
 			return false;
 		}
 		return true;
 	}
 
 	public String getDeclaration() {
-		return _declaration;
+		return declaration;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _declaration.hashCode();
+		result = prime * result + declaration.hashCode();
 		return result;
 	}
 
@@ -79,7 +79,7 @@ public final class GenericDeclaration {
 
 	@Override
 	public String toString() {
-		return _declaration;
+		return declaration;
 	}
 
 }

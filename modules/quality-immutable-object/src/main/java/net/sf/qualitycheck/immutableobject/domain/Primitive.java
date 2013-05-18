@@ -24,7 +24,7 @@ public enum Primitive {
 		Check.notNull(name, "name");
 		boolean ret = false;
 		for (final Primitive p : values()) {
-			if (p._name.equals(name)) {
+			if (p.name.equals(name)) {
 				ret = true;
 				break;
 			}
@@ -32,14 +32,14 @@ public enum Primitive {
 		return ret;
 	}
 
-	private final String _name;
+	private final String name;
 
 	private Primitive(final String name) {
-		_name = name;
+		this.name = Check.notNull(name);
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 }
