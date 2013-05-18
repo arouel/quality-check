@@ -34,7 +34,12 @@ public class CheckTest_notNegative {
 	}
 
 	@Test(expected = IllegalNegativeArgumentException.class)
-	public void notNegative_double_withReference_withName_isInvalid() {
+	public void notNegative_double_withReference_withName_isInvalid_minus_MAX_VALUE() {
+		Check.notNegative(-Double.MAX_VALUE, "min");
+	}
+
+	@Test(expected = IllegalNegativeArgumentException.class)
+	public void notNegative_double_withReference_withName_isInvalid_NEGATIVE_INFINITY() {
 		Check.notNegative(Double.NEGATIVE_INFINITY, "Negative Infinity");
 	}
 
@@ -70,7 +75,12 @@ public class CheckTest_notNegative {
 	}
 
 	@Test(expected = IllegalNegativeArgumentException.class)
-	public void notNegative_float_withReference_withName_isInvalid() {
+	public void notNegative_float_withReference_withName_isInvalid_minus_MAX_VALUE() {
+		Check.notNegative(-Float.MAX_VALUE, "min");
+	}
+
+	@Test(expected = IllegalNegativeArgumentException.class)
+	public void notNegative_float_withReference_withName_isInvalid_NEGATIVE_INFINITY() {
 		Check.notNegative(Float.NEGATIVE_INFINITY, "Negative Infinity");
 	}
 
