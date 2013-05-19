@@ -28,6 +28,8 @@ import net.sf.qualitytest.exception.NoPublicConstructorException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BlueprintTest {
 
@@ -324,6 +326,8 @@ public class BlueprintTest {
 
 	}
 
+	private static final Logger LOG = LoggerFactory.getLogger(BlueprintTest.class);
+
 	public static final Pattern UUID_PATTERN = Pattern.compile("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}");
 
 	@Test
@@ -518,7 +522,7 @@ public class BlueprintTest {
 				Assert.assertNotEquals(immutables[i].getValue(), immutables[i - 1].getValue());
 			}
 
-			System.out.println(immutables[i]);
+			LOG.info(immutables[i].toString());
 		}
 	}
 
