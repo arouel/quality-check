@@ -98,4 +98,11 @@ final class SafeInvoke {
 		}
 	}
 
+	/**
+	 * <strong>Attention:</strong> This class is not intended to create objects from it.
+	 */
+	private SafeInvoke() {
+		// This class is not intended to create objects from it.
+	}
+
 }
