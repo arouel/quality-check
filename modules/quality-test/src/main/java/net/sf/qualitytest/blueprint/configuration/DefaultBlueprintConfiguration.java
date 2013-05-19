@@ -90,23 +90,23 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 
 	private static List<StrategyPair> createDefaultAttributeMapping() {
 		final List<StrategyPair> list = new ArrayList<StrategyPair>();
-		list.add(new StrategyPair(new TypeMatchingStrategy(String.class), new SingleValueCreationStrategy<String>(STRING_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(long.class), new SingleValueCreationStrategy<Long>(LONG_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Integer.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(int.class), new SingleValueCreationStrategy<Integer>(INTEGER_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(boolean.class), new SingleValueCreationStrategy<Boolean>(BOOLEAN_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Character.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(char.class), new SingleValueCreationStrategy<Character>(CHARACTER_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(short.class), new SingleValueCreationStrategy<Short>(SHORT_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(byte.class), new SingleValueCreationStrategy<Byte>(BYTE_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(float.class), new SingleValueCreationStrategy<Float>(FLOAT_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(Double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
-		list.add(new StrategyPair(new TypeMatchingStrategy(double.class), new SingleValueCreationStrategy<Double>(DOUBLE_DEFAULT)));
+		list.add(createStrategyPair(String.class, STRING_DEFAULT));
+		list.add(createStrategyPair(Long.class, LONG_DEFAULT));
+		list.add(createStrategyPair(long.class, LONG_DEFAULT));
+		list.add(createStrategyPair(Integer.class, INTEGER_DEFAULT));
+		list.add(createStrategyPair(int.class, INTEGER_DEFAULT));
+		list.add(createStrategyPair(Boolean.class, BOOLEAN_DEFAULT));
+		list.add(createStrategyPair(boolean.class, BOOLEAN_DEFAULT));
+		list.add(createStrategyPair(Character.class, CHARACTER_DEFAULT));
+		list.add(createStrategyPair(char.class, CHARACTER_DEFAULT));
+		list.add(createStrategyPair(Short.class, SHORT_DEFAULT));
+		list.add(createStrategyPair(short.class, SHORT_DEFAULT));
+		list.add(createStrategyPair(Byte.class, BYTE_DEFAULT));
+		list.add(createStrategyPair(byte.class, BYTE_DEFAULT));
+		list.add(createStrategyPair(Float.class, FLOAT_DEFAULT));
+		list.add(createStrategyPair(float.class, FLOAT_DEFAULT));
+		list.add(createStrategyPair(Double.class, DOUBLE_DEFAULT));
+		list.add(createStrategyPair(double.class, DOUBLE_DEFAULT));
 
 		addDefaultEnumStrategy(list);
 		addDefaultArrayStrategy(list);
@@ -114,6 +114,10 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		list.add(new StrategyPair(new SetterMethodMatchingStrategy(), new BlueprintCreationStrategy()));
 
 		return list;
+	}
+
+	private static <T> StrategyPair createStrategyPair(final Class<T> clazz, final T defaultValue) {
+		return new StrategyPair(new TypeMatchingStrategy(clazz), new SingleValueCreationStrategy<T>(defaultValue));
 	}
 
 	public DefaultBlueprintConfiguration() {
