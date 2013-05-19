@@ -326,12 +326,8 @@ public final class Blueprint {
 	private static <T> Constructor<?> findFirstPublicConstructor(final Class<T> clazz) {
 		final Constructor<?>[] constructors = clazz.getConstructors();
 		for (final Constructor<?> c : constructors) {
-			final boolean isPublic = ModifierBits.isModifierBitSet(c.getModifiers(), Modifier.PUBLIC);
-			if (isPublic) {
-				return c;
-			}
+			return c;
 		}
-
 		return null;
 	}
 
@@ -345,12 +341,10 @@ public final class Blueprint {
 	private static boolean hasPublicDefaultConstructor(final Class<?> clazz) {
 		final Constructor<?>[] constructors = clazz.getConstructors();
 		for (final Constructor<?> c : constructors) {
-			final boolean isPublic = ModifierBits.isModifierBitSet(c.getModifiers(), Modifier.PUBLIC);
-			if (isPublic && c.getParameterTypes().length == 0) {
+			if (c.getParameterTypes().length == 0) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 

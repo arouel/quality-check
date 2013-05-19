@@ -23,11 +23,42 @@ import net.sf.qualitytest.StaticCheck;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
+import net.sf.qualitytest.exception.NoPublicConstructorException;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class BlueprintTest {
+
+	private static final class ClassWithoutConstructor {
+		// class has no constructor, because it is package private
+	}
+
+	public static final class ClassWithoutPublicConstructor {
+		private ClassWithoutPublicConstructor() {
+			// nothing to do
+		}
+
+		protected ClassWithoutPublicConstructor(final String name) {
+			this();
+		}
+	}
+
+	public static final class ClassWithProtectedConstructor {
+		protected ClassWithProtectedConstructor() {
+			// nothing to do
+		}
+	}
+
+	public static final class ClassWithPublicConstructor {
+		public ClassWithPublicConstructor() {
+			// nothing to do
+		}
+	}
+
+	public static final class ClassWithPublicDefaultConstructor {
+		// class has a default constructor, because it is a public class
+	}
 
 	public static abstract class MyAbstract {
 		public abstract String getValue();
@@ -289,6 +320,37 @@ public class BlueprintTest {
 		for (final int i : array) {
 			Assert.assertEquals(0, i);
 		}
+	}
+
+	@Test(expected = NoPublicConstructorException.class)
+	public void testBlueprint_ClassWithoutConstructor() {
+		Blueprint.construct(ClassWithoutConstructor.class, new DefaultBlueprintConfiguration(), new BlueprintSession());
+	}
+
+	@Test(expected = NoPublicConstructorException.class)
+	public void testBlueprint_ClassWithoutPublicConstructor() {
+		Blueprint.construct(ClassWithoutPublicConstructor.class, new DefaultBlueprintConfiguration(), new BlueprintSession());
+	}
+
+	@Test(expected = NoPublicConstructorException.class)
+	public void testBlueprint_ClassWithProtectedConstructor() {
+		final ClassWithProtectedConstructor blueprint = Blueprint.construct(ClassWithProtectedConstructor.class,
+				new DefaultBlueprintConfiguration(), new BlueprintSession());
+		Assert.assertNotNull(blueprint);
+	}
+
+	@Test
+	public void testBlueprint_ClassWithPublicConstructor() {
+		final ClassWithPublicConstructor blueprint = Blueprint.construct(ClassWithPublicConstructor.class,
+				new DefaultBlueprintConfiguration(), new BlueprintSession());
+		Assert.assertNotNull(blueprint);
+	}
+
+	@Test
+	public void testBlueprint_ClassWithPublicDefaultConstructor() {
+		final ClassWithPublicDefaultConstructor blueprint = Blueprint.construct(ClassWithPublicDefaultConstructor.class,
+				new DefaultBlueprintConfiguration(), new BlueprintSession());
+		Assert.assertNotNull(blueprint);
 	}
 
 	@Test
