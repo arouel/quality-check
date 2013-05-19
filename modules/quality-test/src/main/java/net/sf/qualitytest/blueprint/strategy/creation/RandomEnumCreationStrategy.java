@@ -18,12 +18,14 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 import java.util.Random;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitycheck.exception.IllegalStateOfArgumentException;
 
 /**
  * Creation strategy which creates a random enum constant during construction of a blueprint.
  * 
  * @author Dominik Seichter
- * 
  */
 public class RandomEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 
@@ -31,21 +33,22 @@ public class RandomEnumCreationStrategy extends ValueCreationStrategy<Enum<?>> {
 
 	/**
 	 * Blueprint an enum value using the default configuration.
+	 * <p>
+	 * This method returns the a randomly selected value of a given enumeration.
 	 * 
-	 * This method will return the first enum constant in the enumeration.
-	 * 
-	 * @param <T>
 	 * @param expectedClazz
-	 *            the class of an enumeration.
-	 * @return a valid enum value.
+	 *            the class of an enumeration
+	 * @return a valid enum value
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
+	@Throws({ IllegalNullArgumentException.class, IllegalStateOfArgumentException.class })
 	public Enum<?> createValue(final Class<?> expectedClazz) {
 		Check.notNull(expectedClazz, "expectedClazz");
+		Check.stateIsTrue(expectedClazz.isEnum(), "Argument 'expectedClazz' must be an enum.");
+		@SuppressWarnings("unchecked")
 		final Class<? extends Enum<?>> enumClazz = (Class<? extends Enum<?>>) expectedClazz;
 		final Enum<?>[] enumConstants = enumClazz.getEnumConstants();
-		final int index = random.nextInt(enumConstants.length);
+		final int index = enumConstants.length > 0 ? random.nextInt(enumConstants.length) : -1;
 		return enumConstants.length > 0 ? enumConstants[index] : null;
 	}
 
