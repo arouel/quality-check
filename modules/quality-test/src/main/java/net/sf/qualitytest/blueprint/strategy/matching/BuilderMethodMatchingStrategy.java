@@ -31,7 +31,7 @@ import net.sf.qualitytest.blueprint.MatchingStrategy;
  * @author Dominik Seichter
  * 
  */
-public class BuilerMethodMatchingStrategy implements MatchingStrategy {
+public class BuilderMethodMatchingStrategy implements MatchingStrategy {
 
 	private static final String BUILDER_SUFFIX = "Builder";
 
@@ -41,7 +41,7 @@ public class BuilerMethodMatchingStrategy implements MatchingStrategy {
 	 * Create a {@code BuilerMethodMatchingStrategy} with the default suffix 'Builder' to detect classes implementing
 	 * the builder pattern.
 	 */
-	public BuilerMethodMatchingStrategy() {
+	public BuilderMethodMatchingStrategy() {
 		builderSuffix = BUILDER_SUFFIX;
 	}
 
@@ -52,7 +52,7 @@ public class BuilerMethodMatchingStrategy implements MatchingStrategy {
 	 * @param suffix
 	 *            Suffix of builder classes. Must not be null.
 	 */
-	public BuilerMethodMatchingStrategy(@Nonnull final String suffix) {
+	public BuilderMethodMatchingStrategy(@Nonnull final String suffix) {
 		builderSuffix = Check.notNull(suffix, "suffix");
 	}
 
