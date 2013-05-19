@@ -32,6 +32,7 @@ import net.sf.qualitytest.blueprint.SafeInvoke.ExceptionRunnable;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
+import net.sf.qualitytest.exception.NoPublicConstructorException;
 
 /**
  * Blueprinting is a technique that makes writing test easier. For unit-testing you often need data-objects, where the
@@ -369,7 +370,7 @@ public final class Blueprint {
 	private static <T> T immutable(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
 		final Constructor<?> constructor = findFirstPublicConstructor(clazz);
 		if (constructor == null) {
-			throw new BlueprintException("No public constructor found.");
+			throw new NoPublicConstructorException(clazz.getSimpleName());
 		}
 
 		final Class<?>[] parameterTypes = constructor.getParameterTypes();
