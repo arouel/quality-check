@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
@@ -34,8 +35,8 @@ import net.sf.qualitytest.exception.BlueprintCycleException;
  * detection as well as statistical information.
  * 
  * @author Dominik Seichter
- * 
  */
+@NotThreadSafe
 public final class BlueprintSession {
 
 	private final Stack<Class<?>> stack = new Stack<Class<?>>();
