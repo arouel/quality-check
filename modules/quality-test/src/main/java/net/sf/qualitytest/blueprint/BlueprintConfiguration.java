@@ -125,7 +125,7 @@ public interface BlueprintConfiguration {
 	 * Configure whether public attributes should be filled with values during blueprinting.
 	 * 
 	 * @param withPublicAttributes
-	 *            If {@code true} public attributes are filled during blueprinting. otherwise they are ignored
+	 *            if {@code true} public attributes will be filled during blueprinting, otherwise they will be ignored.
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
