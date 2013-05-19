@@ -37,13 +37,13 @@ final class StrategyPair {
 		this.creation = Check.notNull(creation, "creation");
 	}
 
-	public @Nonnull
-	MatchingStrategy getKey() {
+	@Nonnull
+	public MatchingStrategy getKey() {
 		return matching;
 	}
 
-	public @Nonnull
-	CreationStrategy<?> getValue() {
+	@Nonnull
+	public CreationStrategy<?> getValue() {
 		return creation;
 	}
 
