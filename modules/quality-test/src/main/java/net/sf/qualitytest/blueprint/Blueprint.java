@@ -95,8 +95,8 @@ public final class Blueprint {
 		Check.notNull(session, "sesion");
 
 		final T obj = safeNewInstance(clazz);
-		bluePrintPublicMethods(obj, clazz, config, session);
-		bluePrintPublicAttributes(obj, clazz, config, session);
+		blueprintPublicMethods(obj, clazz, config, session);
+		blueprintPublicAttributes(obj, clazz, config, session);
 		return obj;
 	}
 
@@ -112,7 +112,7 @@ public final class Blueprint {
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static void bluePrintField(final Object that, final Field f, final BlueprintConfiguration config, final BlueprintSession session) {
+	private static void blueprintField(final Object that, final Field f, final BlueprintConfiguration config, final BlueprintSession session) {
 		final CreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
 		final Object value = blueprintObject(f.getType(), config, creator, session);
 
@@ -138,7 +138,7 @@ public final class Blueprint {
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static void bluePrintMethod(final Object that, final Method m, final BlueprintConfiguration config,
+	private static void blueprintMethod(final Object that, final Method m, final BlueprintConfiguration config,
 			final BlueprintSession session) {
 		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(m);
 		if (creator != null) {
@@ -192,7 +192,7 @@ public final class Blueprint {
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static <T> void bluePrintPublicAttributes(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
+	private static <T> void blueprintPublicAttributes(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
 			final BlueprintSession session) {
 		if (!config.isWithPublicAttributes()) {
 			return;
@@ -202,7 +202,7 @@ public final class Blueprint {
 			final boolean isStatic = ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.STATIC);
 			final boolean isFinal = ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.FINAL);
 			if (!isStatic && !isFinal) {
-				bluePrintField(obj, f, config, session);
+				blueprintField(obj, f, config, session);
 			}
 		}
 	}
@@ -221,11 +221,11 @@ public final class Blueprint {
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static <T> void bluePrintPublicMethods(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
+	private static <T> void blueprintPublicMethods(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
 			final BlueprintSession session) {
 		for (final Method m : clazz.getMethods()) {
 			if (isRelevant(m)) {
-				bluePrintMethod(obj, m, config, session);
+				blueprintMethod(obj, m, config, session);
 			}
 		}
 	}
@@ -380,8 +380,8 @@ public final class Blueprint {
 
 		@SuppressWarnings("unchecked")
 		final T obj = (T) safeNewInstance(constructor, parameters);
-		bluePrintPublicMethods(obj, clazz, config, session);
-		bluePrintPublicAttributes(obj, clazz, config, session);
+		blueprintPublicMethods(obj, clazz, config, session);
+		blueprintPublicAttributes(obj, clazz, config, session);
 
 		return obj;
 	}

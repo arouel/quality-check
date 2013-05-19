@@ -46,8 +46,8 @@ public class DefaultArrayCreationStrategy implements CreationStrategy<Object> {
 	private static <T> void initializeArray(final Class<T> array, final int arraySize, final Object value,
 			final BlueprintConfiguration config, final BlueprintSession session) {
 		for (int i = 0; i < arraySize; i++) {
-			final Object bluePrint = Blueprint.construct(array.getComponentType(), config, session);
-			Array.set(value, i, bluePrint);
+			final Object blueprint = Blueprint.construct(array.getComponentType(), config, session);
+			Array.set(value, i, blueprint);
 		}
 	}
 
