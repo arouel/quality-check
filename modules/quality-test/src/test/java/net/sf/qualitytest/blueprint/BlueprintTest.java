@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -58,6 +59,28 @@ public class BlueprintTest {
 
 	public static final class ClassWithPublicDefaultConstructor {
 		// class has a default constructor, because it is a public class
+	}
+
+	static final class IsRelevantTestClass {
+		@SuppressWarnings("unused")
+		private static void privateStaticMethod() {
+		}
+
+		protected static void protectedStaticMethod() {
+		}
+
+		public static void publicStaticMethod() {
+		}
+
+		@SuppressWarnings("unused")
+		private void privateMethod() {
+		}
+
+		protected void protectedMethod() {
+		}
+
+		public void publicMethod() {
+		}
 	}
 
 	public static abstract class MyAbstract {
@@ -308,6 +331,42 @@ public class BlueprintTest {
 		CoverageForPrivateConstructor.giveMeCoverage(Blueprint.class);
 	}
 
+	@Test
+	public void isRelevant_privateMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = new IsRelevantTestClass().getClass().getDeclaredMethod("privateMethod", (Class<?>[]) null);
+		Assert.assertFalse(Blueprint.isRelevant(method));
+	}
+
+	@Test
+	public void isRelevant_privateStaticMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = IsRelevantTestClass.class.getDeclaredMethod("privateStaticMethod", (Class<?>[]) null);
+		Assert.assertFalse(Blueprint.isRelevant(method));
+	}
+
+	@Test
+	public void isRelevant_protectedMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = new IsRelevantTestClass().getClass().getDeclaredMethod("protectedMethod", (Class<?>[]) null);
+		Assert.assertFalse(Blueprint.isRelevant(method));
+	}
+
+	@Test
+	public void isRelevant_protectedStaticMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = IsRelevantTestClass.class.getDeclaredMethod("protectedStaticMethod", (Class<?>[]) null);
+		Assert.assertFalse(Blueprint.isRelevant(method));
+	}
+
+	@Test
+	public void isRelevant_publicMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = new IsRelevantTestClass().getClass().getDeclaredMethod("publicMethod", (Class<?>[]) null);
+		Assert.assertTrue(Blueprint.isRelevant(method));
+	}
+
+	@Test
+	public void isRelevant_publicStaticMethod_isNotRelevant() throws SecurityException, NoSuchMethodException {
+		final Method method = IsRelevantTestClass.class.getMethod("publicStaticMethod", (Class<?>[]) null);
+		Assert.assertFalse(Blueprint.isRelevant(method));
+	}
+
 	@Test(expected = BlueprintException.class)
 	public void testAbstract() {
 		Blueprint.construct(MyAbstract.class);
@@ -315,7 +374,7 @@ public class BlueprintTest {
 
 	@Test
 	public void testArray() {
-		final int[] array = (int[]) Blueprint.construct(int[].class);
+		final int[] array = Blueprint.construct(int[].class);
 		Assert.assertTrue(array.length > 0);
 		for (final int i : array) {
 			Assert.assertEquals(0, i);
@@ -436,7 +495,7 @@ public class BlueprintTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMap() {
-		final Map<String, ImmutableObject> map = (Map<String, ImmutableObject>) Blueprint.construct(Map.class);
+		final Map<String, ImmutableObject> map = Blueprint.construct(Map.class);
 		Assert.assertNotNull(map);
 		map.put("any", Blueprint.construct(ImmutableObject.class, new RandomBlueprintConfiguration(), new BlueprintSession()));
 
@@ -465,7 +524,7 @@ public class BlueprintTest {
 
 	@Test
 	public void testStringArray() {
-		final String[] array = (String[]) Blueprint.construct(String[].class, new RandomBlueprintConfiguration(), new BlueprintSession());
+		final String[] array = Blueprint.construct(String[].class, new RandomBlueprintConfiguration(), new BlueprintSession());
 		Assert.assertTrue(array.length > 0);
 		for (final String i : array) {
 			Assert.assertTrue(UUID_PATTERN.matcher(i).matches());
