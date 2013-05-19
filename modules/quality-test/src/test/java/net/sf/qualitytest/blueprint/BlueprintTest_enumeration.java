@@ -59,12 +59,16 @@ public class BlueprintTest_enumeration {
 	public void testEnumerationRandom() {
 		final BlueprintSession session = new BlueprintSession();
 		final BlueprintConfiguration rand = new RandomBlueprintConfiguration();
-		final SimpleEnum simple = Blueprint.construct(SimpleEnum.class, rand, session);
+		final SimpleEnum simple0 = Blueprint.construct(SimpleEnum.class, rand, session);
 		final SimpleEnum simple1 = Blueprint.construct(SimpleEnum.class, rand, session);
 		final SimpleEnum simple2 = Blueprint.construct(SimpleEnum.class, rand, session);
-		final boolean a = simple != simple1;
-		final boolean b = simple != simple2;
+		final SimpleEnum simple3 = Blueprint.construct(SimpleEnum.class, rand, session);
+		final boolean a = simple0 != simple1;
+		final boolean b = simple0 != simple2;
 		final boolean c = simple2 != simple1;
-		Assert.assertTrue(a || b || c);
+		final boolean d = simple3 != simple0;
+		final boolean e = simple3 != simple1;
+		final boolean f = simple3 != simple2;
+		Assert.assertTrue(a || b || c || d || e || f);
 	}
 }
