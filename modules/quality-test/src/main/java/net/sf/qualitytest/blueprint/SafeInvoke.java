@@ -65,8 +65,8 @@ final class SafeInvoke {
 		final Constructor<?>[] constructors = exceptionClass.getDeclaredConstructors();
 		for (final Constructor<?> c : constructors) {
 			final Class<?>[] parameterTypes = c.getParameterTypes();
-			if (parameterTypes.length == 1 && parameterTypes[0].isInstance(Throwable.class)) {
-				return (RuntimeException) constructors[0].newInstance(e);
+			if (parameterTypes.length == 1 && parameterTypes[0] == Throwable.class) {
+				return (RuntimeException) c.newInstance(e);
 			}
 		}
 

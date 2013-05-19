@@ -128,14 +128,18 @@ public class SafeInvokeTest {
 		}, BlueprintException.class));
 	}
 
-	@Test(expected = BlueprintException.class)
+	@Test
 	public void testSaveInfokeThrowsOtherException() {
-		Assert.assertEquals("quality-test", SafeInvoke.invoke(new ExceptionRunnable<String>() {
-
-			@Override
-			public String run() throws Exception {
-				throw new IllegalArgumentException();
-			}
-		}, BlueprintException.class));
+		try {
+			Assert.assertEquals("quality-test", SafeInvoke.invoke(new ExceptionRunnable<String>() {
+				@Override
+				public String run() throws Exception {
+					throw new IllegalArgumentException("cause should be transfered");
+				}
+			}, BlueprintException.class));
+		} catch (final BlueprintException e) {
+			Assert.assertEquals("cause should be transfered", e.getCause().getMessage());
+		}
 	}
+
 }
