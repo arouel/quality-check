@@ -159,6 +159,7 @@ public final class Blueprint {
 		}
 	}
 
+	@Nullable
 	@SuppressWarnings({ "unchecked" })
 	private static <T> T blueprintObject(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
 			@Nullable final CreationStrategy<?> creator, @Nonnull final BlueprintSession session) {
@@ -241,6 +242,7 @@ public final class Blueprint {
 	 *            a class
 	 * @return a blue printed instance of {@code T}
 	 */
+	@Nullable
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T construct(@Nonnull final Class<T> clazz) {
 		Check.notNull(clazz, "clazz");
@@ -262,6 +264,7 @@ public final class Blueprint {
 	 *            a {@code BlueprintConfiguration}
 	 * @return a blue printed instance of {@code T}
 	 */
+	@Nullable
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T construct(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config) {
 		Check.notNull(clazz, "clazz");
@@ -286,6 +289,7 @@ public final class Blueprint {
 	 *            a {@code BlueprintSession}
 	 * @return a blue printed instance of {@code T}
 	 */
+	@Nullable
 	@Throws(IllegalNullArgumentException.class)
 	public static <T> T construct(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
 			@Nonnull final BlueprintSession session) {

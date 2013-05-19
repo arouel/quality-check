@@ -21,9 +21,6 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.sf.qualitycheck.Throws;
-import net.sf.qualitycheck.exception.IllegalNullArgumentException;
-
 /**
  * Defines a blueprint configuration
  * 
@@ -41,7 +38,6 @@ public interface BlueprintConfiguration {
 	 *            a class
 	 * @return a blue printed instance of {@code T}
 	 */
-	@Throws(IllegalNullArgumentException.class)
 	@Nullable
 	<T> T construct(@Nonnull final Class<T> clazz);
 
@@ -106,6 +102,7 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @return the changed blueprint configuration.
 	 */
+	@Nonnull
 	BlueprintConfiguration with(final MatchingStrategy matcher, final CreationStrategy<?> creator);
 
 	/**

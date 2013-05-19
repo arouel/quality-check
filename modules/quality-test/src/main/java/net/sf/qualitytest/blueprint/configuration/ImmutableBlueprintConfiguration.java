@@ -70,12 +70,14 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		this.withPublicAttributes = withPublicAttributes;
 	}
 
+	@Nullable
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> T construct(@Nonnull final Class<T> clazz) {
 		return Blueprint.construct(clazz, this, new BlueprintSession());
 	}
 
+	@Nullable
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public CreationStrategy<?> findCreationStrategyForMethod(@Nonnull final Method method) {
@@ -90,6 +92,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return null;
 	}
 
+	@Nullable
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public CreationStrategy<?> findCreationStrategyForType(@Nonnull final Class<?> clazz) {
@@ -109,18 +112,21 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return withPublicAttributes;
 	}
 
+	@Nonnull
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final T value) {
 		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
 	}
 
+	@Nonnull
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(@Nonnull final MatchingStrategy matchingStrategy) {
 		return with(matchingStrategy, new BlueprintCreationStrategy());
 	}
 
+	@Nonnull
 	@Override
 	@Throws(IllegalNullArgumentException.class)
 	public BlueprintConfiguration with(@Nonnull final MatchingStrategy matcher, @Nonnull final CreationStrategy<?> creator) {
@@ -133,6 +139,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);
 	}
 
+	@Nonnull
 	@Override
 	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
 	public <T> BlueprintConfiguration with(@Nonnull final String name, @Nullable final T value) {
@@ -140,6 +147,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return with(new CaseInsensitiveMethodNameMatchingStrategy(name), new SingleValueCreationStrategy<T>(value));
 	}
 
+	@Nonnull
 	@Override
 	public BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes) {
 		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);
