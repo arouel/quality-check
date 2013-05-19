@@ -37,31 +37,31 @@ import net.sf.qualitytest.exception.BlueprintException;
  * Blueprinting is a technique that makes writing test easier. For unit-testing you often need data-objects, where the
  * actual content of the objects does not matter. {@code Blueprint} creates data-objects filled with random or defined
  * data automatically based on the "Blue-Print" which is the Class itself.
- * 
+ * <p>
  * Blueprinting makes tests more maintainable as they depend less on test-data. Imagine, you add a new required
  * attribute to a class. Usually, you have to add this to all tests using this class. With blueprinting you just have to
  * add it to certain tests where the contents of the logic does actually matter. Most of the time the randomly generated
  * value by {@code Blueprint} is just fine.
- * 
+ * <p>
  * {@code Blueprint} is similar to C#'s AutoFixture (https://github.com/AutoFixture/AutoFixture#readme).
- * 
+ * <p>
  * A simple example:
  * 
- * <code>
- * 	final BlueprintConfiguration config = new RandomBlueprintConfiguration().with("email", "mail@example.com");
- *  final User user = Blueprint.construct(User.class, config);
- * </code>
+ * <pre>
+ * final BlueprintConfiguration config = new RandomBlueprintConfiguration().with(&quot;email&quot;, &quot;mail@example.com&quot;);
+ * final User user = Blueprint.construct(User.class, config);
+ * </pre>
  * 
  * or simpler
  * 
- * <code>
- *  final User user = Blueprint.random().with("email", "mail@example.com").construct(User.class);
- * </code>
+ * <pre>
+ * final User user = Blueprint.random().with(&quot;email&quot;, &quot;mail@example.com&quot;).construct(User.class);
+ * </pre>
  * 
  * {@code Blueprint} offers two custom configurations. A {@code DefaultBlueprintConfiguration} which fills any object
  * using default, empty or 0 values. The second configuration, {@code RandomBlueprintConfiguration} will always generate
  * a random value. Both fill child objects using a deep-tree-search.
- * 
+ * <p>
  * Utilities for collections can be found in {@code CollectionBlueprint}.
  * 
  * @see DefaultBlueprintConfiguration
