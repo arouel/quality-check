@@ -1,6 +1,5 @@
 /*******************************************************************************
- * Copyright 2012 André Rouél
- * Copyright 2012 Dominik Seichter
+ * Copyright 2013 André Rouél and Dominik Seichter
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
