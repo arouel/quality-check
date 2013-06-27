@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.text.MessageFormat;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +29,6 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.ModifierBits;
-import net.sf.qualitytest.blueprint.SafeInvoke.ExceptionRunnable;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
 import net.sf.qualitytest.exception.BlueprintException;
@@ -95,7 +95,7 @@ public final class Blueprint {
 		Check.notNull(config, "config");
 		Check.notNull(session, "sesion");
 
-		final T obj = safeNewInstance(clazz);
+		final T obj = safeNewInstance(session, clazz);
 		blueprintPublicMethods(obj, clazz, config, session);
 		blueprintPublicAttributes(obj, clazz, config, session);
 		return obj;
@@ -117,9 +117,10 @@ public final class Blueprint {
 		final CreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
 		final Object value = blueprintObject(f.getType(), config, creator, session);
 
-		SafeInvoke.invoke(new ExceptionRunnable<Object>() {
+		final String action = MessageFormat.format("Setting field {0} to {1}.", f.getName(), value);
+		SafeInvoke.invoke(new BlueprintExceptionRunnable<Object>(session, action) {
 			@Override
-			public Object run() throws Exception {
+			public Object runInternal() throws Exception {
 				f.set(that, value);
 				return null;
 			}
@@ -149,13 +150,15 @@ public final class Blueprint {
 				values[i] = creator.createValue(parameterTypes[i], config, session);
 			}
 
-			SafeInvoke.invoke(new ExceptionRunnable<Object>() {
+			final String action = MessageFormat.format("Invoking method {0} with arguments {1}.", m.getName(), values);
+			SafeInvoke.invoke(new BlueprintExceptionRunnable<Object>(session, action) {
 
 				@Override
-				public Object run() throws Exception {
+				public Object runInternal() throws Exception {
 					m.invoke(that, values);
 					return null;
 				}
+
 			}, BlueprintException.class);
 		}
 	}
@@ -374,7 +377,7 @@ public final class Blueprint {
 		}
 
 		@SuppressWarnings("unchecked")
-		final T obj = (T) safeNewInstance(constructor, parameters);
+		final T obj = (T) safeNewInstance(session, constructor, parameters);
 		blueprintPublicMethods(obj, clazz, config, session);
 		blueprintPublicAttributes(obj, clazz, config, session);
 
@@ -434,11 +437,12 @@ public final class Blueprint {
 	 * @throws BlueprintException
 	 *             in case of any error
 	 */
-	private static <T> T safeNewInstance(final Class<T> clazz) {
-		return SafeInvoke.invoke(new ExceptionRunnable<T>() {
+	private static <T> T safeNewInstance(final BlueprintSession session, final Class<T> clazz) {
+		final String action = MessageFormat.format("Creating clazz {0} with default constructor.", clazz.getName());
+		return SafeInvoke.invoke(new BlueprintExceptionRunnable<T>(session, action) {
 
 			@Override
-			public T run() throws Exception {
+			public T runInternal() throws Exception {
 				return (T) clazz.newInstance();
 			}
 		}, BlueprintException.class);
@@ -455,11 +459,13 @@ public final class Blueprint {
 	 *             in case of any error
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T safeNewInstance(final Constructor<?> constructor, final Object[] parameters) {
-		return SafeInvoke.invoke(new ExceptionRunnable<T>() {
+	private static <T> T safeNewInstance(final BlueprintSession session, final Constructor<?> constructor, final Object[] parameters) {
+		final String action = MessageFormat.format("Creating clazz {0} with constructor {1}.", constructor.getClass().getName(),
+				constructor.toGenericString());
+		return SafeInvoke.invoke(new BlueprintExceptionRunnable<T>(session, action) {
 
 			@Override
-			public T run() throws Exception {
+			public T runInternal() throws Exception {
 				return (T) constructor.newInstance(parameters);
 			}
 		}, BlueprintException.class);

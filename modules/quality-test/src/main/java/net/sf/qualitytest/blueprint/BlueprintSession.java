@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.exception.BlueprintCycleException;
 
@@ -38,9 +39,13 @@ import net.sf.qualitytest.exception.BlueprintCycleException;
 @NotThreadSafe
 public final class BlueprintSession {
 
+	private static final String SEPARATOR = "->";
+
 	private final Stack<Class<?>> stack = new Stack<Class<?>>();
 	private final Set<Class<?>> classes = new HashSet<Class<?>>();
 	private int blueprintCount = 0;
+
+	private String lastAction = "";
 
 	/**
 	 * Detect cycles in the blueprinting-graph. A cycle occurs when a class is blueprinted within a scope where the same
@@ -52,7 +57,7 @@ public final class BlueprintSession {
 	 */
 	private void detectCycles(@Nonnull final Class<?> clazz) {
 		if (stack.contains(clazz)) {
-			throw new BlueprintCycleException(clazz);
+			throw new BlueprintCycleException(this, clazz);
 		}
 	}
 
@@ -72,6 +77,30 @@ public final class BlueprintSession {
 	 */
 	public int getBlueprintCount() {
 		return blueprintCount;
+	}
+
+	/**
+	 * Get the current blueprinting context as string. This is useful to describe the context in which blueprinting
+	 * errors have occured.
+	 * 
+	 * @return context as string.
+	 */
+	public String getContext() {
+		final StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < stack.size(); i++) {
+			buffer.append(stack.get(i).getName());
+			if (i < stack.size() - 1) {
+				buffer.append(SEPARATOR);
+			}
+		}
+
+		if (!lastAction.isEmpty()) {
+			buffer.append(" {");
+			buffer.append(lastAction);
+			buffer.append('}');
+		}
+
+		return buffer.toString();
 	}
 
 	/**
@@ -102,5 +131,18 @@ public final class BlueprintSession {
 
 		stack.push(clazz);
 		classes.add(clazz);
+	}
+
+	/**
+	 * Specify the last action performed on an object. This will be added to the {@link BlueprintSession.getContext()}
+	 * to allow for simpler debugging.
+	 * 
+	 * @param lastAction
+	 *            A description of the last action.
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public void setLastAction(@Nonnull final String lastAction) {
+		this.lastAction = Check.notEmpty(lastAction, "lastAction");
 	}
 }

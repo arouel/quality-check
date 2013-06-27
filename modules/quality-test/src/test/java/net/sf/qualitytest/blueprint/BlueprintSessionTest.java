@@ -61,4 +61,17 @@ public class BlueprintSessionTest {
 		Assert.assertEquals("", o.getValue());
 		Assert.assertNotNull(o.getNext());
 	}
+
+	@Test
+	public void testCycleMessage() {
+		try {
+			Blueprint.construct(CyclicObject.class);
+			Assert.assertFalse(true);
+		} catch (final BlueprintCycleException e) {
+			Assert.assertTrue(e
+					.getMessage()
+					.startsWith(
+							"Error during blueprinting class 'net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject': net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject {Invoking method setValue with arguments"));
+		}
+	}
 }

@@ -17,6 +17,8 @@ package net.sf.qualitytest.exception;
 
 import javax.annotation.Nullable;
 
+import net.sf.qualitytest.blueprint.BlueprintSession;
+
 /**
  * @author Dominik Seichter
  */
@@ -24,6 +26,8 @@ public class BlueprintException extends RuntimeException {
 
 	private static final long serialVersionUID = -7011658424196608479L;
 	private static final String DEFAULT_MESSAGE = "Error during blueprinting.";
+
+	private BlueprintSession session;
 
 	/**
 	 * Constructs a {@code BlueprintException} with the default message {@link BlueprintException#DEFAULT_MESSAGE}.
@@ -66,4 +70,27 @@ public class BlueprintException extends RuntimeException {
 		super(DEFAULT_MESSAGE, cause);
 	}
 
+	@Override
+	public String getMessage() {
+		final String message = super.getMessage();
+		if (session != null) {
+			return message + " " + session.getContext();
+		} else {
+			return message;
+		}
+	}
+
+	/**
+	 * Access the {@link BlueprintSession} during which the exception has occurred.
+	 * 
+	 * @return {@code BlueprintSession}
+	 */
+	public @Nullable
+	BlueprintSession getSession() {
+		return session;
+	}
+
+	public void setSession(final BlueprintSession session) {
+		this.session = session;
+	}
 }

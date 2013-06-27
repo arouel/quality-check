@@ -79,6 +79,9 @@ final class SafeInvoke {
 	 * 
 	 * @param runnable
 	 *            An {@code ExceptionRunnable}
+	 * @param exceptionClass
+	 *            The kind of exception that should be thrown.
+	 * 
 	 * @throws Throwable
 	 * 
 	 * @throws BlueprintException

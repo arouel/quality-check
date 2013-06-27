@@ -15,7 +15,10 @@
  ******************************************************************************/
 package net.sf.qualitytest.exception;
 
+import java.util.ArrayList;
+
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
+import net.sf.qualitytest.blueprint.BlueprintSession;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,40 +27,63 @@ public class BlueprintCycleExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new BlueprintCycleException(String.class);
+		new BlueprintCycleException(new BlueprintSession(), String.class);
 	}
 
 	@Test(expected = BlueprintCycleException.class)
 	public void construct_withEmptyArgName_successful() {
-		throw new BlueprintCycleException(String.class);
+		throw new BlueprintCycleException(new BlueprintSession(), String.class);
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final BlueprintCycleException e = new BlueprintCycleException(
-				String.class, null);
-		Assert.assertEquals(
-				"Error during blueprinting class 'java.lang.String'.",
-				e.getMessage());
+		final BlueprintCycleException e = new BlueprintCycleException(new BlueprintSession(), String.class, null);
+		Assert.assertEquals("Error during blueprinting class 'java.lang.String': ", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new BlueprintCycleException(String.class, new NumberFormatException());
+		new BlueprintCycleException(new BlueprintSession(), String.class, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withMessageAndFilledCause() {
-		final BlueprintCycleException e = new BlueprintCycleException(
-				BlueprintCycleExceptionTest.class, new NumberFormatException());
+		final BlueprintCycleException e = new BlueprintCycleException(new BlueprintSession(), BlueprintCycleExceptionTest.class,
+				new NumberFormatException());
+		Assert.assertEquals("Error during blueprinting class 'net.sf.qualitytest.exception.BlueprintCycleExceptionTest': ", e.getMessage());
+	}
+
+	@Test
+	public void construct_withMessageAndFilledCauseAndSession() {
+		final BlueprintSession session = new BlueprintSession();
+		session.push(ArrayList.class);
+		session.push(String.class);
+		final BlueprintCycleException e = new BlueprintCycleException(session, BlueprintCycleExceptionTest.class,
+				new NumberFormatException());
 		Assert.assertEquals(
-				"Error during blueprinting class 'net.sf.qualitytest.exception.BlueprintCycleExceptionTest'.",
+				"Error during blueprinting class 'net.sf.qualitytest.exception.BlueprintCycleExceptionTest': java.util.ArrayList->java.lang.String",
 				e.getMessage());
 	}
 
+	@Test
+	public void construct_withMessageAndFilledCauseAndSessionAndLastAction() {
+		final BlueprintSession session = new BlueprintSession();
+		session.push(ArrayList.class);
+		session.push(String.class);
+		session.setLastAction("Hello World");
+		final BlueprintCycleException e = new BlueprintCycleException(session, BlueprintCycleExceptionTest.class,
+				new NumberFormatException());
+		Assert.assertEquals(
+				"Error during blueprinting class 'net.sf.qualitytest.exception.BlueprintCycleExceptionTest': java.util.ArrayList->java.lang.String {Hello World}",
+				e.getMessage());
+	}
 	@Test(expected = IllegalNullArgumentException.class)
 	public void construct_withNullClass() {
-		new BlueprintCycleException(null);
+		new BlueprintCycleException(new BlueprintSession(), null);
 	}
 
+	@Test(expected = IllegalNullArgumentException.class)
+	public void construct_withNullSession() {
+		new BlueprintCycleException(null, String.class);
+	}
 }
