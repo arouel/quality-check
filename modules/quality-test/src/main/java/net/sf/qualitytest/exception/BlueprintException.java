@@ -74,7 +74,12 @@ public class BlueprintException extends RuntimeException {
 	public String getMessage() {
 		final String message = super.getMessage();
 		if (session != null) {
-			return message + " " + session.getContext();
+			final String context = session.getContext();
+			if (!context.isEmpty()) {
+				return message + " " + context;
+			} else {
+				return message;
+			}
 		} else {
 			return message;
 		}

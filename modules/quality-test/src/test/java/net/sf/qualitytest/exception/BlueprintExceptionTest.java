@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.exception;
 
+import net.sf.qualitytest.blueprint.BlueprintSession;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -67,6 +69,31 @@ public class BlueprintExceptionTest {
 	public void construct_withoutArgs_successful() {
 		final BlueprintException e = new BlueprintException();
 		Assert.assertEquals("Error during blueprinting.", e.getMessage());
+	}
+
+	@Test
+	public void testGetMessage() {
+		final BlueprintSession s = new BlueprintSession();
+		final BlueprintException e = new BlueprintException();
+		e.setSession(s);
+		Assert.assertEquals("Error during blueprinting.", e.getMessage());
+	}
+
+	@Test
+	public void testGetMessageWithContext() {
+		final BlueprintSession s = new BlueprintSession();
+		s.push(String.class);
+		final BlueprintException e = new BlueprintException();
+		e.setSession(s);
+		Assert.assertEquals("Error during blueprinting. java.lang.String", e.getMessage());
+	}
+
+	@Test
+	public void testGetSession() {
+		final BlueprintSession s = new BlueprintSession();
+		final BlueprintException e = new BlueprintException();
+		e.setSession(s);
+		Assert.assertSame(s, e.getSession());
 	}
 
 }

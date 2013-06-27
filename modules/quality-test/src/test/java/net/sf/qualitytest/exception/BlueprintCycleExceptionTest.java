@@ -77,6 +77,7 @@ public class BlueprintCycleExceptionTest {
 				"Error during blueprinting class 'net.sf.qualitytest.exception.BlueprintCycleExceptionTest': java.util.ArrayList->java.lang.String {Hello World}",
 				e.getMessage());
 	}
+
 	@Test(expected = IllegalNullArgumentException.class)
 	public void construct_withNullClass() {
 		new BlueprintCycleException(new BlueprintSession(), null);
@@ -85,5 +86,11 @@ public class BlueprintCycleExceptionTest {
 	@Test(expected = IllegalNullArgumentException.class)
 	public void construct_withNullSession() {
 		new BlueprintCycleException(null, String.class);
+	}
+
+	@Test
+	public void testGetSession() {
+		final BlueprintSession s = new BlueprintSession();
+		Assert.assertSame(s, new BlueprintCycleException(s, String.class).getSession());
 	}
 }

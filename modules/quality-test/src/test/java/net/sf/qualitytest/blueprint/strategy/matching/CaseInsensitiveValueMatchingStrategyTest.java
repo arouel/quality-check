@@ -50,6 +50,12 @@ public class CaseInsensitiveValueMatchingStrategyTest {
 	}
 
 	@Test
+	public void testMatchesCaseInsensitveOk_prefix() throws SecurityException, NoSuchMethodException {
+		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("EMail", "get");
+		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("getEmail")));
+	}
+
+	@Test
 	public void testMatchesOk() throws SecurityException, NoSuchMethodException {
 		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("EMail");
 		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("setEmail", String.class)));
