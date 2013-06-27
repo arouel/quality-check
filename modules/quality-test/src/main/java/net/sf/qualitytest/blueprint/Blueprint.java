@@ -367,7 +367,11 @@ public final class Blueprint {
 	private static <T> T immutable(final Class<T> clazz, final BlueprintConfiguration config, final BlueprintSession session) {
 		final Constructor<?> constructor = findFirstPublicConstructor(clazz);
 		if (constructor == null) {
-			throw new NoPublicConstructorException(clazz.getSimpleName());
+			final BlueprintException b = new NoPublicConstructorException(clazz.getSimpleName());
+			final String action = MessageFormat.format("Finding public constructor in {0}", clazz.getName());
+			session.setLastAction(action);
+			b.setSession(session);
+			throw b;
 		}
 
 		final Class<?>[] parameterTypes = constructor.getParameterTypes();

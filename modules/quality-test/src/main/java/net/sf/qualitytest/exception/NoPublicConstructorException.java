@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class NoPublicConstructorException extends RuntimeException {
+public class NoPublicConstructorException extends BlueprintException {
 
 	private static final long serialVersionUID = 5632735367544191025L;
 

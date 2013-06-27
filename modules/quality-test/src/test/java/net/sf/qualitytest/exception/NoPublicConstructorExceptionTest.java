@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.exception;
 
+import net.sf.qualitytest.blueprint.BlueprintSession;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -56,6 +58,16 @@ public class NoPublicConstructorExceptionTest {
 	public void construct_withNullCauseAndCheckMessage() {
 		final NoPublicConstructorException e = new NoPublicConstructorException((Throwable) null);
 		Assert.assertEquals("The given class has no public constructor.", e.getMessage());
+	}
+
+	@Test
+	public void construct_withNullCauseAndCheckMessageAndSession() {
+		final NoPublicConstructorException e = new NoPublicConstructorException((Throwable) null);
+		final BlueprintSession session = new BlueprintSession();
+		session.push(String.class);
+		session.push(Character.class);
+		e.setSession(session);
+		Assert.assertEquals("The given class has no public constructor. java.lang.String->java.lang.Character", e.getMessage());
 	}
 
 	@Test
