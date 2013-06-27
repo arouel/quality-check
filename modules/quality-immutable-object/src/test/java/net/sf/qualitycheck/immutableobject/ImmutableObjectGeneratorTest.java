@@ -528,7 +528,7 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderImplementsInterface(true);
 
 		final String file = "Car.java";
-		assertEquals(readReferenceImmutable(file), readInterfaceAndGenerate(file, settings.build()));
+		assertEquals(readReferenceImmutable(file).replace("\r", ""), readInterfaceAndGenerate(file, settings.build()).replace("\r", ""));
 	}
 
 	@Test(expected = IllegalStateOfArgumentException.class)
