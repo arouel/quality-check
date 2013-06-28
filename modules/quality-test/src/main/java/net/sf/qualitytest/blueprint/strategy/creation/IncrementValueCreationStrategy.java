@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,10 @@ import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintExceptionRunnable;
+import net.sf.qualitytest.blueprint.BlueprintSession;
+import net.sf.qualitytest.blueprint.CreationStrategy;
 import net.sf.qualitytest.blueprint.SafeInvoke;
 import net.sf.qualitytest.blueprint.SafeInvoke.ExceptionRunnable;
 import net.sf.qualitytest.exception.BlueprintException;
@@ -34,7 +39,7 @@ import net.sf.qualitytest.exception.BlueprintException;
  * 
  * @author Dominik Seichter
  */
-public class IncrementValueCreationStrategy<T extends Number> extends ValueCreationStrategy<T> {
+public class IncrementValueCreationStrategy<T extends Number> implements CreationStrategy<T> {
 
 	private static final Map<Class<?>, Class<? extends Number>> PRIMITIVE_MAPPING = new HashMap<Class<?>, Class<? extends Number>>();
 
@@ -66,17 +71,17 @@ public class IncrementValueCreationStrategy<T extends Number> extends ValueCreat
 		this.maxValueOfType = readMaxValueOfType();
 	}
 
-	@Override
 	@ArgumentsChecked
 	@Throws(IllegalNotNullArgumentException.class)
-	public T createValue(@Nonnull final Class<?> expectedClazz) {
+	public T createValue(final Class<?> expectedClazz, final BlueprintConfiguration config, final BlueprintSession session) {
 		Check.notNull(expectedClazz, "expectedClazz");
 
 		final long value = (currentValue.longValue() % maxValueOfType) + offset;
-		currentValue = SafeInvoke.invoke(new ExceptionRunnable<T>() {
+		final String action = MessageFormat.format("Creating value {0} for type {1}.", value, expectedClazz);
+		currentValue = SafeInvoke.invoke(new BlueprintExceptionRunnable<T>(session, action) {
 			@SuppressWarnings("unchecked")
 			@Override
-			public T run() throws Exception {
+			public T runInternal() throws Exception {
 				if (expectedClazz.isPrimitive()) {
 					final Class<?> clazz = PRIMITIVE_MAPPING.get(expectedClazz);
 					return (T) clazz.getConstructor(String.class).newInstance(String.valueOf(value));
