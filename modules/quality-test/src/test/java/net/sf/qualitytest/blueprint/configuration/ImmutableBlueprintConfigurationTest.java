@@ -16,6 +16,7 @@
 package net.sf.qualitytest.blueprint.configuration;
 
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,5 +39,12 @@ public class ImmutableBlueprintConfigurationTest {
 	public void testWithPublicAttributesTrueFalse() {
 		final BlueprintConfiguration config = new ImmutableBlueprintConfiguration().withPublicAttributes(true).withPublicAttributes(false);
 		Assert.assertEquals(false, config.isWithPublicAttributes());
+	}
+
+	@Test
+	public void testWithTypeAndCreationStrategy() {
+		final BlueprintConfiguration config = new ImmutableBlueprintConfiguration().with(String.class,
+				new SingleValueCreationStrategy<String>("Hello"));
+		Assert.assertEquals("Hello", config.construct(String.class));
 	}
 }

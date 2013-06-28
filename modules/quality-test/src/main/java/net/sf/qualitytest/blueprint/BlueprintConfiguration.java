@@ -73,6 +73,19 @@ public interface BlueprintConfiguration {
 	 * 
 	 * @param type
 	 *            a Java type.
+	 * @param creator
+	 *            Creation strategy which actually creates a new value.
+	 * 
+	 * @return the changed blueprint configuration.
+	 */
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final CreationStrategy<?> creator);
+
+	/**
+	 * Replace every attribute with the type {@code type} with a given value.
+	 * 
+	 * @param type
+	 *            a Java type.
 	 * @param value
 	 *            value which should be assigned to the attribute
 	 * 

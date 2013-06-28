@@ -112,6 +112,12 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return withPublicAttributes;
 	}
 
+	@Override
+	@Nonnull
+	public <T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final CreationStrategy<?> creator) {
+		return with(new TypeMatchingStrategy(type), creator);
+	}
+
 	@Nonnull
 	@Override
 	@Throws(IllegalNullArgumentException.class)
