@@ -33,7 +33,7 @@ import net.sf.qualitytest.exception.BlueprintException;
  * @author Dominik Seichter
  * 
  */
-final class SafeInvoke {
+public final class SafeInvoke {
 
 	/**
 	 * A runnable which is allowed to throw any kind of exceptions.
