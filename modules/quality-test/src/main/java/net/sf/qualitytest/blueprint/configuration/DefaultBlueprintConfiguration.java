@@ -16,6 +16,7 @@
 package net.sf.qualitytest.blueprint.configuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,6 +77,8 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 				new HashMap<Object, Object>())));
 		list.add(new StrategyPair(new TypeMatchingStrategy(Set.class), new SingleValueCreationStrategy<Set<Object>>(new HashSet<Object>())));
 		list.add(new StrategyPair(new TypeMatchingStrategy(List.class), new SingleValueCreationStrategy<List<Object>>(
+				new ArrayList<Object>())));
+		list.add(new StrategyPair(new TypeMatchingStrategy(Collection.class), new SingleValueCreationStrategy<Collection<Object>>(
 				new ArrayList<Object>())));
 	}
 
