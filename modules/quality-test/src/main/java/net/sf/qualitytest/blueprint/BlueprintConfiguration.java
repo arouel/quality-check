@@ -69,7 +69,7 @@ public interface BlueprintConfiguration {
 	boolean isWithPublicAttributes();
 
 	/**
-	 * Replace every attribute with the typee {@code type} with a given value.
+	 * Replace every attribute with the type {@code type} with a given value.
 	 * 
 	 * @param type
 	 *            a Java type.
