@@ -18,8 +18,9 @@ package net.sf.qualitytest.blueprint.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
+import net.sf.qualitytest.blueprint.CycleHandlingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomCharValueCreationStrategy;
@@ -33,6 +34,8 @@ import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types with a random
@@ -93,7 +96,6 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	}
 
 	public RandomBlueprintConfiguration() {
-		super(createDefaultAttributeMapping(), false);
+		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), false);
 	}
-
 }

@@ -30,11 +30,13 @@ import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintSession;
 import net.sf.qualitytest.blueprint.CreationStrategy;
+import net.sf.qualitytest.blueprint.CycleHandlingStrategy;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveMethodNameMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
+import net.sf.qualitytest.exception.BlueprintCycleException;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -53,6 +55,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	 * Mapping of class members
 	 */
 	private final List<StrategyPair> mapping;
+	private final List<CycleHandlingStrategy<?>> cycleHandling;
 	private final boolean withPublicAttributes;
 
 	/**
@@ -60,13 +63,17 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	 */
 	public ImmutableBlueprintConfiguration() {
 		mapping = ImmutableList.of();
+		cycleHandling = ImmutableList.of();
 		withPublicAttributes = false;
 	}
 
-	protected ImmutableBlueprintConfiguration(@Nonnull final List<StrategyPair> attributeMapping, final boolean withPublicAttributes) {
+	protected ImmutableBlueprintConfiguration(@Nonnull final List<StrategyPair> attributeMapping,
+			@Nonnull final List<CycleHandlingStrategy<?>> attributeCycleHandling, final boolean withPublicAttributes) {
 		Check.notNull(attributeMapping, "attributeMapping");
+		Check.notNull(attributeCycleHandling, "attributeCycleHandling");
 
 		mapping = ImmutableList.copyOf(attributeMapping);
+		cycleHandling = ImmutableList.copyOf(attributeCycleHandling);
 		this.withPublicAttributes = withPublicAttributes;
 	}
 
@@ -107,6 +114,19 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Nullable
+	public <T> T handleCycle(@Nonnull final BlueprintSession session, @Nonnull final Class<T> clazz) {
+		for (final CycleHandlingStrategy<?> strategy : Lists.reverse(cycleHandling)) {
+			if (strategy.isActiveForType(clazz)) {
+				return (T) strategy.handleCycle(session, clazz);
+			}
+		}
+
+		throw new BlueprintCycleException(session, clazz);
+	}
+
 	@Override
 	public boolean isWithPublicAttributes() {
 		return withPublicAttributes;
@@ -123,6 +143,19 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Throws(IllegalNullArgumentException.class)
 	public <T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final T value) {
 		return with(new TypeMatchingStrategy(type), new SingleValueCreationStrategy<T>(value));
+	}
+
+	@Throws(IllegalNullArgumentException.class)
+	@Override
+	@Nonnull
+	public <T> BlueprintConfiguration with(@Nonnull final CycleHandlingStrategy<T> cycleHandlingStrategy) {
+		Check.notNull(cycleHandlingStrategy, "cycleHandlingStrategy");
+
+		final List<CycleHandlingStrategy<?>> strategies = new ArrayList<CycleHandlingStrategy<?>>();
+		strategies.addAll(cycleHandling);
+		strategies.add(cycleHandlingStrategy);
+		return new ImmutableBlueprintConfiguration(mapping, strategies, withPublicAttributes);
+
 	}
 
 	@Nonnull
@@ -142,7 +175,7 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 		final List<StrategyPair> mapping = new ArrayList<StrategyPair>();
 		mapping.addAll(this.mapping);
 		mapping.add(new StrategyPair(matcher, creator));
-		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);
+		return new ImmutableBlueprintConfiguration(mapping, cycleHandling, withPublicAttributes);
 	}
 
 	@Nonnull
@@ -156,7 +189,6 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Nonnull
 	@Override
 	public BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes) {
-		return new ImmutableBlueprintConfiguration(mapping, withPublicAttributes);
+		return new ImmutableBlueprintConfiguration(mapping, cycleHandling, withPublicAttributes);
 	}
-
 }

@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.sf.qualitytest.exception.BlueprintCycleException;
+
 /**
  * Defines a blueprint configuration
  * 
@@ -62,6 +64,21 @@ public interface BlueprintConfiguration {
 	CreationStrategy<?> findCreationStrategyForType(@Nonnull final Class<?> clazz);
 
 	/**
+	 * Handle the situation that a BlueprintCycle was detected for a particular class.
+	 * 
+	 * @see Blueprint
+	 * 
+	 * @param <T>
+	 * @param session
+	 *            The current {@link BlueprintSession}
+	 * @param clazz
+	 *            The class which caused cycle in the blueprinting graph
+	 * @return a blue printed instance of {@code T}
+	 */
+	@Nullable
+	<T> T handleCycle(@Nonnull final BlueprintSession session, @Nonnull final Class<T> clazz);
+
+	/**
 	 * Retrieve if public attributes are filled during blueprinting.
 	 * 
 	 * @return {@code true} if public attributes are filled during blueprinting
@@ -93,6 +110,18 @@ public interface BlueprintConfiguration {
 	 */
 	@Nonnull
 	<T> BlueprintConfiguration with(@Nonnull final Class<T> type, @Nullable final T value);
+
+	/**
+	 * Handle detected cycles in the blueprinting graph using an additional strategy. The default is to throw a
+	 * {@link BlueprintCycleException}.
+	 * 
+	 * @param cycleHandlingStrategy
+	 *            Strategy to define how cycles for a certain type are handled
+	 * 
+	 * @return the changed blueprint configuration
+	 */
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final CycleHandlingStrategy<T> cycleHandlingStrategy);
 
 	/**
 	 * Blueprint everything matching a given {@code MatchingStrategy} using this configuration.

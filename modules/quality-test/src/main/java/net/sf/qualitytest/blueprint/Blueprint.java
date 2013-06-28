@@ -303,8 +303,14 @@ public final class Blueprint {
 
 		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
 
-		session.push(clazz);
-		final T ret = blueprintObject(clazz, config, creator, session);
+		final boolean cycle = session.push(clazz);
+		final T ret;
+		if (cycle) {
+			ret = (T) config.handleCycle(session, clazz);
+		} else {
+			ret = blueprintObject(clazz, config, creator, session);
+		}
+
 		session.pop();
 		return ret;
 	}

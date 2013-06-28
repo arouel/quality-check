@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitytest.blueprint.CycleHandlingStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.BlueprintCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultArrayCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
@@ -32,6 +33,8 @@ import net.sf.qualitytest.blueprint.strategy.matching.ArrayTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Default {@code BlueprintConfiguration} which assigns all primitive types and their corresponding object types which a
@@ -124,6 +127,6 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	}
 
 	public DefaultBlueprintConfiguration() {
-		super(createDefaultAttributeMapping(), false);
+		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), false);
 	}
 }

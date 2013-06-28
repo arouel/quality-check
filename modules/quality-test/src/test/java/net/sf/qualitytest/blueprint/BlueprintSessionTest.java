@@ -71,7 +71,7 @@ public class BlueprintSessionTest {
 			Assert.assertTrue(e
 					.getMessage()
 					.startsWith(
-							"Error during blueprinting class 'net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject': net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject {Invoking method setValue with arguments"));
+							"Error during blueprinting class 'net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject': net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject->net.sf.qualitytest.blueprint.BlueprintSessionTest$CyclicObject {Invoking method setValue with arguments"));
 		}
 	}
 }

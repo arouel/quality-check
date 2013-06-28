@@ -28,7 +28,6 @@ import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalNullArgumentException;
-import net.sf.qualitytest.exception.BlueprintCycleException;
 
 /**
  * A {@code BlueprintSession} holds information acquired while doing a blueprint of a class. This includes cycle
@@ -53,12 +52,10 @@ public final class BlueprintSession {
 	 * 
 	 * @param clazz
 	 *            a class
-	 * @throws {@code BlueprintCycleException} if a cycle has been detected
+	 * @return true if a cycle in the blueprinting graph was detected
 	 */
-	private void detectCycles(@Nonnull final Class<?> clazz) {
-		if (stack.contains(clazz)) {
-			throw new BlueprintCycleException(this, clazz);
-		}
+	private boolean detectCycles(@Nonnull final Class<?> clazz) {
+		return stack.contains(clazz);
 	}
 
 	/**
@@ -119,18 +116,21 @@ public final class BlueprintSession {
 	 * 
 	 * @param clazz
 	 *            the class for which a blueprint is created
-	 * @throws {@code BlueprintCycleException} if a cycle has been detected
+	 * 
+	 * @return true if a cycle in the blueprinting graph was detected
 	 * 
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNullArgumentException.class)
-	public void push(@Nonnull final Class<?> clazz) {
+	public boolean push(@Nonnull final Class<?> clazz) {
 		Check.notNull(clazz, "clazz");
 
-		detectCycles(clazz);
+		final boolean cycle = detectCycles(clazz);
 
 		stack.push(clazz);
 		classes.add(clazz);
+
+		return cycle;
 	}
 
 	/**
