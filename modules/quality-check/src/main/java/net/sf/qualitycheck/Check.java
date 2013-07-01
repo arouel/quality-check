@@ -715,6 +715,335 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed {@code byte} is greater to another {@code byte}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code byte} is greater than another {@code byte}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code char} is greater to another {@code char}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code char} is greater than another {@code char}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code double} is greater to another {@code double}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code double} is greater than another {@code double}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code float} is greater to another {@code float}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code float} is greater than another {@code float}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code int} is greater to another {@code int}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code int} is greater than another {@code int}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code long} is greater to another {@code long}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code long} is greater than another {@code long}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code short} is greater to another {@code short}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code short} is greater than another {@code short}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparable must be greater than a value (will be passed to
+	 *            {@code IllegalNotGreaterThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotGreaterThanException
+	 *             if the argument value {@code check} is not greater than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotGreaterThanException.class)
+	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
+		if (expected >= check) {
+			throw new IllegalNotGreaterThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
 	 * Ensures that a passed {@code Comparable} is greater to another {@code Comparable}. The comparison is made using
 	 * {@code expected.compareTo(check) >= 0}.
 	 * 
@@ -1022,6 +1351,335 @@ public final class Check {
 			throw new IllegalNumericArgumentException(name);
 		}
 		return value;
+	}
+
+	/**
+	 * Ensures that a passed {@code byte} is less than another {@code byte}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code byte} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code byte} is less than another {@code byte}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code char} is less than another {@code char}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code char} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code char} is less than another {@code char}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code double} is less than another {@code double}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code double} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code double} is less than another {@code double}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code float} is less than another {@code float}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code float} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code float} is less than another {@code float}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code int} is less than another {@code int}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code int} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code int} is less than another {@code int}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code long} is less than another {@code long}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code long} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code long} is less than another {@code long}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code short} is less than another {@code short}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code short} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException();
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code short} is less than another {@code short}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the comparables must be less than a value (will be passed to
+	 *            {@code IllegalNotLessThanException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalNotLesserThanException
+	 *             if the argument value {@code check} is not lesser than value {@code expected}
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotLesserThanException.class)
+	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
+		if (expected <= check) {
+			throw new IllegalNotLesserThanException(message);
+		}
+
+		return check;
 	}
 
 	/**
