@@ -91,7 +91,7 @@ at FindBugs™ JSR-305 support.
 		<!-- Maven Plugins -->
 		<build-helper-maven-plugin.version>1.7</build-helper-maven-plugin.version>
 		<findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
-		<jacoco.version>0.6.2.201302030002</jacoco.version>
+		<jacoco.version>0.6.3.201306030806</jacoco.version>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
 		<maven-changelog-plugin.version>2.2</maven-changelog-plugin.version>
