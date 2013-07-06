@@ -17,6 +17,8 @@ package net.sf.qualitytest.blueprint.strategy.matching;
 
 import java.util.Map;
 
+import net.sf.qualitytest.blueprint.MatchingStrategy;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +27,13 @@ public class ArrayTypeMatchingStrategyTest {
 	@Test
 	public void testExactMatch() {
 		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(String[].class));
+	}
+
+	@Test
+	public void testMatchesByField_mustReturnFalse() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new ArrayTypeMatchingStrategy();
+		Assert.assertFalse(s.matchesByField(null));
+		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
 	}
 
 	@Test
@@ -43,4 +52,5 @@ public class ArrayTypeMatchingStrategyTest {
 	public void testPrimitiveMatch() {
 		Assert.assertTrue(new ArrayTypeMatchingStrategy().matchesByType(int[].class));
 	}
+
 }

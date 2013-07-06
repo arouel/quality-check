@@ -44,6 +44,23 @@ public class CaseInsensitiveValueMatchingStrategyTest {
 	}
 
 	@Test
+	public void testMatchesByField_fieldExists() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new CaseInsensitiveMethodNameMatchingStrategy("hash");
+		Assert.assertTrue(s.matchesByField(String.class.getDeclaredField("hash")));
+	}
+
+	@Test(expected = IllegalNullArgumentException.class)
+	public void testMatchesByField_fieldIsNull() throws SecurityException, NoSuchFieldException {
+		new CaseInsensitiveMethodNameMatchingStrategy("myField").matchesByField(null);
+	}
+
+	@Test
+	public void testMatchesByField_fieldNotExists() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new CaseInsensitiveMethodNameMatchingStrategy("id");
+		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
+	}
+
+	@Test
 	public void testMatchesCaseInsensitveOk() throws SecurityException, NoSuchMethodException {
 		final MatchingStrategy strategy = new CaseInsensitiveMethodNameMatchingStrategy("getEMail");
 		Assert.assertTrue(strategy.matchesByMethod(MyClass.class.getDeclaredMethod("getEmail")));

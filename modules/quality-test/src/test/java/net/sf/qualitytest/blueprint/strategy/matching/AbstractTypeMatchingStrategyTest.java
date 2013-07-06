@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import net.sf.qualitytest.blueprint.MatchingStrategy;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,6 +32,13 @@ public class AbstractTypeMatchingStrategyTest {
 	}
 
 	@Test
+	public void testMatchesByField_mustReturnFalse() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new AbstractTypeMatchingStrategy();
+		Assert.assertFalse(s.matchesByField(null));
+		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
+	}
+
+	@Test
 	public void testMatchNoString() throws SecurityException, NoSuchMethodException {
 		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matchesByMethod(String.class.getDeclaredMethod("toString")));
 	}
@@ -38,4 +47,5 @@ public class AbstractTypeMatchingStrategyTest {
 	public void testMatchNotAbstract() {
 		Assert.assertEquals(false, new AbstractTypeMatchingStrategy().matchesByType(AbstractTypeMatchingStrategyTest.class));
 	}
+
 }

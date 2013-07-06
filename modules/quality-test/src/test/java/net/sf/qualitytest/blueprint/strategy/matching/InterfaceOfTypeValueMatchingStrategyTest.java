@@ -17,6 +17,8 @@ package net.sf.qualitytest.blueprint.strategy.matching;
 
 import java.util.Map;
 
+import net.sf.qualitytest.blueprint.MatchingStrategy;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,6 +35,13 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 	}
 
 	@Test
+	public void testMatchesByField_mustReturnFalse() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new InterfaceOfTypeMatchingStrategy(Object.class);
+		Assert.assertFalse(s.matchesByField(null));
+		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
+	}
+
+	@Test
 	public void testNoMatch() {
 		Assert.assertFalse(new InterfaceOfTypeMatchingStrategy(String.class).matchesByType(Long.class));
 	}
@@ -43,4 +52,5 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(String.class));
 		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(Map.class));
 	}
+
 }

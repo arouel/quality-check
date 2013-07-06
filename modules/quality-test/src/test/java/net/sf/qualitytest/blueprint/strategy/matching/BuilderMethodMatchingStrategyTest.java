@@ -47,4 +47,12 @@ public class BuilderMethodMatchingStrategyTest {
 		final MatchingStrategy s = new BuilderMethodMatchingStrategy("Builder");
 		Assert.assertFalse(s.matchesByMethod(MyBuilderThisIsNot.class.getMethod("value", int.class)));
 	}
+
+	@Test
+	public void testMatchesByField_mustReturnFalse() throws SecurityException, NoSuchFieldException {
+		final MatchingStrategy s = new BuilderMethodMatchingStrategy("Builder");
+		Assert.assertFalse(s.matchesByField(null));
+		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
+	}
+
 }
