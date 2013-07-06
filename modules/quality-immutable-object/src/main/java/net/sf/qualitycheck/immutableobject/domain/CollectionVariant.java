@@ -42,11 +42,11 @@ public enum CollectionVariant {
 
 	SET(Set.class, "new HashSet%s(%s)", "Sets.newHashSet(%s)", "Collections.unmodifiableSet(new HashSet%s(%s))", "ImmutableSet.copyOf(%s)"),
 
-	SORTEDMAP(SortedMap.class, "new LinkedHashMap%s(%s)", "Maps.newLinkedHashMap(%s)",
-			"Collections.unmodifiableSortedMap(new LinkedHashMap%s(%s))", "ImmutableSortedMap.copyOf(%s)"),
+	SORTEDMAP(SortedMap.class, "new TreeMap%s(%s)", "Maps.newTreeMap(%s)", "Collections.unmodifiableSortedMap(new TreeMap%s(%s))",
+			"ImmutableSortedMap.copyOf(%s)"),
 
-	SORTEDSET(SortedSet.class, "new LinkedHashSet%s(%s)", "Sets.newLinkedHashSet(%)",
-			"Collections.unmodifiableSortedSet(new LinkedHashSet%s(%s))", "ImmutableSortedSet.copyOf(%s)");
+	SORTEDSET(SortedSet.class, "new TreeSet%s(%s)", "Sets.newTreeSet(%)", "Collections.unmodifiableSortedSet(new TreeSet%s(%s))",
+			"ImmutableSortedSet.copyOf(%s)");
 
 	@Nullable
 	public static CollectionVariant evaluate(@Nonnull final Package pkg, @Nonnull final String typeName) {
