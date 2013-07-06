@@ -77,7 +77,7 @@ public class BlueprintTest_withPublicAttributes {
 		final StupidImmutableWithPublicAttribut stupid = Blueprint.def().withPublicAttributes(false)
 				.construct(StupidImmutableWithPublicAttribut.class);
 		Assert.assertEquals("", stupid.getStr());
-		Assert.assertNull(stupid.date);
+		Assert.assertNotNull(stupid.date);
 	}
 
 	@Test
