@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
@@ -41,6 +42,17 @@ public interface BlueprintConfiguration {
 	 */
 	@Nullable
 	<T> T construct(@Nonnull final Class<T> clazz);
+
+	/**
+	 * Find a creation strategy that matches on the given field.
+	 * 
+	 * @param field
+	 *            A field
+	 * 
+	 * @return a {@code ValueCreationStrategy} or {@code null}
+	 */
+	@Nullable
+	CreationStrategy<?> findCreationStrategyForField(@Nonnull final Field field);
 
 	/**
 	 * Find a creation strategy that matches on the given method.

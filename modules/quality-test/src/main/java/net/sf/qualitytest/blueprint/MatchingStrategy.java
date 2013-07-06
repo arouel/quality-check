@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,16 @@ import javax.annotation.Nonnull;
  * @author Dominik Seichter
  */
 public interface MatchingStrategy {
+
+	/**
+	 * Test if a field matches this strategy.
+	 * 
+	 * @param field
+	 *            A field
+	 * 
+	 * @return true if the strategy matches and the {@code ValueCreationStrategy} should be applied
+	 */
+	boolean matchesByField(@Nonnull final Field field);
 
 	/**
 	 * Test if a method matches this strategy.

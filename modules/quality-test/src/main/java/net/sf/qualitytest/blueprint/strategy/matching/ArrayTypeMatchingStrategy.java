@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.sf.qualitycheck.Check;
@@ -28,6 +29,11 @@ import net.sf.qualitytest.blueprint.MatchingStrategy;
  * @author Dominik Seichter
  */
 public class ArrayTypeMatchingStrategy implements MatchingStrategy {
+
+	@Override
+	public boolean matchesByField(final Field field) {
+		return false;
+	}
 
 	@Override
 	public boolean matchesByMethod(final Method method) {

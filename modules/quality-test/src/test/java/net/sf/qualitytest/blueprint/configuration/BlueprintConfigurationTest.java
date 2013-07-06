@@ -15,6 +15,10 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.configuration;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.concurrent.Immutable;
+
+import net.sf.qualitycheck.Check;
 import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintTest;
 
@@ -22,6 +26,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class BlueprintConfigurationTest {
+
+	@Immutable
+	public static final class Count {
+
+		@Nonnegative
+		private final int count;
+
+		public Count(@Nonnegative final int count) {
+			this.count = Check.notNegative(count, "count");
+		}
+
+		@Nonnegative
+		public int getCount() {
+			return count;
+		}
+
+	}
 
 	public static final class User {
 		private int age;
@@ -76,6 +97,12 @@ public class BlueprintConfigurationTest {
 		Assert.assertEquals(18, user.getAge());
 		Assert.assertEquals("mail@example.com", user.getEmail());
 		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(user.getName()).matches());
+	}
+
+	@Test
+	public void testBlueprintWith_onAnImmutableInstance() {
+		final Count count = Blueprint.def().with("count", 7).construct(Count.class);
+		Assert.assertEquals(7, count.getCount());
 	}
 
 }

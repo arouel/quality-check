@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.sf.qualitycheck.Check;
@@ -33,6 +34,11 @@ public class InterfaceOfTypeMatchingStrategy implements MatchingStrategy {
 
 	public InterfaceOfTypeMatchingStrategy(final Class<?> clazz) {
 		this.clazz = Check.notNull(clazz);
+	}
+
+	@Override
+	public boolean matchesByField(final Field field) {
+		return false;
 	}
 
 	@Override

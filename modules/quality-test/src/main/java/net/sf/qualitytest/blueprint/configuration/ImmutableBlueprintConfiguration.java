@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.configuration;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,21 @@ class ImmutableBlueprintConfiguration implements BlueprintConfiguration {
 	@Throws(IllegalNullArgumentException.class)
 	public <T> T construct(@Nonnull final Class<T> clazz) {
 		return Blueprint.construct(clazz, this, new BlueprintSession());
+	}
+
+	@Nullable
+	@Override
+	@Throws(IllegalNullArgumentException.class)
+	public CreationStrategy<?> findCreationStrategyForField(@Nonnull final Field field) {
+		Check.notNull(field, "field");
+
+		for (final StrategyPair entry : Lists.reverse(mapping)) {
+			if (entry.getKey().matchesByField(field)) {
+				return entry.getValue();
+			}
+		}
+
+		return null;
 	}
 
 	@Nullable

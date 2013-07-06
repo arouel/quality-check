@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.sf.qualitycheck.Check;
@@ -60,6 +61,13 @@ public class CaseInsensitiveMethodNameMatchingStrategy implements MatchingStrate
 	public CaseInsensitiveMethodNameMatchingStrategy(final String name, final String prefix) {
 		this.name = Check.notEmpty(name);
 		this.prefix = Check.notNull(prefix);
+	}
+
+	@Override
+	public boolean matchesByField(final Field field) {
+		Check.notNull(field, "field");
+		final String fieldName = field.getName();
+		return name.equalsIgnoreCase(fieldName);
 	}
 
 	@Override

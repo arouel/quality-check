@@ -15,6 +15,7 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.matching;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
@@ -54,6 +55,11 @@ public class BuilderMethodMatchingStrategy implements MatchingStrategy {
 	 */
 	public BuilderMethodMatchingStrategy(@Nonnull final String suffix) {
 		builderSuffix = Check.notNull(suffix, "suffix");
+	}
+
+	@Override
+	public boolean matchesByField(final Field field) {
+		return false;
 	}
 
 	@Override

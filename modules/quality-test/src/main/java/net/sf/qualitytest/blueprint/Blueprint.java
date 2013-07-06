@@ -102,26 +102,57 @@ public final class Blueprint {
 	}
 
 	/**
+	 * Blueprint all attributes of an object.
+	 * <p>
+	 * Static fields are ignored.
+	 * 
+	 * @param <T>
+	 *            type of object
+	 * @param obj
+	 *            Instance of the object
+	 * @param clazz
+	 *            Class of the object
+	 * @param config
+	 *            Configuration to apply
+	 * @param session
+	 *            A {@code BlueprintSession}
+	 */
+	private static <T> void blueprintAllAttributes(final T obj, final Class<T> clazz, final BlueprintConfiguration config,
+			final BlueprintSession session) {
+		for (final Field f : clazz.getDeclaredFields()) {
+			final boolean isStatic = ModifierBits.isModifierBitSet(f.getModifiers(), Modifier.STATIC);
+			if (!isStatic) {
+				blueprintField(obj, f, config, session);
+			}
+		}
+	}
+
+	/**
 	 * Blueprint a field.
 	 * 
 	 * @param that
 	 *            Instance of the object
-	 * @param f
-	 *            Accessible Field
+	 * @param field
+	 *            Accessible field
 	 * @param config
 	 *            configuration to use.
 	 * @param session
 	 *            A {@code BlueprintSession}
 	 */
-	private static void blueprintField(final Object that, final Field f, final BlueprintConfiguration config, final BlueprintSession session) {
-		final CreationStrategy<?> creator = config.findCreationStrategyForType(f.getType());
-		final Object value = blueprintObject(f.getType(), config, creator, session);
+	private static void blueprintField(final Object that, final Field field, final BlueprintConfiguration config,
+			final BlueprintSession session) {
+		CreationStrategy<?> creator = config.findCreationStrategyForField(field);
+		if (creator == null) {
+			creator = config.findCreationStrategyForType(field.getType());
+		}
+		final Object value = blueprintObject(field.getType(), config, creator, session);
 
-		final String action = MessageFormat.format("Setting field {0} to {1}.", f.getName(), value);
+		final String action = MessageFormat.format("Setting field {0} to {1}.", field.getName(), value);
 		SafeInvoke.invoke(new BlueprintExceptionRunnable<Object>(session, action) {
 			@Override
 			public Object runInternal() throws Exception {
-				f.set(that, value);
+				field.setAccessible(true);
+				field.set(that, value);
 				return null;
 			}
 		}, BlueprintException.class);
@@ -134,7 +165,7 @@ public final class Blueprint {
 	 * @param that
 	 *            Instance of the object
 	 * @param m
-	 *            Setter-Method
+	 *            setter method
 	 * @param config
 	 *            configuration to use.
 	 * @param session
@@ -152,9 +183,9 @@ public final class Blueprint {
 
 			final String action = MessageFormat.format("Invoking method {0} with arguments {1}.", m.getName(), values);
 			SafeInvoke.invoke(new BlueprintExceptionRunnable<Object>(session, action) {
-
 				@Override
 				public Object runInternal() throws Exception {
+					m.setAccessible(true);
 					m.invoke(that, values);
 					return null;
 				}
@@ -167,15 +198,23 @@ public final class Blueprint {
 	@SuppressWarnings({ "unchecked" })
 	private static <T> T blueprintObject(@Nonnull final Class<T> clazz, @Nonnull final BlueprintConfiguration config,
 			@Nullable final CreationStrategy<?> creator, @Nonnull final BlueprintSession session) {
-		if (creator != null) {
-			return (T) creator.createValue(clazz, config, session);
-		} else if (clazz.isInterface()) {
-			return (T) proxy(clazz, config, session);
-		} else if (hasPublicDefaultConstructor(clazz)) {
-			return bean(clazz, config, session);
+		final boolean cycle = session.push(clazz);
+		final T ret;
+		if (cycle) {
+			ret = (T) config.handleCycle(session, clazz);
 		} else {
-			return immutable(clazz, config, session);
+			if (creator != null) {
+				ret = (T) creator.createValue(clazz, config, session);
+			} else if (clazz.isInterface()) {
+				ret = (T) proxy(clazz, config, session);
+			} else if (hasPublicDefaultConstructor(clazz)) {
+				ret = bean(clazz, config, session);
+			} else {
+				ret = immutable(clazz, config, session);
+			}
 		}
+		session.pop();
+		return ret;
 	}
 
 	/**
@@ -302,17 +341,7 @@ public final class Blueprint {
 		Check.notNull(session, "session");
 
 		final CreationStrategy<?> creator = config.findCreationStrategyForType(clazz);
-
-		final boolean cycle = session.push(clazz);
-		final T ret;
-		if (cycle) {
-			ret = (T) config.handleCycle(session, clazz);
-		} else {
-			ret = blueprintObject(clazz, config, creator, session);
-		}
-
-		session.pop();
-		return ret;
+		return blueprintObject(clazz, config, creator, session);
 	}
 
 	/**
@@ -388,8 +417,7 @@ public final class Blueprint {
 
 		@SuppressWarnings("unchecked")
 		final T obj = (T) safeNewInstance(session, constructor, parameters);
-		blueprintPublicMethods(obj, clazz, config, session);
-		blueprintPublicAttributes(obj, clazz, config, session);
+		blueprintAllAttributes(obj, clazz, config, session);
 
 		return obj;
 	}
