@@ -16,6 +16,7 @@
 package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -480,6 +481,19 @@ public class BlueprintTest {
 		Assert.assertEquals("", immutable.getName());
 		Assert.assertEquals(0, immutable.getValue());
 		Assert.assertNotNull(immutable.getDate());
+		Assert.assertNotNull(immutable.getList());
+	}
+
+	@Test
+	public void testImmutableObjectFields() {
+		final ImmutableObject immutable = Blueprint.def().with("name", "Name").with(Date.class, new Date(42))
+				.construct(ImmutableObject.class);
+		Assert.assertNotNull(immutable);
+		Assert.assertNotNull(immutable.getName());
+		Assert.assertNotNull(immutable.getDate());
+		Assert.assertEquals("Name", immutable.getName());
+		Assert.assertEquals(0, immutable.getValue());
+		Assert.assertEquals(new Date(42), immutable.getDate());
 		Assert.assertNotNull(immutable.getList());
 	}
 

@@ -53,10 +53,14 @@ public final class SafeInvoke {
 	}
 
 	private static RuntimeException createException(final Throwable e, final Class<? extends RuntimeException> exceptionClass) {
-		try {
-			return createExceptionInternal(e, exceptionClass);
-		} catch (final Exception exception) {
-			throw new BlueprintException(exception);
+		if (!exceptionClass.isInstance(e)) {
+			try {
+				return createExceptionInternal(e, exceptionClass);
+			} catch (final Exception exception) {
+				throw new BlueprintException(exception);
+			}
+		} else {
+			return (RuntimeException) e;
 		}
 	}
 
@@ -80,7 +84,8 @@ public final class SafeInvoke {
 	 * @param runnable
 	 *            An {@code ExceptionRunnable}
 	 * @param exceptionClass
-	 *            The kind of exception that should be thrown.
+	 *            The kind of exception that should be thrown. If the thrown exception is not a subclass of this class,
+	 *            a new instance is created
 	 * 
 	 * @throws Throwable
 	 * 
