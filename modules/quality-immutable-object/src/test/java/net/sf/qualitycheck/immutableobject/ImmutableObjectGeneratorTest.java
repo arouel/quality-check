@@ -35,6 +35,8 @@ import com.google.common.io.CharStreams;
 
 public class ImmutableObjectGeneratorTest {
 
+	private final static String JAVA_ENDING = ".java";
+
 	private ImmutableSettings.Builder settingsBuilder;
 
 	@Before
@@ -64,8 +66,20 @@ public class ImmutableObjectGeneratorTest {
 		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings).getImplCode();
 	}
 
+	private String readInterfaceAndGenerateTest(final String name, final ImmutableSettings settings) throws IOException {
+		final InputStream stream = getClass().getClassLoader().getResourceAsStream(name);
+		return ImmutableObjectGenerator.generate(CharStreams.toString(new InputStreamReader(stream)), settings).getTestCode();
+	}
+
 	private String readReferenceImmutable(final String name) throws IOException {
 		final InputStream stream = getClass().getClassLoader().getResourceAsStream("Immutable" + name);
+		return CharStreams.toString(new InputStreamReader(stream));
+	}
+
+	private String readReferenceImmutableTest(final String name) throws IOException {
+		final String nameWithOutJava = name.substring(0, name.length() - JAVA_ENDING.length());
+
+		final InputStream stream = getClass().getClassLoader().getResourceAsStream("Immutable" + nameWithOutJava + "Test" + JAVA_ENDING);
 		return CharStreams.toString(new InputStreamReader(stream));
 	}
 
@@ -529,6 +543,35 @@ public class ImmutableObjectGeneratorTest {
 
 		final String file = "Car.java";
 		assertEquals(readReferenceImmutable(file).replace("\r", ""), readInterfaceAndGenerate(file, settings.build()).replace("\r", ""));
+	}
+
+	@Test
+	public void testCarInterface_TestGeneration() throws IOException {
+		final ImmutableSettings.Builder settings = new ImmutableSettings.Builder();
+
+		// global settings
+		settings.fieldPrefix("");
+		settings.jsr305Annotations(true);
+		settings.guava(false);
+		settings.qualityCheck(true);
+
+		// immutable settings
+		settings.copyMethods(true);
+		settings.hashCodePrecomputation(false);
+		settings.hashCodeAndEquals(true);
+		settings.serializable(false);
+
+		// builder settings
+		settings.builderCopyConstructor(true);
+		settings.builderFlatMutators(true);
+		settings.builderFluentMutators(true);
+		settings.builderName("Builder");
+		settings.builderImplementsInterface(true);
+
+		final String file = "Car.java";
+		System.out.println(readInterfaceAndGenerateTest(file, settings.build()).replace("\r", ""));
+		assertEquals(readReferenceImmutableTest(file).replace("\r", ""),
+				readInterfaceAndGenerateTest(file, settings.build()).replace("\r", ""));
 	}
 
 	@Test(expected = IllegalStateOfArgumentException.class)

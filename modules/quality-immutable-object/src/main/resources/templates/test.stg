@@ -12,6 +12,7 @@ import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
 <immutableTestClass(settings)>
 
 >>
+
 immutableTestClass(settings) ::= <<
 public final class <settings.immutableName>Test {
 
@@ -22,9 +23,12 @@ public final class <settings.immutableName>Test {
 	<equalsAndHashCodeTests(settings)>
 	
 	<preconditionTests(settings)>
+	
+	<equalsBuilderTest(settings)>
 
 }
 >>
+
 importStatement(i) ::= <<
 <if(i)>import <i.type.package.name>.<i.type.name>;<endif>
 >>
@@ -37,13 +41,27 @@ annotateTestWithExpected(className) ::= <<
 @Test(expected = <className>.class)
 >>
 
-
 preconditionTests(settings) ::= <<
 <settings.fields:{ field |
 	<if(field.static.undefined && field.nonnull)><nullablilityTest(field, settings)><endif>
 	<if(field.static.undefined && field.nonnegative)><negativeNumberTest(field, settings)><endif>
 }>
 >>
+
+equalsBuilderTest(className) ::= <<
+<annotateTest()>
+public void blueprintEqualsBuilder() {
+	final <settings.immutableName> blueprint = new Blueprint().build();
+	final <settings.immutableName>.<settings.builderName> builder = new <settings.immutableName>.<settings.builderName>(); 
+
+	<callBuilderMethods("builder", settings)>
+	
+	final <settings.immutableName> obj = builder.build();
+	assertEquals(blueprint, obj);
+
+}
+>>
+
 nullablilityTest(field, settings) ::= <<
 <annotateTestWithExpected("IllegalNullArgumentException")>
 public void precondition_<field.name; format="toUpper">() {
@@ -59,12 +77,25 @@ public void precondition_<field.name; format="toUpper">() {
 negativeNumberValue(field) ::= <<
 <if(field.type.double)>-1d<elseif(field.type.float)>-1f<elseif(field.type.int)>-1<elseif(field.type.long)>-1l<elseif(field.type.short)>-1<endif>
 >>
-
-
+callBuilderMethods(varName, settings) ::= <<
+<settings.fields:{ field |
+	<if(field.static.undefined)><callSingleBuilderMethod(varName, field, settings)><endif>
+}>
+>>
+callSingleBuilderMethod(varName, field, settings) ::= <<
+<if(settings.builderFlatMutators)>
+	<varName>.<field; format="attribute">(<defaultValue(field)>);
+<else>
+	// TODO: Fix setter name, capitalization is not yet supported	
+	<varName>.<field:setter(); format="attribute">(<defaultValue(field)>);
+<endif>
+>>
+setter(fieldname) ::= <%
+set<fieldname; format="attribute">
+%>
 defaultValue(field) ::= <<
 <if(field.type.boolean)>false<elseif(field.type.byte)>0<elseif(field.type.char)>0<elseif(field.type.double)>0d<elseif(field.type.float)>0f<elseif(field.type.int)>0<elseif(field.type.long)>0l<elseif(field.type.short)>0<elseif(field.type.string)>"test"<else>null<endif>
 >>
-
 
 copyOfTests(settings) ::= <<
 <if(settings.copyMethods)>
@@ -80,11 +111,12 @@ public void copyOf_successful() {
 <endif>
 >>
 
-
 equalsAndHashCodeTests(settings) ::= <<
 <settings.fields:{ field |
 	<if(field.static.undefined)><equalsAndHashCodeTest(field, settings)><endif>
 }>
+
+
 
 <annotateTest()>
 public void equals_identical() {
@@ -113,7 +145,12 @@ public void equals_same() {
 	assertSame(a, a);
 	assertTrue(a.hashCode() == a.hashCode());
 }
+
 >>
+
+
+
+
 equalsAndHashCodeTest(field, settings) ::= <<
 <annotateTest()>
 public void equals_different_<field.name; format="toUpper">() {
@@ -125,7 +162,6 @@ public void equals_different_<field.name; format="toUpper">() {
 	assertFalse(a.hashCode() == b.hashCode());
 }
 >>
-
 
 importedType(type) ::= <<
 <type.name><if(!type.genericDeclaration.undefined)>\<<type.genericDeclaration.declaration>\><endif>
@@ -193,3 +229,5 @@ public Blueprint <field; format="attribute">(final <importedType(field.type)> <f
 }
 <endif>
 >>
+
+
