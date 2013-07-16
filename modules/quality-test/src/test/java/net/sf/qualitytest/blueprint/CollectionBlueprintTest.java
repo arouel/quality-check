@@ -47,4 +47,12 @@ public class CollectionBlueprintTest {
 		StaticCheck.noPublicDefaultConstructor(CollectionBlueprint.class);
 	}
 
+	@Test
+	public void testReturnValueIsSame() {
+		final List<ImmutableObject> list = new ArrayList<ImmutableObject>();
+		final List<ImmutableObject> ret = CollectionBlueprint.addMany(list, ImmutableObject.class, 9);
+
+		Assert.assertSame(list, ret);
+	}
+
 }

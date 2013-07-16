@@ -51,9 +51,9 @@ public final class CollectionBlueprint {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNegativeArgumentException.class })
-	public static <T> void addMany(@Nonnull final Collection<T> collection, @Nonnull final Class<T> clazz,
+	public static <T extends Collection<E>, E> T addMany(@Nonnull final T collection, @Nonnull final Class<E> clazz,
 			@Nonnegative final int numberOfItems) {
-		CollectionBlueprint.addMany(collection, clazz, numberOfItems, Blueprint.def());
+		return CollectionBlueprint.addMany(collection, clazz, numberOfItems, Blueprint.def());
 	}
 
 	/**
@@ -72,7 +72,7 @@ public final class CollectionBlueprint {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNegativeArgumentException.class })
-	public static <T> void addMany(@Nonnull final Collection<T> collection, @Nonnull final Class<T> clazz,
+	public static <T extends Collection<E>, E> T addMany(@Nonnull final T collection, @Nonnull final Class<E> clazz,
 			@Nonnegative final int numberOfItems, @Nonnull final BlueprintConfiguration config) {
 		Check.notNull(collection, "collection");
 		Check.notNull(clazz, "clazz");
@@ -84,6 +84,8 @@ public final class CollectionBlueprint {
 			collection.add(Blueprint.construct(clazz, config, new BlueprintSession()));
 			cnt--;
 		}
+
+		return collection;
 	}
 
 	/**
