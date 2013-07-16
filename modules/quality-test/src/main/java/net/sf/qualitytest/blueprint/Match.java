@@ -15,25 +15,75 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import net.sf.qualitycheck.ArgumentsChecked;
+import net.sf.qualitycheck.Check;
+import net.sf.qualitycheck.Throws;
+import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitytest.blueprint.strategy.matching.BuilderMethodMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.CaseInsensitiveMethodNameMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InstanceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
 /**
- * A utility interface to have a more readable API. This class holds possible method matching strategies.
+ * A utility class to have a more readable API. This class holds possible method matching strategies.
  * 
  * @author Dominik Seichter
  * 
  */
-public interface Match {
+public final class Match {
 
 	/**
 	 * Match all public methods of classes with a name ending in "Builder".
 	 */
-	MatchingStrategy BUILDER_METHODS = new BuilderMethodMatchingStrategy();
+	public static final MatchingStrategy BUILDER_METHODS = new BuilderMethodMatchingStrategy();
 
 	/**
 	 * Match all methods which are setter-methods.
 	 */
-	MatchingStrategy SETTER_METHODS = new SetterMethodMatchingStrategy();
+	public static final MatchingStrategy SETTER_METHODS = new SetterMethodMatchingStrategy();
 
+	/**
+	 * Match all classes that are instances of a type.
+	 * 
+	 * @param clazz
+	 *            Supertype that is matched
+	 * @return a {@code MatchingStrategy} which matches the given type.
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotNullArgumentException.class)
+	public static MatchingStrategy instanceOf(final Class<?> clazz) {
+		return new InstanceOfTypeMatchingStrategy(Check.notNull(clazz, "clazz"));
+	}
+
+	/**
+	 * Match by method or attribute name..
+	 * 
+	 * @param name
+	 *            Name of an attribute or method that is matched.
+	 * @return a {@code MatchingStrategy} which matches the given type.
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalEmptyArgumentException.class)
+	public static MatchingStrategy name(final String name) {
+		return new CaseInsensitiveMethodNameMatchingStrategy(Check.notEmpty(name, "name"));
+	}
+
+	/**
+	 * Match a type.
+	 * 
+	 * @param clazz
+	 *            Type that is matched
+	 * @return a {@code MatchingStrategy} which matches the given type.
+	 */
+	@ArgumentsChecked
+	@Throws(IllegalNotNullArgumentException.class)
+	public static MatchingStrategy type(final Class<?> clazz) {
+		return new TypeMatchingStrategy(Check.notNull(clazz, "clazz"));
+	}
+
+	private Match() {
+		// Do not create instances of this class
+	}
 }

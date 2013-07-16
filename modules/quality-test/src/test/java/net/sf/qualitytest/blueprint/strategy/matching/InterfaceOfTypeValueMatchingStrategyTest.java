@@ -26,31 +26,31 @@ public class InterfaceOfTypeValueMatchingStrategyTest {
 
 	@Test
 	public void testExactMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(String.class).matchesByType(String.class));
+		Assert.assertTrue(new InstanceOfTypeMatchingStrategy(String.class).matchesByType(String.class));
 	}
 
 	@Test
 	public void testInheritedMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Number.class).matchesByType(Long.class));
+		Assert.assertTrue(new InstanceOfTypeMatchingStrategy(Number.class).matchesByType(Long.class));
 	}
 
 	@Test
 	public void testMatchesByField_mustReturnFalse() throws SecurityException, NoSuchFieldException {
-		final MatchingStrategy s = new InterfaceOfTypeMatchingStrategy(Object.class);
+		final MatchingStrategy s = new InstanceOfTypeMatchingStrategy(Object.class);
 		Assert.assertFalse(s.matchesByField(null));
 		Assert.assertFalse(s.matchesByField(String.class.getDeclaredField("hash")));
 	}
 
 	@Test
 	public void testNoMatch() {
-		Assert.assertFalse(new InterfaceOfTypeMatchingStrategy(String.class).matchesByType(Long.class));
+		Assert.assertFalse(new InstanceOfTypeMatchingStrategy(String.class).matchesByType(Long.class));
 	}
 
 	@Test
 	public void testObjectdMatch() {
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(Long.class));
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(String.class));
-		Assert.assertTrue(new InterfaceOfTypeMatchingStrategy(Object.class).matchesByType(Map.class));
+		Assert.assertTrue(new InstanceOfTypeMatchingStrategy(Object.class).matchesByType(Long.class));
+		Assert.assertTrue(new InstanceOfTypeMatchingStrategy(Object.class).matchesByType(String.class));
+		Assert.assertTrue(new InstanceOfTypeMatchingStrategy(Object.class).matchesByType(Map.class));
 	}
 
 }

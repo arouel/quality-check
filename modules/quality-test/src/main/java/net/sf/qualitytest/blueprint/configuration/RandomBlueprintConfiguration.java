@@ -31,7 +31,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomIntValueCreationStra
 import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InstanceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
@@ -64,7 +64,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	 * @param map
 	 */
 	public static void addRandomEnumStrategy(final List<StrategyPair> list) {
-		list.add(new StrategyPair(new InterfaceOfTypeMatchingStrategy(Enum.class), new RandomEnumCreationStrategy()));
+		list.add(new StrategyPair(new InstanceOfTypeMatchingStrategy(Enum.class), new RandomEnumCreationStrategy()));
 	}
 
 	private static List<StrategyPair> createDefaultAttributeMapping() {

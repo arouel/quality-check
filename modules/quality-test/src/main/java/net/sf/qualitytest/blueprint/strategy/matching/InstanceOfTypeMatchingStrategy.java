@@ -28,11 +28,11 @@ import net.sf.qualitytest.blueprint.MatchingStrategy;
  * 
  * @author Dominik Seichter
  */
-public class InterfaceOfTypeMatchingStrategy implements MatchingStrategy {
+public class InstanceOfTypeMatchingStrategy implements MatchingStrategy {
 
 	private final Class<?> clazz;
 
-	public InterfaceOfTypeMatchingStrategy(final Class<?> clazz) {
+	public InstanceOfTypeMatchingStrategy(final Class<?> clazz) {
 		this.clazz = Check.notNull(clazz);
 	}
 

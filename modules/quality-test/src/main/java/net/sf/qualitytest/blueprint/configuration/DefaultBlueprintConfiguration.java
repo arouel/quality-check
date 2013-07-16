@@ -30,7 +30,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.DefaultArrayCreationStrate
 import net.sf.qualitytest.blueprint.strategy.creation.DefaultEnumCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.ArrayTypeMatchingStrategy;
-import net.sf.qualitytest.blueprint.strategy.matching.InterfaceOfTypeMatchingStrategy;
+import net.sf.qualitytest.blueprint.strategy.matching.InstanceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.TypeMatchingStrategy;
 
@@ -91,7 +91,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	 * @param list
 	 */
 	public static void addDefaultEnumStrategy(final List<StrategyPair> list) {
-		list.add(new StrategyPair(new InterfaceOfTypeMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy()));
+		list.add(new StrategyPair(new InstanceOfTypeMatchingStrategy(Enum.class), new DefaultEnumCreationStrategy()));
 	}
 
 	private static List<StrategyPair> createDefaultAttributeMapping() {
