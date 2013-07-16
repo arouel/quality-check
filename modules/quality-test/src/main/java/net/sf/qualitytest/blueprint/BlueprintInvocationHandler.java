@@ -48,7 +48,16 @@ class BlueprintInvocationHandler implements InvocationHandler {
 
 	@Override
 	public Object invoke(final Object instance, final Method method, final Object[] parameters) throws Throwable { // NOSONAR
-		return Blueprint.construct(method.getReturnType(), config, session);
+		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(method);
+		final Object result;
+
+		if (creator != null) {
+			result = creator.createValue(method.getReturnType(), config, session);
+		} else {
+			result = Blueprint.construct(method.getReturnType(), config, session);
+		}
+
+		return result;
 	}
 
 }
