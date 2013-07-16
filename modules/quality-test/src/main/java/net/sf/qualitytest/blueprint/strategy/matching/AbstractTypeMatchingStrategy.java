@@ -24,7 +24,7 @@ import net.sf.qualitytest.ModifierBits;
 import net.sf.qualitytest.blueprint.MatchingStrategy;
 
 /**
- * Match a classes which are abstract.
+ * Match classes which are abstract.
  * 
  * This {@code MatchingStrategy} does never match by method.
  * 
