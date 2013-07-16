@@ -26,6 +26,10 @@ import net.sf.qualitycheck.Check;
  * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
  * blueprinting.
  * 
+ * This invocation handler tries first to find a {@code CreationStrategy} with a {@code MatchingStrategy} for the
+ * particular method. If this is found. The {@code CreationStrategy} is used to create the return value. Otherwise
+ * {@code Blueprint} is called to create a blueprint for the methods return-value.
+ * 
  * @author Dominik Seichter
  */
 class BlueprintInvocationHandler implements InvocationHandler {
