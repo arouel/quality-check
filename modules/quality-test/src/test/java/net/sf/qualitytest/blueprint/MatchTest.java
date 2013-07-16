@@ -15,12 +15,18 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint;
 
+import net.sf.qualitytest.CoverageForPrivateConstructor;
 import net.sf.qualitytest.StaticCheck;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MatchTest {
+
+	@Test
+	public void testAddCoverageToMyPrivateConstructor() {
+		CoverageForPrivateConstructor.giveMeCoverage(Match.class);
+	}
 
 	@Test
 	public void testMakeSureClassIsFinalAndNotAccessible() {
@@ -45,5 +51,4 @@ public class MatchTest {
 		Assert.assertTrue(Match.type(String.class).matchesByType(String.class));
 		Assert.assertFalse(Match.type(Long.class).matchesByType(String.class));
 	}
-
 }
