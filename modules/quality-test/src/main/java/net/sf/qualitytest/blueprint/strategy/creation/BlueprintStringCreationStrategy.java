@@ -17,17 +17,43 @@ package net.sf.qualitytest.blueprint.strategy.creation;
 
 import java.util.UUID;
 
+import javax.annotation.Nonnegative;
+
+import net.sf.qualitycheck.ArgumentsChecked;
+import net.sf.qualitycheck.Check;
 
 /**
  * Strategy which creates random strings using {@code Blueprint.string()}.
+ * 
+ * Optionally a maximum length for the generated strings can be specified.
  * 
  * @author Dominik Seichter
  */
 public class BlueprintStringCreationStrategy extends ValueCreationStrategy<String> {
 
+	private final int maxLength;
+
+	/**
+	 * Create a string creation strategy which creates strings with the default length (standard UUID).
+	 */
+	public BlueprintStringCreationStrategy() {
+		maxLength = -1;
+	}
+
+	@ArgumentsChecked
+	public BlueprintStringCreationStrategy(@Nonnegative final int maxLength) {
+		this.maxLength = Check.notNegative(maxLength, "maxLength");
+	}
+
 	@Override
 	public String createValue(final Class<?> expectedClass) {
-		return UUID.randomUUID().toString();
+		final String ret = UUID.randomUUID().toString();
+
+		if (maxLength >= 0) {
+			return ret.substring(0, maxLength);
+		} else {
+			return ret;
+		}
 	}
 
 }

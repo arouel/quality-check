@@ -15,6 +15,8 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.strategy.creation;
 
+import java.util.regex.Pattern;
+
 import net.sf.qualitytest.blueprint.BlueprintTest;
 
 import org.junit.Assert;
@@ -28,6 +30,20 @@ public class BlueprintStringCreationStrategyTest {
 	}
 
 	@Test
+	public void testMaxLength_isFour() {
+		final Pattern SHORT_UUID_PATTERN = Pattern.compile("[a-z0-9]{4}");
+		Assert.assertNotNull(new BlueprintStringCreationStrategy(4).createValue(String.class));
+		Assert.assertEquals(4, new BlueprintStringCreationStrategy(4).createValue(String.class).length());
+		Assert.assertTrue(SHORT_UUID_PATTERN.matcher(new BlueprintStringCreationStrategy(4).createValue(String.class)).matches());
+	}
+
+	@Test
+	public void testMaxLength_isZero() {
+		Assert.assertNotNull(new BlueprintStringCreationStrategy(0).createValue(String.class));
+		Assert.assertEquals("", new BlueprintStringCreationStrategy(0).createValue(String.class));
+	}
+
+	@Test
 	public void testStringIsUuid() {
 		Assert.assertTrue(BlueprintTest.UUID_PATTERN.matcher(new BlueprintStringCreationStrategy().createValue(String.class)).matches());
 	}
@@ -35,7 +51,7 @@ public class BlueprintStringCreationStrategyTest {
 	@Test
 	public void testStringNotEmpty() {
 		Assert.assertNotNull(new BlueprintStringCreationStrategy().createValue(String.class));
-		Assert.assertNotEquals(0, new BlueprintStringCreationStrategy().createValue(String.class));
+		Assert.assertNotEquals("", new BlueprintStringCreationStrategy().createValue(String.class));
 	}
 
 }
