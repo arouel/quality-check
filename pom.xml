@@ -115,7 +115,7 @@ at FindBugs™ JSR-305 support.
 		<guava.version>14.0.1</guava.version>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<easymock.version>3.1</easymock.version>
+		<easymock.version>3.2</easymock.version>
 		<powermock.version>1.5.1</powermock.version>
 		<cglib.version>3.0</cglib.version>
 
