@@ -116,7 +116,7 @@ at FindBugs™ JSR-305 support.
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<easymock.version>3.1</easymock.version>
-		<powermock.version>1.5</powermock.version>
+		<powermock.version>1.5.1</powermock.version>
 		<cglib.version>3.0</cglib.version>
 
 		<!-- Sonar -->
