@@ -30,6 +30,7 @@ import net.sf.qualitytest.blueprint.strategy.creation.RandomFloatValueCreationSt
 import net.sf.qualitytest.blueprint.strategy.creation.RandomIntValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomLongValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomShortValueCreationStrategy;
+import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.ValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.InstanceOfTypeMatchingStrategy;
 import net.sf.qualitytest.blueprint.strategy.matching.SetterMethodMatchingStrategy;
@@ -86,6 +87,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 		list.add(new StrategyPair(new TypeMatchingStrategy(float.class), FLOAT_DEFAULT));
 		list.add(new StrategyPair(new TypeMatchingStrategy(Double.class), DOUBLE_DEFAULT));
 		list.add(new StrategyPair(new TypeMatchingStrategy(double.class), DOUBLE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(void.class), new SingleValueCreationStrategy<Class<Void>>(void.class)));
 
 		addRandomEnumStrategy(list);
 		DefaultBlueprintConfiguration.addDefaultArrayStrategy(list);

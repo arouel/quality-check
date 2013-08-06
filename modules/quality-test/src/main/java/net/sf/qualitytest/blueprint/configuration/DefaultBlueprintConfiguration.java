@@ -113,6 +113,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 		list.add(createStrategyPair(float.class, FLOAT_DEFAULT));
 		list.add(createStrategyPair(Double.class, DOUBLE_DEFAULT));
 		list.add(createStrategyPair(double.class, DOUBLE_DEFAULT));
+		list.add(new StrategyPair(new TypeMatchingStrategy(void.class), new SingleValueCreationStrategy<Class<Void>>(void.class)));
 
 		addDefaultEnumStrategy(list);
 		addDefaultArrayStrategy(list);

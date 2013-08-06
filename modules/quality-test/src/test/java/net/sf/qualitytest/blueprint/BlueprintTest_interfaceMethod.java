@@ -25,6 +25,8 @@ public class BlueprintTest_interfaceMethod {
 		long getId();
 
 		String getName();
+
+		void setName(final String name);
 	}
 
 	@Test
@@ -32,6 +34,22 @@ public class BlueprintTest_interfaceMethod {
 		final SomeEntityBean bean = Blueprint.def().with("getId", 42L).with("getName", "Hello World!").construct(SomeEntityBean.class);
 		Assert.assertEquals(42L, bean.getId());
 		Assert.assertEquals("Hello World!", bean.getName());
+	}
+
+	@Test
+	public void testCallVoidMethodOnInterfaceBlueprinRandomt() {
+		final SomeEntityBean bean = Blueprint.random().with("getId", 42L).with("getName", "Hello World!").construct(SomeEntityBean.class);
+		bean.setName("something");
+		Assert.assertEquals("Hello World!", bean.getName()); // Result should still be the value specified during
+																// construction of the blueprint
+	}
+
+	@Test
+	public void testCallVoidMethodOnInterfaceBlueprint() {
+		final SomeEntityBean bean = Blueprint.def().with("getId", 42L).with("getName", "Hello World!").construct(SomeEntityBean.class);
+		bean.setName("something");
+		Assert.assertEquals("Hello World!", bean.getName()); // Result should still be the value specified during
+																// construction of the blueprint
 	}
 
 }
