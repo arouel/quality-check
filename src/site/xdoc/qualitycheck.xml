@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<properties>
+		<title>About Quality-Check</title>
+		<author>André Rouél</author>
+		<author>Dominik Seichter</author>
+	</properties>
+	<body>
+
+		<section name="What is Quality-Check?">
+			<p>
+				The goal of <em>Quality-Check</em> is to provide a small Java library for basic runtime code quality checks. It provides similar
+				features to
+				<code>org.springframework.util.Assert</code> <a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
+				or
+				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
+				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> tries to
+				replace these libraries and provide all the basic code quality checks you need. (If you're familiar with those classes, just look at our
+				<a href="comparison.html">comparison</a> page.)
+			</p>
+			<p>
+				The checks provided here are typically used to validate method parameters and detect errors during runtime. To
+				detect
+				errors before runtime we use JSR-305 Annotations. With these annotations you are able to detect possible bugs
+				earlier. For more informations look at FindBugs™ JSR-305 support.
+			</p>
+			<p>
+				We think that our module is particularly suitable for APIs, which contain their own domain objects and services that are validated 
+				using <em>Quality-Check</em> not only functionally, but also technically. More over we provide an easy to use fail-fast description of an API 
+				to immediately report at its interface any failure or condition that is likely to lead to failure.
+			</p>
+			<p>
+				We noticed that many projects just copy
+				<code>org.springframework.util.Assert</code> or <code>com.google.common.base.Preconditions</code>
+				to get access to these quality checks. Therefore we provide these features and a small library that can be included in
+				any application without big overhead.
+			</p>
+		</section>
+		<section name="Why is it called check and not assertion?">
+			<p>We think that checks of method arguments are not only assertion tests it's more over a condition to work properly.
+				Beyond this, it supports you to write faster contracts for your methods and classes. If nothing of this package make
+				sense look at the concept
+				<a href="http://en.wikipedia.org/wiki/Design_by_contract"><em>design by contract</em></a>.
+			</p>
+		</section>
+		<section name="Example">
+			<source><![CDATA[
+/**
+ * Sets the given object if it is not null.
+ *
+ * @throws IllegalArgumentException
+ *         if the given argument is {@code null}
+ */
+setObject(final Object object) {
+	if (object != null) {
+		throw new IllegalArgumentException("Argument 'object' must not be null.");
+	}
+	this.object = object;
+}]]></source>
+			<p>
+				can be replaces by:
+			</p>
+			<source><![CDATA[
+/**
+ * Sets the given object if it is not null.
+ */
+@ArgumentsChecked
+setObject(final Object object) {
+	this.object = Check.notNull(object);
+}]]></source>
+		</section>
+		<section name="Why use Quality-Checks for your method parameters?">
+			<p>
+				<em>Quality-Check</em> brings several advantages to your project. If used extensivel throughout your codebase, you will benefit from the
+				following points. We will outline each one in a short paragraph below.
+			</p>
+			<ul>
+				<li>Prevent technical errors due to invalid input parameters</li>
+				<li>Detect errors early, where they occur</li>
+				<li>Do not waste time by writing useless test to cover error detection branches</li>
+				<li>No need to document exceptions thrown because of invalid method arguments</li>
+			</ul>
+			<subsection name="Prevent errors">
+				<p>
+					<em>Quality-Checks</em> to check the input arguments of a method, such as
+					<code>Check.isNull(object)</code>
+					or
+					<code>Check.positionIndex(4, myList.size())</code>
+					should be applied to every argument of every public method in your class, service or component. Why is that?
+					If you
+					check all arguments as soon as they are passed to your code, you do not need to deal with invalid argument
+					values
+					through the rest of your component or class. For example, if every public method ensures that no
+					<code>null</code>
+					values
+					are passed to the class, you do not have to care about
+					<code>null</code>
+					values in your private methods.
+				</p>
+				<p>
+					Therefore, <em>Quality-Checks</em> assist you in preventing
+					<b>technical</b>
+					errors in your classes, because they only have to work with valid arguments.
+				</p>
+			</subsection>
+			<subsection name="Detect errors early">
+				<p>
+					Often, in Java development, you have to deal with
+					<code>NullPointerExceptions</code>
+					or other faults which can be tracked back to invalid values
+					passed to methods and handed further down till they
+					crash in your code. Sometimes it is hard to trace down where the
+					invalid value came from.
+					To identify invalid values
+					as soon as possible and detect errors where they occur, we suggest to guard every public
+					method with <em>Quality-Checks</em>.
+				</p>
+				<p>
+					Using quality checks, erroneous input arguments are identified, as soon as they are passed to your component.
+				</p>
+			</subsection>
+			<subsection name="Avoid useless tests">
+				<p>
+					If you add checks for method arguments manually, you will notice that you have to write additional tests using
+					invalid method arguments to cover
+					these branches. One example for a manual check is here:
+				</p>
+				<source><![CDATA[
+void doSomething(final List<String> list) {
+	if( list == null ) {
+		throw new IllegalArgumentException("Argument 'list' must not be null.");
+	}
+	if( list.isEmpty() ) {
+		throw new IllegalArgumentException("Argument 'list' must not be empty.");
+	}
+}]]></source>
+				<p>
+					In this example, you would have to write two additional tests (one with a null list and one with an empty list),
+					just
+					to test these to branches -
+					or, if you do not, your branch coverage will go down.
+				</p>
+				<p>
+					<em>Quality-Checks</em> will save you from doing so! As calls to
+					<code>Check.*</code>
+					are method calls you will cover them in any test automatically. We make sure
+					that <em>Quality-Check</em> works, so that you
+					do not have to test it. See the example below:
+				</p>
+				<source><![CDATA[
+@ArgumentsChecked
+void doSomething(final List<String> list) {
+   	Check.isNull(list, "list");
+	Check.isEmpty(list, "list");
+}]]></source>
+			</subsection>
+			<subsection name="No need to write documentation for technical error cases">
+				<p>
+					Similar to the example of the branch coverage, you also write a lot of JavaDoc documentation for exceptions
+					thrown in your
+					methods, which check for illegal input parameters.
+				</p>
+				<source><![CDATA[
+/**
+ * Method does something.
+ *
+ * @throws IllegalArgumentException if list is null.
+ * @throws AnotherIllegalArgumentException if list is empty.
+ */
+void doSomething(final List<String> list) {
+	if( list == null ) {
+		throw new IllegalArgumentException("Argument 'list' must not be null.");
+	}
+	if( list.isEmpty() ) {
+		throw new AnotherIllegalArgumentException("Argument 'list' must not be empty.");
+	}
+}]]></source>
+				<p>
+					As quality check throws the exceptions and your code does not there is no need for you to document these
+					exceptions. You can focus
+					on the real important documentation of exceptions which might be thrown by business logic.
+					To show the caller of the
+					method that
+					quality-checks are in place and certain exceptions might be thrown, we add an
+					<code>@ArgumentsChecked</code>
+					annotation.
+				</p>
+			</subsection>
+		</section>
+		<section name="Overview over the Quality-Check way">
+			<div class="section">
+			    <a href="./images/the_quality_check_way.png">
+   					<img src="./images/the_quality_check_way_small.png" alt="Visualization of the Quality-Check way" />
+   				</a>
+			</div>
+		</section>
+
+	</body>
+</document>

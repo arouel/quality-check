@@ -24,17 +24,21 @@
 			<item name="qualitycheck.sf.net" href="http://qualitycheck.sourceforge.net/" />
 		</breadcrumbs>
 
-		<menu name="Overview">
-			<item name="About" href="index.html" />
-			<item name="Usage" href="usage.html" />
-			<item name="Comparison with other" href="comparison.html" />
+		<menu name="Main">
+			<item name="Home" href="index.html" />
 			<item name="License" href="license.html" />
 			<item name="Team" href="team-list.html" />
 		</menu>
 
+		<menu name="Quality-Check">
+			<item name="About" href="qualitycheck.html" />
+			<item name="Usage" href="usage.html" />
+			<item name="Comparison with other" href="comparison.html" />
+		</menu>
+
 		<menu name="Examples">
 			<item name="Quick Start with Maven" href="quickstart.html" />
-			<item name="Simple use case" href="usage.html" />
+			<item name="Quality-Check: Simple use case" href="usage.html" />
 		</menu>
 
 		<menu name="Modules">
@@ -46,7 +50,8 @@
 			<item name="Dependency Convergence" href="dependency-convergence.html" />
 			<item name="Dependency Management" href="dependency-management.html" />
 			<item name="Issue Tracking" href="issue-tracking.html" />
-			<item name="Javadoc" href="modules/quality-check/apidocs/index.html" />
+			<item name="Quality-Check API" href="modules/quality-check/apidocs/index.html" />
+			<item name="Quality-Test API" href="modules/quality-test/apidocs/index.html" />
 			<item name="Plugin Management" href="plugin-management.html" />
 			<item name="Plugins" href="plugins.html" />
 			<item name="Summary" href="project-summary.html" />

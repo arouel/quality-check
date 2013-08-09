@@ -8,14 +8,15 @@
 	<body>
 		<section name="Quick Start with Maven">
 			<p>
-				If you use Apache Maven for your project, it's very easy to start using <em>Quality-Check</em>, because all artifacts are in
+				If you use Apache Maven for your project, it's very easy to start using <em>Quality-Check</em> or <em>Quality-Test</em>,
+				because all artifacts are in
 				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cquality-check">The Central Repository</a>.
 				This repository is used by default to search for libraries.
 			</p>
 			<p>
-				Just add the following dependency to your Project Object Model (POM). You know, the file called
-				<em>pom.xml</em>
-				.
+				Just add the following dependencies to your Project Object Model (POM). You know, the file called
+				<em>pom.xml</em>. Of course, you may want to only use one of the projects, e.g. only quality-check
+				and not quality-test. In this case only the dependency to quality-check is needed.
 			</p>
 			<source><![CDATA[<project>
 	...
@@ -24,7 +25,14 @@
 		<dependency>
 		    <groupId>net.sf.qualitycheck</groupId>
 		    <artifactId>quality-check</artifactId>
-		    <version>1.0-RC1</version>
+		    <version>1.3</version>
+		</dependency>
+		...
+		<dependency>
+		    <groupId>net.sf.qualitycheck</groupId>
+		    <artifactId>quality-test</artifactId>
+		    <version>1.3</version>
+		    <scope>test</scope>
 		</dependency>
 		...
 	</dependencies>
@@ -35,7 +43,8 @@
 				Maven will now transitively resolve all dependencies to
 				<a href="modules/quality-check/index.html">Quality-Check</a>
 				and
-				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jsr305%22">JSR-305 Annotations</a>.
+				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jsr305%22">JSR-305 Annotations</a>
+				or <a href="modules/quality-test/index.html">Quality-Test</a>.
 				Now you're good to go with the next step:
 				<a href="usage.html">Usage in your API</a>.
 			</p>
