@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<properties>
+		<title>About Quality-Check</title>
+		<author>André Rouél</author>
+		<author>Dominik Seichter</author>
+	</properties>
+	<body>
+
+		<section name="What is Quality-Test?">
+			<p>
+				The goal of <em>Quality-Test</em> is to provide a small Java library for improving code quality within unit tests. 
+				It is discouraged to use quality-test in production code. The checks provided in this library are designed to be used in unit-tests.
+			</p>
+			<p>
+			Among others, quality-test has three main components.
+			</p>
+			<ul>
+				<li>StaticCheck</li>
+				<li>Coverage</li>
+				<li>Blueprint</li>
+			</ul>
+		</section>
+		<section name="StaticCheck">
+			<p>
+				The checks and utilities provided check static properties of classes, for example whether classes are marked final or constructors are private. 
+				Additionally, there are utils to give additional code coverage for private constructors.
+			</p>
+			<p>
+				Quality-Test often can be used together with Google Reflections (http://code.google.com/p/reflections/)
+				to perform checks such as, assure that every class in package *.dto.* is final 
+				or make sure that no class in the package *.controller.* contains any non-final static variables.
+			</p>
+			<source><![CDATA[
+@Test
+public void testStaticAttributes() {
+	StaticCheck.noPublicDefaultConstructor(Utility.class);
+	StaticCheck.noNonFinalStatic(StatelessServiceImpl.class);
+}
+]]></source>
+		</section>
+		<section name="Coverage">
+			<p>
+				The coverage feature currently allows to give coverage to private constructors.
+				It is good practice to add private constructors to utility classes that are not thought to be instantiated. This is usually the case for final classes that only have static methods or provide constants (in the latter case I would suggest to use an interface).
+			</p>
+			<p>
+				Following this practice usually gives a bad surprise when looking at your Cobertura code-coverage report (or similar). The tool reports that the constructor is not covered - of course, because you cannot call it! This lowers your overall percentage for line-coverage and is a drawback when you otherwise try to achieve 100% line-coverage and also enforce this using mvn verify or similar methods.
+			</p>
+			<source><![CDATA[
+	CoverageForPrivateConstructor.giveMeCoverage(StaticCheck.class);
+]]></source>
+			
+		</section>		
+		<section name="Blueprint">
+			<p>
+				The biggest part is Blueprint. A framework to automatically fill objects with test data. It is best shown in an example
+			</p>
+			<source><![CDATA[
+	final NameDTO name = Blueprint.random()
+			.with("gender", Gender.Male).construct(NameDTO.class); 
+
+	final Address address = Blueprint.def()
+			.with(String.class, "Default").with("zipCode", 12345L).construct(Address.class); 
+]]></source>
+			<p>
+				As you can see, <em>Blueprint</em> contains two default configurations, which either fill all attributes using default or random values.
+				Basically, Blueprint will walk the object tree and fill all attributes with default values specified by the current configuration.
+				Therefore, you won't get any <code>NullPointerExceptions</code> in your test-cases, as all attributes are filled with values. 
+				You have to specify only those values on which your functional test-case actually depends. Everything else is handled by <em>blueprint</em>.			
+			</p>
+		</section>
+		</body>
+</document>

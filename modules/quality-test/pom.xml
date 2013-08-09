@@ -14,18 +14,27 @@
     <name>Quality-Test</name>
     <description><![CDATA[
 The goal of quality-test is to provide a small Java library for
-basic code quality checks within unit tests. 
+improving code quality within unit tests. 
 
 It is discouraged to use quality-test in production code. The checks
 provided in this library are designed to be used in unit-tests.
 
-The checks and utilities provided in this package check static properties
+Among others, quality-test has three main components.
+- StaticCheck
+- Coverage
+- Blueprint
+
+The checks and utilities provided check static properties
 of classes, for example whether classes are marked final or constructors are private.
 Additionally, there are utils to give additional code coverage for private constructors.
 
 Quality-Test often can be used together with Google Reflections (http://code.google.com/p/reflections/)
 to perform checks such as, assure that every class in package *.dto.* is final 
-or make sure that no class in the package *.controller.* contains any non-final static variables. 
+or make sure that no class in the package *.controller.* contains any non-final static variables.
+
+The coverage feature currently allows to give coverage to private constructors.
+
+The biggest part is Blueprint. A framework to automatically fill objects with test data. 
 ]]></description>
     <url>http://qualitycheck.sourceforge.net/modules/quality-test/</url>
 

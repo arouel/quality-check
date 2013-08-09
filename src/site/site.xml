@@ -36,6 +36,10 @@
 			<item name="Comparison with other" href="comparison.html" />
 		</menu>
 
+		<menu name="Quality-Test">
+			<item name="About" href="qualitytest.html" />
+		</menu>
+
 		<menu name="Examples">
 			<item name="Quick Start with Maven" href="quickstart.html" />
 			<item name="Quality-Check: Simple use case" href="usage.html" />
