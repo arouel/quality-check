@@ -39,6 +39,7 @@
 
 		<menu name="Modules">
 			<item name="Quality-Check" href="modules/quality-check/index.html" />
+			<item name="Quality-Test" href="modules/quality-test/index.html" />
 		</menu>
 
 		<menu name="Documentation">
