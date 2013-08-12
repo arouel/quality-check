@@ -24,9 +24,10 @@ Among others, quality-test has three main components.
 - Coverage
 - Blueprint
 
-The checks and utilities provided check static properties
-of classes, for example whether classes are marked final or constructors are private.
-Additionally, there are utils to give additional code coverage for private constructors.
+The static checkes provided can ensure that certain static
+properties of classes are adhered to. Examples are
+checking if classes are marked final, constructors are private
+or to check that no non final statics are used.
 
 Quality-Test often can be used together with Google Reflections (http://code.google.com/p/reflections/)
 to perform checks such as, assure that every class in package *.dto.* is final 
