@@ -14,11 +14,11 @@
 
 	<name>Quality :: Project</name>
 	<description><![CDATA[
-The goal of quality-project is to provide small Java libraries 
+The goal of Quality-Project is to provide small Java libraries 
 which assist you in writing higher quality code.
 
-Currently it consists of two modules: quality-check and quality-test.
-Quality-check provides basic runtime code quality checks. Quality-test
+Currently it consists of two modules: Quality-Check and Quality-Test.
+Quality-Check provides basic runtime code quality checks. Quality-Test
 includes several tools improve the quality of unit tests.
 ]]></description>
 	<url>http://qualitycheck.sourceforge.net/</url>

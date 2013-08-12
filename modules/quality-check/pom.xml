@@ -13,11 +13,11 @@
 
 	<name>Quality-Check</name>
 	<description><![CDATA[
-The goal of quality-check is to provide a small Java library for
+The goal of Quality-Check is to provide a small Java library for
 basic runtime code quality checks. It provides similar features to
 org.springframework.util.Assert or com.google.common.base.Preconditions
 without the need to include big libraries or frameworks such as
-Spring or Guava. The package quality-check tries to replace these
+Spring or Guava. The package Quality-Check tries to replace these
 libraries and provide all the basic code quality checks you need.
 
 The checks provided here are typically used to validate method

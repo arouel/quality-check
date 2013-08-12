@@ -10,11 +10,11 @@
 
 		<section name="What is Quality-Project?">
 			<p>
-				The goal of quality-project is to provide small Java libraries which assist you in writing higher quality code.
+				The goal of Quality-Project is to provide small Java libraries which assist you in writing higher quality code.
 			</p>
 			<p>
-				Currently it consists of two modules: <a href="qualitycheck.html">quality-check</a> and <a href="modules/quality-check/index.html">quality-test</a>.
-				<em>Quality-check</em> provides basic runtime code quality checks. <em>Quality-test</em>
+				Currently it consists of two modules: <a href="qualitycheck.html">Quality-Check</a> and <a href="modules/quality-check/index.html">Quality-Test</a>.
+				<em>Quality-Check</em> provides basic runtime code quality checks. <em>Quality-Test</em>
 				includes several tools improve the quality of unit tests.
 			</p>
 			<p>
@@ -24,7 +24,7 @@
 				<p>
 					We believe that all method arguments have to be checked for 
 					technical validity, to avoid technical errors such as <code>NullPointerExceptions</code>
-					or <code>IndexOutOfBoundsException</code>. <em>Quality-check</em> provides several
+					or <code>IndexOutOfBoundsException</code>. <em>Quality-Check</em> provides several
 					checks to ensure your parameters are valid. For more information take a look in to the <a href="qualitycheck.html">introduction</a>.
 				</p>
 				<source><![CDATA[

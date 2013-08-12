@@ -13,10 +13,10 @@
 
     <name>Quality-Test</name>
     <description><![CDATA[
-The goal of quality-test is to provide a small Java library for
+The goal of Quality-Test is to provide a small Java library for
 improving code quality within unit tests. 
 
-It is discouraged to use quality-test in production code. The checks
+It is discouraged to use Quality-Test in production code. The checks
 provided in this library are designed to be used in unit-tests.
 
 Among others, quality-test has three main components.
