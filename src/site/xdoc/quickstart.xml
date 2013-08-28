@@ -8,14 +8,14 @@
 	<body>
 		<section name="Quick Start with Maven">
 			<p>
-				If you use Apache Maven for your project, it's very easy to start using <em>Quality-Check</em> or <em>Quality-Test</em>,
+				If you use Apache Maven for your project, it is very easy to start using <em>Quality-Check</em> or <em>Quality-Test</em>,
 				because all artifacts are in
 				<a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cquality-check">The Central Repository</a>.
 				This repository is used by default to search for libraries.
 			</p>
 			<p>
 				Just add the following dependencies to your Project Object Model (POM). You know, the file called
-				<em>pom.xml</em>. Of course, you may want to only use one of the projects, e.g. only quality-check
+				<em>pom.xml</em>. Of course, you may want to only use one of the projects, e. g. only quality-check
 				and not quality-test. In this case only the dependency to quality-check is needed.
 			</p>
 			<source><![CDATA[<project>

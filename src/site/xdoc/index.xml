@@ -8,24 +8,24 @@
 	</properties>
 	<body>
 
-		<section name="What is Quality-Project?">
+		<section name="What is Quality-Project?">	
 			<p>
 				The goal of Quality-Project is to provide small Java libraries which assist you in writing higher quality code.
 			</p>
 			<p>
 				Currently it consists of two modules: <a href="qualitycheck.html">Quality-Check</a> and <a href="modules/quality-check/index.html">Quality-Test</a>.
 				<em>Quality-Check</em> provides basic runtime code quality checks. <em>Quality-Test</em>
-				includes several tools improve the quality of unit tests.
+				includes several tools to improve the quality of unit tests.
 			</p>
 			<p>
-				Here's some example code to show both modules.
+				Here is some example code to show both modules:
 			</p>
 			<subsection name="Quality-Check">
 				<p>
-					We believe that all method arguments have to be checked for 
+					We believe that all method arguments must to be checked for 
 					technical validity, to avoid technical errors such as <code>NullPointerExceptions</code>
 					or <code>IndexOutOfBoundsException</code>. <em>Quality-Check</em> provides several
-					checks to ensure your parameters are valid. For more information take a look in to the <a href="qualitycheck.html">introduction</a>.
+					checks to ensure your parameters are valid. For more information take a look at the <a href="qualitycheck.html">introduction</a>.
 				</p>
 				<source><![CDATA[
 @ArgumentsChecked
@@ -38,10 +38,9 @@ void doSomething(final List<String> list) {
 			</subsection>
 			<subsection name="Quality-Test">
 				<p>
-					In our opinion unit tests should focus on testing algorithms and functional behaviour.
-					Way to often you have to care about test data instead. Therefore, <em>quality-test</em>
-					provides its <em>Blueprint</em> feature to construct objects where all attributes
-					are filled with values.
+					In our opinion, unit tests should focus on testing algorithms and functional behaviour.
+					Much too often, you have to deal with test data instead. Therefore, <em>quality-test</em>
+					provides its <em>Blueprint</em> feature to construct objects where all attributes are filled with values.
 				</p>
 				<source><![CDATA[
 @Test
@@ -64,8 +63,8 @@ void testSomething() {
 					application. Questions can also be sent to our <a href="https://lists.sourceforge.net/lists/listinfo/qualitycheck-users">mailing list</a>.
 				</li>
 				<li>
-					Help with the documentation by pointing out areas that are lacking or unclear, and if you are so inclined,
-					submitting patches to correct it. You can quickly contribute rough thoughts by forking this project on
+					Help with the documentation by pointing out areas that are lacking or unclear, and if you like, you can
+					submit patches to correct it. You can quickly contribute your thoughts by forking this project on
 					<a target="_blank" href="https://github.com/before/quality-check">GitHub</a> or
 					downloading at <a target="_blank" href="https://sourceforge.net/projects/qualitycheck/">Sourceforge</a>
 					, or you can volunteer to help collate and organize information that is already there.

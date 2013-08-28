@@ -12,7 +12,7 @@
 			<p>
 				This means that if the
 				<em>Quality-Check</em>
-				library is used also the JSR-305 library must exist in your classpath.
+				library is used, the JSR-305 library must exist in your classpath.
 			</p>
 			<h3>A simple use case</h3>
 			<p>
@@ -21,9 +21,9 @@
 				quickly.
 			</p>
 			<p>
-				Then you should have access to the classes of the library. For example, you might want to build an
+				Now you require access to the classes of the library. For example, you might want to build an
 				<em>immutable</em>
-				object as the following example.
+				object as shown in the following example:
 			</p>
 			<h4>
 				<span class="green">

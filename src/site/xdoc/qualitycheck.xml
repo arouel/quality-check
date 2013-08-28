@@ -15,19 +15,19 @@
 				<code>org.springframework.util.Assert</code> <a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
 				or
 				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
-				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> tries to
-				replace these libraries and provide all the basic code quality checks you need. (If you're familiar with those classes, just look at our
+				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> aims to
+				replace these libraries and provide all the basic code quality checks you need. (If you are familiar with those classes, just look at our
 				<a href="comparison.html">comparison</a> page.)
 			</p>
 			<p>
 				The checks provided here are typically used to validate method parameters and detect errors during runtime. To
 				detect
 				errors before runtime we use JSR-305 Annotations. With these annotations you are able to detect possible bugs
-				earlier. For more informations look at FindBugs™ JSR-305 support.
+				earlier. For more information look at FindBugs™ JSR-305 support.
 			</p>
 			<p>
-				We think that our module is particularly suitable for APIs, which contain their own domain objects and services that are validated 
-				using <em>Quality-Check</em> not only functionally, but also technically. More over we provide an easy to use fail-fast description of an API 
+				We consider our module as particularly suitable for APIs, which contain their own domain objects and services that are validated 
+				using <em>Quality-Check</em> not only functionally, but also technically. Moreover, we provide an easy to use fail-fast description of an API 
 				to immediately report at its interface any failure or condition that is likely to lead to failure.
 			</p>
 			<p>
@@ -39,8 +39,8 @@
 		</section>
 		<section name="Why is it called check and not assertion?">
 			<p>We think that checks of method arguments are not only assertion tests it's more over a condition to work properly.
-				Beyond this, it supports you to write faster contracts for your methods and classes. If nothing of this package make
-				sense look at the concept
+				Beyond this, it supports you in writing faster contracts for your methods and classes. If nothing of this package makes
+				sense please take a look at the concept
 				<a href="http://en.wikipedia.org/wiki/Design_by_contract"><em>design by contract</em></a>.
 			</p>
 		</section>
@@ -72,7 +72,7 @@ setObject(final Object object) {
 		</section>
 		<section name="Why use Quality-Checks for your method parameters?">
 			<p>
-				<em>Quality-Check</em> brings several advantages to your project. If used extensivel throughout your codebase, you will benefit from the
+				<em>Quality-Check</em> brings several advantages to your project. If used extensively throughout your codebase, you will benefit from the
 				following points. We will outline each one in a short paragraph below.
 			</p>
 			<ul>
@@ -109,8 +109,8 @@ setObject(final Object object) {
 					Often, in Java development, you have to deal with
 					<code>NullPointerExceptions</code>
 					or other faults which can be tracked back to invalid values
-					passed to methods and handed further down till they
-					crash in your code. Sometimes it is hard to trace down where the
+					passed to methods and handed further down until they
+					crash in your code. Sometimes, it is hard to trace down where the
 					invalid value came from.
 					To identify invalid values
 					as soon as possible and detect errors where they occur, we suggest to guard every public
@@ -137,9 +137,7 @@ void doSomething(final List<String> list) {
 }]]></source>
 				<p>
 					In this example, you would have to write two additional tests (one with a null list and one with an empty list),
-					just
-					to test these to branches -
-					or, if you do not, your branch coverage will go down.
+					only to test these two branches. Alternatively, if you do not, your branch coverage will go down.
 				</p>
 				<p>
 					<em>Quality-Checks</em> will save you from doing so! As calls to
@@ -177,9 +175,9 @@ void doSomething(final List<String> list) {
 	}
 }]]></source>
 				<p>
-					As quality check throws the exceptions and your code does not there is no need for you to document these
+					As quality check throws the exceptions and your code does not, there is no need for you to document these
 					exceptions. You can focus
-					on the real important documentation of exceptions which might be thrown by business logic.
+					on the really important documentation of exceptions which might be thrown by business logic.
 					To show the caller of the
 					method that
 					quality-checks are in place and certain exceptions might be thrown, we add an

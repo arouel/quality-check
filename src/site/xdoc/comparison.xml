@@ -10,9 +10,9 @@
 		<section name="Comparison of Quality-Check with similar classes">
 			<a name="overview" />
 			<p>
-				This page tries to compare
+				This page aims to compare
 				<em>Quality-Check</em>
-				with other classes like
+				with other classes such as
 				<code>org.springframework.util.Assert</code>
 				<a href="http://static.springsource.org/spring/docs/3.1.x/javadoc-api/org/springframework/util/Assert.html">[1]</a>
 				or
