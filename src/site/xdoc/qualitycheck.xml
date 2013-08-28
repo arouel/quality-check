@@ -16,7 +16,7 @@
 				or
 				<code>com.google.common.base.Preconditions</code> <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Preconditions.html">[2]</a>
 				without the need to include big libraries or frameworks such as Spring or Guava. The package <em>Quality-Check</em> aims to
-				replace these libraries and provide all the basic code quality checks you need. (If you are familiar with those classes, just look at our
+				replace these libraries and provide all the basic code quality checks you need. (If you are familiar with those classes, just take a look at our
 				<a href="comparison.html">comparison</a> page.)
 			</p>
 			<p>
@@ -76,10 +76,10 @@ setObject(final Object object) {
 				following points. We will outline each one in a short paragraph below.
 			</p>
 			<ul>
-				<li>Prevent technical errors due to invalid input parameters</li>
-				<li>Detect errors early, where they occur</li>
-				<li>Do not waste time by writing useless test to cover error detection branches</li>
-				<li>No need to document exceptions thrown because of invalid method arguments</li>
+				<li>Prevent technical errors due to invalid input parameters.</li>
+				<li>Detect errors early, where they occur.</li>
+				<li>Do not waste time by writing useless test to cover error detection branches.</li>
+				<li>No need to document exceptions thrown because of invalid method arguments.</li>
 			</ul>
 			<subsection name="Prevent errors">
 				<p>

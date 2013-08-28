@@ -11,10 +11,10 @@
 		<section name="What is Quality-Test?">
 			<p>
 				The goal of <em>Quality-Test</em> is to provide a small Java library for improving code quality within unit tests. 
-				It is discouraged to use quality-test in production code. The checks provided in this library are designed to be used in unit-tests.
+				In general, it is discouraged to use quality-test in production code. The checks provided in this library are designed to be used in unit-tests.
 			</p>
 			<p>
-			Among others, quality-test has three main components.
+			Quality-test has three main and a few smaller components.
 			</p>
 			<ul>
 				<li>StaticCheck</li>
