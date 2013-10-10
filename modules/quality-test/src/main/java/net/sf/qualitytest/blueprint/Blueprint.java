@@ -17,6 +17,7 @@ package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
@@ -31,6 +32,7 @@ import net.sf.qualitycheck.exception.IllegalNullArgumentException;
 import net.sf.qualitytest.ModifierBits;
 import net.sf.qualitytest.blueprint.configuration.DefaultBlueprintConfiguration;
 import net.sf.qualitytest.blueprint.configuration.RandomBlueprintConfiguration;
+import net.sf.qualitytest.blueprint.invocationhandler.RefreshingBlueprintInvocationHandler;
 import net.sf.qualitytest.exception.BlueprintException;
 import net.sf.qualitytest.exception.NoPublicConstructorException;
 
@@ -450,7 +452,8 @@ public final class Blueprint {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T proxy(final Class<T> iface, final BlueprintConfiguration config, final BlueprintSession session) {
-		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class[] { iface }, new BlueprintInvocationHandler(config, session));
+		final InvocationHandler invocationHandler = new RefreshingBlueprintInvocationHandler(config, session);
+		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class[] { iface }, invocationHandler);
 	}
 
 	/**

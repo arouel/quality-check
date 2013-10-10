@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint;
+package net.sf.qualitytest.blueprint.invocationhandler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -21,6 +21,10 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 
 import net.sf.qualitycheck.Check;
+import net.sf.qualitytest.blueprint.Blueprint;
+import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.BlueprintSession;
+import net.sf.qualitytest.blueprint.CreationStrategy;
 
 /**
  * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
@@ -32,7 +36,7 @@ import net.sf.qualitycheck.Check;
  * 
  * @author Dominik Seichter
  */
-class BlueprintInvocationHandler implements InvocationHandler {
+abstract class BlueprintInvocationHandler implements InvocationHandler {
 
 	private final BlueprintConfiguration config;
 	private final BlueprintSession session;
@@ -50,17 +54,22 @@ class BlueprintInvocationHandler implements InvocationHandler {
 		this.session = Check.notNull(session, "session");
 	}
 
-	@Override
-	public Object invoke(final Object instance, final Method method, final Object[] parameters) throws Throwable { // NOSONAR
-		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(method);
+	/**
+	 * Actually create a new value without using the internal cache.
+	 * 
+	 * @param method
+	 *            Method for which a return value must be created
+	 * @return the created value
+	 */
+	protected Object createNewValue(final Method method) {
 		final Object result;
+		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(method);
 
 		if (creator != null) {
 			result = creator.createValue(method.getReturnType(), config, session);
 		} else {
 			result = Blueprint.construct(method.getReturnType(), config, session);
 		}
-
 		return result;
 	}
 
