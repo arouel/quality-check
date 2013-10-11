@@ -92,6 +92,17 @@ public class CreateTest {
 	}
 
 	@Test
+	public void testCreateRandomString() {
+		Assert.assertNotNull(Create.randomString().createValue(String.class));
+	}
+
+	@Test
+	public void testCreateRandomStringWithMaxLength() {
+		final String s = Create.randomString(4).createValue(String.class);
+		Assert.assertEquals(4, s.length());
+	}
+
+	@Test
 	public void testCreateSingleValue() {
 		Assert.assertEquals("Hallo", Create.value("Hallo").createValue(String.class, Blueprint.def(), new BlueprintSession()));
 	}
@@ -101,5 +112,4 @@ public class CreateTest {
 		StaticCheck.classIsFinal(Create.class);
 		StaticCheck.noPublicDefaultConstructor(Create.class);
 	}
-
 }

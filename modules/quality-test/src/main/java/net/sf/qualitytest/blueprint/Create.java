@@ -24,6 +24,7 @@ import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
 import net.sf.qualitytest.blueprint.invocationhandler.CachedBlueprintInvocationHandler;
 import net.sf.qualitytest.blueprint.invocationhandler.ProxyInvocationHandler;
 import net.sf.qualitytest.blueprint.invocationhandler.RefreshingBlueprintInvocationHandler;
+import net.sf.qualitytest.blueprint.strategy.creation.BlueprintStringCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.NullValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
@@ -142,6 +143,28 @@ public final class Create {
 	 */
 	public static CreationStrategy<Short> randomShort() {
 		return new RandomShortValueCreationStrategy();
+	}
+
+	/**
+	 * Create a random String.
+	 * 
+	 * @return {@code CreationStrategy} which always returns a random String.
+	 */
+	public static BlueprintStringCreationStrategy randomString() {
+		return new BlueprintStringCreationStrategy();
+	}
+
+	/**
+	 * Create a random String which does not exceed a certain maximum length.
+	 * 
+	 * @param maxLength
+	 *            Generated string does not exceed the specified maximum length but is not necessarily filled up to
+	 *            maxLength. Must be a positive value.
+	 * 
+	 * @return {@code CreationStrategy} which always returns a random String.
+	 */
+	public static BlueprintStringCreationStrategy randomString(final int maxLength) {
+		return new BlueprintStringCreationStrategy(maxLength);
 	}
 
 	/**

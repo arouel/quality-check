@@ -40,6 +40,13 @@ public class BlueprintStringCreationStrategy extends ValueCreationStrategy<Strin
 		maxLength = -1;
 	}
 
+	/**
+	 * Create a string creation strategy which does not exceed the given maximum length
+	 * 
+	 * @param maxLength
+	 *            Generated string does not exceed the specified maximum length but is not necessarily filled up to
+	 *            maxLength. Must be a positive value.
+	 */
 	@ArgumentsChecked
 	public BlueprintStringCreationStrategy(@Nonnegative final int maxLength) {
 		this.maxLength = Check.notNegative(maxLength, "maxLength");
