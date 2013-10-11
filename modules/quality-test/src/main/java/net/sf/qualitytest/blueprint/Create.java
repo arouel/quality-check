@@ -21,6 +21,9 @@ import net.sf.qualitycheck.ArgumentsChecked;
 import net.sf.qualitycheck.Check;
 import net.sf.qualitycheck.Throws;
 import net.sf.qualitycheck.exception.IllegalNotNullArgumentException;
+import net.sf.qualitytest.blueprint.invocationhandler.CachedBlueprintInvocationHandler;
+import net.sf.qualitytest.blueprint.invocationhandler.ProxyInvocationHandler;
+import net.sf.qualitytest.blueprint.invocationhandler.RefreshingBlueprintInvocationHandler;
 import net.sf.qualitytest.blueprint.strategy.creation.NullValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomBooleanValueCreationStrategy;
 import net.sf.qualitytest.blueprint.strategy.creation.RandomByteValueCreationStrategy;
@@ -40,6 +43,16 @@ import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrateg
  * 
  */
 public final class Create {
+
+	/**
+	 * Create a proxy implementation for any interface which caches generated method return values and returns that way
+	 * always the same value for a certain method call.
+	 * 
+	 * @return {@code ProxyInvocationHandler} which creates cached proxies.
+	 */
+	public static ProxyInvocationHandler cachedProxy() {
+		return new CachedBlueprintInvocationHandler();
+	}
 
 	/**
 	 * Always create {@code null}.
@@ -129,6 +142,15 @@ public final class Create {
 	 */
 	public static CreationStrategy<Short> randomShort() {
 		return new RandomShortValueCreationStrategy();
+	}
+
+	/**
+	 * Create a proxy implementation for any interface which refreshes generated method return values when possible.
+	 * 
+	 * @return {@code ProxyInvocationHandler} which creates refreshing proxies.
+	 */
+	public static ProxyInvocationHandler refreshingProxy() {
+		return new RefreshingBlueprintInvocationHandler();
 	}
 
 	/**
