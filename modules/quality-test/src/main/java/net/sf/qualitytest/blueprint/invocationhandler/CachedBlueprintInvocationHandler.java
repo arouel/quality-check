@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintSession;
@@ -36,21 +37,9 @@ import net.sf.qualitytest.blueprint.BlueprintSession;
  * 
  * @author Dominik Seichter
  */
-public final class CachedBlueprintInvocationHandler extends BlueprintInvocationHandler {
+public final class CachedBlueprintInvocationHandler extends BlueprintProxyInvocationHandler {
 
 	private final Map<Method, Object> returnValueCache = new ConcurrentHashMap<Method, Object>();
-
-	/**
-	 * Create a new {@link CachedBlueprintInvocationHandler}
-	 * 
-	 * @param config
-	 *            A {@link BlueprintConfiguration}
-	 * @param session
-	 *            A {@link BlueprintSession}
-	 */
-	public CachedBlueprintInvocationHandler(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session) {
-		super(config, session);
-	}
 
 	/**
 	 * Actually create a new value using the internal cache.
@@ -59,11 +48,12 @@ public final class CachedBlueprintInvocationHandler extends BlueprintInvocationH
 	 *            Method for which a return value must be created
 	 * @return the created value
 	 */
-	private Object createNewValueUsingCache(final Method method) {
+	private Object createNewValueUsingCache(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session,
+			@Nonnull final Method method) {
 		final Object result;
 		final boolean isCached = returnValueCache.containsKey(method);
 		if (!isCached) {
-			result = createNewValue(method);
+			result = createNewValue(config, session, method);
 			returnValueCache.put(method, result);
 		} else {
 			result = returnValueCache.get(method);
@@ -72,8 +62,8 @@ public final class CachedBlueprintInvocationHandler extends BlueprintInvocationH
 	}
 
 	@Override
-	public Object invoke(final Object instance, final Method method, final Object[] parameters) throws Throwable { // NOSONAR
-		return createNewValueUsingCache(method);
+	public Object invoke(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session,
+			@Nonnull final Object instance, @Nonnull final Method method, @Nullable final Object[] parameters) throws Throwable { // NOSONAR
+		return createNewValueUsingCache(config, session, method);
 	}
-
 }

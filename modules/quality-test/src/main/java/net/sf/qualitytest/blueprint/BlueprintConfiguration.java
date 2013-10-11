@@ -16,11 +16,14 @@
 package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.sf.qualitytest.blueprint.invocationhandler.ProxyInvocationHandler;
+import net.sf.qualitytest.blueprint.invocationhandler.RefreshingBlueprintInvocationHandler;
 import net.sf.qualitytest.exception.BlueprintCycleException;
 
 /**
@@ -76,6 +79,17 @@ public interface BlueprintConfiguration {
 	CreationStrategy<?> findCreationStrategyForType(@Nonnull final Class<?> clazz);
 
 	/**
+	 * Find an invocation handler that matches a given interface class. The default invocationhandler is
+	 * {@link RefreshingBlueprintInvocationHandler}.
+	 * 
+	 * @param iface
+	 *            Must be an interface
+	 * @return an {@code InvocationHandler} or {@code null}
+	 */
+	@Nullable
+	ProxyInvocationHandler findInvocationHandlerForClass(@Nonnull final Class<?> iface);
+
+	/**
 	 * Handle the situation that a BlueprintCycle was detected for a particular class.
 	 * 
 	 * @see Blueprint
@@ -96,6 +110,19 @@ public interface BlueprintConfiguration {
 	 * @return {@code true} if public attributes are filled during blueprinting
 	 */
 	boolean isWithPublicAttributes();
+
+	/**
+	 * Whenever an interface {@code iface} is encountered use the given {@link InvocationHandler} to construct a proxy
+	 * object using {@code Proxy.newProxyInstance}.
+	 * 
+	 * @param iface
+	 *            Must be an interface
+	 * @param invocationHandler
+	 *            An {@link InvocationHandler} which is used to construct a proxy object
+	 * @return the changed blueprint configuration.
+	 */
+	@Nonnull
+	<T> BlueprintConfiguration with(@Nonnull final Class<?> iface, @Nonnull final ProxyInvocationHandler invocationHandler);
 
 	/**
 	 * Replace every attribute with the type {@code type} with a given value.
@@ -181,5 +208,4 @@ public interface BlueprintConfiguration {
 	 */
 	@Nonnull
 	BlueprintConfiguration withPublicAttributes(final boolean withPublicAttributes);
-
 }

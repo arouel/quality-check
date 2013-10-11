@@ -1,5 +1,6 @@
 package net.sf.qualitytest.blueprint;
 
+import net.sf.qualitytest.blueprint.invocationhandler.CachedBlueprintInvocationHandler;
 import net.sf.qualitytest.blueprint.strategy.creation.IncrementValueCreationStrategy;
 
 import org.junit.Assert;
@@ -14,7 +15,8 @@ public class BlueprintInvocationHandlerTest {
 
 	@Test
 	public void testInvocationHandlerReturnsCachedValue() {
-		final MyInterface mi = Blueprint.random().construct(MyInterface.class);
+		final MyInterface mi = Blueprint.random().with(MyInterface.class, new CachedBlueprintInvocationHandler())
+				.construct(MyInterface.class);
 		final int a = mi.getNumber();
 		final int b = mi.getNumber();
 

@@ -23,23 +23,8 @@ import javax.annotation.Nullable;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
 import net.sf.qualitytest.blueprint.BlueprintSession;
 
-/**
- * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
- * blueprinting.
- * 
- * This invocation handler tries first to find a {@code CreationStrategy} with a {@code MatchingStrategy} for the
- * particular method. If this is found. The {@code CreationStrategy} is used to create the return value. Otherwise
- * {@code Blueprint} is called to create a blueprint for the methods return-value.
- * 
- * For every call to the method a new value is generated.
- * 
- * @author Dominik Seichter
- */
-public final class RefreshingBlueprintInvocationHandler extends BlueprintProxyInvocationHandler {
+public interface ProxyInvocationHandler {
 
-	@Override
-	public Object invoke(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session,
-			@Nonnull final Object instance, @Nonnull final Method method, @Nullable final Object[] parameters) throws Throwable { // NOSONAR
-		return createNewValue(config, session, method);
-	}
+	Object invoke(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session, @Nonnull final Object proxy,
+			@Nonnull final Method method, @Nullable final Object[] args) throws Throwable;
 }

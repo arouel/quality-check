@@ -128,6 +128,7 @@ public final class DefaultBlueprintConfiguration extends ImmutableBlueprintConfi
 	}
 
 	public DefaultBlueprintConfiguration() {
-		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), false);
+		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), ImmutableList.<InvocationHandlerPair> of(),
+				false);
 	}
 }

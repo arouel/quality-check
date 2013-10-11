@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package net.sf.qualitytest.blueprint.invocationhandler;
+package net.sf.qualitytest.blueprint;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -21,10 +21,7 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 
 import net.sf.qualitycheck.Check;
-import net.sf.qualitytest.blueprint.Blueprint;
-import net.sf.qualitytest.blueprint.BlueprintConfiguration;
-import net.sf.qualitytest.blueprint.BlueprintSession;
-import net.sf.qualitytest.blueprint.CreationStrategy;
+import net.sf.qualitytest.blueprint.invocationhandler.ProxyInvocationHandler;
 
 /**
  * Invocation handler which is used to blueprint objects returned from dynamic interface proxies created during
@@ -36,10 +33,11 @@ import net.sf.qualitytest.blueprint.CreationStrategy;
  * 
  * @author Dominik Seichter
  */
-abstract class BlueprintInvocationHandler implements InvocationHandler {
+final class BlueprintInvocationHandler implements InvocationHandler {
 
 	private final BlueprintConfiguration config;
 	private final BlueprintSession session;
+	private final ProxyInvocationHandler invocationHandler;
 
 	/**
 	 * Create a new {@link BlueprintInvocationHandler}
@@ -48,29 +46,19 @@ abstract class BlueprintInvocationHandler implements InvocationHandler {
 	 *            A {@link BlueprintConfiguration}
 	 * @param session
 	 *            A {@link BlueprintSession}
+	 * @param invocationHandler
+	 *            A {@link ProxyInvocationHandler}
 	 */
-	public BlueprintInvocationHandler(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session) {
+	public BlueprintInvocationHandler(@Nonnull final BlueprintConfiguration config, @Nonnull final BlueprintSession session,
+			@Nonnull final ProxyInvocationHandler invocationHandler) {
 		this.config = Check.notNull(config, "config");
 		this.session = Check.notNull(session, "session");
+		this.invocationHandler = Check.notNull(invocationHandler, "invocationHandler");
 	}
 
-	/**
-	 * Actually create a new value without using the internal cache.
-	 * 
-	 * @param method
-	 *            Method for which a return value must be created
-	 * @return the created value
-	 */
-	protected Object createNewValue(final Method method) {
-		final Object result;
-		final CreationStrategy<?> creator = config.findCreationStrategyForMethod(method);
-
-		if (creator != null) {
-			result = creator.createValue(method.getReturnType(), config, session);
-		} else {
-			result = Blueprint.construct(method.getReturnType(), config, session);
-		}
-		return result;
+	@Override
+	public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+		return invocationHandler.invoke(config, session, proxy, method, args);
 	}
 
 }

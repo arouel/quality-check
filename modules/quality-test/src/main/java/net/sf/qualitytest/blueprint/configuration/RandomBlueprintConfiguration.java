@@ -98,6 +98,7 @@ public final class RandomBlueprintConfiguration extends ImmutableBlueprintConfig
 	}
 
 	public RandomBlueprintConfiguration() {
-		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), false);
+		super(createDefaultAttributeMapping(), ImmutableList.<CycleHandlingStrategy<?>> of(), ImmutableList.<InvocationHandlerPair> of(),
+				false);
 	}
 }
