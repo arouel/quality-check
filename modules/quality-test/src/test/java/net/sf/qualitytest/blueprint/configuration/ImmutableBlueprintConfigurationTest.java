@@ -15,13 +15,45 @@
  ******************************************************************************/
 package net.sf.qualitytest.blueprint.configuration;
 
+import net.sf.qualitytest.blueprint.Blueprint;
 import net.sf.qualitytest.blueprint.BlueprintConfiguration;
+import net.sf.qualitytest.blueprint.invocationhandler.CachedBlueprintInvocationHandler;
+import net.sf.qualitytest.blueprint.invocationhandler.RefreshingBlueprintInvocationHandler;
 import net.sf.qualitytest.blueprint.strategy.creation.SingleValueCreationStrategy;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ImmutableBlueprintConfigurationTest {
+
+	public interface SimpleInterface {
+		String getString();
+	}
+
+	public interface SimpleInterface2 {
+		int getNumber();
+	}
+
+	@Test
+	public void testDifferentInvocationHandlers() {
+		final BlueprintConfiguration config = Blueprint.random().with(SimpleInterface.class, new RefreshingBlueprintInvocationHandler())
+				.with(SimpleInterface2.class, new CachedBlueprintInvocationHandler());
+		final SimpleInterface si = config.construct(SimpleInterface.class);
+		Assert.assertNotNull(si.getString());
+
+		final SimpleInterface2 si2 = config.construct(SimpleInterface2.class);
+		final int a = si2.getNumber();
+		final int b = si2.getNumber();
+
+		Assert.assertEquals(a, b);
+	}
+
+	@Test
+	public void testInvocationHandlerNotFound() {
+		final BlueprintConfiguration config = new ImmutableBlueprintConfiguration();
+		final SimpleInterface si = config.construct(SimpleInterface.class);
+		Assert.assertNotNull(si.getString());
+	}
 
 	@Test
 	public void testWithPublicAttributesDefault() {
