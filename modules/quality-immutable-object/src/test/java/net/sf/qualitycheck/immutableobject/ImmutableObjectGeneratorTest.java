@@ -569,7 +569,6 @@ public class ImmutableObjectGeneratorTest {
 		settings.builderImplementsInterface(true);
 
 		final String file = "Car.java";
-		System.out.println(readInterfaceAndGenerateTest(file, settings.build()).replace("\r", ""));
 		assertEquals(readReferenceImmutableTest(file).replace("\r", ""),
 				readInterfaceAndGenerateTest(file, settings.build()).replace("\r", ""));
 	}

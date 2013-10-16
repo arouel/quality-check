@@ -141,7 +141,6 @@ public final class ImmutableCarTest {
 
 		final ImmutableCar obj = builder.build();
 		assertEquals(blueprint, obj);
-
 	}
 
 }

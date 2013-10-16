@@ -24,7 +24,7 @@ public final class <settings.immutableName>Test {
 	
 	<preconditionTests(settings)>
 	
-	<equalsBuilderTest(settings)>
+	<builderTest(settings)>
 
 }
 >>
@@ -48,7 +48,7 @@ preconditionTests(settings) ::= <<
 }>
 >>
 
-equalsBuilderTest(className) ::= <<
+builderTest(settings) ::= <<
 <annotateTest()>
 public void blueprintEqualsBuilder() {
 	final <settings.immutableName> blueprint = new Blueprint().build();
@@ -58,7 +58,6 @@ public void blueprintEqualsBuilder() {
 	
 	final <settings.immutableName> obj = builder.build();
 	assertEquals(blueprint, obj);
-
 }
 >>
 
