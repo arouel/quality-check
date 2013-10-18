@@ -26,66 +26,73 @@ public class IllegalPatternArgumentExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalPatternArgumentException("argName", TEST_PATTERN);
+		new IllegalPatternArgumentException("argName", TEST_PATTERN, "value");
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalPatternArgumentException("", TEST_PATTERN);
+		new IllegalPatternArgumentException("", TEST_PATTERN, "value");
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("", null);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("", null, "value", (Throwable) null);
 		Assert.assertEquals("The passed argument must match against the specified pattern: [not set]", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", TEST_PATTERN, new NumberFormatException());
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", TEST_PATTERN, "value",
+				new NumberFormatException());
 		Assert.assertEquals("The passed argument 'argName' must match against the specified pattern: [a-z]+ (flags: 0)", e.getMessage());
 	}
 
 	@Test
-	public void construct_withModifier() {
-		final Pattern pattern = Pattern.compile("[a-z]+", Pattern.CASE_INSENSITIVE);
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", pattern, new NumberFormatException());
-		Assert.assertEquals("The passed argument 'argName' must match against the specified pattern: [a-z]+ (flags: 2)", e.getMessage());
-	}
-
-	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", null);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", null, "value", (Throwable) null);
 		Assert.assertEquals("The passed argument 'argName' must match against the specified pattern: [not set]", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalPatternArgumentException(TEST_PATTERN, new NumberFormatException());
+		new IllegalPatternArgumentException(TEST_PATTERN, "value", new NumberFormatException());
+	}
+
+	@Test
+	public void construct_withModifier() {
+		final Pattern pattern = Pattern.compile("[a-z]+", Pattern.CASE_INSENSITIVE);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException("argName", pattern, "value",
+				new NumberFormatException());
+		Assert.assertEquals("The passed argument 'argName' must match against the specified pattern: [a-z]+ (flags: 2)", e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullArgName() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException((String) null, TEST_PATTERN);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException((String) null, TEST_PATTERN, "value");
 		Assert.assertEquals("The passed argument must match against the specified pattern: [a-z]+ (flags: 0)", e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullArgNameAndNullCause() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException((String) null, null);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException((String) null, null, null);
 		Assert.assertEquals("The passed argument must match against the specified pattern: [not set]", e.getMessage());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException(TEST_PATTERN, (Throwable) null);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException(TEST_PATTERN, null, (Throwable) null);
 		Assert.assertEquals("The passed argument must match against the specified pattern: [a-z]+ (flags: 0)", e.getMessage());
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		final IllegalPatternArgumentException e = new IllegalPatternArgumentException(TEST_PATTERN);
+		final IllegalPatternArgumentException e = new IllegalPatternArgumentException(TEST_PATTERN, "value");
 		Assert.assertEquals("The passed argument must match against the specified pattern: [a-z]+ (flags: 0)", e.getMessage());
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<CharSequence> iah = new IllegalPatternArgumentException(TEST_PATTERN, "value");
+		Assert.assertEquals("value", iah.getIllegalArgument());
+	}
 }

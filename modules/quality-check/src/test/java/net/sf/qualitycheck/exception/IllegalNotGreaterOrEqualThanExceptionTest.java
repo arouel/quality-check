@@ -22,39 +22,44 @@ public class IllegalNotGreaterOrEqualThanExceptionTest {
 
 	@Test
 	public void construct_withArgs_successful() {
-		new IllegalNotGreaterOrEqualThanException("a^2 + b^2 = c^2");
+		new IllegalNotGreaterOrEqualThanException("a^2 + b^2 = c^2", 2);
 	}
 
 	@Test
 	public void construct_withArgsAndNullCause() {
-		new IllegalNotGreaterOrEqualThanException("a^2 + b^2 = c^2", (Throwable) null);
+		new IllegalNotGreaterOrEqualThanException("a^2 + b^2 = c^2", 2, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withFilledArgsAndNullCause() {
-		final IllegalNotGreaterOrEqualThanException e = new IllegalNotGreaterOrEqualThanException("a != b", (Throwable) null);
+		final IllegalNotGreaterOrEqualThanException e = new IllegalNotGreaterOrEqualThanException("a != b", 2, (Throwable) null);
 		Assert.assertEquals("a != b", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNotGreaterOrEqualThanException(new NumberFormatException());
+		new IllegalNotGreaterOrEqualThanException(2, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new IllegalNotGreaterOrEqualThanException((Throwable) null);
+		new IllegalNotGreaterOrEqualThanException((Object) null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNotGreaterOrEqualThanException();
+		new IllegalNotGreaterOrEqualThanException(2);
 	}
 
 	@Test
 	public void message_without_template() {
-		final IllegalNotGreaterOrEqualThanException e = new IllegalNotGreaterOrEqualThanException();
+		final IllegalNotGreaterOrEqualThanException e = new IllegalNotGreaterOrEqualThanException(2);
 		Assert.assertEquals("Argument must be greater or equal than a defined value.", e.getMessage());
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<Object> iah = new IllegalNotGreaterOrEqualThanException(2);
+		Assert.assertEquals(Integer.valueOf(2), iah.getIllegalArgument());
+	}
 }

@@ -22,38 +22,33 @@ public class IllegalNegativeArgumentExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalNegativeArgumentException("argName");
+		new IllegalNegativeArgumentException("argName", -2);
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalNegativeArgumentException("");
+		new IllegalNegativeArgumentException("", -2);
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		new IllegalNegativeArgumentException("", null);
+		new IllegalNegativeArgumentException("", -2, null);
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		new IllegalNegativeArgumentException("argName", new NumberFormatException());
+		new IllegalNegativeArgumentException("argName", -2, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final IllegalNegativeArgumentException e = new IllegalNegativeArgumentException("argName", null);
+		final IllegalNegativeArgumentException e = new IllegalNegativeArgumentException("argName", -2, null);
 		Assert.assertEquals("The passed argument 'argName' must be greater than 0.", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNegativeArgumentException(new NumberFormatException());
-	}
-
-	@Test
-	public void construct_withNullArgName() {
-		new IllegalNegativeArgumentException((String) null);
+		new IllegalNegativeArgumentException(-2, new NumberFormatException());
 	}
 
 	@Test
@@ -62,13 +57,23 @@ public class IllegalNegativeArgumentExceptionTest {
 	}
 
 	@Test
+	public void construct_withNullArgNameAndNullValue() {
+		new IllegalNegativeArgumentException((String) null, (Number) null);
+	}
+
+	@Test
 	public void construct_withNullCause() {
-		new IllegalNegativeArgumentException((Throwable) null);
+		new IllegalNegativeArgumentException((Number) null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNegativeArgumentException();
+		new IllegalNegativeArgumentException(-2);
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<Number> iah = new IllegalNegativeArgumentException(-2);
+		Assert.assertEquals(Integer.valueOf(-2), iah.getIllegalArgument());
+	}
 }

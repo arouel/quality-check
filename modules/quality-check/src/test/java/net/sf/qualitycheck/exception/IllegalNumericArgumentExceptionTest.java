@@ -22,53 +22,58 @@ public class IllegalNumericArgumentExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalNumericArgumentException("argName");
+		new IllegalNumericArgumentException("argName", "42a");
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalNumericArgumentException("");
+		new IllegalNumericArgumentException("", "42a");
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		new IllegalNumericArgumentException("", null);
+		new IllegalNumericArgumentException("", "42a", null);
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		new IllegalNumericArgumentException("argName", new NumberFormatException());
+		new IllegalNumericArgumentException("argName", "42a", new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final IllegalNumericArgumentException e = new IllegalNumericArgumentException("argName", null);
+		final IllegalNumericArgumentException e = new IllegalNumericArgumentException("argName", "42a", null);
 		Assert.assertEquals("The passed argument 'argName' must be numeric.", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNumericArgumentException(new NumberFormatException());
+		new IllegalNumericArgumentException("42a", new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withNullArgName() {
-		new IllegalNumericArgumentException((String) null);
+		new IllegalNumericArgumentException((String) null, "42a");
 	}
 
 	@Test
 	public void construct_withNullArgNameAndNullCause() {
-		new IllegalNumericArgumentException((String) null, null);
+		new IllegalNumericArgumentException((String) null, null, null);
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new IllegalNumericArgumentException((Throwable) null);
+		new IllegalNumericArgumentException(null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNumericArgumentException();
+		new IllegalNumericArgumentException("42a");
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<CharSequence> iah = new IllegalNumericArgumentException("42a");
+		Assert.assertEquals("42a", iah.getIllegalArgument());
+	}
 }

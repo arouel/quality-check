@@ -22,40 +22,44 @@ public class IllegalNotEqualExceptionTest {
 
 	@Test
 	public void construct_withArgs_successful() {
-		new IllegalNotEqualException("a^2 + b^2 = c^2");
-	}
-
-	@Test
-	public void message_without_template() {
-		final IllegalNotEqualException e = new IllegalNotEqualException();
-		Assert.assertEquals("Argument must be equal to a defined value.", e.getMessage());
+		new IllegalNotEqualException("a^2 + b^2 = c^2", 2);
 	}
 
 	@Test
 	public void construct_withArgsAndNullCause() {
-		new IllegalNotEqualException("a^2 + b^2 = c^2", (Throwable) null);
+		new IllegalNotEqualException("a^2 + b^2 = c^2", 2, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withFilledArgsAndNullCause() {
-		final IllegalNotEqualException e = new IllegalNotEqualException("a != b", (Throwable) null);
+		final IllegalNotEqualException e = new IllegalNotEqualException("a != b", 2, (Throwable) null);
 		Assert.assertEquals("a != b", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNotEqualException(new NumberFormatException());
+		new IllegalNotEqualException(2, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new IllegalNotEqualException((Throwable) null);
+		new IllegalNotEqualException((Object) null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNotEqualException();
+		new IllegalNotEqualException(2);
 	}
 
-	
+	@Test
+	public void message_without_template() {
+		final IllegalNotEqualException e = new IllegalNotEqualException(2);
+		Assert.assertEquals("Argument must be equal to a defined value.", e.getMessage());
+	}
+
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<Object> iah = new IllegalNotEqualException(2);
+		Assert.assertEquals(Integer.valueOf(2), iah.getIllegalArgument());
+	}
 }

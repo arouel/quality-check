@@ -22,39 +22,44 @@ public class IllegalNotLesserThanExceptionTest {
 
 	@Test
 	public void construct_withArgs_successful() {
-		new IllegalNotLesserThanException("a^2 + b^2 = c^2");
+		new IllegalNotLesserThanException("a^2 + b^2 = c^2", 2);
 	}
 
 	@Test
 	public void construct_withArgsAndNullCause() {
-		new IllegalNotLesserThanException("a^2 + b^2 = c^2", (Throwable) null);
+		new IllegalNotLesserThanException("a^2 + b^2 = c^2", 2, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withFilledArgsAndNullCause() {
-		final IllegalNotLesserThanException e = new IllegalNotLesserThanException("a != b", (Throwable) null);
+		final IllegalNotLesserThanException e = new IllegalNotLesserThanException("a != b", 2, (Throwable) null);
 		Assert.assertEquals("a != b", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalNotLesserThanException(new NumberFormatException());
+		new IllegalNotLesserThanException(2, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withNullCause() {
-		new IllegalNotLesserThanException((Throwable) null);
+		new IllegalNotLesserThanException((Object) null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalNotLesserThanException();
+		new IllegalNotLesserThanException(2);
 	}
 
 	@Test
 	public void message_without_template() {
-		final IllegalNotLesserThanException e = new IllegalNotLesserThanException();
+		final IllegalNotLesserThanException e = new IllegalNotLesserThanException(2);
 		Assert.assertEquals("Argument must be lesser than a defined value.", e.getMessage());
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<Object> iah = new IllegalNotLesserThanException(-2);
+		Assert.assertEquals(Integer.valueOf(-2), iah.getIllegalArgument());
+	}
 }

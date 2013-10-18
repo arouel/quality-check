@@ -22,53 +22,58 @@ public class IllegalPositiveArgumentExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalPositiveArgumentException("argName");
+		new IllegalPositiveArgumentException("argName", 4);
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalPositiveArgumentException("");
+		new IllegalPositiveArgumentException("", 4);
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		new IllegalPositiveArgumentException("", null);
+		new IllegalPositiveArgumentException("", 4, null);
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		new IllegalPositiveArgumentException("argName", new NumberFormatException());
+		new IllegalPositiveArgumentException("argName", 4, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final IllegalPositiveArgumentException e = new IllegalPositiveArgumentException("argName", null);
+		final IllegalPositiveArgumentException e = new IllegalPositiveArgumentException("argName", 4, null);
 		Assert.assertEquals("The passed argument 'argName' must be smaller than 0.", e.getMessage());
 	}
 
 	@Test
 	public void construct_withFilledCause() {
-		new IllegalPositiveArgumentException(new NumberFormatException());
+		new IllegalPositiveArgumentException(4, new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withNullArgName() {
-		new IllegalPositiveArgumentException((String) null);
-	}
-
-	@Test
-	public void construct_withNullArgNameAndNullCause() {
 		new IllegalPositiveArgumentException((String) null, null);
 	}
 
 	@Test
+	public void construct_withNullArgNameAndNullCause() {
+		new IllegalPositiveArgumentException((String) null, null, null);
+	}
+
+	@Test
 	public void construct_withNullCause() {
-		new IllegalPositiveArgumentException((Throwable) null);
+		new IllegalPositiveArgumentException(null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalPositiveArgumentException();
+		new IllegalPositiveArgumentException(4);
 	}
 
+	@Test
+	public void testGetIllegalArgument() {
+		final IllegalArgumentHolder<Number> iah = new IllegalPositiveArgumentException(4);
+		Assert.assertEquals(Integer.valueOf(4), iah.getIllegalArgument());
+	}
 }
