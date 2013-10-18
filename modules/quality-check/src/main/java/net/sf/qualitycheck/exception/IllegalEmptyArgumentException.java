@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013 André Rouél and Dominik Seichter
+ * Copyright 2013 AndrÃ© RouÃ©l and Dominik Seichter
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
  * Thrown to indicate that a method has been passed with an empty reference as argument that does not accept it as
  * valid. For example, if a method needs a string with a length greater than 0 and is passed with an empty string.
  * 
- * @author André Rouél
+ * @author AndrÃ© RouÃ©l
  * @author Dominik Seichter
  */
-public class IllegalEmptyArgumentException extends RuntimeException implements IllegalArgumentHolder<Object> {
+public class IllegalEmptyArgumentException extends RuntimeException {
 
 	private static final long serialVersionUID = -6988558700678645359L;
 
@@ -65,34 +65,11 @@ public class IllegalEmptyArgumentException extends RuntimeException implements I
 	}
 
 	/**
-	 * The illegal value which caused this exception to be thrown.
-	 */
-	private final Object illegalArgumentValue;
-
-	/**
 	 * Constructs an {@code IllegalNullArgumentException} with the default message
 	 * {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
-	 * 
-	 * @param illegalArgumentValue
-	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalEmptyArgumentException(@Nullable final Object illegalArgumentValue) {
+	public IllegalEmptyArgumentException() {
 		super(DEFAULT_MESSAGE);
-		this.illegalArgumentValue = illegalArgumentValue;
-	}
-
-	/**
-	 * Constructs a new exception with the default message {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
-	 * 
-	 * @param illegalArgumentValue
-	 *            The illegal value which caused this exception to be thrown.
-	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
-	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
-	 */
-	public IllegalEmptyArgumentException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
-		super(DEFAULT_MESSAGE, cause);
-		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -102,12 +79,9 @@ public class IllegalEmptyArgumentException extends RuntimeException implements I
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
-	 * @param illegalArgumentValue
-	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName) {
 		super(determineMessage(argumentName));
-		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -116,20 +90,23 @@ public class IllegalEmptyArgumentException extends RuntimeException implements I
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
-	 * @param illegalArgumentValue
-	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue,
-			@Nullable final Throwable cause) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Throwable cause) {
 		super(determineMessage(argumentName), cause);
-		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
-	@Override
-	public Object getIllegalArgument() {
-		return illegalArgumentValue;
+	/**
+	 * Constructs a new exception with the default message {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param cause
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 */
+	public IllegalEmptyArgumentException(@Nullable final Throwable cause) {
+		super(DEFAULT_MESSAGE, cause);
 	}
+
 }

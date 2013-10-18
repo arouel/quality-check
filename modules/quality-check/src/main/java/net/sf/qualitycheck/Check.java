@@ -2035,7 +2035,7 @@ public final class Check {
 	public static <T> T notEmpty(@Nonnull final T reference, final boolean expression, @Nullable final String name) {
 		notNull(reference, name);
 		if (expression) {
-			throw new IllegalEmptyArgumentException(name, reference);
+			throw new IllegalEmptyArgumentException(name);
 		}
 		return reference;
 	}
