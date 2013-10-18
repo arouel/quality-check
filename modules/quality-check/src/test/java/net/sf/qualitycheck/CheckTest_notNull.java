@@ -49,4 +49,9 @@ public class CheckTest_notNull {
 		Check.notNull("", "foo");
 	}
 
+	@Test(expected = AssertionError.class)
+	public void testWithAssert() {
+		final Long a = null;
+		assert a != null;
+	}
 }
