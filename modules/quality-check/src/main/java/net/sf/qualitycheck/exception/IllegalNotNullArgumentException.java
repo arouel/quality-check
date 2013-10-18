@@ -15,7 +15,10 @@
  ******************************************************************************/
 package net.sf.qualitycheck.exception;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import net.sf.qualitycheck.Check;
 
 /**
  * Thrown to indicate that a method has been passed with an illegal not {@code null} reference as argument where
@@ -61,9 +64,9 @@ public class IllegalNotNullArgumentException extends RuntimeException implements
 	 * @param illegalArgumentValue
 	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotNullArgumentException(@Nullable final Object illegalArgumentValue) {
+	public IllegalNotNullArgumentException(@Nonnull final Object illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
-		this.illegalArgumentValue = illegalArgumentValue;
+		this.illegalArgumentValue = Check.notNull(illegalArgumentValue, "illegalArgumentValue");
 	}
 
 	/**
@@ -76,9 +79,9 @@ public class IllegalNotNullArgumentException extends RuntimeException implements
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNotNullArgumentException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
+	public IllegalNotNullArgumentException(@Nonnull final Object illegalArgumentValue, @Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
-		this.illegalArgumentValue = illegalArgumentValue;
+		this.illegalArgumentValue = Check.notNull(illegalArgumentValue, "illegalArgumentValue");
 	}
 
 	/**
@@ -92,9 +95,9 @@ public class IllegalNotNullArgumentException extends RuntimeException implements
 	 * @param illegalArgumentValue
 	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotNullArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue) {
+	public IllegalNotNullArgumentException(@Nullable final String argumentName, @Nonnull final Object illegalArgumentValue) {
 		super(format(argumentName));
-		this.illegalArgumentValue = illegalArgumentValue;
+		this.illegalArgumentValue = Check.notNull(illegalArgumentValue, "illegalArgumentValue");
 	}
 
 	/**
@@ -110,10 +113,10 @@ public class IllegalNotNullArgumentException extends RuntimeException implements
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNotNullArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue,
+	public IllegalNotNullArgumentException(@Nullable final String argumentName, @Nonnull final Object illegalArgumentValue,
 			@Nullable final Throwable cause) {
 		super(format(argumentName), cause);
-		this.illegalArgumentValue = illegalArgumentValue;
+		this.illegalArgumentValue = Check.notNull(illegalArgumentValue, "illegalArgumentValue");
 	}
 
 	@Override
