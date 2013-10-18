@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalEmptyArgumentException extends RuntimeException {
+public class IllegalEmptyArgumentException extends RuntimeException implements IllegalArgumentHolder<Object> {
 
 	private static final long serialVersionUID = -6988558700678645359L;
 
@@ -65,11 +65,34 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	}
 
 	/**
+	 * The illegal value which caused this exception to be thrown.
+	 */
+	private final Object illegalArgumentValue;
+
+	/**
 	 * Constructs an {@code IllegalNullArgumentException} with the default message
 	 * {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalEmptyArgumentException() {
+	public IllegalEmptyArgumentException(@Nullable final Object illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	/**
+	 * Constructs a new exception with the default message {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
+	 * @param cause
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 */
+	public IllegalEmptyArgumentException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
+		super(DEFAULT_MESSAGE, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -79,9 +102,12 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalEmptyArgumentException(@Nullable final String argumentName) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue) {
 		super(determineMessage(argumentName));
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -90,23 +116,20 @@ public class IllegalEmptyArgumentException extends RuntimeException {
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Throwable cause) {
+	public IllegalEmptyArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue,
+			@Nullable final Throwable cause) {
 		super(determineMessage(argumentName), cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
-	/**
-	 * Constructs a new exception with the default message {@link IllegalEmptyArgumentException#DEFAULT_MESSAGE}.
-	 * 
-	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
-	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
-	 */
-	public IllegalEmptyArgumentException(@Nullable final Throwable cause) {
-		super(DEFAULT_MESSAGE, cause);
+	@Override
+	public Object getIllegalArgument() {
+		return illegalArgumentValue;
 	}
-
 }

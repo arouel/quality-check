@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalNumericArgumentException extends RuntimeException {
+public class IllegalNumericArgumentException extends RuntimeException implements IllegalArgumentHolder<CharSequence> {
 
 	private static final long serialVersionUID = 6913991870563658630L;
 
@@ -67,11 +67,34 @@ public class IllegalNumericArgumentException extends RuntimeException {
 	}
 
 	/**
+	 * The illegal value which caused this exception to be thrown.
+	 */
+	private final CharSequence illegalArgumentValue;
+
+	/**
 	 * Constructs an {@code IllegalNullArgumentException} with the default message
 	 * {@link IllegalNumericArgumentException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNumericArgumentException() {
+	public IllegalNumericArgumentException(@Nullable final CharSequence illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	/**
+	 * Constructs a new exception with the default message {@link IllegalNumericArgumentException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
+	 * @param cause
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 */
+	public IllegalNumericArgumentException(@Nullable final CharSequence illegalArgumentValue, @Nullable final Throwable cause) {
+		super(DEFAULT_MESSAGE, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -81,9 +104,12 @@ public class IllegalNumericArgumentException extends RuntimeException {
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNumericArgumentException(@Nullable final String argumentName) {
+	public IllegalNumericArgumentException(@Nullable final String argumentName, @Nullable final CharSequence illegalArgumentValue) {
 		super(determineMessage(argumentName));
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -92,23 +118,21 @@ public class IllegalNumericArgumentException extends RuntimeException {
 	 * 
 	 * @param argumentName
 	 *            the name of the passed argument
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNumericArgumentException(@Nullable final String argumentName, @Nullable final Throwable cause) {
+	public IllegalNumericArgumentException(@Nullable final String argumentName, @Nullable final CharSequence illegalArgumentValue,
+			@Nullable final Throwable cause) {
 		super(determineMessage(argumentName), cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
-	/**
-	 * Constructs a new exception with the default message {@link IllegalNumericArgumentException#DEFAULT_MESSAGE}.
-	 * 
-	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
-	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
-	 */
-	public IllegalNumericArgumentException(@Nullable final Throwable cause) {
-		super(DEFAULT_MESSAGE, cause);
+	@Override
+	public CharSequence getIllegalArgument() {
+		return illegalArgumentValue;
 	}
 
 }

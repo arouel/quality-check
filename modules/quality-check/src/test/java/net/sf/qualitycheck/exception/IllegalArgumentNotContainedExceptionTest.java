@@ -22,27 +22,27 @@ public class IllegalArgumentNotContainedExceptionTest {
 
 	@Test
 	public void construct_withArgName_successful() {
-		new IllegalArgumentNotContainedException("argName");
+		new IllegalArgumentNotContainedException("argName", Long.valueOf(42));
 	}
 
 	@Test
 	public void construct_withEmptyArgName_successful() {
-		new IllegalArgumentNotContainedException("");
+		new IllegalArgumentNotContainedException("", Long.valueOf(42));
 	}
 
 	@Test
 	public void construct_withEmptyArgNameAndNullCause() {
-		new IllegalArgumentNotContainedException("", null);
+		new IllegalArgumentNotContainedException("", Long.valueOf(42), null);
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndFilledCause() {
-		new IllegalArgumentNotContainedException("argName", new NumberFormatException());
+		new IllegalArgumentNotContainedException("argName", Long.valueOf(42), new NumberFormatException());
 	}
 
 	@Test
 	public void construct_withFilledArgNameAndNullCause() {
-		final IllegalArgumentNotContainedException e = new IllegalArgumentNotContainedException("argName", null);
+		final IllegalArgumentNotContainedException e = new IllegalArgumentNotContainedException("argName", Long.valueOf(42), null);
 		Assert.assertEquals("The passed argument 'argName' must be contained in a defined collection.", e.getMessage());
 	}
 
@@ -57,18 +57,23 @@ public class IllegalArgumentNotContainedExceptionTest {
 	}
 
 	@Test
-	public void construct_withNullArgNameAndNullCause() {
-		new IllegalArgumentNotContainedException((String) null, null);
+	public void construct_withNullArgNameAndNullValueAndNullCause() {
+		new IllegalArgumentNotContainedException((String) null, null, null);
 	}
 
 	@Test
-	public void construct_withNullCause() {
-		new IllegalArgumentNotContainedException((Throwable) null);
+	public void construct_withNullValueAndNullCause() {
+		new IllegalArgumentNotContainedException((Object) null, (Throwable) null);
 	}
 
 	@Test
 	public void construct_withoutArgs_successful() {
-		new IllegalArgumentNotContainedException();
+		new IllegalArgumentNotContainedException(Long.valueOf(42));
 	}
 
+	@Test
+	public void getIllegalArgument() {
+		final IllegalArgumentHolder<Object> iah = new IllegalArgumentNotContainedException(Long.valueOf(42));
+		Assert.assertEquals(Long.valueOf(42), iah.getIllegalArgument());
+	}
 }

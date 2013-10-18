@@ -19,13 +19,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Thrown to indicate that a method was passed arguments which was expected
- * to be equal to another object but was not.
+ * Thrown to indicate that a method was passed arguments which was expected to be equal to another object but was not.
  * 
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalNotEqualException extends RuntimeException {
+public class IllegalNotEqualException extends RuntimeException implements IllegalArgumentHolder<Object> {
 
 	private static final long serialVersionUID = 49779498587504287L;
 
@@ -33,13 +32,36 @@ public class IllegalNotEqualException extends RuntimeException {
 	 * Default message to indicate that the given arguments must be equal to another object.
 	 */
 	protected static final String DEFAULT_MESSAGE = "Argument must be equal to a defined value.";
-	
+
+	/**
+	 * The illegal value which caused this exception to be thrown.
+	 */
+	private final Object illegalArgumentValue;
+
 	/**
 	 * Constructs an {@code IllegalNotEqualException} with the default message
 	 * {@link IllegalNotEqualException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotEqualException() {
+	public IllegalNotEqualException(@Nullable final Object illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	/**
+	 * Constructs a new exception with the default message {@link IllegalNotEqualException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
+	 * @param cause
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 */
+	public IllegalNotEqualException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
+		super(DEFAULT_MESSAGE, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -47,9 +69,12 @@ public class IllegalNotEqualException extends RuntimeException {
 	 * 
 	 * @param message
 	 *            explains why the object must equal another object
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotEqualException(@Nonnull final String message) {
+	public IllegalNotEqualException(@Nonnull final String message, @Nullable final Object illegalArgumentValue) {
 		super(message);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -57,23 +82,21 @@ public class IllegalNotEqualException extends RuntimeException {
 	 * 
 	 * @param message
 	 *            explains why the object must equal another object
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNotEqualException(@Nonnull final String message, @Nullable final Throwable cause) {
+	public IllegalNotEqualException(@Nonnull final String message, @Nullable final Object illegalArgumentValue,
+			@Nullable final Throwable cause) {
 		super(message, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
-	
-	/**
-	 * Constructs a new exception with the default message {@link IllegalNotEqualException#DEFAULT_MESSAGE}.
-	 * 
-	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
-	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
-	 */
-	public IllegalNotEqualException(@Nullable final Throwable cause) {
-		super(DEFAULT_MESSAGE, cause);
+
+	@Override
+	public Object getIllegalArgument() {
+		return illegalArgumentValue;
 	}
 
 }

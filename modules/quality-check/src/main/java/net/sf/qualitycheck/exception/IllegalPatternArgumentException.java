@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalPatternArgumentException extends RuntimeException {
+public class IllegalPatternArgumentException extends RuntimeException implements IllegalArgumentHolder<CharSequence> {
 
 	private static final long serialVersionUID = -6741481389295600427L;
 
@@ -103,14 +103,22 @@ public class IllegalPatternArgumentException extends RuntimeException {
 	}
 
 	/**
+	 * The illegal value which caused this exception to be thrown.
+	 */
+	private final CharSequence illegalArgumentValue;
+
+	/**
 	 * Constructs an {@code IllegalNullArgumentException} with the default message
 	 * {@link IllegalPatternArgumentException#DEFAULT_MESSAGE} including the pattern which the argument must match.
 	 * 
 	 * @param pattern
 	 *            Pattern, that a string or character sequence should correspond to
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalPatternArgumentException(@Nullable final Pattern pattern) {
+	public IllegalPatternArgumentException(@Nullable final Pattern pattern, @Nullable final CharSequence illegalArgumentValue) {
 		super(format(pattern));
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -119,12 +127,16 @@ public class IllegalPatternArgumentException extends RuntimeException {
 	 * 
 	 * @param pattern
 	 *            Pattern, that a string or character sequence should correspond to
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalPatternArgumentException(@Nullable final Pattern pattern, @Nullable final Throwable cause) {
+	public IllegalPatternArgumentException(@Nullable final Pattern pattern, @Nullable final CharSequence illegalArgumentValue,
+			@Nullable final Throwable cause) {
 		super(format(pattern), cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -136,9 +148,13 @@ public class IllegalPatternArgumentException extends RuntimeException {
 	 *            the name of the passed argument
 	 * @param pattern
 	 *            Pattern, that a string or character sequence should correspond to
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalPatternArgumentException(@Nullable final String argumentName, @Nullable final Pattern pattern) {
+	public IllegalPatternArgumentException(@Nullable final String argumentName, @Nullable final Pattern pattern,
+			@Nullable final CharSequence illegalArgumentValue) {
 		super(determineMessage(argumentName, pattern));
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -149,13 +165,21 @@ public class IllegalPatternArgumentException extends RuntimeException {
 	 *            the name of the passed argument
 	 * @param pattern
 	 *            Pattern, that a string or character sequence should correspond to
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
 	public IllegalPatternArgumentException(@Nullable final String argumentName, @Nullable final Pattern pattern,
-			@Nullable final Throwable cause) {
+			@Nullable final CharSequence illegalArgumentValue, @Nullable final Throwable cause) {
 		super(determineMessage(argumentName, pattern), cause);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	@Override
+	public CharSequence getIllegalArgument() {
+		return illegalArgumentValue;
 	}
 
 }

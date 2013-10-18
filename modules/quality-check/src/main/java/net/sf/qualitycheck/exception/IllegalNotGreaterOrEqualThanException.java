@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalNotGreaterOrEqualThanException extends RuntimeException {
+public class IllegalNotGreaterOrEqualThanException extends RuntimeException implements IllegalArgumentHolder<Object> {
 
 	private static final long serialVersionUID = 581207857845351903L;
 
@@ -35,11 +35,35 @@ public class IllegalNotGreaterOrEqualThanException extends RuntimeException {
 	protected static final String DEFAULT_MESSAGE = "Argument must be greater or equal than a defined value.";
 
 	/**
+	 * The illegal value which caused this exception to be thrown.
+	 */
+	private final Object illegalArgumentValue;
+
+	/**
 	 * Constructs an {@code IllegalNotGreaterOrEqualThanException} with the default message
 	 * {@link IllegalNotGreaterOrEqualThanException#DEFAULT_MESSAGE}.
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotGreaterOrEqualThanException() {
+	public IllegalNotGreaterOrEqualThanException(@Nullable final Object illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	/**
+	 * Constructs a new exception with the default message {@link IllegalNotGreaterOrEqualThanException#DEFAULT_MESSAGE}
+	 * .
+	 * 
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
+	 * @param cause
+	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
+	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
+	 */
+	public IllegalNotGreaterOrEqualThanException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
+		super(DEFAULT_MESSAGE, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -47,9 +71,12 @@ public class IllegalNotGreaterOrEqualThanException extends RuntimeException {
 	 * 
 	 * @param message
 	 *            explains why the object must greater than another object
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 */
-	public IllegalNotGreaterOrEqualThanException(@Nonnull final String message) {
+	public IllegalNotGreaterOrEqualThanException(@Nonnull final String message, @Nullable final Object illegalArgumentValue) {
 		super(message);
+		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
@@ -57,24 +84,22 @@ public class IllegalNotGreaterOrEqualThanException extends RuntimeException {
 	 * 
 	 * @param message
 	 *            explains why the object must greater or equal than another object
-	 * @param cause
-	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
-	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
-	 */
-	public IllegalNotGreaterOrEqualThanException(@Nonnull final String message, @Nullable final Throwable cause) {
-		super(message, cause);
-	}
-
-	/**
-	 * Constructs a new exception with the default message {@link IllegalNotGreaterOrEqualThanException#DEFAULT_MESSAGE}
-	 * .
+	 * @param illegalArgumentValue
+	 *            The illegal value which caused this exception to be thrown.
 	 * 
 	 * @param cause
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalNotGreaterOrEqualThanException(@Nullable final Throwable cause) {
-		super(DEFAULT_MESSAGE, cause);
+	public IllegalNotGreaterOrEqualThanException(@Nonnull final String message, @Nullable final Object illegalArgumentValue,
+			@Nullable final Throwable cause) {
+		super(message, cause);
+		this.illegalArgumentValue = illegalArgumentValue;
+	}
+
+	@Override
+	public Object getIllegalArgument() {
+		return illegalArgumentValue;
 	}
 
 }

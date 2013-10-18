@@ -36,6 +36,16 @@ public class CheckTest_contains {
 		Assert.assertSame(Letter.D, Check.contains(set, Letter.D, "name"));
 	}
 
+	@Test
+	public void contains_getIllegalArgument() {
+		try {
+			Check.contains(set, Letter.C, "foo");
+			Assert.assertFalse(true);
+		} catch (final IllegalArgumentNotContainedException e) {
+			Assert.assertEquals(Letter.C, e.getIllegalArgument());
+		}
+	}
+
 	@Test(expected = IllegalArgumentNotContainedException.class)
 	public void contains_withReference_isInvalid() {
 		Check.contains(set, Letter.B);
@@ -55,4 +65,5 @@ public class CheckTest_contains {
 	public void contains_withReference_withName_isValid() {
 		Check.contains(set, Letter.A, "foo");
 	}
+
 }

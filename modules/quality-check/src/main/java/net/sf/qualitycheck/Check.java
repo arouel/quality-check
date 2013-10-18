@@ -156,7 +156,7 @@ public final class Check {
 		Check.notNull(needle, "needle");
 
 		if (!haystack.contains(needle)) {
-			throw new IllegalArgumentNotContainedException();
+			throw new IllegalArgumentNotContainedException(needle);
 		}
 
 		return needle;
@@ -187,7 +187,7 @@ public final class Check {
 		Check.notNull(needle, "needle");
 
 		if (!haystack.contains(needle)) {
-			throw new IllegalArgumentNotContainedException(name);
+			throw new IllegalArgumentNotContainedException(name, needle);
 		}
 
 		return needle;
@@ -233,7 +233,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -260,7 +260,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -287,7 +287,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -313,7 +313,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -340,7 +340,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -366,7 +366,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -393,7 +393,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -419,7 +419,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -446,7 +446,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -472,7 +472,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -500,7 +500,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -527,7 +527,7 @@ public final class Check {
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -558,7 +558,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) != 0) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -590,7 +590,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (!expected.equals(check)) {
-			throw new IllegalNotEqualException();
+			throw new IllegalNotEqualException(check);
 		}
 
 		return check;
@@ -620,7 +620,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) != 0) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -651,7 +651,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (!expected.equals(check)) {
-			throw new IllegalNotEqualException(message);
+			throw new IllegalNotEqualException(message, check);
 		}
 
 		return check;
@@ -678,7 +678,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) > 0) {
-			throw new IllegalNotGreaterOrEqualThanException();
+			throw new IllegalNotGreaterOrEqualThanException(check);
 		}
 
 		return check;
@@ -708,7 +708,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) > 0) {
-			throw new IllegalNotGreaterOrEqualThanException(message);
+			throw new IllegalNotGreaterOrEqualThanException(message, check);
 		}
 
 		return check;
@@ -730,7 +730,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -755,7 +755,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -777,7 +777,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -802,7 +802,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -824,7 +824,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -849,7 +849,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -871,7 +871,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -896,7 +896,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -918,7 +918,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -943,7 +943,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -965,7 +965,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -990,7 +990,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -1012,7 +1012,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -1037,7 +1037,7 @@ public final class Check {
 	@Throws(IllegalNotGreaterThanException.class)
 	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
 		if (expected >= check) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -1064,7 +1064,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) >= 0) {
-			throw new IllegalNotGreaterThanException();
+			throw new IllegalNotGreaterThanException(check);
 		}
 
 		return check;
@@ -1094,7 +1094,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) >= 0) {
-			throw new IllegalNotGreaterThanException(message);
+			throw new IllegalNotGreaterThanException(message, check);
 		}
 
 		return check;
@@ -1186,7 +1186,7 @@ public final class Check {
 	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(@Nullable final Object reference) {
 		if (reference != null) {
-			throw new IllegalNotNullArgumentException();
+			throw new IllegalNotNullArgumentException(reference);
 		}
 	}
 
@@ -1209,7 +1209,7 @@ public final class Check {
 	@Throws(IllegalNotNullArgumentException.class)
 	public static void isNull(@Nullable final Object reference, @Nullable final String name) {
 		if (reference != null) {
-			throw new IllegalNotNullArgumentException(name);
+			throw new IllegalNotNullArgumentException(name, reference);
 		}
 	}
 
@@ -1300,9 +1300,9 @@ public final class Check {
 			ret = checkNumberInRange(value, type);
 		} catch (final NumberFormatException nfe) {
 			if (name == null) {
-				throw new IllegalNumberArgumentException(nfe);
+				throw new IllegalNumberArgumentException(value, nfe);
 			} else {
-				throw new IllegalNumberArgumentException(name, nfe);
+				throw new IllegalNumberArgumentException(name, value, nfe);
 			}
 		}
 
@@ -1348,7 +1348,7 @@ public final class Check {
 	public static <T extends CharSequence> T isNumeric(@Nonnull final T value, @Nullable final String name) {
 		Check.notNull(value, "value");
 		if (!matches(NumericRegularExpressionHolder.getPattern(), value)) {
-			throw new IllegalNumericArgumentException(name);
+			throw new IllegalNumericArgumentException(name, value);
 		}
 		return value;
 	}
@@ -1369,7 +1369,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1394,7 +1394,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1416,7 +1416,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1441,7 +1441,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1463,7 +1463,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1488,7 +1488,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1510,7 +1510,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1535,7 +1535,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1557,7 +1557,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1582,7 +1582,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1604,7 +1604,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1629,7 +1629,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1651,7 +1651,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1676,7 +1676,7 @@ public final class Check {
 	@Throws(IllegalNotLesserThanException.class)
 	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
 		if (expected <= check) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1703,7 +1703,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) <= 0) {
-			throw new IllegalNotLesserThanException();
+			throw new IllegalNotLesserThanException(check);
 		}
 
 		return check;
@@ -1733,7 +1733,7 @@ public final class Check {
 		Check.notNull(check, "check");
 
 		if (expected.compareTo(check) <= 0) {
-			throw new IllegalNotLesserThanException(message);
+			throw new IllegalNotLesserThanException(message, check);
 		}
 
 		return check;
@@ -1801,7 +1801,7 @@ public final class Check {
 		Check.notNull(pattern, "pattern");
 		Check.notNull(chars, "chars");
 		if (!matches(pattern, chars)) {
-			throw new IllegalPatternArgumentException(name, pattern);
+			throw new IllegalPatternArgumentException(name, pattern, chars);
 		}
 		return chars;
 	}
@@ -2035,7 +2035,7 @@ public final class Check {
 	public static <T> T notEmpty(@Nonnull final T reference, final boolean expression, @Nullable final String name) {
 		notNull(reference, name);
 		if (expression) {
-			throw new IllegalEmptyArgumentException(name);
+			throw new IllegalEmptyArgumentException(name, reference);
 		}
 		return reference;
 	}
@@ -2285,7 +2285,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static double notNegative(@Nonnull final double value) {
 		if (value < 0.0) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(value);
 		}
 		return value;
 	}
@@ -2304,7 +2304,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static double notNegative(@Nonnull final double value, @Nullable final String name) {
 		if (value < 0.0) {
-			throw new IllegalNegativeArgumentException(name);
+			throw new IllegalNegativeArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2325,7 +2325,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static float notNegative(@Nonnull final float value) {
 		if (value < 0.0f) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(value);
 		}
 		return value;
 	}
@@ -2344,7 +2344,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static float notNegative(@Nonnull final float value, @Nullable final String name) {
 		if (value < 0.0f) {
-			throw new IllegalNegativeArgumentException(name);
+			throw new IllegalNegativeArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2365,7 +2365,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(@Nonnull final int value) {
 		if (value < 0) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(value);
 		}
 		return value;
 	}
@@ -2384,7 +2384,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static int notNegative(@Nonnull final int value, @Nullable final String name) {
 		if (value < 0) {
-			throw new IllegalNegativeArgumentException(name);
+			throw new IllegalNegativeArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2405,7 +2405,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static long notNegative(@Nonnull final long value) {
 		if (value < 0L) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(value);
 		}
 		return value;
 	}
@@ -2424,7 +2424,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static long notNegative(@Nonnull final long value, @Nullable final String name) {
 		if (value < 0L) {
-			throw new IllegalNegativeArgumentException(name);
+			throw new IllegalNegativeArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2445,7 +2445,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static short notNegative(@Nonnull final short value) {
 		if (value < (short) 0) {
-			throw new IllegalNegativeArgumentException();
+			throw new IllegalNegativeArgumentException(value);
 		}
 		return value;
 	}
@@ -2464,7 +2464,7 @@ public final class Check {
 	@Throws(IllegalNegativeArgumentException.class)
 	public static short notNegative(@Nonnull final short value, @Nullable final String name) {
 		if (value < (short) 0) {
-			throw new IllegalNegativeArgumentException(name);
+			throw new IllegalNegativeArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2525,7 +2525,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static double notPositive(@Nonnull final double value) {
 		if (value > 0.0) {
-			throw new IllegalPositiveArgumentException();
+			throw new IllegalPositiveArgumentException(value);
 		}
 		return value;
 	}
@@ -2544,7 +2544,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static double notPositive(@Nonnull final double value, @Nullable final String name) {
 		if (value > 0.0) {
-			throw new IllegalPositiveArgumentException(name);
+			throw new IllegalPositiveArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2565,7 +2565,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static float notPositive(@Nonnull final float value) {
 		if (value > 0.0f) {
-			throw new IllegalPositiveArgumentException();
+			throw new IllegalPositiveArgumentException(value);
 		}
 		return value;
 	}
@@ -2584,7 +2584,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static float notPositive(@Nonnull final float value, @Nullable final String name) {
 		if (value > 0.0f) {
-			throw new IllegalPositiveArgumentException(name);
+			throw new IllegalPositiveArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2605,7 +2605,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static int notPositive(@Nonnull final int value) {
 		if (value > 0) {
-			throw new IllegalPositiveArgumentException();
+			throw new IllegalPositiveArgumentException(value);
 		}
 		return value;
 	}
@@ -2624,7 +2624,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static int notPositive(@Nonnull final int value, @Nullable final String name) {
 		if (value > 0) {
-			throw new IllegalPositiveArgumentException(name);
+			throw new IllegalPositiveArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2645,7 +2645,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static long notPositive(@Nonnull final long value) {
 		if (value > 0L) {
-			throw new IllegalPositiveArgumentException();
+			throw new IllegalPositiveArgumentException(value);
 		}
 		return value;
 	}
@@ -2664,7 +2664,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static long notPositive(@Nonnull final long value, @Nullable final String name) {
 		if (value > 0L) {
-			throw new IllegalPositiveArgumentException(name);
+			throw new IllegalPositiveArgumentException(name, value);
 		}
 		return value;
 	}
@@ -2685,7 +2685,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static short notPositive(@Nonnull final short value) {
 		if (value > (short) 0) {
-			throw new IllegalPositiveArgumentException();
+			throw new IllegalPositiveArgumentException(value);
 		}
 		return value;
 	}
@@ -2704,7 +2704,7 @@ public final class Check {
 	@Throws(IllegalPositiveArgumentException.class)
 	public static short notPositive(@Nonnull final short value, @Nullable final String name) {
 		if (value > (short) 0) {
-			throw new IllegalPositiveArgumentException(name);
+			throw new IllegalPositiveArgumentException(name, value);
 		}
 		return value;
 	}
