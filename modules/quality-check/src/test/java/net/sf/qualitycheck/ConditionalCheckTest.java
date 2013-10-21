@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 
 import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
@@ -999,6 +1000,216 @@ public class ConditionalCheckTest {
 	@Test
 	public void testNotEmptyStringArgName_Positive_NoFailure() {
 		ConditionalCheck.notEmpty(true, "Quality-Check", "arg");
+	}
+
+	@Test
+	public void testNotEquals_Negative() {
+		ConditionalCheck.notEquals(false, Long.valueOf(412), Long.valueOf(412));
+	}
+
+	@Test
+	public void testNotEquals_Negative_boolean() {
+		ConditionalCheck.notEquals(false, false, false);
+	}
+
+	@Test
+	public void testNotEquals_Negative_byte() {
+		ConditionalCheck.notEquals(false, (byte) 4, (byte) 4);
+	}
+
+	@Test
+	public void testNotEquals_Negative_char() {
+		ConditionalCheck.notEquals(false, 'A', 'A');
+	}
+
+	@Test
+	public void testNotEquals_Negative_int() {
+		ConditionalCheck.notEquals(false, 3, 3);
+	}
+
+	@Test
+	public void testNotEquals_Negative_long() {
+		ConditionalCheck.notEquals(false, 3l, 3l);
+	}
+
+	@Test
+	public void testNotEquals_Negative_short() {
+		ConditionalCheck.notEquals(false, (short) 3, (short) 3);
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure() {
+		ConditionalCheck.notEquals(true, Long.valueOf(1543), Long.valueOf(1543));
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_boolean() {
+		ConditionalCheck.notEquals(true, false, false);
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_byte() {
+		ConditionalCheck.notEquals(true, (byte) 5, (byte) 5);
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_char() {
+		ConditionalCheck.notEquals(true, 'A', 'A');
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_int() {
+		ConditionalCheck.notEquals(true, 3, 3);
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_long() {
+		ConditionalCheck.notEquals(true, 3l, 3l);
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_short() {
+		ConditionalCheck.notEquals(true, (short) 3, (short) 3);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure() {
+		ConditionalCheck.notEquals(true, Long.valueOf(42), Long.valueOf(41));
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_boolean() {
+		ConditionalCheck.notEquals(true, true, false);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_byte() {
+		ConditionalCheck.notEquals(true, (byte) 5, (byte) 32);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_char() {
+		ConditionalCheck.notEquals(true, 'A', 'F');
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_int() {
+		ConditionalCheck.notEquals(true, 3, 32);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_long() {
+		ConditionalCheck.notEquals(true, 3l, 32l);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_short() {
+		ConditionalCheck.notEquals(true, (short) 3, (short) 13);
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative() {
+		ConditionalCheck.notEquals(false, Long.valueOf(42), Long.valueOf(42), "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_boolean() {
+		ConditionalCheck.notEquals(false, false, false, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_byte() {
+		ConditionalCheck.notEquals(false, (byte) 4, (byte) 4, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_char() {
+		ConditionalCheck.notEquals(false, 'A', 'A', "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_int() {
+		ConditionalCheck.notEquals(false, 3, 3, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_long() {
+		ConditionalCheck.notEquals(false, 3l, 3l, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Negative_short() {
+		ConditionalCheck.notEquals(false, (short) 3, (short) 3, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure() {
+		ConditionalCheck.notEquals(true, Long.valueOf(1543), Long.valueOf(1543), "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_boolean() {
+		ConditionalCheck.notEquals(true, false, false, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_byte() {
+		ConditionalCheck.notEquals(true, (byte) 4, (byte) 4, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_char() {
+		ConditionalCheck.notEquals(true, 'V', 'V', "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_int() {
+		ConditionalCheck.notEquals(true, 3, 3, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_long() {
+		ConditionalCheck.notEquals(true, 3l, 3l, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_short() {
+		ConditionalCheck.notEquals(true, (short) 3, (short) 3, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure() {
+		ConditionalCheck.notEquals(true, Long.valueOf(42), Long.valueOf(142), "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_boolean() {
+		ConditionalCheck.notEquals(true, false, true, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_byte() {
+		ConditionalCheck.notEquals(true, (byte) 42, (byte) 422, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_char() {
+		ConditionalCheck.notEquals(true, 'A', 'F', "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_int() {
+		ConditionalCheck.notEquals(true, 3, 32, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_long() {
+		ConditionalCheck.notEquals(true, 3l, 32l, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_short() {
+		ConditionalCheck.notEquals(true, (short) 3, (short) 23, "msg");
 	}
 
 	@Test

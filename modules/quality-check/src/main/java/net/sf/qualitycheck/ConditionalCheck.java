@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
@@ -1437,6 +1438,413 @@ public final class ConditionalCheck {
 	public static <T> void notEmpty(final boolean condition, @Nonnull final T[] array, @Nullable final String name) {
 		if (condition) {
 			Check.notEmpty(array, name);
+		}
+	}
+
+	/**
+	 * Ensures that a passed boolean is not equal to another boolean. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,boolean, boolean, String)}
+	 * and pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed boolean is not equal to another boolean. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @param message
+	 *            an error message describing why the booleans must equal (will be passed to
+	 *            {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check,
+			final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed byte is not equal to another byte. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,byte, byte, String)} and
+	 * pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed byte is not equal to another byte. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @param message
+	 *            an error message describing why the bytes must equal (will be passed to {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed char is not equal to another char. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,char, char, String)} and
+	 * pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed char is not equal to another char. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @param message
+	 *            an error message describing why the chars must equal (will be passed to {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed intH is not equal to another int. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,int, int, String)} and pass
+	 * as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed int is not equal to another int. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @param message
+	 *            an error message describing why the ints must equal (will be passed to {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed long is not equal to another long. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,long, long, String)} and
+	 * pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed long is not equal to another long. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @param message
+	 *            an error message describing why the longs must equal (will be passed to {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed short is not equal to another short. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,short, short, String)} and
+	 * pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) {
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed short is not equal to another short. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @param message
+	 *            an error message describing why the shorts must equal (will be passed to {@code IllegalEqualException}
+	 *            )
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static void notEquals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) {
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is not equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) == 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method
+	 * {@link ConditionalCheck#notEquals(condition,Comparable, Comparable, String)} and pass as second argument the name
+	 * of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Comparable<T>> void notEquals(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed object is not equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check) }.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link ConditionalCheck#notEquals(condition,Object, Object, String)}
+	 * and pass as second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Object> void notEquals(final boolean condition, @Nonnull final T expected, @Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.notEquals(expected, check);
+		}
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is not equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) == 0}.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the <a>s must equal (will be passed to {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Comparable<T>> void notEquals(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
+			final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.notEquals(expected, check, message);
+		}
+	}
+
+	/**
+	 * Ensures that a passed object is not equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check)}.
+	 * 
+	 * @param condition
+	 *            condition must be {@code true}^ so that the check will be performed
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * @param message
+	 *            an error message describing why the objects must equal (will be passed to
+	 *            {@code IllegalEqualException})
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Object> void notEquals(final boolean condition, @Nonnull final T expected, @Nonnull final T check,
+			final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (condition) {
+			Check.notEquals(expected, check, message);
 		}
 	}
 
