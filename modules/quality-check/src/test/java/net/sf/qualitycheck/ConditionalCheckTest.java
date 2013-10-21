@@ -59,6 +59,37 @@ public class ConditionalCheckTest {
 		A, B, C, D
 	}
 
+	private static final class NotEqual {
+		public static final NotEqual UNEQUAL = new NotEqual(1);
+
+		public static final NotEqual DIFFERENT = new NotEqual(2);
+
+		private final int value;
+
+		private NotEqual(final int v) {
+			value = v;
+		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			final NotEqual other = (NotEqual) obj;
+			if (value != other.value) {
+				return false;
+			}
+			return true;
+		}
+
+	};
+
 	private final EnumSet<Letter> set = EnumSet.of(Letter.A, Letter.D);;
 
 	@Test
@@ -1030,6 +1061,11 @@ public class ConditionalCheckTest {
 	@Test
 	public void testNotEquals_Negative_long() {
 		ConditionalCheck.notEquals(false, 3l, 3l);
+	};
+
+	@Test
+	public void testNotEquals_Negative_object() {
+		ConditionalCheck.notEquals(false, NotEqual.UNEQUAL, NotEqual.UNEQUAL);
 	}
 
 	@Test
@@ -1068,6 +1104,11 @@ public class ConditionalCheckTest {
 	}
 
 	@Test(expected = IllegalEqualException.class)
+	public void testNotEquals_Positive_Failure_object() {
+		ConditionalCheck.notEquals(true, NotEqual.UNEQUAL, NotEqual.UNEQUAL);
+	}
+
+	@Test(expected = IllegalEqualException.class)
 	public void testNotEquals_Positive_Failure_short() {
 		ConditionalCheck.notEquals(true, (short) 3, (short) 3);
 	}
@@ -1100,6 +1141,11 @@ public class ConditionalCheckTest {
 	@Test
 	public void testNotEquals_Positive_NoFailure_long() {
 		ConditionalCheck.notEquals(true, 3l, 32l);
+	}
+
+	@Test
+	public void testNotEquals_Positive_NoFailure_object() {
+		ConditionalCheck.notEquals(true, NotEqual.UNEQUAL, NotEqual.DIFFERENT);
 	}
 
 	@Test
@@ -1138,6 +1184,11 @@ public class ConditionalCheckTest {
 	}
 
 	@Test
+	public void testNotEqualsMsg_Negative_object() {
+		ConditionalCheck.notEquals(false, NotEqual.UNEQUAL, NotEqual.UNEQUAL, "msg");
+	}
+
+	@Test
 	public void testNotEqualsMsg_Negative_short() {
 		ConditionalCheck.notEquals(false, (short) 3, (short) 3, "msg");
 	}
@@ -1173,6 +1224,11 @@ public class ConditionalCheckTest {
 	}
 
 	@Test(expected = IllegalEqualException.class)
+	public void testNotEqualsMsg_Positive_Failure_object() {
+		ConditionalCheck.notEquals(true, NotEqual.UNEQUAL, NotEqual.UNEQUAL, "msg");
+	}
+
+	@Test(expected = IllegalEqualException.class)
 	public void testNotEqualsMsg_Positive_Failure_short() {
 		ConditionalCheck.notEquals(true, (short) 3, (short) 3, "msg");
 	}
@@ -1205,6 +1261,11 @@ public class ConditionalCheckTest {
 	@Test
 	public void testNotEqualsMsg_Positive_NoFailure_long() {
 		ConditionalCheck.notEquals(true, 3l, 32l, "msg");
+	}
+
+	@Test
+	public void testNotEqualsMsg_Positive_NoFailure_object() {
+		ConditionalCheck.notEquals(true, NotEqual.UNEQUAL, NotEqual.DIFFERENT, "msg");
 	}
 
 	@Test
