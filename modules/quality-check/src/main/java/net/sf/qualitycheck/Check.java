@@ -2190,9 +2190,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2217,9 +2215,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2245,9 +2241,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2271,9 +2265,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2299,9 +2291,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static char notEquals(@Nonnull final char expected, @Nonnull final char check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static char notEquals(@Nonnull final char expected, @Nonnull final char check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2325,9 +2315,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static char notEquals(@Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static char notEquals(@Nonnull final char expected, @Nonnull final char check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2353,9 +2341,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static int notEquals(@Nonnull final int expected, @Nonnull final int check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static int notEquals(@Nonnull final int expected, @Nonnull final int check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2379,9 +2365,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static int notEquals(@Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static int notEquals(@Nonnull final int expected, @Nonnull final int check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2407,9 +2391,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static long notEquals(@Nonnull final long expected, @Nonnull final long check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static long notEquals(@Nonnull final long expected, @Nonnull final long check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2433,9 +2415,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static long notEquals(@Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static long notEquals(@Nonnull final long expected, @Nonnull final long check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2461,9 +2441,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static short notEquals(@Nonnull final short expected, @Nonnull final short check) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static short notEquals(@Nonnull final short expected, @Nonnull final short check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2488,9 +2466,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static short notEquals(@Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
-		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
-
+	public static short notEquals(@Nonnull final short expected, @Nonnull final short check, final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
