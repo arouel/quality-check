@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 
 import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
+import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
@@ -2169,6 +2170,449 @@ public final class Check {
 		notNull(array);
 		notEmpty(array, array.length == 0, EMPTY_ARGUMENT_NAME);
 		return array;
+	}
+
+	/**
+	 * Ensures that a passed boolean is not equal to another boolean. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(boolean, boolean, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @return the passed boolean argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed boolean is not equal to another boolean. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            boolean to be checked
+	 * @param message
+	 *            an error message describing why the booleans must equal (will be passed to
+	 *            {@code IllegalEqualException})
+	 * @return the passed boolean argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byte is not equal to another byte. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(byte, byte, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @return the passed byte argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed byte is not equal to another byte. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            byte to be checked
+	 * @param message
+	 *            an error message describing why the bytes must equal (will be passed to {@code IllegalEqualException})
+	 * @return the byte boolean argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is not equal to another char. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(char, char, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @return the passed char argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static char notEquals(@Nonnull final char expected, @Nonnull final char check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed char is not equal to another char. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            char to be checked
+	 * @param message
+	 *            an error message describing why the chars must equal (will be passed to {@code IllegalEqualException})
+	 * @return the passed char argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static char notEquals(@Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed intH is not equal to another int. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(int, int, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @return the passed int argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static int notEquals(@Nonnull final int expected, @Nonnull final int check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed int is not equal to another int. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            int to be checked
+	 * @param message
+	 *            an error message describing why the ints must equal (will be passed to {@code IllegalEqualException})
+	 * @return the passed int argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static int notEquals(@Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is not equal to another long. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(long, long, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @return the passed long argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static long notEquals(@Nonnull final long expected, @Nonnull final long check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed long is not equal to another long. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            long to be checked
+	 * @param message
+	 *            an error message describing why the longs must equal (will be passed to {@code IllegalEqualException})
+	 * @return the passed long argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static long notEquals(@Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is not equal to another short. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(short, short, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @return the passed short argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static short notEquals(@Nonnull final short expected, @Nonnull final short check) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed short is not equal to another short. The comparison is made using
+	 * <code>expected == check</code>.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            short to be checked
+	 * @param message
+	 *            an error message describing why the shorts must equal (will be passed to {@code IllegalEqualException}
+	 *            )
+	 * @return the passed short {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@Throws(IllegalEqualException.class)
+	public static short notEquals(@Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
+		// Sonar warns about suspicious notEquals method name, as the name is intended deactivate sonar
+
+		if (expected == check) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is not equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) == 0}.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(Comparable, Comparable, String)} and pass as
+	 * second argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Comparable<T>> T notEquals(@Nonnull final T expected, @Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) == 0) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed object is not equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check) }.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEquals(Object, Object, String)} and pass as second
+	 * argument the name of the parameter to enhance the exception message.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * @return the passed argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Object> T notEquals(@Nonnull final T expected, @Nonnull final T check) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.equals(check)) {
+			throw new IllegalEqualException(check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed {@code Comparable} is not equal to another {@code Comparable}. The comparison is made using
+	 * {@code expected.compareTo(check) == 0}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Comparable to be checked
+	 * @param message
+	 *            an error message describing why the <a>s must equal (will be passed to {@code IllegalEqualException})
+	 * @return the passed {@code Comparable} argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Comparable<T>> T notEquals(@Nonnull final T expected, @Nonnull final T check, final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.compareTo(check) == 0) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
+	}
+
+	/**
+	 * Ensures that a passed object is not equal to another object. The comparison is made using a call to
+	 * {@code expected.equals(check)}.
+	 * 
+	 * @param expected
+	 *            Expected value
+	 * @param check
+	 *            Object to be checked
+	 * @param message
+	 *            an error message describing why the objects must equal (will be passed to
+	 *            {@code IllegalEqualException})
+	 * @return the passed argument {@code check}
+	 * 
+	 * @throws IllegalEqualException
+	 *             if both argument values are not equal
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
+	public static <T extends Object> T notEquals(@Nonnull final T expected, @Nonnull final T check, final String message) {
+		Check.notNull(expected, "expected");
+		Check.notNull(check, "check");
+
+		if (expected.equals(check)) {
+			throw new IllegalEqualException(message, check);
+		}
+
+		return check;
 	}
 
 	/**
