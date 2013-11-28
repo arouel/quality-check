@@ -24,13 +24,13 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterOrEqualThanException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
@@ -166,7 +166,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
+	public static void equals(final boolean condition, final boolean expected, final boolean check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -195,7 +195,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final boolean expected, final boolean check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -224,7 +224,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
+	public static void equals(final boolean condition, final byte expected, final byte check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -252,7 +252,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final byte expected, final byte check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -281,7 +281,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) { // NOSONAR
+	public static void equals(final boolean condition, final char expected, final char check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -309,7 +309,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final char expected, final char check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -338,7 +338,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) { // NOSONAR
+	public static void equals(final boolean condition, final int expected, final int check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -366,7 +366,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final int expected, final int check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -396,7 +396,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) { // NOSONAR
+	public static void equals(final boolean condition, final long expected, final long check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -424,7 +424,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final long expected, final long check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -454,7 +454,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) { // NOSONAR
+	public static void equals(final boolean condition, final short expected, final short check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -483,7 +483,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static void equals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
+	public static void equals(final boolean condition, final short expected, final short check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (condition) {
@@ -602,7 +602,7 @@ public final class ConditionalCheck {
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
 	public static <T extends Comparable<T>> void greaterOrEqualThan(final boolean condition, @Nonnull final T expected,
-			@Nonnull final T check, final String message) {
+			@Nonnull final T check, @Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -1460,7 +1460,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check) {
+	public static void notEquals(final boolean condition, final boolean expected, final boolean check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1484,8 +1484,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final boolean expected, @Nonnull final boolean check,
-			final String message) {
+	public static void notEquals(final boolean condition, final boolean expected, final boolean check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1510,7 +1509,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check) {
+	public static void notEquals(final boolean condition, final byte expected, final byte check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1533,7 +1532,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final byte expected, @Nonnull final byte check, final String message) {
+	public static void notEquals(final boolean condition, final byte expected, final byte check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1558,7 +1557,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final char expected, @Nonnull final char check) {
+	public static void notEquals(final boolean condition, final char expected, final char check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1581,7 +1580,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final char expected, @Nonnull final char check, final String message) {
+	public static void notEquals(final boolean condition, final char expected, final char check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1606,7 +1605,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final int expected, @Nonnull final int check) {
+	public static void notEquals(final boolean condition, final int expected, final int check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1629,7 +1628,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final int expected, @Nonnull final int check, final String message) {
+	public static void notEquals(final boolean condition, final int expected, final int check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1654,7 +1653,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final long expected, @Nonnull final long check) {
+	public static void notEquals(final boolean condition, final long expected, final long check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1677,7 +1676,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final long expected, @Nonnull final long check, final String message) {
+	public static void notEquals(final boolean condition, final long expected, final long check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1702,7 +1701,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final short expected, @Nonnull final short check) {
+	public static void notEquals(final boolean condition, final short expected, final short check) {
 		if (condition) {
 			Check.notEquals(expected, check);
 		}
@@ -1726,7 +1725,7 @@ public final class ConditionalCheck {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static void notEquals(final boolean condition, @Nonnull final short expected, @Nonnull final short check, final String message) {
+	public static void notEquals(final boolean condition, final short expected, final short check, @Nonnull final String message) {
 		if (condition) {
 			Check.notEquals(expected, check, message);
 		}
@@ -1956,7 +1955,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static void notNegative(final boolean condition, @Nonnull final int value) {
+	public static void notNegative(final boolean condition, final int value) {
 		if (condition) {
 			Check.notNegative(value);
 		}
@@ -1976,7 +1975,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static void notNegative(final boolean condition, @Nonnull final int value, @Nullable final String name) {
+	public static void notNegative(final boolean condition, final int value, @Nullable final String name) {
 		if (condition) {
 			Check.notNegative(value, name);
 		}
@@ -2040,7 +2039,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static void notPositive(final boolean condition, @Nonnull final int value) {
+	public static void notPositive(final boolean condition, final int value) {
 		if (condition) {
 			Check.notPositive(value);
 		}
@@ -2060,7 +2059,7 @@ public final class ConditionalCheck {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static void notPositive(final boolean condition, @Nonnull final int value, @Nullable final String name) {
+	public static void notPositive(final boolean condition, final int value, @Nullable final String name) {
 		if (condition) {
 			Check.notPositive(value, name);
 		}

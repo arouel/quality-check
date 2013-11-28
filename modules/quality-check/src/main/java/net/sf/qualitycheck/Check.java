@@ -26,13 +26,13 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
 import net.sf.qualitycheck.exception.IllegalMissingAnnotationException;
 import net.sf.qualitycheck.exception.IllegalNaNArgumentException;
 import net.sf.qualitycheck.exception.IllegalNegativeArgumentException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalNotEqualException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterOrEqualThanException;
 import net.sf.qualitycheck.exception.IllegalNotGreaterThanException;
@@ -230,7 +230,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check) { // NOSONAR
+	public static boolean equals(final boolean expected, final boolean check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -257,7 +257,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check, @Nonnull final String message) { // NOSONAR
+	public static boolean equals(final boolean expected, final boolean check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -337,7 +337,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static char equals(@Nonnull final char expected, @Nonnull final char check) { // NOSONAR
+	public static char equals(final char expected, final char check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -363,7 +363,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static char equals(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) { // NOSONAR
+	public static char equals(final char expected, final char check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -776,7 +776,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check) {
+	public static char greaterThan(final char expected, final char check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -801,7 +801,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) {
+	public static char greaterThan(final char expected, final char check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -1415,7 +1415,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check) {
+	public static char lesserThan(final char expected, final char check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1440,7 +1440,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) {
+	public static char lesserThan(final char expected, final char check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
