@@ -17,7 +17,7 @@ package net.sf.qualitycheck;
 
 import java.util.EnumSet;
 
-import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,12 +41,12 @@ public class CheckTest_contains {
 		try {
 			Check.contains(set, Letter.C, "foo");
 			Assert.assertFalse(true);
-		} catch (final IllegalArgumentNotContainedException e) {
+		} catch (final IllegalNotContainedArgumentException e) {
 			Assert.assertEquals(Letter.C, e.getIllegalArgument());
 		}
 	}
 
-	@Test(expected = IllegalArgumentNotContainedException.class)
+	@Test(expected = IllegalNotContainedArgumentException.class)
 	public void contains_withReference_isInvalid() {
 		Check.contains(set, Letter.B);
 	}
@@ -56,7 +56,7 @@ public class CheckTest_contains {
 		Check.contains(set, Letter.A);
 	}
 
-	@Test(expected = IllegalArgumentNotContainedException.class)
+	@Test(expected = IllegalNotContainedArgumentException.class)
 	public void contains_withReference_withName_isInvalid() {
 		Check.contains(set, Letter.C, "foo");
 	}

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
@@ -105,7 +105,7 @@ public class ConditionalCheckTest {
 		ConditionalCheck.contains(false, set, Letter.B);
 	}
 
-	@Test(expected = IllegalArgumentNotContainedException.class)
+	@Test(expected = IllegalNotContainedArgumentException.class)
 	public void testContains_Positive_Failure() {
 		ConditionalCheck.contains(true, set, Letter.C);
 	}
@@ -120,7 +120,7 @@ public class ConditionalCheckTest {
 		ConditionalCheck.contains(false, set, Letter.C, "msg");
 	}
 
-	@Test(expected = IllegalArgumentNotContainedException.class)
+	@Test(expected = IllegalNotContainedArgumentException.class)
 	public void testContainsMsg_Positive_Failure() {
 		ConditionalCheck.contains(true, set, Letter.C, "msg");
 	}

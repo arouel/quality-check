@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * @author André Rouél
  * @author Dominik Seichter
  */
-public class IllegalArgumentNotContainedException extends RuntimeException implements IllegalArgumentHolder<Object> {
+public class IllegalNotContainedArgumentException extends RuntimeException implements IllegalArgumentHolder<Object> {
 
 	private static final long serialVersionUID = 8389358566804494876L;
 
@@ -38,7 +38,7 @@ public class IllegalArgumentNotContainedException extends RuntimeException imple
 	protected static final String MESSAGE_WITH_NAME = "The passed argument '%s' must be contained in a defined collection.";
 
 	/**
-	 * Returns the formatted string {@link IllegalArgumentNotContainedException#MESSAGE_WITH_NAME} with the given
+	 * Returns the formatted string {@link IllegalNotContainedArgumentException#MESSAGE_WITH_NAME} with the given
 	 * {@code argumentName}.
 	 * 
 	 * @param argumentName
@@ -55,20 +55,20 @@ public class IllegalArgumentNotContainedException extends RuntimeException imple
 	private final Object illegalArgumentValue;
 
 	/**
-	 * Constructs an {@code IllegalArgumentNotContainedException} with the default message
-	 * {@link IllegalArgumentNotContainedException#DEFAULT_MESSAGE}.
+	 * Constructs an {@code IllegalNotContainedArgumentException} with the default message
+	 * {@link IllegalNotContainedArgumentException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param illegalArgumentValue
 	 *            The illegal value which was not contained in a collection and by that caused this exception to be
 	 *            thrown.
 	 */
-	public IllegalArgumentNotContainedException(@Nullable final Object illegalArgumentValue) {
+	public IllegalNotContainedArgumentException(@Nullable final Object illegalArgumentValue) {
 		super(DEFAULT_MESSAGE);
 		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
-	 * Constructs a new exception with the default message {@link IllegalArgumentNotContainedException#DEFAULT_MESSAGE}.
+	 * Constructs a new exception with the default message {@link IllegalNotContainedArgumentException#DEFAULT_MESSAGE}.
 	 * 
 	 * @param illegalArgumentValue
 	 *            The illegal value which was not contained in a collection and by that caused this exception to be
@@ -77,14 +77,14 @@ public class IllegalArgumentNotContainedException extends RuntimeException imple
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalArgumentNotContainedException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
+	public IllegalNotContainedArgumentException(@Nullable final Object illegalArgumentValue, @Nullable final Throwable cause) {
 		super(DEFAULT_MESSAGE, cause);
 		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
-	 * Constructs an {@code IllegalArgumentNotContainedException} with the message
-	 * {@link IllegalArgumentNotContainedException#MESSAGE_WITH_NAME} including the given name of the argument as string
+	 * Constructs an {@code IllegalNotContainedArgumentException} with the message
+	 * {@link IllegalNotContainedArgumentException#MESSAGE_WITH_NAME} including the given name of the argument as string
 	 * representation.
 	 * 
 	 * @param argumentName
@@ -93,13 +93,13 @@ public class IllegalArgumentNotContainedException extends RuntimeException imple
 	 *            The illegal value which was not contained in a collection and by that caused this exception to be
 	 *            thrown.
 	 */
-	public IllegalArgumentNotContainedException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue) {
+	public IllegalNotContainedArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue) {
 		super(format(argumentName));
 		this.illegalArgumentValue = illegalArgumentValue;
 	}
 
 	/**
-	 * Constructs a new exception with the message {@link IllegalArgumentNotContainedException#MESSAGE_WITH_NAME}
+	 * Constructs a new exception with the message {@link IllegalNotContainedArgumentException#MESSAGE_WITH_NAME}
 	 * including the given name as string representation and cause.
 	 * 
 	 * @param argumentName
@@ -111,7 +111,7 @@ public class IllegalArgumentNotContainedException extends RuntimeException imple
 	 *            the cause (which is saved for later retrieval by the {@link Throwable#getCause()} method). (A
 	 *            {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
 	 */
-	public IllegalArgumentNotContainedException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue,
+	public IllegalNotContainedArgumentException(@Nullable final String argumentName, @Nullable final Object illegalArgumentValue,
 			@Nullable final Throwable cause) {
 		super(format(argumentName), cause);
 		this.illegalArgumentValue = illegalArgumentValue;

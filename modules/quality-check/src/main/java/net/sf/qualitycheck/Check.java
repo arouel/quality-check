@@ -26,7 +26,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
@@ -147,17 +147,17 @@ public final class Check {
 	 *            An object that must be contained into a collection.
 	 * @return the passed argument {@code needle}
 	 * 
-	 * @throws IllegalArgumentNotContainedException
+	 * @throws IllegalNotContainedArgumentException
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNotContainedArgumentException.class })
 	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle) {
 		Check.notNull(haystack, "haystack");
 		Check.notNull(needle, "needle");
 
 		if (!haystack.contains(needle)) {
-			throw new IllegalArgumentNotContainedException(needle);
+			throw new IllegalNotContainedArgumentException(needle);
 		}
 
 		return needle;
@@ -178,17 +178,17 @@ public final class Check {
 	 *            name of argument of {@code needle}
 	 * @return the passed argument {@code needle}
 	 * 
-	 * @throws IllegalArgumentNotContainedException
+	 * @throws IllegalNotContainedArgumentException
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNotContainedArgumentException.class })
 	public static <T extends Object> T contains(@Nonnull final Collection<T> haystack, @Nonnull final T needle, @Nonnull final String name) {
 		Check.notNull(haystack, "haystack");
 		Check.notNull(needle, "needle");
 
 		if (!haystack.contains(needle)) {
-			throw new IllegalArgumentNotContainedException(name, needle);
+			throw new IllegalNotContainedArgumentException(name, needle);
 		}
 
 		return needle;

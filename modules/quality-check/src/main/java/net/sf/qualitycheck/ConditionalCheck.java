@@ -24,7 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.sf.qualitycheck.exception.IllegalArgumentNotContainedException;
+import net.sf.qualitycheck.exception.IllegalNotContainedArgumentException;
 import net.sf.qualitycheck.exception.IllegalEmptyArgumentException;
 import net.sf.qualitycheck.exception.IllegalEqualException;
 import net.sf.qualitycheck.exception.IllegalInstanceOfArgumentException;
@@ -102,11 +102,11 @@ public final class ConditionalCheck {
 	 * @param needle
 	 *            An object that must be contained into a collection.
 	 * 
-	 * @throws IllegalArgumentNotContainedException
+	 * @throws IllegalNotContainedArgumentException
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNotContainedArgumentException.class })
 	public static <T extends Object> void contains(final boolean condition, @Nonnull final Collection<T> haystack, @Nonnull final T needle) {
 		if (condition) {
 			Check.contains(haystack, needle);
@@ -132,11 +132,11 @@ public final class ConditionalCheck {
 	 * @param name
 	 *            name of argument of {@code needle}
 	 * 
-	 * @throws IllegalArgumentNotContainedException
+	 * @throws IllegalNotContainedArgumentException
 	 *             if the passed {@code needle} can not be found in {@code haystack}
 	 */
 	@ArgumentsChecked
-	@Throws({ IllegalNullArgumentException.class, IllegalArgumentNotContainedException.class })
+	@Throws({ IllegalNullArgumentException.class, IllegalNotContainedArgumentException.class })
 	public static <T extends Object> void contains(final boolean condition, @Nonnull final Collection<T> haystack, @Nonnull final T needle,
 			@Nonnull final String name) {
 		if (condition) {
