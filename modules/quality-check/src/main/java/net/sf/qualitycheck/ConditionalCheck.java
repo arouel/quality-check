@@ -49,33 +49,35 @@ import net.sf.qualitycheck.exception.RuntimeInstantiationException;
 
 /**
  * This class adds conditional checks to test your arguments to be valid. The checks are the same as offered in
- * {@code Check}, but all have an additional condition. The check is only executed if the condition is @code
+ * {@link Check}, but all have an additional condition. These checks will only be executed if the condition is
  * <code>true</code>.
+ * <p>
+ * Examples for conditional checks are parameters that must be audited if they are not <code>null</code>. E.g.
  * 
- * Examples for ConditionalCheck's are parameters that must be checked if they are not null. E.g. <code>
- *   public void method(@Nullable final String numericArgument, @Nullable final List<Value> list) {
- *   	ConditionalCheck.isNumeric( numericArgument != null, numericArgument, "numericArgument" );
- *   	ConditionalCheck.isNumeric( list != null, list, "list" );
- *   }
- * </code>
+ * <pre>
+ * public void method(@Nullable final String numericArgument, @Nullable final List&lt;Value&gt; list) {
+ * 	ConditionalCheck.isNumeric(numericArgument != null, numericArgument, &quot;numericArgument&quot;);
+ * 	ConditionalCheck.isNumeric(list != null, list, &quot;list&quot;);
+ * }
+ * </pre>
  * 
- * There are also cases where you can do more optimized technical checks: <code>
- *   public void method(final String address) {
- *   	ConditionalCheck.matchesPattern(address.length() <= 15,
- *   			Pattern.compile("\\d{3}.\\d{3}.\\d{3}.\\d{3}"), address);
- *   	ConditionalCheck.matchesPattern(address.length() > 15, 
- *   			Pattern.compile("[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}"), address);
- *   }
+ * There are also cases where you can do more optimized technical checks:
  * 
- * </code>
+ * <pre>
+ * public void method(final String address) {
+ * 	ConditionalCheck.matchesPattern(address.length() &lt;= 15, Pattern.compile(&quot;\\d{3}.\\d{3}.\\d{3}.\\d{3}&quot;), address);
+ * 	ConditionalCheck.matchesPattern(address.length() &gt; 15,
+ * 			Pattern.compile(&quot;[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}&quot;), address);
+ * }
+ * </pre>
  * 
- * Use {@code ConditionalCheck} with care! Coditional checks are often an indicator for bad design. Good APIs accept
+ * Use {@code ConditionalCheck} with care! Conditional checks are often an indicator for bad design. Good APIs accept
  * only values that are always valid. Seldom there are arguments which must be checked only in certain cases.
  * Additionally, take care that you do not mix up technical and functional checks. Conditional checks often tend to be
  * more functional than the technical checks offered by {@code Check}.
- * 
- * Logical checks should not be done using {@code ConditionalCheck}, because the way checks work one cannot be sure if
- * every branch is covered by measuring the branch coverage.
+ * <p>
+ * Logical checks should not be done using {@code ConditionalCheck}, because the way checks work cannot be sure if every
+ * branch is covered by measuring the branch coverage.
  * 
  * @author Dominik Seichter
  */
