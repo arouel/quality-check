@@ -257,7 +257,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) { // NOSONAR
+	public static boolean equals(@Nonnull final boolean expected, @Nonnull final boolean check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -284,7 +284,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check) { // NOSONAR
+	public static byte equals(final byte expected, final byte check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -310,7 +310,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static byte equals(@Nonnull final byte expected, @Nonnull final byte check, final String message) { // NOSONAR
+	public static byte equals(final byte expected, final byte check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -363,7 +363,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static char equals(@Nonnull final char expected, @Nonnull final char check, final String message) { // NOSONAR
+	public static char equals(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -390,7 +390,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static int equals(@Nonnull final int expected, @Nonnull final int check) { // NOSONAR
+	public static int equals(final int expected, final int check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -416,7 +416,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static int equals(@Nonnull final int expected, @Nonnull final int check, final String message) { // NOSONAR
+	public static int equals(final int expected, final int check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -443,7 +443,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static long equals(@Nonnull final long expected, @Nonnull final long check) { // NOSONAR
+	public static long equals(final long expected, final long check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -469,7 +469,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static long equals(@Nonnull final long expected, @Nonnull final long check, final String message) { // NOSONAR
+	public static long equals(final long expected, final long check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -497,7 +497,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static short equals(@Nonnull final short expected, @Nonnull final short check) { // NOSONAR
+	public static short equals(final short expected, final short check) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -524,7 +524,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalNotEqualException.class)
-	public static short equals(@Nonnull final short expected, @Nonnull final short check, final String message) { // NOSONAR
+	public static short equals(final short expected, final short check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 
 		if (expected != check) {
@@ -615,7 +615,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
-	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+	public static <T extends Comparable<T>> T equals(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
@@ -645,9 +645,8 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotEqualException.class })
-	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, final String message) { // NOSONAR
+	public static <T extends Object> T equals(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) { // NOSONAR
 		// Sonar warns about suspicious equals method name, as the name is intended deactivate sonar
-
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -704,7 +703,8 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterOrEqualThanException.class })
-	public static <T extends Comparable<T>> T greaterOrEqualThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Comparable<T>> T greaterOrEqualThan(@Nonnull final T expected, @Nonnull final T check,
+			@Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -729,7 +729,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check) {
+	public static byte greaterThan(final byte expected, final byte check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -754,7 +754,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static byte greaterThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
+	public static byte greaterThan(final byte expected, final byte check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -801,7 +801,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
+	public static char greaterThan(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -823,7 +823,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check) {
+	public static double greaterThan(final double expected, final double check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -848,7 +848,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static double greaterThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
+	public static double greaterThan(final double expected, final double check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -870,7 +870,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check) {
+	public static float greaterThan(final float expected, final float check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -895,7 +895,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static float greaterThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
+	public static float greaterThan(final float expected, final float check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -917,7 +917,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check) {
+	public static int greaterThan(final int expected, final int check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -942,7 +942,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static int greaterThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
+	public static int greaterThan(final int expected, final int check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -964,7 +964,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check) {
+	public static long greaterThan(final long expected, final long check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -989,7 +989,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static long greaterThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
+	public static long greaterThan(final long expected, final long check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -1011,7 +1011,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check) {
+	public static short greaterThan(final short expected, final short check) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(check);
 		}
@@ -1036,7 +1036,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotGreaterThanException.class)
-	public static short greaterThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
+	public static short greaterThan(final short expected, final short check, @Nonnull final String message) {
 		if (expected >= check) {
 			throw new IllegalNotGreaterThanException(message, check);
 		}
@@ -1090,7 +1090,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotGreaterThanException.class })
-	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Comparable<T>> T greaterThan(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -1368,7 +1368,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check) {
+	public static byte lesserThan(final byte expected, final byte check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1393,7 +1393,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static byte lesserThan(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
+	public static byte lesserThan(final byte expected, final byte check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1440,7 +1440,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check, final String message) {
+	public static char lesserThan(@Nonnull final char expected, @Nonnull final char check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1462,7 +1462,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check) {
+	public static double lesserThan(final double expected, final double check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1487,7 +1487,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static double lesserThan(@Nonnull final double expected, @Nonnull final double check, final String message) {
+	public static double lesserThan(final double expected, final double check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1509,7 +1509,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check) {
+	public static float lesserThan(final float expected, final float check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1534,7 +1534,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static float lesserThan(@Nonnull final float expected, @Nonnull final float check, final String message) {
+	public static float lesserThan(final float expected, final float check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1556,7 +1556,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check) {
+	public static int lesserThan(final int expected, final int check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1581,7 +1581,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static int lesserThan(@Nonnull final int expected, @Nonnull final int check, final String message) {
+	public static int lesserThan(final int expected, final int check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1603,7 +1603,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check) {
+	public static long lesserThan(final long expected, final long check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1628,7 +1628,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static long lesserThan(@Nonnull final long expected, @Nonnull final long check, final String message) {
+	public static long lesserThan(final long expected, final long check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1650,7 +1650,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check) {
+	public static short lesserThan(final short expected, final short check) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(check);
 		}
@@ -1675,7 +1675,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws(IllegalNotLesserThanException.class)
-	public static short lesserThan(@Nonnull final short expected, @Nonnull final short check, final String message) {
+	public static short lesserThan(final short expected, final short check, @Nonnull final String message) {
 		if (expected <= check) {
 			throw new IllegalNotLesserThanException(message, check);
 		}
@@ -1729,7 +1729,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalNotLesserThanException.class })
-	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Comparable<T>> T lesserThan(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -2190,7 +2190,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check) {
+	public static boolean notEquals(final boolean expected, final boolean check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2215,7 +2215,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static boolean notEquals(@Nonnull final boolean expected, @Nonnull final boolean check, final String message) {
+	public static boolean notEquals(final boolean expected, final boolean check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2241,7 +2241,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check) {
+	public static byte notEquals(final byte expected, final byte check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2265,7 +2265,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static byte notEquals(@Nonnull final byte expected, @Nonnull final byte check, final String message) {
+	public static byte notEquals(final byte expected, final byte check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2291,7 +2291,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static char notEquals(@Nonnull final char expected, @Nonnull final char check) {
+	public static char notEquals(final char expected, final char check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2315,7 +2315,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static char notEquals(@Nonnull final char expected, @Nonnull final char check, final String message) {
+	public static char notEquals(final char expected, final char check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2341,7 +2341,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static int notEquals(@Nonnull final int expected, @Nonnull final int check) {
+	public static int notEquals(final int expected, final int check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2365,7 +2365,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static int notEquals(@Nonnull final int expected, @Nonnull final int check, final String message) {
+	public static int notEquals(final int expected, final int check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2391,7 +2391,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static long notEquals(@Nonnull final long expected, @Nonnull final long check) {
+	public static long notEquals(final long expected, final long check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2415,7 +2415,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static long notEquals(@Nonnull final long expected, @Nonnull final long check, final String message) {
+	public static long notEquals(final long expected, final long check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2441,7 +2441,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static short notEquals(@Nonnull final short expected, @Nonnull final short check) {
+	public static short notEquals(final short expected, final short check) {
 		if (expected == check) {
 			throw new IllegalEqualException(check);
 		}
@@ -2466,7 +2466,7 @@ public final class Check {
 	 *             if both argument values are not equal
 	 */
 	@Throws(IllegalEqualException.class)
-	public static short notEquals(@Nonnull final short expected, @Nonnull final short check, final String message) {
+	public static short notEquals(final short expected, final short check, @Nonnull final String message) {
 		if (expected == check) {
 			throw new IllegalEqualException(message, check);
 		}
@@ -2551,7 +2551,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
-	public static <T extends Comparable<T>> T notEquals(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Comparable<T>> T notEquals(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -2580,7 +2580,7 @@ public final class Check {
 	 */
 	@ArgumentsChecked
 	@Throws({ IllegalNullArgumentException.class, IllegalEqualException.class })
-	public static <T extends Object> T notEquals(@Nonnull final T expected, @Nonnull final T check, final String message) {
+	public static <T extends Object> T notEquals(@Nonnull final T expected, @Nonnull final T check, @Nonnull final String message) {
 		Check.notNull(expected, "expected");
 		Check.notNull(check, "check");
 
@@ -2703,7 +2703,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static double notNegative(@Nonnull final double value) {
+	public static double notNegative(final double value) {
 		if (value < 0.0) {
 			throw new IllegalNegativeArgumentException(value);
 		}
@@ -2722,7 +2722,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static double notNegative(@Nonnull final double value, @Nullable final String name) {
+	public static double notNegative(final double value, @Nullable final String name) {
 		if (value < 0.0) {
 			throw new IllegalNegativeArgumentException(name, value);
 		}
@@ -2743,7 +2743,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static float notNegative(@Nonnull final float value) {
+	public static float notNegative(final float value) {
 		if (value < 0.0f) {
 			throw new IllegalNegativeArgumentException(value);
 		}
@@ -2762,7 +2762,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static float notNegative(@Nonnull final float value, @Nullable final String name) {
+	public static float notNegative(final float value, @Nullable final String name) {
 		if (value < 0.0f) {
 			throw new IllegalNegativeArgumentException(name, value);
 		}
@@ -2783,7 +2783,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static int notNegative(@Nonnull final int value) {
+	public static int notNegative(final int value) {
 		if (value < 0) {
 			throw new IllegalNegativeArgumentException(value);
 		}
@@ -2802,7 +2802,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static int notNegative(@Nonnull final int value, @Nullable final String name) {
+	public static int notNegative(final int value, @Nullable final String name) {
 		if (value < 0) {
 			throw new IllegalNegativeArgumentException(name, value);
 		}
@@ -2823,7 +2823,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static long notNegative(@Nonnull final long value) {
+	public static long notNegative(final long value) {
 		if (value < 0L) {
 			throw new IllegalNegativeArgumentException(value);
 		}
@@ -2842,7 +2842,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static long notNegative(@Nonnull final long value, @Nullable final String name) {
+	public static long notNegative(final long value, @Nullable final String name) {
 		if (value < 0L) {
 			throw new IllegalNegativeArgumentException(name, value);
 		}
@@ -2863,7 +2863,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static short notNegative(@Nonnull final short value) {
+	public static short notNegative(final short value) {
 		if (value < (short) 0) {
 			throw new IllegalNegativeArgumentException(value);
 		}
@@ -2882,7 +2882,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalNegativeArgumentException.class)
-	public static short notNegative(@Nonnull final short value, @Nullable final String name) {
+	public static short notNegative(final short value, @Nullable final String name) {
 		if (value < (short) 0) {
 			throw new IllegalNegativeArgumentException(name, value);
 		}
@@ -2943,7 +2943,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static double notPositive(@Nonnull final double value) {
+	public static double notPositive(final double value) {
 		if (value > 0.0) {
 			throw new IllegalPositiveArgumentException(value);
 		}
@@ -2962,7 +2962,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static double notPositive(@Nonnull final double value, @Nullable final String name) {
+	public static double notPositive(final double value, @Nullable final String name) {
 		if (value > 0.0) {
 			throw new IllegalPositiveArgumentException(name, value);
 		}
@@ -2983,7 +2983,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static float notPositive(@Nonnull final float value) {
+	public static float notPositive(final float value) {
 		if (value > 0.0f) {
 			throw new IllegalPositiveArgumentException(value);
 		}
@@ -3002,7 +3002,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static float notPositive(@Nonnull final float value, @Nullable final String name) {
+	public static float notPositive(final float value, @Nullable final String name) {
 		if (value > 0.0f) {
 			throw new IllegalPositiveArgumentException(name, value);
 		}
@@ -3023,7 +3023,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static int notPositive(@Nonnull final int value) {
+	public static int notPositive(final int value) {
 		if (value > 0) {
 			throw new IllegalPositiveArgumentException(value);
 		}
@@ -3042,7 +3042,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static int notPositive(@Nonnull final int value, @Nullable final String name) {
+	public static int notPositive(final int value, @Nullable final String name) {
 		if (value > 0) {
 			throw new IllegalPositiveArgumentException(name, value);
 		}
@@ -3063,7 +3063,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static long notPositive(@Nonnull final long value) {
+	public static long notPositive(final long value) {
 		if (value > 0L) {
 			throw new IllegalPositiveArgumentException(value);
 		}
@@ -3082,7 +3082,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static long notPositive(@Nonnull final long value, @Nullable final String name) {
+	public static long notPositive(final long value, @Nullable final String name) {
 		if (value > 0L) {
 			throw new IllegalPositiveArgumentException(name, value);
 		}
@@ -3103,7 +3103,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static short notPositive(@Nonnull final short value) {
+	public static short notPositive(final short value) {
 		if (value > (short) 0) {
 			throw new IllegalPositiveArgumentException(value);
 		}
@@ -3122,7 +3122,7 @@ public final class Check {
 	 *             if the given argument {@code reference} is smaller than {@code 0}
 	 */
 	@Throws(IllegalPositiveArgumentException.class)
-	public static short notPositive(@Nonnull final short value, @Nullable final String name) {
+	public static short notPositive(final short value, @Nullable final String name) {
 		if (value > (short) 0) {
 			throw new IllegalPositiveArgumentException(name, value);
 		}
