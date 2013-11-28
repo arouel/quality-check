@@ -100,13 +100,13 @@ includes several tools improve the quality of unit tests.
 		<maven-site-plugin.version>3.3</maven-site-plugin.version>
 		<maven-surefire-plugin.version>2.15</maven-surefire-plugin.version>
 		<maven-toolchains-plugin.version>1.0</maven-toolchains-plugin.version>
-		<wagon-ssh.version>2.4</wagon-ssh.version>
-		<pitest.version>0.30</pitest.version>
+		<wagon-ssh.version>2.5</wagon-ssh.version>
+		<pitest.version>0.31</pitest.version>
 
 		<!-- Dependencies -->
 		<commons-logging.version>1.1.1</commons-logging.version>
 		<findbugs.version>2.0.1</findbugs.version>
-		<guava.version>14.0.1</guava.version>
+		<guava.version>15.0</guava.version>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<easymock.version>3.2</easymock.version>
