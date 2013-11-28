@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013 AndrÃ© RouÃ©l and Dominik Seichter
+ * Copyright 2013 André Rouél and Dominik Seichter
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
  * Thrown to indicate that a method has been passed with an empty reference as argument that does not accept it as
  * valid. For example, if a method needs a string with a length greater than 0 and is passed with an empty string.
  * 
- * @author AndrÃ© RouÃ©l
+ * @author André Rouél
  * @author Dominik Seichter
  */
 public class IllegalEmptyArgumentException extends RuntimeException {

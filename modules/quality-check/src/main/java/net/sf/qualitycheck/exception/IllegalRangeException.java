@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 /**
  * Thrown to indicate that a method has been passed with a range as arguments.
- * 
+ * <p>
  * A range (<em>start</em>, <em>end</em>, <em>size</em>) is valid if the following conditions are true: - start < size -
  * end < size - start < end
  * 

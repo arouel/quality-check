@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 /**
  * Thrown to indicate that a method has been passed with an argument that is not part of a collection but must be.
  * 
+ * @author André Rouél
  * @author Dominik Seichter
  */
 public class IllegalArgumentNotContainedException extends RuntimeException implements IllegalArgumentHolder<Object> {

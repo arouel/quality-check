@@ -18,8 +18,8 @@ package net.sf.qualitycheck.exception;
 /**
  * This is a marker interface indicating that an exception also holds the value which caused the exception to be thrown.
  * 
- * @author dominik.seichter
- * 
+ * @author André Rouél
+ * @author Dominik Seichter
  */
 public interface IllegalArgumentHolder<T> {
 

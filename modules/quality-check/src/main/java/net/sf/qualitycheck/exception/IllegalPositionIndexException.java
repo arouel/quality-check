@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
 /**
  * Thrown to indicate that a passed position index was out of the bounds of a string, list, array ... .
  * 
- * 
  * @author André Rouél
  * @author Dominik Seichter
  */

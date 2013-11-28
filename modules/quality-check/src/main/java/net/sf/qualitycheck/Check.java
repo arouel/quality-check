@@ -51,7 +51,7 @@ import net.sf.qualitycheck.exception.RuntimeInstantiationException;
 
 /**
  * This class offers simple static methods to test your arguments to be valid.
- * 
+ * <p>
  * Checks should be added to all arguments of all public methods in your class to assure that only valid values can be
  * encountered within your class. This is major step to avoid technical errors like NullPointerExceptions or
  * IndexOutOfBoundsException in your code.
