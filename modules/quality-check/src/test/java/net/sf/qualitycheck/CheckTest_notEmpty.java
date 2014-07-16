@@ -18,6 +18,8 @@ package net.sf.qualitycheck;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,6 +60,18 @@ public class CheckTest_notEmpty {
 	public void notEmpty_emptyCollection_withArgName_isInvalid() {
 		final Set<String> collection = new HashSet<String>();
 		Check.notEmpty(collection, "collection");
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyIterable_isInvalid() {
+		final Iterable<String> iterable = new LinkedList<String>();
+		Check.notEmpty(iterable);
+	}
+
+	@Test(expected = IllegalEmptyArgumentException.class)
+	public void notEmpty_emptyIterable_withArgName_isInvalid() {
+		final Iterable<String> iterable = new LinkedList<String>();
+		Check.notEmpty(iterable, "iterable");
 	}
 
 	@Test(expected = IllegalEmptyArgumentException.class)
@@ -132,6 +146,22 @@ public class CheckTest_notEmpty {
 		collection.add("hmm, what a tasty ice cream");
 		final Set<String> nonEmptySet = Check.notEmpty(collection, "collection");
 		Assert.assertSame(collection, nonEmptySet);
+	}
+
+	@Test
+	public void notEmpty_filledIterable_isValid() {
+		final List<String> iterable = new LinkedList<String>();
+		iterable.add("hmm, what a tasty ice cream");
+		final Iterable<String> nonEmptySet = Check.notEmpty((Iterable<String>) iterable);
+		Assert.assertSame(iterable, nonEmptySet);
+	}
+
+	@Test
+	public void notEmpty_filledIterable_withArgName_isValid() {
+		final List<String> iterable = new LinkedList<String>();
+		iterable.add("hmm, what a tasty ice cream");
+		final Iterable<String> nonEmptySet = Check.notEmpty((Iterable<String>) iterable, "iterable");
+		Assert.assertSame(iterable, nonEmptySet);
 	}
 
 	@Test
