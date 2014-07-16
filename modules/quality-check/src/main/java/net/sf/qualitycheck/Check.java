@@ -1982,6 +1982,29 @@ public final class Check {
 	}
 
 	/**
+	 * Ensures that a passed iterable as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * We recommend to use the overloaded method {@link Check#notEmpty(Iterable, String)} and pass as second argument
+	 * the name of the parameter to enhance the exception message.
+	 * 
+	 * @param iterable
+	 *            an iterable which should not be empty
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code iterable} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code iterable} is empty
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Iterable<?>> T notEmpty(@Nonnull final T iterable) {
+		notNull(iterable);
+		notEmpty(iterable, !iterable.iterator().hasNext(), EMPTY_ARGUMENT_NAME);
+		return iterable;
+	}
+
+	/**
 	 * Ensures that a passed map as a parameter of the calling method is not empty.
 	 * 
 	 * <p>
@@ -2127,6 +2150,37 @@ public final class Check {
 		notNull(collection, name);
 		notEmpty(collection, collection.isEmpty(), name);
 		return collection;
+	}
+
+	/**
+	 * Ensures that a passed iterable as a parameter of the calling method is not empty.
+	 * 
+	 * <p>
+	 * The following example describes how to use it.
+	 * 
+	 * <pre>
+	 * &#064;ArgumentsChecked
+	 * public setIterable(Iterable&lt;String&gt; iterable) {
+	 * 	this.iterable = Check.notEmpty(iterable, &quot;iterable&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * @param iterable
+	 *            an iterable which should not be empty
+	 * @param name
+	 *            name of object reference (in source code)
+	 * @return the passed reference that is not empty
+	 * @throws IllegalNullArgumentException
+	 *             if the given argument {@code iterable} is {@code null}
+	 * @throws IllegalEmptyArgumentException
+	 *             if the given argument {@code iterable} is empty
+	 */
+	@ArgumentsChecked
+	@Throws({ IllegalNullArgumentException.class, IllegalEmptyArgumentException.class })
+	public static <T extends Iterable<?>> T notEmpty(@Nonnull final T iterable, @Nullable final String name) {
+		notNull(iterable, name);
+		notEmpty(iterable, !iterable.iterator().hasNext(), name);
+		return iterable;
 	}
 
 	/**
