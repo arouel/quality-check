@@ -100,6 +100,7 @@ includes several tools improve the quality of unit tests.
 		<maven-site-plugin.version>3.3</maven-site-plugin.version>
 		<maven-surefire-plugin.version>2.15</maven-surefire-plugin.version>
 		<maven-toolchains-plugin.version>1.0</maven-toolchains-plugin.version>
+		<jqassistant-maven-plugin.version>1.1.0</jqassistant-maven-plugin.version>
 		<wagon-ssh.version>2.5</wagon-ssh.version>
 		<pitest.version>0.31</pitest.version>
 
@@ -368,6 +369,11 @@ includes several tools improve the quality of unit tests.
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				<plugin>
+		            <groupId>com.buschmais.jqassistant.scm</groupId>
+		            <artifactId>jqassistant-maven-plugin</artifactId>
+					<version>${jqassistant-maven-plugin.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -405,8 +411,22 @@ includes several tools improve the quality of unit tests.
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
+			<plugin>
+	            <groupId>com.buschmais.jqassistant.scm</groupId>
+	            <artifactId>jqassistant-maven-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <goals>
+	                        <goal>scan</goal>
+	                        <goal>analyze</goal>
+	                    </goals>
+	                    <configuration>
+	                        <failOnViolations>true</failOnViolations>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>			
 		</plugins>
-
 	</build>
 
 	<profiles>
@@ -492,4 +512,20 @@ includes several tools improve the quality of unit tests.
 		</profile>
 	</profiles>
 
+	<reporting>
+	    <plugins>
+	        <plugin>
+	            <groupId>com.buschmais.jqassistant.scm</groupId>
+	            <artifactId>jqassistant-maven-plugin</artifactId>
+	            <reportSets>
+	                <reportSet>
+	                    <reports>
+	                        <report>report</report>
+	                    </reports>
+	                </reportSet>
+	            </reportSets>
+	        </plugin>
+	    </plugins>
+	</reporting>
+	
 </project>
